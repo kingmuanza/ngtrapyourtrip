@@ -1,0 +1,28 @@
+<div class="trait">
+
+</div>
+<div class="titre">
+    <span>
+        Nos offres d'hébergement
+    </span>
+</div>
+
+<div class="sejours">
+    <div class="row">
+        <div class="cell-lg-3">
+            <div class="description text-leader2">
+                Découvrez toutes nos offres d'hébergement pour un confort sans pareil
+            </div>
+
+        </div>
+        <div class="cell-lg-9">
+            <div class="row">
+                <div class="cell-lg-4" *ngFor="let hebergement of hebergements; let index = index;">
+                    <div *ngIf="index < 6">
+                        <app-display-hebergement [hebergement]="hebergement"></app-display-hebergement>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -44,8 +44,10 @@
       true,
       140
     ],
+    "member-access": false,
+    "trailing-comma": false,
     "member-ordering": [
-      true,
+      false,
       {
         "order": [
           "static-field",
@@ -76,6 +78,8 @@
       true,
       "as-needed"
     ],
+    "ordered-imports": [false],
+    "object-literal-sort-keys": false,
     "quotemark": [
       true,
       "single"

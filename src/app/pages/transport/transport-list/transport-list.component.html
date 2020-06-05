@@ -1,0 +1,49 @@
+<div class="page-transport">
+    <div class="entete" style="background-color: #eee;">
+        <div class="row">
+            <div class="cell-lg-5">
+                <div class="titre">
+                    Transports
+                </div>
+                <div class="sous-titre text-leader2">
+                    Retrouvez les meilleurs offres de transport
+                </div>
+            </div>
+            <div class="cell-lg-7">
+                <div class="text-leader2 text-right" style="padding-top: 25px;">
+                    <small>
+                        Effectuer une recherche
+                    </small>
+                </div>
+                <div class="row">
+                    <div class="cell-lg-6">
+                        <div>
+                            <input placeholder="Rechercher un transport" data-role="input" [(ngModel)]="recherche" (ngModelChange)="rechercher($event)">
+                        </div>
+                    </div>
+                    <div class="cell-lg-6">
+                        <div>
+                            <select [(ngModel)]="ordre" data-filter="false" (ngModelChange)="ordonner($event)" data-role="select">
+                                <option value="croissant">
+                                    Ordre croissant de prix
+                                </option>
+                                <option value="decroissant">
+                                    Ordre décroissant de prix
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contenu">
+        <div class="transports">
+            <div class="row">
+                <div class="cell-lg-3" *ngFor="let transport of resultats">
+                    <app-display-transport [transport]="transport"></app-display-transport>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

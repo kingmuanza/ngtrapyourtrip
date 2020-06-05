@@ -1,0 +1,41 @@
+.trait {
+    height: 2px;
+    background-color: black;
+    margin-top: 10vh;
+}
+
+.titre {
+    margin-top: -5vh;
+    text-align: center;
+    font-size: 5vh;
+    span {
+        background-color: white;
+        padding-left: 5vw;
+        padding-right: 5vw;
+        font-weight: bold;
+    }
+}
+
+.description {
+    font-size: 5vh;
+    padding-top: 20px;
+    padding-right: 20px;
+}
+
+.sejours {
+    padding-top: 30px;
+}
+
+.sejour {
+    .sejour__image {
+        height: 40vh;
+        background-image: url('../../../../assets/img/limbe.png');
+        background-size: cover;
+        background-position: center center;
+        border-radius: 10px;
+    }
+    .sejour__description {
+        padding-top: 10px;
+
+    }
+}

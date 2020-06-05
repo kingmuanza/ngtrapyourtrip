@@ -1,0 +1,53 @@
+<div class="inscription-page">
+    <div class="row">
+        <div class="cell-lg-5">
+            <div class="titre">
+                Inscrivez-vous !
+            </div>
+            <div class="text-leader2">
+                Créez un compte et profitez de toutes nos offres !
+                Si vous possédez déjà un compte 
+                <a routerLink="/connexion">Cliquez-ici</a>
+            </div>
+        </div>
+        <div class="cell-lg-5">
+            <div class="formulaire shadow-1">
+                <div class="text-leader2" style="margin-bottom: 20px;">
+                    Veuillez remplir ce formulaire
+                </div>
+                <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                    <div>
+                        <input formControlName="nom" data-role="input" data-prepend="Nom">
+                    </div>
+                    <div>
+                        <input formControlName="prenom" data-role="input" data-prepend="Prénom">
+                    </div>
+                    <div>
+                        <select formControlName="sexe" data-role="select" data-prepend="Sexe">
+                            <option value="femme">
+                                Femme
+                            </option>
+                            <option value="homme">
+                                Homme
+                            </option>
+                        </select>
+                    </div>
+                    <div>
+                        <input formControlName="login" data-role="input" data-prepend="Email">
+                    </div>
+                    <div>
+                        <input formControlName="passe" type="password" data-role="input" data-prepend="Mot de passe">
+                    </div>
+                    <div>
+                        <input formControlName="confirmation" type="password" data-role="input" data-prepend="Confirmer mot de passe">
+                    </div>
+                    <div>
+                        <button class="button warning" style="background-color: rgb(255, 155, 0);">
+                            S'inscrire
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -50,7 +50,9 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/metro4/build/css/metro-all.min.css",
               "node_modules/datatables.net-dt/css/jquery.dataTables.css",
+              "node_modules/animate.css/animate.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -149,6 +151,10 @@
               "devServerTarget": "trap:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }

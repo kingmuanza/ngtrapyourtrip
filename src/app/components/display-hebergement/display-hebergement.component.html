@@ -1,0 +1,22 @@
+<div *ngIf="hebergement" class="sejour" (click)="ouvrir(hebergement.id)">
+    <div class="sejour__conteneur">
+        <div class="sejour__image" [ngStyle]="{'background-image': 'url(' + hebergement.images[0] +')'}">
+
+        </div>
+        <div class="muanza-details">
+            <span *ngIf="hebergement.wifi" class="detail">
+                <span class="fg-white mif-network-wifi"></span>
+            </span>
+            <span *ngIf="hebergement.parking" class="detail">
+                <span class="fg-white mif-automobile"></span>
+            </span>
+        </div>
+    </div>
+    <div class="sejour__description">
+        {{hebergement.titre}}
+    </div>
+    <div class="sejour__notation orange" [innerHTML]="notationToStars(hebergement.notation)"></div>
+    <div class="sejour__prix">
+        {{hebergement.nuitee | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+    </div>
+</div>

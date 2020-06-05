@@ -1,0 +1,62 @@
+<div class="page-sejour">
+    <div class="entete" style="background-color: #eee;">
+        <div class="row">
+            <div class="cell-lg-5">
+                <div class="titre">
+                    Paiement
+                </div>
+                <div class="sous-titre text-leader2">
+                    Effectuez le paiement ici.
+                    Choisissez le mode de paiement qui vous convient
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contenu">
+    <div class="row">
+    <div class="cell-lg-7">
+        <table class="table table-border cell-border">
+            <thead>
+                <tr>
+                    <th>Date début</th>
+                    <th>Prestation</th>
+                    <th style="background-color: #fafafa;">Coût</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let reservation of reservations">
+                    <td>{{reservation.dateDebut | date: 'yyyy-MM-dd'}}</td>
+                    <td>
+                        <span *ngIf="reservation.sejour">
+                            {{reservation.sejour.titre}}
+                        </span>
+                        <span *ngIf="reservation.hebergement">
+                            {{reservation.hebergement.titre}}
+                        </span>
+                        <span *ngIf="reservation.divertissement">
+                            {{reservation.divertissement.titre}}
+                        </span>
+                        <span *ngIf="reservation.transport">
+                            {{reservation.transport.titre}}
+                        </span>
+                    </td>
+                    <td style="text-align: right; background-color: #fafafa;">
+                        <b>
+                            {{reservation.cout  | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                        </b>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th style="font-size: 1.2em;" colspan="2">Total</th> 
+                    <th style="font-size: 1.2em; text-align: right;background-color: #fafafa;">
+                        {{TOTAL | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    </div>
+    </div>
+</div>

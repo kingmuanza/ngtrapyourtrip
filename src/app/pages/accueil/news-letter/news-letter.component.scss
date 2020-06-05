@@ -1,0 +1,29 @@
+.titre {
+    padding-top: 10vh;
+    font-size: 3.0em;
+    text-align: center;
+}
+.formulaire {
+    padding: 5vmin;
+    padding-left: 20vmax;
+    padding-right: 20vmax;
+    padding-bottom: 20vh;
+}
+.trap-input {
+    font-size: 35px;
+    padding-left: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    width: 100%;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    opacity: 0.8;
+}
+.button.muanza {
+    margin-top: 1vmax;
+    width: 100%;
+    background-color: #000;
+    color: white;
+    border-radius: 5px;
+}

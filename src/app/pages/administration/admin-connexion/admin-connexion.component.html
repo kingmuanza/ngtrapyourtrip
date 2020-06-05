@@ -1,0 +1,29 @@
+<div class="page" style="height: 100vh;">
+    <div class="entete">
+        <div class="titre">
+            Console d'administration
+        </div>
+        <div class="sous-titre">
+            Veuillez vous connecter !
+        </div>
+    </div>
+    <div class="contenu">
+        <div class="formulaire">
+            <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+                <div class="row">
+                    <div class="cell-lg-5">
+                        <input formControlName="login" data-role="input" data-prepend="Login">
+                    </div>
+                    <div class="cell-lg-5">
+                        <input formControlName="passe" data-role="input" type="password" data-prepend="Mot de passe">
+                    </div>
+                    <div class="cell-lg-2">
+                        <button class="button warning">
+                            Connexion
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

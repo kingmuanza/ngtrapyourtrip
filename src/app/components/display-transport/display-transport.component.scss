@@ -1,0 +1,35 @@
+.transport {
+    cursor: pointer;
+
+    .transport__conteneur {
+        
+        height: 40vh;
+        overflow: hidden;
+        border-radius: 10px;
+
+    }
+
+    .transport__image {
+        height: 40vh;
+        background-image: url('../../../assets/img/limbe.png');
+        background-size: cover;
+        background-position: center center;
+        border-radius: 10px;
+        transition: transform 200ms;
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+
+    .transport__description {
+        padding-top: 10px;
+
+    }
+    .transport__notation {
+        
+    }
+}
+
+.orange {
+    color: rgb(255, 115, 0);
+}

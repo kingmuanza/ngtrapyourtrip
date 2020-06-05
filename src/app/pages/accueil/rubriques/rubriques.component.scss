@@ -1,0 +1,40 @@
+$bg-primaire: rgb(255, 115, 0);
+
+.offres {
+    padding-top: 3vmin;
+    padding-bottom: 3vmin;
+
+    .offre {
+        border: 2px solid #333;
+        border-radius: 10px;
+        height: 80px;
+        padding: 20px;
+        font-size: 1.2em;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #002;
+            color: $bg-primaire;
+        }
+
+        .libelle {
+            font-weight: bold;
+        }
+
+        .icone {
+            float: right;
+        }
+
+        @media screen and (max-width: 599px) {
+
+            border: 2px solid #333;
+            border-radius: 10px;
+            height: 50px;
+            padding: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            font-size: 1.0em;
+            cursor: pointer;
+        }
+    }
+}

@@ -15,16 +15,20 @@
     "@angular/common": "~9.1.6",
     "@angular/compiler": "~9.1.6",
     "@angular/core": "~9.1.6",
+    "@angular/fire": "^6.0.0",
     "@angular/forms": "~9.1.6",
+    "@angular/localize": "^9.1.9",
     "@angular/platform-browser": "~9.1.6",
     "@angular/platform-browser-dynamic": "~9.1.6",
     "@angular/router": "~9.1.6",
     "angular-datatables": "^9.0.1",
+    "animate.css": "^4.1.0",
     "chart.js": "^2.9.3",
     "datatables.net": "^1.10.20",
     "datatables.net-buttons": "^1.6.2",
     "datatables.net-buttons-dt": "^1.6.2",
     "datatables.net-dt": "^1.10.20",
+    "firebase": "^7.14.5",
     "jquery": "^3.5.1",
     "jszip": "^3.4.0",
     "metro4": "^4.3.6",
@@ -35,7 +39,7 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.901.5",
+    "@angular-devkit/build-angular": "^0.901.7",
     "@angular/cli": "~9.1.5",
     "@angular/compiler-cli": "~9.1.6",
     "@types/datatables.net": "^1.10.19",
@@ -55,6 +59,11 @@
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~3.8.3"
+    "typescript": "~3.8.3",
+    "@angular-devkit/architect": "~0.900",
+    "firebase-tools": "^8.0.0",
+    "fuzzy": "^0.1.3",
+    "inquirer": "^6.2.2",
+    "inquirer-autocomplete-prompt": "^1.0.1"
   }
 }

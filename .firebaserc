@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "trapyourtrip": {
+      "hosting": {
+        "trap": [
+          "trapyourtrip"
+        ]
+      }
+    }
+  }
+}

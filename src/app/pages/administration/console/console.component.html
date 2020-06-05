@@ -1,0 +1,44 @@
+<div class="page">
+    <div class="entete">
+        <div class="titre">
+            Console d'administration
+        </div>
+        <div class="sous-titre text-leader2">
+            Bienvenue dans la console d'administration
+        </div>
+    </div>
+    <div class="contenu">
+        <div class="row">
+            <div class="cell-lg-3">
+                <ul class="v-menu">
+                    <li class="menu-title">Création</li>
+                    <li><a (click)="setMenu('nouveau-sejour')"><span class="mif-home icon"></span> Séjour</a></li>
+                    <li><a (click)="setMenu('nouveau-divertissement')"><span class="mif-dribbble icon"></span> Divertissement</a></li>
+                    <li><a (click)="setMenu('nouveau-hebergement')"><span class="mif-hotel icon"></span> Hébergement</a></li>
+                    <li><a (click)="setMenu('nouveau-transport')"><span class="mif-bus icon"></span> Transport</a></li>
+                    <li class="menu-title">Offres</li>
+                    <li><a (click)="nouveauSejour()"><span class="mif-home icon"></span> Séjour</a></li>
+                    <li><a (click)="nouveauSejour()"><span class="mif-dribbble icon"></span> Divertissement</a></li>
+                    <li><a (click)="nouveauSejour()"><span class="mif-hotel icon"></span> Hébergement</a></li>
+                    <li><a (click)="nouveauSejour()"><span class="mif-bus icon"></span> Transport</a></li>
+
+                </ul>
+
+            </div>
+            <div class="cell-lg-9">
+                <div *ngIf="menu === 'nouveau-sejour'" class="menu-contenu">
+                    <app-sejour-edit></app-sejour-edit>
+                </div>
+                <div *ngIf="menu === 'nouveau-hebergement'" class="menu-contenu">
+                    <app-hebergement-edit></app-hebergement-edit>
+                </div>
+                <div *ngIf="menu === 'nouveau-divertissement'" class="menu-contenu">
+                    <app-divertissement-edit></app-divertissement-edit>
+                </div>
+                <div *ngIf="menu === 'nouveau-transport'" class="menu-contenu">
+                    <app-transport-edit></app-transport-edit>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+
+<div data-role="appbar" data-expand-point="md" class="muanza-appbar">
+    <a href="#" class="brand no-hover">
+        <img class="image-logo" src="../../../assets/img/logo.png">
+    </a>
+
+    <ul class="app-bar-menu ml-auto">
+        <li>
+            <a routerLink="accueil" routerLinkActive="active">
+                <span class="mif-home"></span>
+                Accueil
+            </a>
+        </li>
+        <li>
+            <a routerLink="panier" routerLinkActive="active">
+                <span class="mif-cart"></span>
+                Panier
+                <b class="superieur" style="margin-left: 3px;">
+                    <sup>{{reservations.length}}</sup>
+                </b>
+            </a>
+        </li>
+        <li style="margin-right: 4vw;">
+            <a routerLink="dashboard" routerLinkActive="active">
+                {{utilisateur ? utilisateur.nom :'Mon'}}
+                {{utilisateur ? utilisateur.prenom :'compte'}}
+                <img src="../../../assets/img/Kribi.jpg" class="user-image">
+            </a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,35 @@
+<div class="inscription-page">
+    <div class="row">
+        <div class="cell-lg-12">
+            <div class="formulaire">
+                <div class="titre">
+                    Connectez-vous !
+                </div>
+                <div>
+                    Veuillez remplir ce formulaire !
+                    Si vous n'avez pas encore de compte
+                    <a routerLink="/inscription">Cliquez-ici</a>
+                </div>
+                <div class="text-leader2" style="margin-bottom: 20px;">
+
+                </div>
+                <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                    <div class="row">
+                        <div class="cell-lg-5">
+                            <input formControlName="login" data-role="input" data-prepend="Email">
+                        </div>
+                        <div class="cell-lg-5">
+                            <input formControlName="passe" type="password" data-role="input"
+                                data-prepend="Mot de passe">
+                        </div>
+                        <div class="cell-lg-2">
+                            <button class="button warning" style="background-color: rgb(255, 155, 0);">
+                                Connexion
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

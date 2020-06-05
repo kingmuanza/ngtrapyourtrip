@@ -1,0 +1,58 @@
+.sejour {
+    cursor: pointer;
+
+    .sejour__conteneur {
+        
+        height: 40vh;
+        overflow: hidden;
+        border-radius: 10px;
+        
+        @media screen and (max-width: 599px) {
+            height: 25vh;
+        }
+
+    }
+
+    .sejour__image {
+        height: 40vh;
+        background-image: url('../../../assets/img/limbe.png');
+        background-size: cover;
+        background-position: center center;
+        border-radius: 10px;
+        transition: transform 200ms;
+        &:hover {
+            transform: scale(1.2);
+        }
+        
+        @media screen and (max-width: 599px) {
+            height: 25vh;
+        }
+    }
+
+    .sejour__description {
+        padding-top: 10px;
+        
+        @media screen and (max-width: 599px) {
+            text-align: center;
+        }
+
+    }
+    .sejour__notation {
+        
+        @media screen and (max-width: 599px) {
+            text-align: center;
+        }
+        
+    }
+    .sejour__prix {
+        
+        @media screen and (max-width: 599px) {
+            text-align: center;
+        }
+        
+    }
+}
+
+.orange {
+    color: rgb(255, 115, 0);
+}

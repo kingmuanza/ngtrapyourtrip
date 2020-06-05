@@ -1,0 +1,40 @@
+<div class="page" *ngIf="divertissement">
+    <div class="entete">
+        <div class="row">
+            <div class="cell-lg-9">
+                <div class="titre">
+                    {{divertissement.titre}}
+                </div>
+                <div class="sous-titre text-leader2">
+                    {{divertissement.description}}
+                </div>
+            </div>
+            <div class="cell-lg-3">
+            </div>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+            <div class="row">
+                <div class="cell-lg-4">
+                    <input #calendarpickerlocale formControlName="date" data-role="calendarpicker" data-prepend="Date d'arrivée">
+                </div>
+                <div class="cell-lg-4">
+                    <input formControlName="personnes" data-role="input" data-prepend="Personnes">
+                </div>
+                <div class="cell-lg-4">
+                    <button class="button warning" style="width: 100%;">
+                        Réserver
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="contenu" style="padding-top: 5vh">
+        <div class="row">
+            <div *ngFor="let image of divertissement.images" class="cell-lg-4">
+                <div class="trap-image" [ngStyle]="{'background-image': 'url(' + image +')'}">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

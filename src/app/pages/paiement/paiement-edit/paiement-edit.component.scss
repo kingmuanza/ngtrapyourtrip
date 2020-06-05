@@ -1,0 +1,26 @@
+
+.page-sejour {
+    .entete {
+
+        padding-top: 60px;
+        padding-left: 5vw;
+        padding-right: 5vw;
+        padding-bottom: 5vh;
+
+        .titre {
+            font-size: 3.0em;
+        }
+
+        .sous-titre {
+            margin-top: -5px;
+        }
+    }
+
+    .contenu {
+        padding-top: 5vh;
+        padding-left: 5vw;
+        padding-right: 5vw;
+        padding-bottom: 5vh;
+        min-height: 80vh;
+    }
+}

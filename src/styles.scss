@@ -1,1 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
+
+$bg-primaire: rgb(255, 155, 0);
+
+.muanza-desktop {
+    @media screen and (max-width: 599px) {
+        display: none;
+    }
+}
+.muanza-mobile {
+    display: none;
+    @media screen and (max-width: 599px) {
+        display: block;
+    }
+}
+
+.page {
+    
+    margin-top: 65px;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    padding-bottom: 5vh;
+
+    @media screen and (max-width: 599px) {
+        margin-top: 55px;
+        margin-left: 2.5vw;
+        margin-right: 2.5vw;
+        padding-bottom: 5vh;
+    }
+
+    .entete {
+        .titre {
+            font-size: 3.0em;
+        }
+    }
+
+    .contenu {
+        padding-top: 2vh;
+        padding-bottom: 10vh;
+    }
+}

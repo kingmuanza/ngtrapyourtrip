@@ -1,0 +1,39 @@
+<div class="page">
+    <div class="entete">
+        <div class="titre">
+            Mon compte
+        </div>
+        <div class="sous-titre text-leader2">
+            {{utilisateur.login}}
+        </div>
+    </div>
+    <div class="contenu">
+        <div class="row">
+            <div class="cell-lg-3">
+                <ul class="v-menu">
+                    <li class="menu-title">Informations</li>
+                    <li><a (click)="nouveauSejour()"><span class="mif-user icon"></span> Mon profil</a></li>
+                    <li><a (click)="nouveauSejour()"><span class="mif-security icon"></span> Mon compte</a></li>
+                    <li class="menu-title">Services</li>
+                    <li>
+                        <a (click)="nouveauSejour()"><span class="mif-cart icon"></span>
+                            Mon panier
+                        </a>
+                        <a (click)="nouveauSejour()"><span class="mif-list icon"></span>
+                            Mes réservations
+                        </a>
+                        <a (click)="nouveauSejour()"><span class="mif-credit-card icon"></span>
+                            Mes paiements
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="cell-lg-9">
+                <div class="menu-contenu">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

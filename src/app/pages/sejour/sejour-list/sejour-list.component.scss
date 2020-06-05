@@ -1,0 +1,44 @@
+.sejours {
+    padding-top: 5vh;
+
+    .sejour {
+        cursor: pointer;
+        .sejour__image {
+            height: 40vh;
+            background-image: url('../../../../assets/img/limbe.png');
+            background-size: cover;
+            background-position: center center;
+            border-radius: 10px;
+        }
+
+        .sejour__description {
+            padding-top: 10px;
+
+        }
+    }
+
+}
+
+.page-sejour {
+    .entete {
+
+        padding-top: 60px;
+        padding-left: 5vw;
+        padding-right: 5vw;
+        padding-bottom: 5vh;
+
+        .titre {
+            font-size: 3.0em;
+        }
+
+        .sous-titre {
+            margin-top: -5px;
+        }
+    }
+
+    .contenu {
+        padding-left: 5vw;
+        padding-right: 5vw;
+        padding-bottom: 5vh;
+    }
+}

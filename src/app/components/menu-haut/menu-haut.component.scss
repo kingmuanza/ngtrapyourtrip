@@ -1,0 +1,53 @@
+$bg-primaire: rgb(255, 115, 0);
+.image-logo {
+    height: 35px; 
+    margin-left: 4vw;
+
+    @media screen and (max-width: 599px) {
+        margin-left: -1vw;
+    }
+}
+.muanza-appbar {
+    z-index: 2000;
+    width: 100vw;
+    overflow-x: hidden;
+}
+ul {
+    li {
+        a {
+            font-size: 1.0em;
+            transition: letter-spacing 200ms;
+            padding-right: 20px;
+            &:hover {
+                background-color: $bg-primaire;
+                background-color: lighten($bg-primaire, 30%);
+                letter-spacing: 1px;
+            }
+            &.active {
+                background-color: $bg-primaire;
+                color: white;
+                .superieur {
+                    color: white;
+                }
+                .user-image {
+                    border: 2px solid white;
+                }
+            }
+
+            span {
+                margin-right: 10px;
+            }
+            .superieur {
+                color: rgb(255, 115, 0);
+            }
+
+            .user-image {
+                margin-left: 10px;
+                height: 30px;
+                width: 30px;
+                border-radius: 50%;
+                border: 1px solid rgb(255, 115, 0);
+            }
+        }
+    }
+}

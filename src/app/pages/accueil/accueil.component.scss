@@ -1,0 +1,26 @@
+$bg-primaire: rgb(255, 115, 0);
+
+.offres {
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+    .offre {
+        border: 1px solid #333;
+        border-radius: 10px;
+        height: 80px;
+        padding: 20px;
+        font-size: 1.2em;
+        cursor: pointer;
+        &:hover {
+            background-color: black;
+            color: $bg-primaire;
+        }
+
+        .libelle {
+            font-weight: bold;
+        }
+
+        .icone {
+            float: right;
+        }
+    }
+}

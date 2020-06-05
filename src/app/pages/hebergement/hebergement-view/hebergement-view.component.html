@@ -1,0 +1,50 @@
+<div class="page" *ngIf="hebergement">
+    <div class="entete">
+        <div class="row">
+            <div class="cell-lg-9">
+                <div class="titre">
+                    {{hebergement.titre}}
+                </div>
+                <div class="sous-titre text-leader2">
+                    {{hebergement.description}}
+                </div>
+            </div>
+            <div class="cell-lg-3">
+            <div class="details text-leader2 text-right">
+                <span class="detail">
+                    <span class="fg-orange mif-network-wifi"></span>
+                    WiFi
+                </span>
+                <span class="detail">
+                    <span class="fg-orange mif-automobile"></span>
+                    Parking
+                </span>
+            </div>
+            </div>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+            <div class="row">
+                <div class="cell-lg-4">
+                    <input #calendarpickerlocale formControlName="date" data-role="calendarpicker" data-prepend="Date d'arrivée">
+                </div>
+                <div class="cell-lg-4">
+                    <input #calendarpickerlocale2 formControlName="dateFin" data-role="calendarpicker" data-prepend="Date de départ">
+                </div>
+                <div class="cell-lg-4">
+                    <button class="button warning" style="width: 100%;">
+                        Réserver
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="contenu" style="padding-top: 5vh">
+        <div class="row">
+            <div *ngFor="let image of hebergement.images" class="cell-lg-4">
+                <div class="trap-image" [ngStyle]="{'background-image': 'url(' + image +')'}">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

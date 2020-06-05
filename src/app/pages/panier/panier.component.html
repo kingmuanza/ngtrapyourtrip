@@ -1,0 +1,95 @@
+<div class="page-sejour">
+    <div class="entete" style="background-color: #eee;">
+        <div class="row">
+            <div class="cell-lg-5">
+                <div class="titre">
+                    Mon panier
+                </div>
+                <div class="sous-titre text-leader2">
+                    Vos réservations ici
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contenu">
+        <table class="table table-border cell-border">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Date début</th>
+                    <th>Prestation</th>
+                    <th>Description</th>
+                    <th style="background-color: #fafafa;">Coût</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let reservation of reservations">
+                    <td>{{reservation.date | date: 'yyyy-MM-dd HH:mm'}}</td>
+                    <td>{{reservation.dateDebut | date: 'yyyy-MM-dd'}}</td>
+                    <td>
+                        <span *ngIf="reservation.sejour">
+                            {{reservation.sejour.titre}}
+                        </span>
+                        <span *ngIf="reservation.hebergement">
+                            {{reservation.hebergement.titre}}
+                        </span>
+                        <span *ngIf="reservation.divertissement">
+                            {{reservation.divertissement.titre}}
+                        </span>
+                        <span *ngIf="reservation.transport">
+                            {{reservation.transport.titre}}
+                        </span>
+                    </td>
+                    <td>
+                        <span *ngIf="reservation.sejour">
+                            {{reservation.sejour.description}}
+                        </span>
+                        <span *ngIf="reservation.hebergement">
+                            {{reservation.hebergement.description}}
+                        </span>
+                        <span *ngIf="reservation.divertissement">
+                            {{reservation.divertissement.description}}
+                        </span>
+                        <span *ngIf="reservation.transport">
+                            {{reservation.transport.description}}
+                        </span>
+                    </td>
+                    <td style="text-align: right; background-color: #fafafa;">
+                        <b>
+                            {{reservation.cout  | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                        </b>
+                    </td>
+                    <td style="white-space: nowrap;">
+                        <button (click)="voir(reservation)" class="button success">
+                            Voir
+                        </button>
+                        <button (click)="modifier(reservation)" class="button warning" style="background-color: rgb(255, 115, 0);">
+                            Modifier
+                        </button>
+                        <button (click)="supprimer(reservation.id)" class="button alert danger">
+                            Supprimer
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th style="font-size: 1.2em;" colspan="4">Total</th> 
+                    <th style="font-size: 1.2em; text-align: right;background-color: #fafafa;">
+                        {{TOTAL | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                    </th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+        <div style="margin-top: 20px;">
+            <button (click)="supprimerTout()" class="button alert danger">
+                Annuler toutes les réservations
+            </button>
+            <button (click)="suivant()" class="button warning" style="background-color: rgb(255, 115, 0); float: right;">
+                Suivant
+            </button>
+        </div>
+    </div>
+</div>

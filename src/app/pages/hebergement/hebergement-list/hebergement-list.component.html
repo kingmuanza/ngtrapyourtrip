@@ -1,0 +1,49 @@
+<div class="page-sejour">
+    <div class="entete" style="background-color: #eee;">
+        <div class="row">
+            <div class="cell-lg-5">
+                <div class="titre">
+                    Hébergements
+                </div>
+                <div class="sous-titre text-leader2">
+                    Retrouvez nos offres d'hébergement
+                </div>
+            </div>
+            <div class="cell-lg-7">
+                <div class="text-leader2 text-right" style="padding-top: 25px;">
+                    <small>
+                        Effectuer une recherche
+                    </small>
+                </div>
+                <div class="row">
+                    <div class="cell-lg-6">
+                        <div>
+                            <input placeholder="Rechercher un hébergement" data-role="input" [(ngModel)]="recherche" (ngModelChange)="rechercher($event)">
+                        </div>
+                    </div>
+                    <div class="cell-lg-6">
+                        <div>
+                            <select [(ngModel)]="ordre" data-filter="false" (ngModelChange)="ordonner($event)" data-role="select">
+                                <option value="croissant">
+                                    Ordre croissant de prix
+                                </option>
+                                <option value="decroissant">
+                                    Ordre décroissant de prix
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contenu">
+        <div class="sejours">
+            <div class="row">
+                <div class="cell-lg-3" *ngFor="let hebergement of resultats">
+                    <app-display-hebergement [hebergement]="hebergement"></app-display-hebergement>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

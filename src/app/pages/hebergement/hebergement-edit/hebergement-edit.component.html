@@ -1,0 +1,48 @@
+<div class="titre">
+    Nouvelle offre d'hébergement
+</div>
+<div class="text-leader2" style="margin-bottom: 20px;">
+    Création d'une nouvelle offre d'hébergement
+</div>
+<div class="formulaire">
+    <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+        <div>
+            <input data-role="input" formControlName="titre" data-prepend="Titre">
+        </div>
+        <div>
+            <input data-role="input" type="number" formControlName="nuitee" data-prepend="Nuitée">
+        </div>
+        <div>
+            <textarea data-role="textarea" formControlName="description" data-prepend="Description"></textarea>
+        </div>
+        <div>
+            <input data-role="input" formControlName="lieu" data-prepend="Lieu">
+        </div>
+        <div>
+            <input data-role="input" formControlName="tel" data-prepend="Tel">
+        </div>
+        <div class="row">
+            <div class="cell-lg-4">
+                <input type="checkbox" formControlName="wifi" data-role="checkbox" data-caption="WiFi">
+            </div>
+            <div class="cell-lg-4">
+                <input type="checkbox" formControlName="parking" data-role="checkbox" data-caption="Parking">
+            </div>
+        </div>
+        <div>
+            <input data-role="input" formControlName="tags" data-prepend="Tags">
+            <small>Séparer les tags par un point-virgue ( ; )</small>
+        </div>
+        <div>
+            <input data-role="input" type="number" formControlName="notation" data-prepend="Notation">
+        </div>
+        <div>
+            <input (change)="uploadFile($event)" data-role="file" type="file" multiple data-prepend="Images">
+        </div>
+        <div class="row">
+            <div class="cell-lg-6">
+                <button class="button warning">Enregistrer</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,69 @@
+.trait {
+    height: 2px;
+    background-color: black;
+    margin-top: 10vh;
+}
+
+.titre {
+    margin-top: -5vh;
+    text-align: center;
+    font-size: 5vh;
+
+    @media screen and (max-width: 599px) {
+        line-height: 1.15;
+    }
+
+    span {
+        background-color: white;
+        padding-left: 5vw;
+        padding-right: 5vw;
+        font-weight: bold;
+
+        @media screen and (max-width: 599px) {
+            display: inline-block;
+            margin-left: 10vw;
+            margin-right: 10vw;
+        }
+    }
+}
+
+.description {
+    font-size: 5vh;
+    padding-top: 20px;
+    padding-right: 20px;
+
+    @media screen and (max-width: 599px) {
+        padding-right: 0px;
+        padding-top: 0px;
+        font-size: 3vh;
+    }
+}
+
+.sejours {
+    padding-top: 30px;
+
+    @media screen and (max-width: 599px) {
+        padding-top: 0px;
+    }
+}
+
+.mobile-center {
+    @media screen and (max-width: 599px) {
+        text-align: center;
+    }
+}
+
+.sejour {
+    .sejour__image {
+        height: 40vh;
+        background-image: url('../../../../assets/img/limbe.png');
+        background-size: cover;
+        background-position: center center;
+        border-radius: 10px;
+    }
+
+    .sejour__description {
+        padding-top: 10px;
+
+    }
+}
