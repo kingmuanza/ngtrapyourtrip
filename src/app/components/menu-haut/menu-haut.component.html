@@ -12,6 +12,34 @@
             </a>
         </li>
         <li>
+            <a [ngClass]="{'active': offres}" (click)="check()" class="dropdown-toggle">
+                <span class="mif-star-full"></span>
+                Nos offres
+            </a>
+            <ul style="z-index: 2000;" class="d-menu" data-role="dropdown">
+                <li>
+                    <a routerLink="/sejour" routerLinkActive="active">
+                        Séjours
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/offres/hebergement" routerLinkActive="active">
+                        Hébergements
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/transport" routerLinkActive="active">
+                        Transport
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/divertissement" routerLinkActive="active">
+                        Divertissement
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
             <a routerLink="panier" routerLinkActive="active">
                 <span class="mif-cart"></span>
                 Panier

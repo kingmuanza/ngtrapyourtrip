@@ -1,7 +1,7 @@
 <div class="page-sejour">
     <div class="entete" style="background-color: #eee;">
         <div class="row">
-            <div class="cell-lg-5">
+            <div class="cell-lg-12">
                 <div class="titre">
                     Séjours
                 </div>
@@ -9,21 +9,12 @@
                     Retrouvez les meilleurs séjours
                 </div>
             </div>
-            <div class="cell-lg-7">
-                <div class="text-leader2 text-right" style="padding-top: 25px;">
-                    <small>
-                        Effectuer une recherche
-                    </small>
-                </div>
-                <div class="row">
-                    <div class="cell-lg-6">
-                        <div>
-                            <input placeholder="Rechercher un séjour" data-role="input" [(ngModel)]="recherche" (ngModelChange)="rechercher($event)">
-                        </div>
-                    </div>
-                    <div class="cell-lg-6">
-                        <div>
-                            <select [(ngModel)]="ordre" data-filter="false" (ngModelChange)="ordonner($event)" data-role="select">
+            <div class="cell-lg-12">
+                <div class="row no-gap">
+                    <div class="cell-lg-3 bordure-grise">
+                        <div style="margin-right: 10px;">
+                            <select data-cls-option="fg-orange"
+                            data-cls-selected-item="bg-orange fg-white" [(ngModel)]="ordre" data-filter="false" (ngModelChange)="ordonner($event)" data-role="select">
                                 <option value="croissant">
                                     Ordre croissant de prix
                                 </option>
@@ -31,6 +22,28 @@
                                     Ordre décroissant de prix
                                 </option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="cell-lg-3 bordure-orange--debut">
+                        <div>
+                            <input placeholder="Rechercher un séjour" data-role="input" [(ngModel)]="recherche" (ngModelChange)="rechercher($event)">
+                        </div>
+                    </div>
+                    <div class="cell-lg-2 bordure-orange--fin">
+                        <div>
+                            <input placeholder="Parent" data-role="input">
+                        </div>
+                    </div>
+                    <div class="cell-lg-2 bordure-orange--fin">
+                        <div>
+                            <input placeholder="Enfants" data-role="input">
+                        </div>
+                    </div>
+                    <div class="cell-lg-2 bordure-orange--fin">
+                        <div>
+                            <button class="button warning" style="width: 100%;">
+                                Rechercher
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { DataTablesModule } from 'angular-datatables';
 import { ChartsModule } from 'ng2-charts';
@@ -47,6 +47,8 @@ import { ReservationViewComponent } from './pages/reservation/reservation-view/r
 import { DisplayDivertissementComponent } from './components/display-divertissement/display-divertissement.component';
 import { DisplayTransportComponent } from './components/display-transport/display-transport.component';
 import { AccueilTransportsComponent } from './pages/accueil/accueil-transports/accueil-transports.component';
+import { HebergementListEditComponent } from './pages/hebergement/hebergement-list-edit/hebergement-list-edit.component';
+import { HebergementEditOldComponent } from './pages/hebergement/hebergement-edit-old/hebergement-edit-old.component';
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -92,7 +94,9 @@ registerLocaleData(localeFr, 'fr-FR');
     ReservationViewComponent,
     DisplayDivertissementComponent,
     DisplayTransportComponent,
-    AccueilTransportsComponent
+    AccueilTransportsComponent,
+    HebergementListEditComponent,
+    HebergementEditOldComponent
   ],
   imports: [
     BrowserModule,
@@ -102,6 +106,11 @@ registerLocaleData(localeFr, 'fr-FR');
     DataTablesModule,
     ChartsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: LOCALE_ID,
+      useValue: 'fr-FR'
+    }
+  ],
 })
 export class AppModule { }

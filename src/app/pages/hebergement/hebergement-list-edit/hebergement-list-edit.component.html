@@ -1,0 +1,29 @@
+<div *ngIf="!hebergement">
+    <h1>
+        Hébergements
+    </h1>
+    <div class="text-leader2" style="margin-bottom: 20px;">
+        Liste des offres d'hébergements
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+        <input data-role="input" formControlName="mot" placeholder="Rechercher un hébergement">
+    </form>
+    <div class="row" style="margin-top: 10px;">
+        <div class="cell-lg-3 cell-md-4" *ngFor="let hebergement of resultats">
+            <app-display-hebergement [hebergement]="hebergement"></app-display-hebergement>
+            <div>
+                <button (click)="editHebergement(hebergement)" class="button muanza" style="width: 100%;">
+                    Modifier
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="hebergement">
+    <div style="margin-bottom: 5px; margin-top: 20px;">
+        <button class="button">
+            Revenir aux hébergements
+        </button>
+    </div>
+    <app-hebergement-edit [hebergement]="hebergement"></app-hebergement-edit>
+</div>

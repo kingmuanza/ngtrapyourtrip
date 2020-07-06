@@ -1,5 +1,5 @@
 .sous-titre {
-    margin-top: -5px;
+    margin-top: 0px;
 }
 
 .formulaire {
@@ -10,9 +10,16 @@
 }
 
 .trap-image {
-    height: 50vh;
+    height: 40vh;
     background-size: cover;
     background-position: center center;
+    margin-bottom: 2vh;
+}
+.trap-image-big {
+    height: 82vh;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
 }
 
 .images {
@@ -44,8 +51,67 @@
 }
 
 .details {
-    margin-top: 30px;
+    margin-top: 20px;
+    margin-bottom: 10px;
     .detail {
-        margin-left: 20px;
+        display: inline-block;
+        background-color: #fafafa;
+        margin-right: 10px;
+        padding-right: 10px;
+        span {
+            color: rgba(255, 115, 0);
+            background-color: #eee;
+            padding: 3px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
     }
+    .detail2 {
+        display: inline-block;
+        background-color: #fafafa;
+        margin-right: 10px;
+        padding-right: 10px;
+        span.icone {
+            color: rgba(255, 115, 0);
+            background-color: #eee;
+
+            i {
+                font-size: 1.5em;
+            }
+        }
+        span.libelle {
+            display: inline-block;
+            padding: 3px;
+            padding-top: 4px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    }
+}
+
+.orange {
+    color: rgba(255, 115, 0);
+}
+
+.sejour__notation {
+    margin-top: 0px;
+    text-align: right;
+    font-size: 2.0em;
+}
+
+.bordure-orange {
+    &-debut {
+        border: 2px solid rgb(255, 115, 0);
+    }
+
+    &-fin {
+        border: 2px solid rgb(255, 115, 0);
+        border-left: 0px solid #eee;
+    }
+}
+
+input.muanza {
+    border: 1px solid #fff;
+    outline: none !important;
+    padding-left: 20px;
 }

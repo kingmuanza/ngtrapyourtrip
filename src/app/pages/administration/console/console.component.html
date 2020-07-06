@@ -19,7 +19,7 @@
                     <li class="menu-title">Offres</li>
                     <li><a (click)="nouveauSejour()"><span class="mif-home icon"></span> Séjour</a></li>
                     <li><a (click)="nouveauSejour()"><span class="mif-dribbble icon"></span> Divertissement</a></li>
-                    <li><a (click)="nouveauSejour()"><span class="mif-hotel icon"></span> Hébergement</a></li>
+                    <li><a (click)="setMenu('hebergement')"><span class="mif-hotel icon"></span> Hébergement</a></li>
                     <li><a (click)="nouveauSejour()"><span class="mif-bus icon"></span> Transport</a></li>
 
                 </ul>
@@ -32,11 +32,17 @@
                 <div *ngIf="menu === 'nouveau-hebergement'" class="menu-contenu">
                     <app-hebergement-edit></app-hebergement-edit>
                 </div>
+                <div *ngIf="menu === 'nouveau-hebergement'" class="menu-contenu">
+                    <app-hebergement-edit></app-hebergement-edit>
+                </div>
                 <div *ngIf="menu === 'nouveau-divertissement'" class="menu-contenu">
                     <app-divertissement-edit></app-divertissement-edit>
                 </div>
                 <div *ngIf="menu === 'nouveau-transport'" class="menu-contenu">
                     <app-transport-edit></app-transport-edit>
+                </div>
+                <div *ngIf="menu === 'hebergement'" class="menu-contenu">
+                    <app-hebergement-list-edit></app-hebergement-list-edit>
                 </div>
             </div>
         </div>

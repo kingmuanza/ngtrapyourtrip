@@ -24,6 +24,9 @@ import { DivertissementListComponent } from './pages/divertissement/divertisseme
 import { TransportListComponent } from './pages/transport/transport-list/transport-list.component';
 import { TransportEditComponent } from './pages/transport/transport-edit/transport-edit.component';
 import { TransportViewComponent } from './pages/transport/transport-view/transport-view.component';
+import { ReservationListComponent } from './pages/reservation/reservation-list/reservation-list.component';
+import { ReservationViewComponent } from './pages/reservation/reservation-view/reservation-view.component';
+import { ReservationEditComponent } from './pages/reservation/reservation-edit/reservation-edit.component';
 
 const routes: Routes = [
   { path: 'accueil', component: AccueilComponent },
@@ -46,10 +49,15 @@ const routes: Routes = [
   { path: 'sejour/edit', component: SejourEditComponent },
   { path: 'sejour/edit/:id', component: SejourEditComponent },
 
-  { path: 'hebergement', component: HebergementListComponent },
-  { path: 'hebergement/view/:id', component: HebergementViewComponent },
-  { path: 'hebergement/edit', component: HebergementEditComponent },
-  { path: 'hebergement/edit/:id', component: HebergementEditComponent },
+  { path: 'offres/hebergement', component: HebergementListComponent },
+  { path: 'offres/hebergement/view/:id', component: HebergementViewComponent },
+  { path: 'offres/hebergement/edit', component: HebergementEditComponent },
+  { path: 'offres/hebergement/edit/:id', component: HebergementEditComponent },
+
+  { path: 'offres/reservation', component: ReservationListComponent },
+  { path: 'offres/reservation/view/:id', component: ReservationViewComponent },
+  { path: 'offres/reservation/edit', component: ReservationEditComponent },
+  { path: 'offres/reservation/edit/:id', component: ReservationEditComponent },
 
   { path: 'divertissement', component: DivertissementListComponent },
   { path: 'divertissement/view/:id', component: DivertissementViewComponent },
@@ -66,7 +74,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    scrollPositionRestoration: 'enabled', // Add options right here
+  })],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

@@ -1,1 +1,83 @@
-<p>reservation-view works!</p>
+<div class="page" style="min-height: 100vh; padding-top: 10px;">
+    <div style="margin-top: 0px; margin-bottom: 20px;">
+        <div data-role="stepper" data-steps="3" data-step="1" data-view="diamond" data-cls-step="rounded"
+            data-cls-complete="bg-green" data-cls-current="bg-orange">
+        </div>
+    </div>
+    <div class="entete" *ngIf="reservation">
+        <div class="titre2">
+            {{reservation.hebergement.titre}}
+            <span class="sejour__notation orange"
+                [innerHTML]="notationToStars(reservation.hebergement.notation)"></span>
+
+        </div>
+        <div class="sous-titre text-leader2">
+            {{reservation.hebergement.description}}
+        </div>
+
+        <div class="sejour_duree">
+            <div class="row">
+                <div class="cell-lg-3">
+                    <div style="padding-left: 10px;">
+                        Hébergement
+                    </div>
+                </div>
+                <div class="cell-lg-3">
+                    <div>
+                        Durée séjour : {{days}} jours
+                    </div>
+                </div>
+                <div class="cell-lg-3">
+                    {{reservation.personnes}} Adultes
+                </div>
+                <div class="cell-lg-3">
+                    {{reservation.enfants}} Enfants
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <div class="cell-lg-3">
+                <div>
+                    <b>
+                        Arrivée
+                    </b>
+                </div>
+                <div>
+                    {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                </div>
+            </div>
+            <div class="cell-lg-3">
+                <div>
+                    <b>
+                        Départ
+                    </b>
+                </div>
+                <div>
+                    {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                </div>
+            </div>
+            <div class="cell-lg-2">
+                <div style="padding-top: 5px;">
+                    <button class="button outline warning"
+                        style="border-color: rgb(255, 115,0); color: rgb(255, 115,0);">
+                        Changer les dates
+                    </button>
+                </div>
+            </div>
+            <div class="cell-lg-4">
+                <h3 class="text-right" style="margin: 0; padding:0">
+                    {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                </h3>
+            </div>
+        </div>
+        <div style="margin-top: 40px">
+            <button class="button warning" style="background-color: rgb(255, 115,0); color: #fff;">
+                Passer aux informations personnelles
+            </button>
+        </div>
+
+    </div>
+    <div class="contenu">
+
+    </div>
+</div>

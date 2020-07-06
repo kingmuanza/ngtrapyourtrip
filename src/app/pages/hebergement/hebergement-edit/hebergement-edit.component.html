@@ -21,13 +21,39 @@
         <div>
             <input data-role="input" formControlName="tel" data-prepend="Tel">
         </div>
-        <div class="row">
-            <div class="cell-lg-4">
+        
+        <div>
+            <select data-role="select" data-filter="false">
+                <option value="hotel">
+                    Hôtel
+                </option>
+                <option value="villa">
+                    Villa
+                </option>
+            </select>
+        </div>
+        <div class="options">
+            <span class="">
                 <input type="checkbox" formControlName="wifi" data-role="checkbox" data-caption="WiFi">
-            </div>
-            <div class="cell-lg-4">
+            </span>
+            <span class="">
                 <input type="checkbox" formControlName="parking" data-role="checkbox" data-caption="Parking">
-            </div>
+            </span>
+            <span class="">
+                <input type="checkbox" formControlName="dej" data-role="checkbox" data-caption="Petit déjeuner">
+            </span>
+            <span class="">
+                <input type="checkbox" formControlName="clim" data-role="checkbox" data-caption="Climatiseur">
+            </span>
+            <span class="">
+                <input type="checkbox" formControlName="piscine" data-role="checkbox" data-caption="Piscine">
+            </span>
+            <span class="">
+                <input type="checkbox" formControlName="plage" data-role="checkbox" data-caption="Plage">
+            </span>
+            <span class="">
+                <input type="checkbox" formControlName="gardien" data-role="checkbox" data-caption="Gardien">
+            </span>
         </div>
         <div>
             <input data-role="input" formControlName="tags" data-prepend="Tags">

@@ -1,49 +1,127 @@
 <div class="page-sejour">
-    <div class="entete" style="background-color: #eee;">
-        <div class="row">
-            <div class="cell-lg-5">
-                <div class="titre">
-                    Hébergements
-                </div>
-                <div class="sous-titre text-leader2">
-                    Retrouvez nos offres d'hébergement
-                </div>
-            </div>
-            <div class="cell-lg-7">
-                <div class="text-leader2 text-right" style="padding-top: 25px;">
-                    <small>
-                        Effectuer une recherche
-                    </small>
-                </div>
-                <div class="row">
-                    <div class="cell-lg-6">
-                        <div>
-                            <input placeholder="Rechercher un hébergement" data-role="input" [(ngModel)]="recherche" (ngModelChange)="rechercher($event)">
-                        </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+        <div class="entete" style="background-color: #eee;">
+            <div>
+                <div>
+                    <div class="titre">
+                        Hébergements
                     </div>
-                    <div class="cell-lg-6">
-                        <div>
-                            <select [(ngModel)]="ordre" data-filter="false" (ngModelChange)="ordonner($event)" data-role="select">
-                                <option value="croissant">
-                                    Ordre croissant de prix
+                    <div class="sous-titre text-leader2" style="font-size: 0.9em;">
+                        Retrouvez nos offres d'hébergement
+                    </div>
+                </div>
+                <div style="margin-top: 5px;">
+                    <div class="row no-gap">
+                        <div class="cell-lg-4 bordure-orange-debut">
+                            <div>
+                                <input formControlName="mot" placeholder="Rechercher un hébergement"
+                                    class="input muanza">
+                            </div>
+                        </div>
+                        <div class="cell-lg-2 bordure-orange-fin">
+                            <select placeholder="Logement" formControlName="nature" data-role="select"
+                                data-filter="false">
+                                <option value="null" disabled="true" [selected]="true">
+                                    Logement
                                 </option>
-                                <option value="decroissant">
-                                    Ordre décroissant de prix
+                                <option value="hotel">
+                                    Hôtel
+                                </option>
+                                <option value="villa">
+                                    Villa
                                 </option>
                             </select>
                         </div>
+                        <div class="cell-lg-2 bordure-orange-fin">
+                            <div>
+                                <input formControlName="adultes" style="text-align: right;" type="number"
+                                    placeholder="Adultes" class="input muanza">
+                                <div style="margin-top: -30px; padding-left: 10px; width: 50%; color: #888;">
+                                    <span>
+                                        Adultes
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cell-lg-2 bordure-orange-fin">
+                            <div>
+                                <input formControlName="enfants" style="text-align: right;" type="number"
+                                    placeholder="Enfants" class="input muanza">
+                                <div style="margin-top: -30px; padding-left: 10px; width: 50%; color: #888;">
+                                    <span>
+                                        Enfants
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cell-lg-2 bordure-orange-fin" style="background-color: rgb(255, 115, 0);">
+                            <button class="button"
+                                style="background-color: rgb(255, 115, 0); color: #fff;  width: 100%;">Rechercher</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="contenu">
-        <div class="sejours">
+        <div class="contenu">
             <div class="row">
-                <div class="cell-lg-3" *ngFor="let hebergement of resultats">
-                    <app-display-hebergement [hebergement]="hebergement"></app-display-hebergement>
+                <div class="cell-lg-12">
+                    <div class="ordre">
+                        <span>
+                            <a>Ordre croissant de prix</a>
+                        </span>
+                        <span class="active">
+                            <a>Ordre décroissant de prix</a>
+                        </span>
+                        <span class="">
+                            <a>Ordre croissant de notation</a>
+                        </span>
+                        <span class="">
+                            <a>Ordre décroissant de notation</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="sejours">
+                <div class="row">
+                    <div class="cell-lg-2">
+                        <div class="options">
+                            <span class="">
+                                <input formControlName="wifi" type="checkbox" data-role="checkbox" data-caption="WiFi">
+                            </span>
+                            <span class="">
+                                <input formControlName="parking" type="checkbox" data-role="checkbox"
+                                    data-caption="Parking">
+                            </span>
+                            <span class="">
+                                <input formControlName="petitdej" type="checkbox" data-role="checkbox"
+                                    data-caption="Petit déjeuner">
+                            </span>
+                            <span class="">
+                                <input formControlName="climatiseur" type="checkbox" data-role="checkbox"
+                                    data-caption="Climatiseur">
+                            </span>
+                            <span class="">
+                                <input formControlName="piscine" type="checkbox" data-role="checkbox"
+                                    data-caption="Piscine">
+                            </span>
+                            <span class="">
+                                <input formControlName="plage" type="checkbox" data-role="checkbox" data-caption="Plage">
+                            </span>
+                            <span class="">
+                                <input formControlName="gardien" type="checkbox" data-role="checkbox"
+                                    data-caption="Gardien">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="cell-lg-10">
+                        <div class="row">
+                            <div class="cell-lg-3 cell-md-4" *ngFor="let hebergement of resultats">
+                                <app-display-hebergement [hebergement]="hebergement"></app-display-hebergement>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
 import { Sejour } from 'src/app/models/sejour.model';
@@ -13,6 +13,7 @@ declare const metro: any;
 })
 export class HebergementEditComponent implements OnInit {
 
+  @Input() hebergement?: Hebergement;
   form: FormGroup;
   fichiers: FileList;
   images = new Array<Blob>();
@@ -26,17 +27,26 @@ export class HebergementEditComponent implements OnInit {
     this.initForm();
   }
 
+  retirerImage() {
+
+  }
+
   initForm() {
     this.form = this.formBuilder.group({
-      titre: ['Appartement meublé', Validators.required],
-      description: ['Appartement meublé avec 2 chambres, un salon, une cuisine', Validators.required],
-      nuitee: ['50000', Validators.required],
-      lieu: ['Etoa meki, Yaoundé', Validators.required],
-      tel: ['696543495', Validators.required],
-      wifi: [true, Validators.required],
-      parking: [false, Validators.required],
-      notation: ['3', Validators.required],
-      tags: ['', Validators.required],
+      titre: [this.hebergement ? this.hebergement.titre : 'Appartement meublé', [Validators.required]],
+      description: [this.hebergement ? this.hebergement.description : 'Appartement meublé une cuisine', [Validators.required]],
+      nuitee: [this.hebergement ? this.hebergement.nuitee : '50000', [Validators.required]],
+      lieu: [this.hebergement ? this.hebergement.lieu : 'Etoa meki, Yaoundé', [Validators.required]],
+      tel: ['696543495', [Validators.required]],
+      wifi: [this.hebergement && this.hebergement.options ? this.hebergement.options.wifi : true],
+      parking: [this.hebergement && this.hebergement.options ? this.hebergement.options.parking : false],
+      dej: [this.hebergement && this.hebergement.options ? this.hebergement.options.petitdej : false],
+      clim: [this.hebergement && this.hebergement.options ? this.hebergement.options.climatiseur : false],
+      piscine: [this.hebergement && this.hebergement.options ? this.hebergement.options.piscine : false],
+      plage: [this.hebergement && this.hebergement.options ? this.hebergement.options.plage : false],
+      gardien: [this.hebergement && this.hebergement.options ? this.hebergement.options.gardien : false],
+      notation: [this.hebergement ? this.hebergement.notation : '3', [Validators.required]],
+      tags: [this.hebergement ? this.hebergement.tags : ''],
     });
   }
 
@@ -61,6 +71,14 @@ export class HebergementEditComponent implements OnInit {
     hebergement.wifi = wifi;
     hebergement.parking = parking;
     hebergement.notation = notation;
+
+    hebergement.options.climatiseur = value.clim;
+    hebergement.options.gardien = value.gardien;
+    hebergement.options.parking = value.parking;
+    hebergement.options.petitdej = value.dej;
+    hebergement.options.piscine = value.piscine;
+    hebergement.options.plage = value.plage;
+    hebergement.options.wifi = value.wifi;
 
     const activity = metro().activity.open({
       type: 'square',

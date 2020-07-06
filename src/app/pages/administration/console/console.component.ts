@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Hebergement } from 'src/app/models/hebergement.model';
 
 @Component({
   selector: 'app-console',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConsoleComponent implements OnInit {
 
-  menu = 'nouveau-sejour';
+  menu = 'nouveau-hebergement';
+  hebergement: Hebergement;
   constructor() { }
 
   ngOnInit(): void {
@@ -19,6 +21,10 @@ export class ConsoleComponent implements OnInit {
 
   setMenu(menu: string) {
     this.menu = menu;
+  }
+
+  editHebergement(hebergement) {
+    this.menu = 'edit-hebergement';
   }
 
 }

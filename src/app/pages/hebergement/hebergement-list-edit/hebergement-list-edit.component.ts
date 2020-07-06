@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import * as firebase from 'firebase';
 import { Hebergement } from 'src/app/models/hebergement.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import * as firebase from 'firebase';
 declare const metro: any;
 
 @Component({
-  selector: 'app-hebergement-list',
-  templateUrl: './hebergement-list.component.html',
-  styleUrls: ['./hebergement-list.component.scss']
+  selector: 'app-hebergement-list-edit',
+  templateUrl: './hebergement-list-edit.component.html',
+  styleUrls: ['./hebergement-list-edit.component.scss']
 })
-export class HebergementListComponent implements OnInit {
+export class HebergementListEditComponent implements OnInit {
 
+  hebergement: Hebergement;
   hebergements = new Array<Hebergement>();
   HEBERGEMENTS = new Array<Hebergement>();
   resultats = new Array<Hebergement>();
@@ -48,6 +49,10 @@ export class HebergementListComponent implements OnInit {
     });
   }
 
+  editHebergement(hebergement) {
+    this.hebergement = hebergement;
+  }
+
   onSubmitForm() {
     const value = this.form.value;
     console.log('value');
@@ -79,6 +84,10 @@ export class HebergementListComponent implements OnInit {
 
   ouvrir(id) {
     this.router.navigate(['hebergement', 'view', id]);
+  }
+
+  modifier(hebergement) {
+    this.router.navigate(['offres', 'hebergement', 'edit', hebergement.id]);
   }
 
   getSejours() {
@@ -142,4 +151,5 @@ export class HebergementListComponent implements OnInit {
       });
     }
   }
+
 }

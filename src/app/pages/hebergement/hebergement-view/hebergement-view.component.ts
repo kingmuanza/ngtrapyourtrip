@@ -19,6 +19,10 @@ export class HebergementViewComponent implements OnInit {
 
   hebergement: Hebergement;
   form: FormGroup;
+  hebergements = new Array<Hebergement>();
+  HEBERGEMENTS = new Array<Hebergement>();
+  resultats = new Array<Hebergement>();
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -29,7 +33,10 @@ export class HebergementViewComponent implements OnInit {
     this.route.paramMap.subscribe((paramMap) => {
       const id = paramMap.get('id');
       if (id) {
-        this.getSejour(id);
+        this.getSejour(id).then((hebergement) => {
+          this.hebergement = hebergement;
+          this.getSejours();
+        });
       }
     });
     this.initForm();
@@ -39,13 +46,18 @@ export class HebergementViewComponent implements OnInit {
     this.form = this.formBuilder.group({
       date: ['', Validators.required],
       dateFin: ['', Validators.required],
-      personnes: [1, Validators.required]
+      adultes: [1, Validators.required],
+      enfants: [0, Validators.required],
     });
 
     this.form.controls['date'].valueChanges.subscribe((value) => {
       console.log('value');
       console.log(value);
     });
+  }
+
+  goToAll() {
+    this.router.navigate(['offres', 'hebergement']);
   }
 
   onFormSubmit() {
@@ -55,7 +67,8 @@ export class HebergementViewComponent implements OnInit {
     console.log('this.calendarpickerlocale.nativeElement.value');
     console.log(this.calendarpickerlocale.nativeElement.value);
 
-    const personnes = value.personnes;
+    const adultes = value.adultes;
+    const enfants = value.enfants;
     const date = this.calendarpickerlocale.nativeElement.value;
     const dateFin = this.calendarpickerlocale2.nativeElement.value;
 
@@ -71,7 +84,8 @@ export class HebergementViewComponent implements OnInit {
         console.log(days);
         const reservation = new Reservation();
         reservation.hebergement = this.hebergement;
-        reservation.personnes = personnes;
+        reservation.personnes = adultes;
+        reservation.enfants = enfants;
         reservation.dateDebut = new Date(date);
         reservation.dateFin = new Date(dateFin);
         reservation.cout = this.hebergement.nuitee * days;
@@ -97,7 +111,7 @@ export class HebergementViewComponent implements OnInit {
         db.collection('reservation-trap').doc(reservation.id).set(JSON.parse(JSON.stringify(reservation))).then((resultats) => {
           console.log('TERMINEEE !!!');
           metro().activity.close(activity);
-          this.router.navigate(['panier']);
+          this.router.navigate(['offres', 'reservation', 'view', reservation.id]);
         }).catch((e) => {
           metro().activity.close(activity);
         });
@@ -124,7 +138,7 @@ export class HebergementViewComponent implements OnInit {
 
   }
 
-  getSejour(id: string) {
+  getSejour(id: string): Promise<Hebergement> {
     const activity = metro().activity.open({
       type: 'square',
       overlayColor: '#fff',
@@ -134,12 +148,60 @@ export class HebergementViewComponent implements OnInit {
     return new Promise((resolve, reject) => {
       db.collection('hebergements-trap').doc(id).get().then((resultat) => {
         const hebergement = resultat.data() as Hebergement;
-        this.hebergement = hebergement;
         console.log('TERMINEEE !!!');
         console.log(this.hebergement);
+        resolve(hebergement);
         metro().activity.close(activity);
       }).catch((e) => {
         metro().activity.close(activity);
+        reject(e);
+      });
+    });
+  }
+
+  notationToStars(notation: number) {
+    notation = Math.floor(notation);
+    let stars = '';
+    for (let i = 0; i < notation; i++) {
+      stars = stars + '<span class="mif-star-full" style="color: rgb(255, 115, 0);"></span>';
+    }
+    for (let j = 0; j < 5 - notation; j++) {
+      stars = stars + '<span class="mif-star-empty" style="color: rgb(255, 115, 0);"></span>';
+    }
+    return stars;
+  }
+
+  getSejours() {
+    this.hebergements = new Array<Hebergement>();
+    this.resultats = new Array<Hebergement>();
+    const db = firebase.firestore();
+    return new Promise((resolve, reject) => {
+      db.collection('hebergements-trap').get().then((resultats) => {
+        resultats.forEach((resultat) => {
+          const hebergement = resultat.data() as Hebergement;
+          if (!hebergement.options) {
+            hebergement.options = {
+              wifi: false,
+              plage: false,
+              piscine: false,
+              climatiseur: false,
+              parking: false,
+              petitdej: false,
+              gardien: false,
+            };
+            hebergement.options.parking = hebergement.parking;
+            hebergement.options.wifi = hebergement.wifi;
+          }
+          if (hebergement.id !== this.hebergement.id) {
+            this.hebergements.push(hebergement);
+            this.resultats.push(hebergement);
+          }
+        });
+        console.log('TERMINEEE !!!');
+        console.log(this.hebergements);
+        resolve(this.hebergements);
+      }).catch((e) => {
+        reject(e);
       });
     });
   }

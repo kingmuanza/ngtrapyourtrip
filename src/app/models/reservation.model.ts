@@ -16,16 +16,20 @@ export class Reservation extends Modele {
     dateDebut: Date;
     dateFin?: Date;
     personnes: number;
+    enfants: number;
     paiements: Array<{
         montant: number;
         date: Date;
         mode: string;
     }>;
+    validee: boolean;
+    effectuee: boolean;
 
     utilisateur: Utilisateur;
 
     constructor() {
         super();
+        this.enfants = 0;
     }
 
 }

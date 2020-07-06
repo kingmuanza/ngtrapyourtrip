@@ -3,12 +3,27 @@
         <div class="sejour__image" [ngStyle]="{'background-image': 'url(' + hebergement.images[0] +')'}">
 
         </div>
-        <div class="muanza-details">
-            <span *ngIf="hebergement.wifi" class="detail">
+        <div *ngIf="hebergement.options" class="muanza-details">
+            <span title="WiFi" *ngIf="hebergement.options.wifi" class="detail">
                 <span class="fg-white mif-network-wifi"></span>
             </span>
-            <span *ngIf="hebergement.parking" class="detail">
+            <span title="Parking" *ngIf="hebergement.options.parking" class="detail">
                 <span class="fg-white mif-automobile"></span>
+            </span>
+            <span title="Petit déjeuner" *ngIf="hebergement.options.petitdej" class="detail">
+                <span class="fg-white mif-spoon-fork"></span>
+            </span>
+            <span title="Climatisation" *ngIf="hebergement.options.climatiseur" class="detail">
+                <span class="fg-white mif-air"></span>
+            </span>
+            <span title="Piscine" *ngIf="hebergement.options.piscine" class="detail">
+                <span class="fas fa-swimming-pool fg-white"></span>
+            </span>
+            <span title="Plage" *ngIf="hebergement.options.plage" class="detail">
+                <span class="fas fa-umbrella-beach fg-white"></span>
+            </span>
+            <span title="Gardien" *ngIf="hebergement.options.gardien" class="detail">
+                <span class="fas fa-user-secret fg-white"></span>
             </span>
         </div>
     </div>

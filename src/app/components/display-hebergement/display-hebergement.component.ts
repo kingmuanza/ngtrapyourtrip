@@ -18,7 +18,7 @@ export class DisplayHebergementComponent implements OnInit {
   }
 
   ouvrir(id) {
-    this.router.navigate(['hebergement', 'view', id]);
+    this.router.navigate(['offres', 'hebergement', 'view', id]);
   }
 
   notationToStars(notation: number) {
