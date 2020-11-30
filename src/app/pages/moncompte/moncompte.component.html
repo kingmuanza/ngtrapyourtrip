@@ -1,0 +1,43 @@
+<div *ngIf="utilisateur">
+    <div class="padding-muanza entete">
+        Mon compte
+    </div>
+    <div class="padding-muanza contenu">
+
+        <div class="row">
+            <div class="cell-lg-6">
+                <div class="text-leader2" style="margin-bottom: 10px;">
+                    Changez mon mot de passe
+                </div>
+                <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                    <div>
+                        <input class="hideOnMObile" type="password" formControlName="ancien" data-role="input"
+                            data-prepend="Ancien mot de passe">
+                        <input class="showOnMObile" type="password" formControlName="ancien" data-role="materialinput"
+                            placeholder="Ancien mot de passe">
+                    </div>
+                    <div>
+                        <input class="hideOnMObile" formControlName="passe" type="password" data-role="input"
+                            data-prepend="Mot de passe">
+                        <input class="showOnMObile" formControlName="passe" type="password" data-role="materialinput"
+                            placeholder="Mot de passe">
+                    </div>
+                    <div>
+                        <input class="hideOnMObile" formControlName="confirmation" type="password" data-role="input"
+                            data-prepend="Confirmer mot de passe">
+                        <input class="showOnMObile" formControlName="confirmation" type="password"
+                            data-role="materialinput" placeholder="Confirmez le mot de passe">
+                        <small class="fg-red">
+                            {{messagePasse}}
+                        </small>
+                    </div>
+                    <div>
+                        <button class="button warning" style="background-color: rgb(255, 115, 0); ">
+                            Modifier le mot de passe
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

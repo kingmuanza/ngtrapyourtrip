@@ -1,1 +1,83 @@
-<p>reservation-edit works!</p>
+<div class="page" style="min-height: 100vh; padding-top: 10px;">
+    <div style="margin-top: 0px; margin-bottom: 20px;">
+        <div data-role="stepper" data-steps="3" data-step="1" data-view="diamond" data-cls-step="rounded"
+            data-cls-complete="bg-green" data-cls-current="bg-orange">
+        </div>
+    </div>
+    <div class="entete" *ngIf="reservation">
+        <div class="titre2">
+            <b *ngIf="reservation.hebergement.prestataire" style="">
+                {{reservation.hebergement.prestataire.nom}} -
+            </b>
+            {{reservation.hebergement.titre}}
+            <span class="sejour__notation orange"
+                [innerHTML]="notationToStars(reservation.hebergement.notation)"></span>
+
+        </div>
+        <div class="sous-titre text-leader2">
+            {{reservation.hebergement.description}}
+        </div>
+
+        <div class="sejour_duree">
+            <div class="row">
+                <div class="cell-lg-3">
+                    <div style="padding-left: 10px;">
+                        Hébergement
+                    </div>
+                </div>
+                <div class="cell-lg-3">
+                    <div>
+                        Durée séjour : {{days}} jours
+                    </div>
+                </div>
+                <div class="cell-lg-3">
+                    {{reservation.personnes}} Adultes
+                </div>
+                <div class="cell-lg-3">
+                    {{reservation.enfants}} Enfants
+                </div>
+            </div>
+        </div>
+
+        <div class="shadow-1" style="padding:20px; padding-top: 15px; margin-top: 20px">
+            <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                <h3>
+                    Changement de date
+                </h3>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="cell-lg-3">
+                        <div>
+                            <input #calendarpickerlocale formControlName="date" data-role="calendarpicker"
+                                data-prepend="Arrivée" data-on-change="muanza()">
+                        </div>
+                    </div>
+                    <div class="cell-lg-3">
+                        <div>
+                            <input #calendarpickerlocale2 formControlName="dateFin" data-role="calendarpicker"
+                                data-prepend="Départ" data-on-change="muanza()">
+                        </div>
+                    </div>
+                    <div class="cell-lg-2">
+                    </div>
+                    <div class="cell-lg-4">
+                    </div>
+                </div>
+            </form>
+            <div style="margin-top: 20px">
+                <button [disabled]="form.invalid" (click)="onFormSubmit()" class="button warning" style="background-color: rgb(255, 115,0); color: #fff;">
+                    Confirmer le changement de dates
+                </button>
+            </div>
+        </div>
+        <div style="margin-top: 20px">
+            <button (click)="revenir()" class="button">
+                Revenir à la réservation
+            </button>
+        </div>
+
+
+    </div>
+    <div class="contenu">
+
+    </div>
+</div>

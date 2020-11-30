@@ -1,0 +1,45 @@
+<div class="page">
+    <div class="entete">
+        <div class="titre">
+            Nouveau départ
+        </div>
+    </div>
+    <div class="contenu">
+        <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+            <div>
+                <label>Agence</label>
+                <select formControlName="agence">
+                    <option *ngFor="let agence of agences" [ngValue]="agence">
+                        {{agence.nom}}
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label>Trajet</label>
+                <select formControlName="trajet">
+                    <option *ngFor="let trajet of trajets" [ngValue]="trajet">
+                        {{trajet.villeDepart}} - {{trajet.villeArrivee}}
+                    </option>
+                </select>
+            </div>
+            <div>
+                <input formControlName="modele" data-role="input" data-prepend="Modèle du véhicule">
+            </div>
+            <div>
+                <input formControlName="heures" data-role="input" data-prepend="Heures">
+                <small>
+                    Séparez les heures par des points virgules (;)
+                </small>
+            </div>
+            <div>
+                <input formControlName="vip" value="muanza" data-role="checkbox" data-caption="Service VIP">
+            </div>
+            <div>
+                <input formControlName="prix" data-role="input" type="number" data-prepend="Coût du trajet">
+            </div>
+            <div>
+                <button class="button">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+</div> 

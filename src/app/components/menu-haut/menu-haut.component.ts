@@ -18,8 +18,10 @@ export class MenuHautComponent implements OnInit {
   reservations = [];
   panierSubscription: Subscription;
   offres;
+  dashboard;
   offresSubscription: Subscription;
   offresSubject = new Subject<boolean>();
+  photoURL = '../../../assets/img/user.png';
   constructor(
     private authService: AuthentificationService,
     private panierService: PanierService,
@@ -31,13 +33,19 @@ export class MenuHautComponent implements OnInit {
 
   check() {
     this.offres = this.route.isActive('offres', false);
-    console.log('this.offres');
-    console.log(this.offres);
+    this.dashboard = this.route.isActive('dashboard', false);
+    // console.log('this.offres');
+    // console.log(this.offres);
   }
 
   public ngOnInit(): void {
     this.utilisateurSubscription = this.authService.utilisateurSubject.subscribe((utilisateur: Utilisateur) => {
       this.utilisateur = utilisateur;
+      if (utilisateur && utilisateur.photoURL) {
+        this.photoURL = utilisateur.photoURL;
+      } else {
+        this.photoURL = '../../../assets/img/user.png';
+      }
     });
     this.panierSubscription = this.panierService.panierSubject.subscribe((reservations) => {
       this.reservations = reservations;
@@ -46,6 +54,17 @@ export class MenuHautComponent implements OnInit {
     this.route.events.subscribe(() => {
       this.check();
     });
+    this.authService.emit();
+  }
+
+  gotoDash() {
+    this.check();
+    this.route.navigate(['dashboard']);
+  }
+
+  deconnexion() {
+    this.authService.deconnexion();
+    this.route.navigate(['accueil']);
   }
 
 }

@@ -1,0 +1,127 @@
+<div class="page-sejour">
+    <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+        <div class="entete" style="background-color: #eee;">
+            <div>
+                <div>
+                    <div class="titre">
+                        Hébergements
+                    </div>
+                    <div class="sous-titre text-leader2" style="font-size: 0.9em;">
+                        Retrouvez nos offres d'hébergement
+                    </div>
+                </div>
+                <div style="margin-top: 10px;">
+                    <div class="row no-gap shadow-1 radius-gauche radius-droit">
+                        <div class="cell-lg-4 bordure-orange-debut radius-gauche">
+                            <div class="radius-gauche">
+                                <input formControlName="mot" placeholder="Rechercher un hébergement"
+                                    class="input muanza radius-gauche">
+                            </div>
+                        </div>
+                        <div class="cell-lg-3 bordure-orange-fin">
+                            <div class="radius-gauche">
+                                <input formControlName="ville" placeholder="Pays / Ville"
+                                    class="input muanza radius-gauche">
+                            </div>
+                        </div>
+                        <div class="cell-lg-3 bordure-orange-fin">
+                            <select placeholder="Logement" formControlName="nature" data-role="select"
+                                data-filter="false">
+                                <option value="null" disabled="true" [selected]="true">
+                                    Type d'hébergement
+                                </option>
+                                <option value="tous">
+                                    Tous
+                                </option>
+                                <option value="hotel">
+                                    Hôtel
+                                </option>
+                                <option value="villa">
+                                    Logement
+                                </option>
+                            </select>
+                        </div>
+                        <div class="cell-lg-2 bordure-orange-fin radius-droit"
+                            style="background-color: rgb(255, 115, 0);">
+                            <button class="button radius-droit"
+                                style="background-color: rgb(255, 115, 0); color: #fff;  width: 100%;">Rechercher</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contenu">
+            <div class="row">
+                <div class="cell-lg-12">
+                    <div class="ordre">
+                        <span (click)="changerOrdre('croissant')" [ngClass]="{'active': ordre === 'croissant'}">
+                            <a>Ordre croissant de notation</a>
+                        </span>
+                        <span (click)="changerOrdre('decroissant')" [ngClass]="{'active': ordre !== 'croissant'}">
+                            <a>Ordre décroissant de notation</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="sejours">
+                <div class="row">
+                    <div class="cell-lg-2">
+                        <div class="etoiles">
+                            <span (click)="changerEtoiles(1)" (mouseenter)="changerEtoilesIntention(1)"
+                                (mouseleave)="reinitEtoiles()" [ngClass]="{'mif-star-empty': triEtoilesIntention < 1, 'mif-star-full': triEtoilesIntention > 0 || triEtoiles > 0}"></span>
+                            
+                            <span (click)="changerEtoiles(2)" (mouseenter)="changerEtoilesIntention(2)"
+                                (mouseleave)="reinitEtoiles()" [ngClass]="{'mif-star-empty': triEtoilesIntention < 2, 'mif-star-full': triEtoilesIntention > 1 || triEtoiles > 1}"></span>
+                            
+                            <span (click)="changerEtoiles(3)" (mouseenter)="changerEtoilesIntention(3)"
+                                (mouseleave)="reinitEtoiles()" [ngClass]="{'mif-star-empty': triEtoilesIntention < 3, 'mif-star-full': triEtoilesIntention > 2 || triEtoiles > 2}"></span>
+                            
+                            <span (click)="changerEtoiles(4)" (mouseenter)="changerEtoilesIntention(4)"
+                                (mouseleave)="reinitEtoiles()" [ngClass]="{'mif-star-empty': triEtoilesIntention < 4, 'mif-star-full': triEtoilesIntention > 3 || triEtoiles > 3}"></span>
+                            
+                            <span (click)="changerEtoiles(5)" (mouseenter)="changerEtoilesIntention(5)"
+                                (mouseleave)="reinitEtoiles()" [ngClass]="{'mif-star-empty': triEtoilesIntention < 5, 'mif-star-full': triEtoilesIntention > 4 || triEtoiles > 4}"></span>
+                            
+                        </div>
+                        <div class="options">
+                            <span class="">
+                                <input formControlName="wifi" type="checkbox" data-role="checkbox" data-caption="WiFi">
+                            </span>
+                            <span class="">
+                                <input formControlName="parking" type="checkbox" data-role="checkbox"
+                                    data-caption="Parking">
+                            </span>
+                            <span class="">
+                                <input formControlName="petitdej" type="checkbox" data-role="checkbox"
+                                    data-caption="Petit déjeuner">
+                            </span>
+                            <span class="">
+                                <input formControlName="climatiseur" type="checkbox" data-role="checkbox"
+                                    data-caption="Climatiseur">
+                            </span>
+                            <span class="">
+                                <input formControlName="piscine" type="checkbox" data-role="checkbox"
+                                    data-caption="Piscine">
+                            </span>
+                            <span class="">
+                                <input formControlName="plage" type="checkbox" data-role="checkbox"
+                                    data-caption="Plage">
+                            </span>
+                            <span class="">
+                                <input formControlName="gardien" type="checkbox" data-role="checkbox"
+                                    data-caption="Gardien">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="cell-lg-10">
+                        <div class="row">
+                            <div class="cell-lg-3 cell-md-4" *ngFor="let prestataire of resultats">
+                                <app-display-prestataire [prestataire]="prestataire"></app-display-prestataire>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

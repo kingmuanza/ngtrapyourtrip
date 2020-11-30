@@ -36,7 +36,7 @@ export class SejourViewComponent implements OnInit {
   initForm() {
     this.form = this.formBuilder.group({
       date: ['', Validators.required],
-      personnes: [1, Validators.required]
+      personnes: ['', Validators.required]
     });
 
     this.form.controls['date'].valueChanges.subscribe((value) => {
@@ -118,4 +118,19 @@ export class SejourViewComponent implements OnInit {
     });
   }
 
+  notationToStars(notation: number) {
+    notation = Math.floor(notation);
+    let stars = '';
+    for (let i = 0; i < notation; i++) {
+      stars = stars + '<span class="mif-star-full" style="color: rgb(255, 115, 0);"></span>';
+    }
+    for (let j = 0; j < 5 - notation; j++) {
+      stars = stars + '<span class="mif-star-empty" style="color: rgb(255, 115, 0);"></span>';
+    }
+    return stars;
+  }
+
+  goToAll() {
+
+  }
 }

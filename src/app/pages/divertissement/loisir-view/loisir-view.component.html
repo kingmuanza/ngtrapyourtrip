@@ -1,0 +1,42 @@
+<div class="page" *ngIf="divertissement">
+    <div class="entete">
+        <div class="row">
+            <div class="cell-lg-9">
+                <div class="titre">
+                    {{divertissement.titre}}
+                </div>
+                <div class="sous-titre text-leader2">
+                    {{divertissement.description}}
+                </div>
+            </div>
+            <div class="cell-lg-3">
+            </div>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+            <div class="row no-gap shadow-1" style="border-radius: 20px;">
+                <div class="cell-lg-4 bordure-orange-debut radius-gauche"
+                    style="padding-left: 5px; background-color: #eee;">
+                    <input formControlName="personnes" data-role="input" data-prepend="Personnes">
+                </div>
+                <div class="cell-lg-4 bordure-orange-fin" style="padding-left: 5px; background-color: #eee;">
+                    <input #calendarpickerlocale formControlName="date" data-role="calendarpicker"
+                        data-prepend="Date">
+                </div>
+                <div class="cell-lg-4 bordure-orange-fin radius-droit">
+                    <button class="button warning" style="width: 100%; background-color: rgb(255, 115, 0);">
+                        Réserver
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="contenu" style="padding-top: 5vh">
+        <div class="row">
+            <div *ngFor="let image of divertissement.images" class="cell-lg-4">
+                <div class="trap-image" [ngStyle]="{'background-image': 'url(' + image +')'}">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

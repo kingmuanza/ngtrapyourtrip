@@ -46,9 +46,10 @@ export class ConnexionComponent implements OnInit {
       overlayAlpha: 0.8
     });
 
-    this.authService.connexion(login, passe).then(() => {
+    this.authService.connexion(login, passe).then((utilisateur) => {
       metro().activity.close(activity);
       const panierString = localStorage.getItem('panier-trap');
+      localStorage.setItem('trap-your-utilisateur', JSON.stringify(utilisateur));
       if (panierString) {
         const reservations = JSON.parse(panierString);
         if (reservations.length > 0) {

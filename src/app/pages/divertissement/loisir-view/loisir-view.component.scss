@@ -1,0 +1,44 @@
+.sous-titre {
+    margin-top: -5px;
+}
+
+.formulaire {
+    height: 60vh;
+    border: 2px solid rgb(255, 115, 0);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.trap-image {
+    height: 50vh;
+    background-size: cover;
+    background-position: center center;
+}
+
+.images {
+    background-color: #000;
+    height: 60vh;
+    margin-left: 10px;
+}
+
+.petit-titre {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.total {
+    padding-top: 20px;
+    text-align: right;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.reservation {
+    position: absolute;
+    bottom: 20px;
+    left: 0px;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+}

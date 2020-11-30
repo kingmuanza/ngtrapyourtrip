@@ -1,62 +1,69 @@
 <div class="page-sejour">
     <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
-        <div class="entete" style="background-color: #eee;">
-            <div>
-                <div>
-                    <div class="titre">
-                        Hébergements
-                    </div>
-                    <div class="sous-titre text-leader2" style="font-size: 0.9em;">
-                        Retrouvez nos offres d'hébergement
-                    </div>
+        <div class="entete">
+            <div class="entete__background" [ngStyle]="{'background-image': 'url('+ prestataire.photoURL +')'}">
+            </div>
+            <div class="entete__contenu">
+                <div style="margin-left: -15px; margin-bottom: -20px;">
+                    <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
+                        <li class="page-item"><a routerLink="accueil" class="page-link">Accueil</a></li>
+                        <li class="page-item"><a (click)="goToAll()" class="page-link">Hébergement</a></li>
+                        <li class="page-item" *ngIf="prestataire"><a class="page-link">{{prestataire.nom}}</a></li>
+                    </ul>
                 </div>
-                <div style="margin-top: 5px;">
-                    <div class="row no-gap">
-                        <div class="cell-lg-4 bordure-orange-debut">
-                            <div>
-                                <input formControlName="mot" placeholder="Rechercher un hébergement"
-                                    class="input muanza">
-                            </div>
+                <div>
+                    <div *ngIf="prestataire">
+                        <div class="titre">
+                            {{prestataire.nom}}
+                            <span class="sejour__notation orange"
+                                [innerHTML]="notationToStars(prestataire.notation)"></span>
                         </div>
-                        <div class="cell-lg-2 bordure-orange-fin">
-                            <select placeholder="Logement" formControlName="nature" data-role="select"
-                                data-filter="false">
-                                <option value="null" disabled="true" [selected]="true">
-                                    Logement
-                                </option>
-                                <option value="hotel">
-                                    Hôtel
-                                </option>
-                                <option value="villa">
-                                    Villa
-                                </option>
-                            </select>
+                        <div class="sous-titre text-leader2" style="font-size: 1.1em;">
+                            <ng-container *ngIf="prestataire.pays">
+                                {{prestataire.pays}},
+                            </ng-container>
+                            <ng-container *ngIf="prestataire.ville">
+                                {{prestataire.ville}},
+                            </ng-container>
+                            <ng-container *ngIf="prestataire.localisation">
+                                {{prestataire.localisation}},
+                            </ng-container>
+                            <ng-container *ngIf="prestataire.tel">
+                                {{prestataire.tel}},
+                            </ng-container>
+                            <ng-container *ngIf="prestataire.email">
+                                {{prestataire.email}}
+                            </ng-container>
                         </div>
-                        <div class="cell-lg-2 bordure-orange-fin">
-                            <div>
-                                <input formControlName="adultes" style="text-align: right;" type="number"
-                                    placeholder="Adultes" class="input muanza">
-                                <div style="margin-top: -30px; padding-left: 10px; width: 50%; color: #888;">
-                                    <span>
-                                        Adultes
-                                    </span>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <div class="row no-gap shadow-1" style="border-radius: 20px;">
+                            <div class="cell-lg-5 bordure-orange-debut radius-gauche">
+                                <div class="radius-gauche">
+                                    <input formControlName="adultes" style="text-align: right;" type="number"
+                                        placeholder="Adultes" class="input muanza radius-gauche">
+                                    <div style="margin-top: -30px; padding-left: 10px; width: 50%; color: #888;">
+                                        <span>
+                                            Adultes
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="cell-lg-2 bordure-orange-fin">
-                            <div>
-                                <input formControlName="enfants" style="text-align: right;" type="number"
-                                    placeholder="Enfants" class="input muanza">
-                                <div style="margin-top: -30px; padding-left: 10px; width: 50%; color: #888;">
-                                    <span>
-                                        Enfants
-                                    </span>
+                            <div class="cell-lg-5 bordure-orange-fin">
+                                <div>
+                                    <input formControlName="enfants" style="text-align: right;" type="number"
+                                        placeholder="Enfants" class="input muanza">
+                                    <div style="margin-top: -30px; padding-left: 10px; width: 50%; color: #888;">
+                                        <span>
+                                            Enfants
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="cell-lg-2 bordure-orange-fin" style="background-color: rgb(255, 115, 0);">
-                            <button class="button"
-                                style="background-color: rgb(255, 115, 0); color: #fff;  width: 100%;">Rechercher</button>
+                            <div class="cell-lg-2 bordure-orange-fin radius-droit" style="background-color: rgb(255, 115, 0);">
+                                <button class="button radius-droit"
+                                    style="background-color: rgb(255, 115, 0); color: #fff;  width: 100%;">Rechercher</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -66,17 +73,11 @@
             <div class="row">
                 <div class="cell-lg-12">
                     <div class="ordre">
-                        <span>
+                        <span (click)="changerOrdre('croissant')" [ngClass]="{'active': ordre === 'croissant'}">
                             <a>Ordre croissant de prix</a>
                         </span>
-                        <span class="active">
+                        <span (click)="changerOrdre('decroissant')" [ngClass]="{'active': ordre !== 'croissant'}">
                             <a>Ordre décroissant de prix</a>
-                        </span>
-                        <span class="">
-                            <a>Ordre croissant de notation</a>
-                        </span>
-                        <span class="">
-                            <a>Ordre décroissant de notation</a>
                         </span>
                     </div>
                 </div>
@@ -89,27 +90,32 @@
                                 <input formControlName="wifi" type="checkbox" data-role="checkbox" data-caption="WiFi">
                             </span>
                             <span class="">
-                                <input formControlName="parking" type="checkbox" data-role="checkbox"
-                                    data-caption="Parking">
+                                <input formControlName="baignoire" type="checkbox" data-role="checkbox"
+                                    data-caption="Baignoire">
                             </span>
                             <span class="">
-                                <input formControlName="petitdej" type="checkbox" data-role="checkbox"
-                                    data-caption="Petit déjeuner">
+                                <input formControlName="tele" type="checkbox" data-role="checkbox"
+                                    data-caption="Télévision">
+                            </span>
+                            <span class="">
+                                <input formControlName="bouilloire" type="checkbox" data-role="checkbox"
+                                    data-caption="Machine à café">
                             </span>
                             <span class="">
                                 <input formControlName="climatiseur" type="checkbox" data-role="checkbox"
                                     data-caption="Climatiseur">
                             </span>
                             <span class="">
-                                <input formControlName="piscine" type="checkbox" data-role="checkbox"
-                                    data-caption="Piscine">
+                                <input formControlName="minibar" type="checkbox" data-role="checkbox"
+                                    data-caption="Mini Bar">
                             </span>
                             <span class="">
-                                <input formControlName="plage" type="checkbox" data-role="checkbox" data-caption="Plage">
+                                <input formControlName="litsimple" type="checkbox" data-role="checkbox"
+                                    data-caption="Lit simple">
                             </span>
                             <span class="">
-                                <input formControlName="gardien" type="checkbox" data-role="checkbox"
-                                    data-caption="Gardien">
+                                <input formControlName="litdouble" type="checkbox" data-role="checkbox"
+                                    data-caption="lit double">
                             </span>
                         </div>
                     </div>

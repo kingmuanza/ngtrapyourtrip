@@ -24,6 +24,12 @@ export class Reservation extends Modele {
     }>;
     validee: boolean;
     effectuee: boolean;
+    responsable: {
+        nom: string,
+        prenom: string,
+        tel: string,
+        numero: string,
+    };
 
     utilisateur: Utilisateur;
 

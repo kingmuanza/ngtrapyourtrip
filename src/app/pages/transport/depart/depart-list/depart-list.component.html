@@ -1,0 +1,97 @@
+<div class="page-transport">
+    <div class="entete" style="background-color: #eee;">
+
+        <div class="entete__background">
+        </div>
+        <div class="entete__contenu">
+
+            <div style="margin-left: -15px; margin-bottom: -20px;">
+                <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
+                    <li class="page-item">
+                        <a routerLink="/offres/transport" class="page-link">
+                            Transport
+                        </a>
+                    </li>
+                    <li class="page-item" *ngIf="trajet">
+                        <a class="page-link">
+                            {{description(trajet)}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="cell-lg-12">
+                    <div class="titre">
+                        {{trajet && trajet.villeDepart === trajet.villeArrivee ? 'Location de voiture' : 'Départs'}}
+                    </div>
+                    <div *ngIf="trajet" class="sous-titre text-leader2">
+                        <div *ngIf="trajet.villeDepart === trajet.villeArrivee">
+                            {{trajet.villeDepart}}
+                        </div>
+                        <div *ngIf="trajet.villeDepart !== trajet.villeArrivee">
+                            {{trajet.villeDepart}} - {{trajet.villeArrivee}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contenu">
+        <div *ngIf="trajet">
+            <div *ngIf="trajet.villeDepart === trajet.villeArrivee" class="trajets">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                    <thead>
+                        <tr>
+                            <th>Ville</th>
+                            <th>Modèle</th>
+                            <th>Agence</th>
+                            <th>Prix journalier</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let depart of departs" style="cursor: pointer;">
+                            <tr (click)="reservation(depart, '')" style="cursor: pointer;">
+                                <td>{{ depart.trajet.villeDepart }}</td>
+                                <td>{{ depart.modele }}</td>
+                                <td>{{ depart.agence.nom }}</td>
+                                <td>{{ depart.prix }}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <div *ngIf="trajet.villeDepart !== trajet.villeArrivee" class="trajets">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                    <thead>
+                        <tr>
+                            <th>Ville de départ</th>
+                            <th>Ville d'arrivée</th>
+                            <th>Type</th>
+                            <th>Agence</th>
+                            <th>Prix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let depart of departs" style="cursor: pointer;">
+                            <tr (click)="reservation(depart, null)" style="cursor: pointer;">
+
+                                <td>{{ depart.trajet.villeDepart }}</td>
+                                <td>{{ depart.trajet.villeArrivee }}</td>
+                                <td>
+                                    <span *ngIf="depart.vip" class="vip">
+                                        VIP
+                                    </span>
+                                    <span *ngIf="!depart.vip" class="standard">
+                                        Standard
+                                    </span>
+                                </td>
+                                <td>{{ depart.agence.nom }}</td>
+                                <td>{{ depart.prix }}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

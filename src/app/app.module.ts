@@ -49,6 +49,35 @@ import { DisplayTransportComponent } from './components/display-transport/displa
 import { AccueilTransportsComponent } from './pages/accueil/accueil-transports/accueil-transports.component';
 import { HebergementListEditComponent } from './pages/hebergement/hebergement-list-edit/hebergement-list-edit.component';
 import { HebergementEditOldComponent } from './pages/hebergement/hebergement-edit-old/hebergement-edit-old.component';
+import { PrestataireListComponent } from './pages/prestataire/prestataire-list/prestataire-list.component';
+import { PrestataireViewComponent } from './pages/prestataire/prestataire-view/prestataire-view.component';
+import { PrestataireEditComponent } from './pages/prestataire/prestataire-edit/prestataire-edit.component';
+import { PrestataireCreateComponent } from './pages/prestataire/prestataire-create/prestataire-create.component';
+import { PrestataireListEditComponent } from './pages/prestataire/prestataire-list-edit/prestataire-list-edit.component';
+import { ReservationInfosComponent } from './pages/reservation/reservation-infos/reservation-infos.component';
+import { ReservationRecapComponent } from './pages/reservation/reservation-recap/reservation-recap.component';
+import { PhotoComponent } from './pages/inscription/photo/photo.component';
+import { MonprofilComponent } from './pages/monprofil/monprofil.component';
+import { MoncompteComponent } from './pages/moncompte/moncompte.component';
+import { DisplayPrestataireComponent } from './components/display-prestataire/display-prestataire.component';
+import { OubliComponent } from './pages/oubli/oubli.component';
+import { TrajetListComponent } from './pages/transport/trajet/trajet-list/trajet-list.component';
+import { TrajetEditComponent } from './pages/transport/trajet/trajet-edit/trajet-edit.component';
+import { TrajetViewComponent } from './pages/transport/trajet/trajet-view/trajet-view.component';
+import { AgenceEditComponent } from './pages/transport/agence/agence-edit/agence-edit.component';
+import { AgenceViewComponent } from './pages/transport/agence/agence-view/agence-view.component';
+import { AgenceListComponent } from './pages/transport/agence/agence-list/agence-list.component';
+import { DepartViewComponent } from './pages/transport/depart/depart-view/depart-view.component';
+import { DepartListComponent } from './pages/transport/depart/depart-list/depart-list.component';
+import { DepartEditComponent } from './pages/transport/depart/depart-edit/depart-edit.component';
+import { LocationListComponent } from './pages/transport/location/location-list/location-list.component';
+import { LocationEditComponent } from './pages/transport/location/location-edit/location-edit.component';
+import { LocationViewComponent } from './pages/transport/location/location-view/location-view.component';
+import { DivertissementChoixComponent } from './pages/divertissement/divertissement-choix/divertissement-choix.component';
+import { LoisirListComponent } from './pages/divertissement/loisir-list/loisir-list.component';
+import { LoisirViewComponent } from './pages/divertissement/loisir-view/loisir-view.component';
+import { LoisirEditComponent } from './pages/divertissement/loisir-edit/loisir-edit.component';
+import { DisplayLoisirComponent } from './components/display-loisir/display-loisir.component';
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -96,7 +125,36 @@ registerLocaleData(localeFr, 'fr-FR');
     DisplayTransportComponent,
     AccueilTransportsComponent,
     HebergementListEditComponent,
-    HebergementEditOldComponent
+    HebergementEditOldComponent,
+    PrestataireListComponent,
+    PrestataireViewComponent,
+    PrestataireEditComponent,
+    PrestataireCreateComponent,
+    PrestataireListEditComponent,
+    ReservationInfosComponent,
+    ReservationRecapComponent,
+    PhotoComponent,
+    MonprofilComponent,
+    MoncompteComponent,
+    DisplayPrestataireComponent,
+    OubliComponent,
+    TrajetListComponent,
+    TrajetEditComponent,
+    TrajetViewComponent,
+    AgenceEditComponent,
+    AgenceViewComponent,
+    AgenceListComponent,
+    DepartViewComponent,
+    DepartListComponent,
+    DepartEditComponent,
+    LocationListComponent,
+    LocationEditComponent,
+    LocationViewComponent,
+    DivertissementChoixComponent,
+    LoisirListComponent,
+    LoisirViewComponent,
+    LoisirEditComponent,
+    DisplayLoisirComponent
   ],
   imports: [
     BrowserModule,

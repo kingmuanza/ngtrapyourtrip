@@ -38,7 +38,7 @@
                             {{reservation.divertissement.titre}}
                         </span>
                         <span *ngIf="reservation.transport">
-                            {{reservation.transport.titre}}
+                            {{reservation.transport.depart.agence.nom}}
                         </span>
                     </td>
                     <td>
@@ -52,7 +52,7 @@
                             {{reservation.divertissement.description}}
                         </span>
                         <span *ngIf="reservation.transport">
-                            {{reservation.transport.description}}
+                            {{description(reservation.transport.depart.trajet)}}
                         </span>
                     </td>
                     <td style="text-align: right; background-color: #fafafa;">
@@ -88,7 +88,13 @@
                 Annuler toutes les réservations
             </button>
             <button (click)="suivant()" class="button warning" style="background-color: rgb(255, 115, 0); float: right;">
-                Suivant
+                <ng-container *ngIf="isUser">
+                    Suivant
+                </ng-container>
+                <ng-container *ngIf="!isUser">
+                    Passer au paiement
+                </ng-container>
+                
             </button>
         </div>
     </div>

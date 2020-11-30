@@ -60,6 +60,12 @@ export class HebergementViewComponent implements OnInit {
     this.router.navigate(['offres', 'hebergement']);
   }
 
+  goToPrestataire() {
+    if (this.hebergement.prestataire) {
+      this.router.navigate(['offres', 'hebergement', 'prestataire', this.hebergement.prestataire.id]);
+    }
+  }
+
   onFormSubmit() {
     const value = this.form.value;
     console.log('value');
@@ -148,9 +154,7 @@ export class HebergementViewComponent implements OnInit {
     return new Promise((resolve, reject) => {
       db.collection('hebergements-trap').doc(id).get().then((resultat) => {
         const hebergement = resultat.data() as Hebergement;
-        console.log('TERMINEEE !!!');
-        console.log(this.hebergement);
-        resolve(hebergement);
+        resolve(new Hebergement(hebergement));
         metro().activity.close(activity);
       }).catch((e) => {
         metro().activity.close(activity);
@@ -178,6 +182,7 @@ export class HebergementViewComponent implements OnInit {
     return new Promise((resolve, reject) => {
       db.collection('hebergements-trap').get().then((resultats) => {
         resultats.forEach((resultat) => {
+          /*
           const hebergement = resultat.data() as Hebergement;
           if (!hebergement.options) {
             hebergement.options = {
@@ -196,6 +201,7 @@ export class HebergementViewComponent implements OnInit {
             this.hebergements.push(hebergement);
             this.resultats.push(hebergement);
           }
+          */
         });
         console.log('TERMINEEE !!!');
         console.log(this.hebergements);

@@ -1,0 +1,88 @@
+<div class="gris">
+
+</div>
+<div class="inscription-page">
+
+    <div class="text-center">
+        <small>
+            Cliquez sur l'image pour changer de photo de profil
+        </small>
+    </div>
+    <div class="photo-cadre">
+
+        <div (click)="galerie()" class="photo shadow-1" [ngClass]="{'ronde': utilisateur && !utilisateur.prestataire}" [ngStyle]="{'background-image': 'url(' + photoURL + ')'}">
+
+        </div>
+        <div *ngIf="utilisateur && edit" style="margin-top: 10px;">
+            <div class="formulaire">
+                <div>
+                    <input data-role="input" [(ngModel)]="utilisateur.nom" class="input" placeholder="Nom">
+                </div>
+                <div *ngIf="utilisateur && !utilisateur.prestataire">
+                    <input data-role="input" [(ngModel)]="utilisateur.prenom" class="input" placeholder="Prénom">
+                </div>
+                <div>
+                <div>
+                    <input data-role="input" [(ngModel)]="utilisateur.pays" class="input" placeholder="Pays">
+                </div>
+                <div>
+                    <input data-role="input" [(ngModel)]="utilisateur.ville" class="input" placeholder="Ville">
+                </div>
+                </div>
+                <div>
+                    <input data-role="input" [(ngModel)]="utilisateur.localisation" class="input" placeholder="Adresse">
+                </div>
+                <div>
+                    <input data-role="input" [(ngModel)]="utilisateur.tel" class="input" placeholder="Tel">
+                </div>
+                <div>
+                    <input data-role="input" [(ngModel)]="utilisateur.email" class="input" placeholder="Email">
+                </div>
+                <div *ngIf="utilisateur && !utilisateur.prestataire">
+                    <select [(ngModel)]="utilisateur.sexe" class="input" placeholder="S">
+                        <option value="homme">
+                            Homme
+                        </option>
+                        <option value="femme">
+                            Femme
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="utilisateur && !edit" style="margin-top: 10px;">
+            {{utilisateur.nom}}
+            {{utilisateur.prenom}}<ng-container *ngIf="utilisateur && !utilisateur.prestataire">,
+                {{utilisateur.sexe | uppercase }}
+            </ng-container>
+            
+
+            <span (click)="editer()" class="edit">
+                <span class="mif-pencil"></span>
+            </span>
+            <div>
+                <b>{{utilisateur.email ? utilisateur.email: utilisateur.login}}</b>
+            </div>
+            <div>
+                <span>{{utilisateur.pays}}, {{utilisateur.ville}}</span>
+            </div>
+            <div>
+                <span>{{utilisateur.localisation}}</span>
+            </div>
+            <div>
+                <span>{{utilisateur.tel}}</span>
+            </div>
+        </div>
+        <div style="margin-top: 10px;">
+            <button (click)="suivant()" class="button warning" style="width: 100%; background-color: rgb(255, 115, 0);">
+                Terminé
+            </button>
+        </div>
+        <div style="margin-top: 10px;">
+            <a routerLink="/accueil">Revenir à l'accueil</a>
+        </div>
+    </div>
+    <input id="uploadBtn" accept="image/*" type="file" (change)="uploadFile($event)" class="filebtn" #fileButton />
+
+
+</div>

@@ -3,12 +3,38 @@
         <div class="sejour__image" [ngStyle]="{'background-image': 'url(' + sejour.images[0] +')'}">
 
         </div>
+        <div class="muanza-details">
+            <span title="baignoire" class="detail">
+                <span class="fas fa-glass-cheers fg-white"></span>
+            </span>
+            <span title="baignoire" class="detail">
+                <span class="fas fa-umbrella-beach fg-white"></span>
+            </span>
+            <span title="baignoire" class="detail">
+                <span class="fas fa-mountain fg-white"></span>
+            </span>
+        </div>
     </div>
     <div class="sejour__description">
-        {{sejour.titre}}
-    </div>
-    <div class="sejour__notation orange" [innerHTML]="notationToStars(sejour.notation)"></div>
-    <div class="sejour__prix">
-        {{sejour.prixUnitaire | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+        <div class="row">
+            <div class="cell-lg-6">
+                <b>
+                    {{sejour.titre}}
+                </b>
+            </div>
+            <div class="cell-lg-6">
+                <div class="sejour__notation orange" [innerHTML]="notationToStars(sejour.notation)">
+
+                </div>
+            </div>
+        </div>
+        <div class="sejour__prix">
+            {{sejour.prixUnitaire | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+        </div>
+        <div class="sejour__calendrier">
+            <span>
+                Du 28/08/2020 au 30/08/2020
+            </span>
+        </div>
     </div>
 </div>

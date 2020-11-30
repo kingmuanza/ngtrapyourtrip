@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Reservation } from 'src/app/models/reservation.model';
+import { Trajet } from 'src/app/models/trajet.model';
 
 declare const metro: any;
 
@@ -15,7 +16,8 @@ export class ReservationViewComponent implements OnInit {
   reservation: Reservation;
   days = 0;
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -68,6 +70,26 @@ export class ReservationViewComponent implements OnInit {
 
   toDate(str) {
     return new Date(str);
+  }
+
+  edit(reservation: Reservation) {
+    this.router.navigate(['offres', 'reservation', 'edit', reservation.id]);
+  }
+
+  infos(reservation: Reservation) {
+    this.router.navigate(['offres', 'reservation', 'infos', reservation.id]);
+  }
+
+  description(trajet: Trajet) {
+    if (trajet) {
+      if (trajet.villeArrivee === trajet.villeDepart) {
+        return 'Location de voiture : ' + trajet.villeArrivee;
+      } else {
+        return trajet.villeDepart + ' - ' + trajet.villeArrivee;
+      }
+    } else {
+      return '';
+    }
   }
 
 }

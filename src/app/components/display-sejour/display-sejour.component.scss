@@ -1,58 +1,106 @@
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+    }
+
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes opaque {
+    0% {
+        transform: scale(1.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
 .sejour {
     cursor: pointer;
+    animation-name: progress-bar;
+    animation-duration: 500ms;
+    margin-bottom: 10px;
 
     .sejour__conteneur {
-        
-        height: 40vh;
+        background-color: #eee;
+        height: 250px;
         overflow: hidden;
-        border-radius: 10px;
-        
-        @media screen and (max-width: 599px) {
-            height: 25vh;
-        }
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
 
     }
 
     .sejour__image {
-        height: 40vh;
-        background-image: url('../../../assets/img/limbe.png');
+        height: 250px;
         background-size: cover;
         background-position: center center;
+        
         border-radius: 10px;
-        transition: transform 200ms;
+        transition: transform 400ms;
+        animation-name: opaque;
+        animation-duration: 1000ms;
+        background-color: #eee;
+
         &:hover {
             transform: scale(1.2);
-        }
-        
-        @media screen and (max-width: 599px) {
-            height: 25vh;
         }
     }
 
     .sejour__description {
-        padding-top: 10px;
-        
-        @media screen and (max-width: 599px) {
-            text-align: center;
+        padding: 10px;
+        padding-left: 15px;
+        background-color: #eee;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        height: 120px;
+        overflow: hidden;
+
+    }
+
+    .sejour__notation {
+        margin-top: -3px;
+        float: right;
+        font-size: 1.2em;;
+    }
+
+    .sejour__prix {
+        margin-top: -10px;
+        span {
+            color: #444;
+            border-radius: 5px;
+            font-weight: bold;
         }
 
     }
-    .sejour__notation {
-        
-        @media screen and (max-width: 599px) {
-            text-align: center;
-        }
-        
-    }
-    .sejour__prix {
-        
-        @media screen and (max-width: 599px) {
-            text-align: center;
-        }
-        
+    .sejour__calendrier {
+        font-weight: bold;
+        padding-top: 10px;
+        color: rgb(255, 115, 0);
     }
 }
 
 .orange {
     color: rgb(255, 115, 0);
+}
+
+.muanza-details {
+    margin-top: -250px;
+    padding-top: 10px;
+    padding-left: 10px;
+    text-align: left;
+    margin-right: 30%;
+    line-height: 2.5;
+
+    .detail {
+        background-color: rgb(255, 115, 0);
+        padding: 5px;
+        padding-left: 8px;
+        padding-right: 8px;
+        margin-left: 3px;
+        margin-right: 3px;
+        border-radius: 5px;
+    }
 }

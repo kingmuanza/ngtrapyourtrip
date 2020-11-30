@@ -31,6 +31,12 @@ export class AuthentificationService {
         }).catch((e) => {
           reject(e);
         });
+      }).catch((e) => {
+        if (e.code === 'auth/email-already-in-use') {
+          reject(e);
+        } else {
+          reject(e);
+        }
       });
     });
   }
@@ -51,5 +57,11 @@ export class AuthentificationService {
         });
       });
     });
+  }
+
+  deconnexion() {
+    this.utilisateur = null;
+    localStorage.removeItem('trap-your-utilisateur');
+    this.emit();
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { Divertissement } from 'src/app/models/divertissement.model';
@@ -15,12 +16,30 @@ export class DivertissementListComponent implements OnInit {
   resultats = new Array<Divertissement>();
   recherche = '';
   ordre = 'croissant';
+
+  form: FormGroup;
+
   constructor(
     private router: Router,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
     this.getSejours();
+    this.initForm();
+  }
+
+  initForm() {
+    this.form = this.formBuilder.group({
+      rechercher: ['', Validators.required],
+      dateDebut: ['', Validators.required],
+      dateFin: ['', Validators.required],
+      ville: ['Yaoundé', Validators.required],
+    });
+  }
+
+  onFormSubmit() {
+
   }
 
   ouvrir(id) {
@@ -36,16 +55,17 @@ export class DivertissementListComponent implements OnInit {
     });
     const db = firebase.firestore();
     return new Promise((resolve, reject) => {
-      db.collection('divertissements-trap').get().then((resultats) => {
+      db.collection('divertissements-trap').orderBy('date', 'desc').get().then((resultats) => {
         resultats.forEach((resultat) => {
           const divertissement = resultat.data() as Divertissement;
-          this.divertissements.push(divertissement);
-          this.resultats.push(divertissement);
+          if (divertissement.date) {
+            this.divertissements.push(divertissement);
+            this.resultats.push(divertissement);
+          }
         });
         console.log('TERMINEEE !!!');
         console.log(this.divertissements);
         metro().activity.close(activity);
-        this.ordonner(this.ordre);
         resolve(this.divertissements);
       }).catch((e) => {
         metro().activity.close(activity);

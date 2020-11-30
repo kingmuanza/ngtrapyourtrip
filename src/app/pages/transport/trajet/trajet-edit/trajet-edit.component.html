@@ -1,0 +1,23 @@
+<div class="page">
+    <div class="entete">
+        <div class="titre">
+            Créez un nouveau trajet
+        </div>
+    </div>
+    <div class="contenu">
+        <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+            <div>
+                <input formControlName="villeDepart" data-role="input" data-prepend="Ville de départ">
+            </div>
+            <div>
+                <input formControlName="villeArrivee" data-role="input" data-prepend="Ville d'arrivée">
+            </div>
+            <div>
+                <input formControlName="retour" data-role="checkbox" data-caption="Enregistrer le trajet retour">
+            </div>
+            <div>
+                <button class="button">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+</div>

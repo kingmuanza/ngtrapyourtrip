@@ -27,10 +27,11 @@ export class DivertissementEditComponent implements OnInit {
 
   initForm() {
     this.form = this.formBuilder.group({
-      titre: ['Balade en Pirogue', Validators.required],
-      description: ['Baladez-vous en pirogue près des crocodiles sauvages', Validators.required],
+      titre: ['Concert géant', Validators.required],
+      description: ['Venez vivre le show', Validators.required],
       prix: ['50000', Validators.required],
-      lieu: ['Mbalmayo', Validators.required],
+      lieu: ['Yaoundé', Validators.required],
+      date: ['', Validators.required],
       tel: ['696543495', Validators.required],
       notation: ['5', Validators.required],
       tags: ['', Validators.required],
@@ -39,6 +40,8 @@ export class DivertissementEditComponent implements OnInit {
 
   onFormSubmit() {
     const value = this.form.value;
+    console.log('divertissemnt');
+    console.log(value);
 
     const titre = value.titre;
     const description = value.description;
@@ -47,6 +50,7 @@ export class DivertissementEditComponent implements OnInit {
     const tel = value.tel;
     const notation = value.notation;
     const tags = value.tags;
+    const date = value.date;
 
     const divertissement = new Divertissement();
     divertissement.titre = titre;
@@ -56,15 +60,19 @@ export class DivertissementEditComponent implements OnInit {
     divertissement.tel = tel;
     divertissement.notation = notation;
     divertissement.tags = tags;
-
+    if (date) {
+      console.log('ya date');
+      divertissement.date = new Date(date);
+    } else {
+      console.log('ya pas date');
+      divertissement.date = null;
+    }
     const activity = metro().activity.open({
       type: 'square',
       overlayColor: '#fff',
       overlayAlpha: 0.8
     });
-
     console.log('Activité est lancé');
-
     this.save().then((liens) => {
       console.log('liens');
       console.log(liens);
@@ -80,7 +88,6 @@ export class DivertissementEditComponent implements OnInit {
     }).catch(() => {
       console.log('Il ya un pb avec les images');
     });
-
   }
 
   uploadFile(event: any) {

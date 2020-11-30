@@ -1,3 +1,66 @@
+
+.entete {
+    height: 270px;
+    overflow: hidden;
+
+    .entete__background {
+
+        height: 270px;
+        overflow: hidden;
+
+        animation-name: progress-bar;
+        animation-duration: 500ms;
+        background-size: cover;
+        background-position: center center;
+        // background-attachment: fixed;
+
+        filter: blur(5px);
+        transform: scale(1.2);
+
+    }
+
+    .entete__contenu {
+        padding-top: 55px;
+        padding-left: 5vw;
+        padding-right: 5vw;
+        padding-bottom: 3vh;
+        margin-top: -270px;
+        height: 270px;
+        overflow: hidden;
+        //background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5));
+        background-color: rgba(255,255,255,0.85);
+        //color: white;
+
+        .titre {
+            font-size: 2.0em;
+            line-height: 1.15;
+        }
+
+        .sous-titre {
+            margin-top: 5px;
+        }
+    }
+}
+
+.contenu {
+    padding-top: 1vh;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    padding-bottom: 15vh;
+    min-height: 100vh;
+}
+
+.bordure-orange {
+    &-debut {
+        border: 2px solid rgb(255, 115, 0);
+    }
+
+    &-fin {
+        border: 2px solid rgb(255, 115, 0);
+        border-left: 0px solid #eee;
+    }
+}
+
 .sous-titre {
     margin-top: -5px;
 }

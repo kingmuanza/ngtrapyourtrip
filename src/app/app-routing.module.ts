@@ -27,6 +27,22 @@ import { TransportViewComponent } from './pages/transport/transport-view/transpo
 import { ReservationListComponent } from './pages/reservation/reservation-list/reservation-list.component';
 import { ReservationViewComponent } from './pages/reservation/reservation-view/reservation-view.component';
 import { ReservationEditComponent } from './pages/reservation/reservation-edit/reservation-edit.component';
+import { PrestataireListComponent } from './pages/prestataire/prestataire-list/prestataire-list.component';
+import { PrestataireViewComponent } from './pages/prestataire/prestataire-view/prestataire-view.component';
+import { PrestataireEditComponent } from './pages/prestataire/prestataire-edit/prestataire-edit.component';
+import { ReservationInfosComponent } from './pages/reservation/reservation-infos/reservation-infos.component';
+import { ReservationRecapComponent } from './pages/reservation/reservation-recap/reservation-recap.component';
+import { PhotoComponent } from './pages/inscription/photo/photo.component';
+import { MoncompteComponent } from './pages/moncompte/moncompte.component';
+import { OubliComponent } from './pages/oubli/oubli.component';
+import { TrajetEditComponent } from './pages/transport/trajet/trajet-edit/trajet-edit.component';
+import { AgenceEditComponent } from './pages/transport/agence/agence-edit/agence-edit.component';
+import { DepartEditComponent } from './pages/transport/depart/depart-edit/depart-edit.component';
+import { DepartListComponent } from './pages/transport/depart/depart-list/depart-list.component';
+import { DepartViewComponent } from './pages/transport/depart/depart-view/depart-view.component';
+import { DivertissementChoixComponent } from './pages/divertissement/divertissement-choix/divertissement-choix.component';
+import { LoisirListComponent } from './pages/divertissement/loisir-list/loisir-list.component';
+import { LoisirViewComponent } from './pages/divertissement/loisir-view/loisir-view.component';
 
 const routes: Routes = [
   { path: 'accueil', component: AccueilComponent },
@@ -35,39 +51,68 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'panier', component: PanierComponent },
   { path: 'inscription', component: InscriptionComponent },
+  { path: 'inscription/photo', component: PhotoComponent },
   { path: 'connexion', component: ConnexionComponent },
+  { path: 'oubli', component: OubliComponent },
 
   { path: 'dashboard/paiement', component: PaiementListComponent },
   { path: 'dashboard/paiement/edit', component: PaiementEditComponent },
   { path: 'dashboard/paiement/view/:id', component: PaiementViewComponent },
+  { path: 'dashboard/profil', component: PhotoComponent },
+  { path: 'dashboard/compte', component: MoncompteComponent },
+  { path: 'dashboard/reservation', component: ReservationListComponent },
+  { path: 'dashboard/paiement', component: PaiementListComponent },
 
   { path: 'admin/connexion', component: AdminConnexionComponent },
   { path: 'admin/console', component: ConsoleComponent },
 
-  { path: 'sejour', component: SejourListComponent },
-  { path: 'sejour/view/:id', component: SejourViewComponent },
-  { path: 'sejour/edit', component: SejourEditComponent },
-  { path: 'sejour/edit/:id', component: SejourEditComponent },
+  { path: 'offres/sejour', component: SejourListComponent },
+  { path: 'offres/sejour/view/:id', component: SejourViewComponent },
+  { path: 'offres/sejour/edit', component: SejourEditComponent },
+  { path: 'offres/sejour/edit/:id', component: SejourEditComponent },
 
-  { path: 'offres/hebergement', component: HebergementListComponent },
+  { path: 'offres/hebergement', component: PrestataireListComponent },
+  { path: 'offres/hebergement/prestataire/:id', component: HebergementListComponent },
   { path: 'offres/hebergement/view/:id', component: HebergementViewComponent },
   { path: 'offres/hebergement/edit', component: HebergementEditComponent },
   { path: 'offres/hebergement/edit/:id', component: HebergementEditComponent },
 
   { path: 'offres/reservation', component: ReservationListComponent },
   { path: 'offres/reservation/view/:id', component: ReservationViewComponent },
+  { path: 'offres/reservation/infos/:id', component: ReservationInfosComponent },
+  { path: 'offres/reservation/recap/:id', component: ReservationRecapComponent },
   { path: 'offres/reservation/edit', component: ReservationEditComponent },
   { path: 'offres/reservation/edit/:id', component: ReservationEditComponent },
 
-  { path: 'divertissement', component: DivertissementListComponent },
+  { path: 'divertissement', component: DivertissementChoixComponent },
   { path: 'divertissement/view/:id', component: DivertissementViewComponent },
   { path: 'divertissement/edit', component: DivertissementEditComponent },
   { path: 'divertissement/edit/:id', component: DivertissementEditComponent },
 
-  { path: 'transport', component: TransportListComponent },
-  { path: 'transport/view/:id', component: TransportViewComponent },
-  { path: 'transport/edit', component: TransportEditComponent },
-  { path: 'transport/edit/:id', component: TransportEditComponent },
+  { path: 'offres/divertissement', component: DivertissementChoixComponent },
+  { path: 'offres/divertissement/evenements', component: DivertissementListComponent },
+  { path: 'offres/divertissement/loisirs', component: LoisirListComponent },
+  { path: 'offres/divertissement/evenements/view/:id', component: DivertissementViewComponent },
+  { path: 'offres/divertissement/loisirs/view/:id', component: LoisirViewComponent },
+  { path: 'offres/divertissement/edit', component: DivertissementEditComponent },
+  { path: 'offres/divertissement/edit/:id', component: DivertissementEditComponent },
+
+  { path: 'offres/transport', component: TransportListComponent },
+  { path: 'offres/transport/view/:id', component: TransportViewComponent },
+  { path: 'offres/transport/edit', component: TransportEditComponent },
+  { path: 'offres/transport/edit/:id', component: TransportEditComponent },
+
+  { path: 'offres/transport/trajet/edit', component: TrajetEditComponent },
+  { path: 'offres/transport/agence/edit', component: AgenceEditComponent },
+
+  { path: 'offres/transport/depart/edit', component: DepartEditComponent },
+  { path: 'offres/transport/depart/list/:id', component: DepartListComponent },
+  { path: 'offres/transport/depart/view/:id/:heure', component: DepartViewComponent },
+
+  { path: 'prestataire', component: PrestataireListComponent },
+  { path: 'prestataire/view/:id', component: PrestataireViewComponent },
+  { path: 'prestataire/edit', component: PrestataireEditComponent },
+  { path: 'prestataire/edit/:id', component: PrestataireEditComponent },
 
   { path: 'accueil', component: AccueilComponent },
   { path: '**', redirectTo: 'accueil' },

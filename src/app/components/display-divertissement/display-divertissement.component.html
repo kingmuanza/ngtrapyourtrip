@@ -14,6 +14,17 @@
             <div class="sejour__description">
                 {{divertissement.titre}}
             </div>
+            <div>
+                <b>
+                    {{divertissement.lieu}}
+                </b>
+            </div>
+            <div *ngIf="divertissement.date">
+                {{divertissement.date | date: 'yyyy-MM-dd' }}
+            </div>
+            <div *ngIf="!(divertissement.date)">
+                {{date | date: 'yyyy-MM-dd' }}
+            </div>
         </div>
         <div class="cell-4">
             <div style="padding-top: 10px; text-align: right;">

@@ -18,8 +18,8 @@ $bg-primaire: rgb(255, 115, 0);
 
     position: relative;
     z-index: 1000;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.15));
-    height: 60vmin;
+    // background: linear-gradient(to right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.15));
+    min-height: 60vmin;
     margin-top: -60vmin;
 
     border-radius: 10px;
@@ -59,18 +59,75 @@ $bg-primaire: rgb(255, 115, 0);
 
 .trap-input {
     font-size: 35px;
-    padding-left: 10px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding-left: 30px;
     width: 100%;
     border-radius: 5px;
     outline: none;
     border: none;
     opacity: 0.95;
 
+    &+.resultats {
+        transform-origin: top left;
+        transform: scaleY(0);
+        transition: transform 500ms;
+        transition-delay: 200ms;
+    }
+
     &:focus {
-        border: 2px solid rgb(255, 115, 0);
+        border: 0px solid rgb(255, 115, 0);
         padding-top: 3px;
         padding-bottom: 3px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+
+        &+.resultats {       
+            transform-origin: top left;     
+            transform: scaleY(1);
+        }
+    }
+}
+
+.resultats {
+    z-index: 1990;
+    min-height: 400px;
+    background-color: rgba(240, 240, 240, 0.9);
+    padding-bottom: 10px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    .resultat {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 10px;
+
+        .photo {
+            display: inline-block;
+            height: 45px;
+            overflow: hidden;
+
+            img {
+                height: 45px;
+                width: 45px;
+                border-radius: 7px;
+            }
+        }
+
+        .details {
+            display: inline-block;
+            height: 45px;
+            overflow: hidden;
+            padding-left: 20px;
+            padding-top: 0px;
+            line-height: 1.4;
+
+            .description {
+                color: #777;
+            }
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgba(220, 220, 220, 1);
+        }
     }
 }

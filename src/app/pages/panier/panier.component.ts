@@ -4,6 +4,7 @@ import { AuthentificationService } from 'src/app/services/authentification.servi
 import { Router } from '@angular/router';
 import { PanierService } from 'src/app/services/panier.service';
 import { Subscription } from 'rxjs';
+import { Trajet } from 'src/app/models/trajet.model';
 
 @Component({
   selector: 'app-panier',
@@ -15,6 +16,7 @@ export class PanierComponent implements OnInit {
   reservations = [];
   panierSubscription: Subscription;
   TOTAL = 0;
+  isUser = false;
   constructor(
     private authService: AuthentificationService,
     private router: Router,
@@ -22,6 +24,11 @@ export class PanierComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (this.authService.utilisateur) {
+      this.isUser = true;
+    } else {
+      this.isUser = false;
+    }
     this.panierSubscription = this.panierService.panierSubject.subscribe((reservations) => {
       this.reservations = reservations;
       this.reservations.forEach((reservation: Reservation) => {
@@ -45,7 +52,11 @@ export class PanierComponent implements OnInit {
       this.router.navigate(['sejour', 'view', reservation.sejour.id]);
     }
     if (reservation.hebergement) {
-      this.router.navigate(['hebergement', 'view', reservation.hebergement.id]);
+      if (reservation.responsable) {
+        this.router.navigate(['offres', 'reservation', 'recap', reservation.id]);
+      } else {
+        this.router.navigate(['offres', 'reservation', 'infos', reservation.id]);
+      }
     }
     if (reservation.divertissement) {
       this.router.navigate(['divertissement', 'view', reservation.divertissement.id]);
@@ -91,7 +102,22 @@ export class PanierComponent implements OnInit {
   supprimerTout() {
     const oui = confirm('Etes-vous sûr de vouloir supprimer toutes les reservations ?');
     if (oui) {
+      this.reservations = [];
+      localStorage.setItem('panier-trap', JSON.stringify([]));
+      this.panierService.reservations = [];
+      this.panierService.emit();
+    }
+  }
 
+  description(trajet: Trajet) {
+    if (trajet) {
+      if (trajet.villeArrivee === trajet.villeDepart) {
+        return 'Location de voiture : ' + trajet.villeArrivee;
+      } else {
+        return trajet.villeDepart + ' - ' + trajet.villeArrivee;
+      }
+    } else {
+      return '';
     }
   }
 

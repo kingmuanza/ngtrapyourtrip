@@ -15,6 +15,9 @@ declare const metro: any;
 export class InscriptionComponent implements OnInit {
 
   form: FormGroup;
+  messageEmail = '';
+  messagePasse = '';
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -64,23 +67,47 @@ export class InscriptionComponent implements OnInit {
 
       this.authService.inscription(utilisateur, passe).then(() => {
         metro().activity.close(activity);
+        localStorage.setItem('trap-your-utilisateur', JSON.stringify(utilisateur));
         const panierString = localStorage.getItem('panier-trap');
         if (panierString) {
           const reservations = JSON.parse(panierString);
           if (reservations.length > 0) {
             this.router.navigate(['dashboard', 'paiement', 'edit']);
           } else {
-            this.router.navigate(['dashboard']);
+            this.router.navigate(['inscription', 'photo']);
           }
         }
       }).catch((e) => {
+        console.log('erreur dinscription');
+        console.log(e);
         metro().activity.close(activity);
+        const notify = metro().notify;
+        if (e.code === 'auth/email-already-in-use') {
+          this.messageEmail = 'Email déjà utilisé';
+          notify.create('Email déjà utilisé', null, {
+            cls: 'alert notify-marge',
+            keepOpen: false,
+            position: 'bottom right',
+            elementPosition: 'bottom right',
+            globalPosition: 'bottom right',
+          });
+        } else {
+          notify.create('Les mots de passe ne sont pas identiques', null, {
+            cls: 'alert notify-marge',
+            keepOpen: false,
+            position: 'bottom right',
+            elementPosition: 'bottom right',
+            globalPosition: 'bottom right',
+          });
+        }
       });
     } else {
       const notify = metro().notify;
+      this.messagePasse = 'Les mots de passe ne sont pas identiques';
+      console.log('Les mots de passe ne sont pas identiques');
       notify.create('Les mots de passe ne sont pas identiques', null, {
         cls: 'alert',
-        keepOpen: true
+        keepOpen: false
       });
     }
   }

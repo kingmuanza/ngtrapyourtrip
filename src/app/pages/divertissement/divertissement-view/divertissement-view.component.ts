@@ -50,64 +50,49 @@ export class DivertissementViewComponent implements OnInit {
     const value = this.form.value;
     console.log('value');
     console.log(value);
-    console.log('this.calendarpickerlocale.nativeElement.value');
-    console.log(this.calendarpickerlocale.nativeElement.value);
 
     const personnes = value.personnes;
-    const date = this.calendarpickerlocale.nativeElement.value;
 
-    if (date && date.length > 2) {
+    if (true) {
+      const reservation = new Reservation();
+      reservation.divertissement = this.divertissement;
+      reservation.personnes = personnes;
+      reservation.dateDebut = new Date(this.divertissement.date);
+      reservation.cout = this.divertissement.prix * personnes;
 
-      if (true) {
-        const reservation = new Reservation();
-        reservation.divertissement = this.divertissement;
-        reservation.personnes = personnes;
-        reservation.dateDebut = new Date(date);
-        reservation.cout = this.divertissement.prix * personnes;
+      console.log('reservation');
+      console.log(reservation);
 
-        console.log('reservation');
-        console.log(reservation);
+      const activity = metro().activity.open({
+        type: 'square',
+        overlayColor: '#fff',
+        overlayAlpha: 0.8
+      });
 
-        const activity = metro().activity.open({
-          type: 'square',
-          overlayColor: '#fff',
-          overlayAlpha: 0.8
-        });
-
-        const panierString = localStorage.getItem('panier-trap');
-        let panier = [];
-        if (panierString) {
-          panier = JSON.parse(panierString);
-        }
-        panier.push(reservation);
-        localStorage.setItem('panier-trap', JSON.stringify(panier));
-
-        const db = firebase.firestore();
-        db.collection('reservation-trap').doc(reservation.id).set(JSON.parse(JSON.stringify(reservation))).then((resultats) => {
-          console.log('TERMINEEE !!!');
-          metro().activity.close(activity);
-          this.router.navigate(['panier']);
-        }).catch((e) => {
-          metro().activity.close(activity);
-        });
-
-      } else {
-        const notify = metro().notify;
-        notify.create('La date d\'arrivée est supérieure à la date de départ', null, {
-          cls: 'alert',
-          distance: '50vh',
-          duration: 1000,
-          timeout: 4000
-        });
+      const panierString = localStorage.getItem('panier-trap');
+      let panier = [];
+      if (panierString) {
+        panier = JSON.parse(panierString);
       }
+      panier.push(reservation);
+      localStorage.setItem('panier-trap', JSON.stringify(panier));
+
+      const db = firebase.firestore();
+      db.collection('reservation-trap').doc(reservation.id).set(JSON.parse(JSON.stringify(reservation))).then((resultats) => {
+        console.log('TERMINEEE !!!');
+        metro().activity.close(activity);
+        this.router.navigate(['offres', 'reservation', 'view', reservation.id]);
+      }).catch((e) => {
+        metro().activity.close(activity);
+      });
 
     } else {
       const notify = metro().notify;
-      notify.create('Veuillez renseigner la date', null, {
+      notify.create('La date d\'arrivée est supérieure à la date de départ', null, {
         cls: 'alert',
         distance: '50vh',
-        timeout: 4000,
-        duration: 1000
+        duration: 1000,
+        timeout: 4000
       });
     }
 

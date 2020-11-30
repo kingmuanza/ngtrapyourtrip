@@ -1,0 +1,50 @@
+<div class="page-sejour">
+    <div class="entete" style="background-color: #eee;">
+
+        <div class="entete__background">
+        </div>
+        <div class="entete__contenu">
+            <div class="row">
+                <div class="cell-lg-12">
+                    <div class="titre">
+                        Centres de loisirs
+                    </div>
+                    <div class="sous-titre text-leader2">
+                        <div>
+                            Tous les centres de loisirs
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                <div class="row no-gap shadow-1" style="border-radius: 20px;">
+
+                    <div class="cell-lg-5 bordure-orange-debut radius-gauche"
+                        style="padding-left: 5px; background-color: #eee;">
+                        <input formControlName="rechercher" placeholder="Rechercher" data-role="input"
+                            class="radius-gauche">
+                    </div>
+                    <div class="cell-lg-5 bordure-orange-fin">
+                        <input data-prepend="Ville" formControlName="ville" data-role="input">
+
+                    </div>
+                    <div class="cell-lg-2 bordure-orange-fin radius-droit">
+                        <button class="button warning" style="width: 100%; background-color: rgb(255, 115, 0);">
+                            Réserver
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="contenu">
+        <div class="sejours">
+            <div class="row">
+                <div class="cell-lg-4" *ngFor="let divertissement of resultats">
+                    <app-display-loisir [divertissement]="divertissement"></app-display-loisir>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

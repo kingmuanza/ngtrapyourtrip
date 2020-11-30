@@ -8,20 +8,22 @@
                 <div class="sous-titre text-leader2">
                     {{divertissement.description}}
                 </div>
+                <div>
+                    Le
+                    <b>{{divertissement.date | date: 'yyyy-MM-dd'}} </b>
+                </div>
             </div>
             <div class="cell-lg-3">
             </div>
         </div>
         <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-            <div class="row">
-                <div class="cell-lg-4">
-                    <input #calendarpickerlocale formControlName="date" data-role="calendarpicker" data-prepend="Date d'arrivée">
-                </div>
-                <div class="cell-lg-4">
+            <div class="row no-gap shadow-1" style="border-radius: 20px;">
+                <div class="cell-lg-8 bordure-orange-debut radius-gauche"
+                style="padding-left: 5px; background-color: #eee;">
                     <input formControlName="personnes" data-role="input" data-prepend="Personnes">
                 </div>
-                <div class="cell-lg-4">
-                    <button class="button warning" style="width: 100%;">
+                <div class="cell-lg-4 bordure-orange-fin radius-droit">
+                    <button class="button warning" style="width: 100%; background-color: rgb(255, 115, 0);">
                         Réserver
                     </button>
                 </div>

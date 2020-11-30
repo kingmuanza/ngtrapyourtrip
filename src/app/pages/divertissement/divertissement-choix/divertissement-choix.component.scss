@@ -1,0 +1,11 @@
+.categorie {
+    border: 2px solid rgb(255, 115, 0);;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    background-color: rgba(#000, 0.05);
+
+    &:hover {
+        opacity: 0.8;
+    }
+}

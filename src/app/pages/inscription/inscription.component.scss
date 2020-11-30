@@ -1,16 +1,31 @@
 .inscription-page {
     min-height: 100vh;
-    padding-top: 20vh;
+    padding-top: 120px;
+
     padding-left: 10vw;
     padding-right: 10vw;
     padding-bottom: 10vw;
 
+    @media screen and (max-width: 599px) {
+        padding-top: 60px;
+        padding-left: 5vw;
+        padding-right: 5vw;
+        text-align: center;
+        font-size: 0.9em;;
+    }
+
     .formulaire {
         border: 4px solid rgb(255, 155, 0);
-        border-radius: 20px;
+        border-radius: 10px;
         padding: 20px;
-        padding-top: 40px;
+        padding-top: 20px;
         padding-bottom: 40px;
+        background-color: #fafafa;
+        width: 500px;
+
+        @media screen and (max-width: 599px) {
+            width: 100%;
+        }
 
         div {
             margin-bottom: 15px;
@@ -21,4 +36,9 @@
 .titre {
     font-size: 2.0em;
     font-weight: bold;
+}
+
+.notify-marge {
+    margin-top: 100px;
+    padding-top: 100px;
 }

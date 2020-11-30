@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
 export class DisplayDivertissementComponent implements OnInit {
 
   @Input() divertissement?: Divertissement;
+
+  date = new Date();
+
   constructor(
     private router: Router,
   ) { }
@@ -18,7 +21,7 @@ export class DisplayDivertissementComponent implements OnInit {
   }
 
   ouvrir(id) {
-    this.router.navigate(['divertissement', 'view', id]);
+    this.router.navigate(['offres', 'divertissement', 'evenements', 'view', id]);
   }
 
   notationToStars(notation: number) {

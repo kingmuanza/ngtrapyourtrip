@@ -4,34 +4,42 @@
 
         </div>
         <div *ngIf="hebergement.options" class="muanza-details">
-            <span title="WiFi" *ngIf="hebergement.options.wifi" class="detail">
-                <span class="fg-white mif-network-wifi"></span>
+            <span title="baignoire" *ngIf="hebergement.options.baignoire" class="detail">
+                <span class="fas fa-bath fg-white"></span>
             </span>
-            <span title="Parking" *ngIf="hebergement.options.parking" class="detail">
-                <span class="fg-white mif-automobile"></span>
+            <span title="télévision" *ngIf="hebergement.options.tele" class="detail">
+                <span class="fas fa-tv fg-white"></span>
             </span>
-            <span title="Petit déjeuner" *ngIf="hebergement.options.petitdej" class="detail">
-                <span class="fg-white mif-spoon-fork"></span>
+            <span title="bouilloire" *ngIf="hebergement.options.bouilloire" class="detail">
+                <span class="fas fa-mug-hot fg-white"></span>
             </span>
-            <span title="Climatisation" *ngIf="hebergement.options.climatiseur" class="detail">
+            <span title="climatisation" *ngIf="hebergement.options.climatiseur" class="detail">
                 <span class="fg-white mif-air"></span>
             </span>
-            <span title="Piscine" *ngIf="hebergement.options.piscine" class="detail">
-                <span class="fas fa-swimming-pool fg-white"></span>
+            <span title="mini bar" *ngIf="hebergement.options.minibar" class="detail">
+                <span class="fas fa-wine-bottle fg-white"></span>
             </span>
-            <span title="Plage" *ngIf="hebergement.options.plage" class="detail">
-                <span class="fas fa-umbrella-beach fg-white"></span>
+            <span title="lit double fg-white" *ngIf="hebergement.options.litdouble" class="detail">
+                <span class="fas fa-bed fg-white"></span>
+                <span style="color: white;"> ²</span>
             </span>
-            <span title="Gardien" *ngIf="hebergement.options.gardien" class="detail">
-                <span class="fas fa-user-secret fg-white"></span>
+            <span title="lit simple" *ngIf="hebergement.options.litsimple" class="detail">
+                <span class="fas fa-bed fg-white"></span>
+            </span>
+            <span title="wifi" *ngIf="hebergement.options.wifi" class="detail">
+                <span class="fg-white mif-network-wifi"></span>
             </span>
         </div>
     </div>
     <div class="sejour__description">
-        {{hebergement.titre}}
-    </div>
-    <div class="sejour__notation orange" [innerHTML]="notationToStars(hebergement.notation)"></div>
-    <div class="sejour__prix">
-        {{hebergement.nuitee | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+        {{hebergement.titre}} 
+        <b *ngIf="hebergement.prestataire">
+            -
+            {{hebergement.prestataire.nom}} 
+        </b>
+        <div class="sejour__notation orange" [innerHTML]="notationToStars(hebergement.notation)"></div>
+        <div class="sejour__prix">
+            {{hebergement.nuitee | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+        </div>
     </div>
 </div>

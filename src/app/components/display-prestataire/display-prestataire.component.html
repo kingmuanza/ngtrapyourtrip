@@ -1,0 +1,63 @@
+<p *ngIf="prestataire && !prestataire.prestataire">
+    Erreur de prestataire
+</p>
+<div *ngIf="prestataire && prestataire.prestataire" class="sejour" (click)="ouvrir(prestataire.id)">
+    <div class="sejour__conteneur">
+        <div class="sejour__image" [ngStyle]="{'background-image': 'url(' + photoURL +')'}">
+
+        </div>
+        <div *ngIf="prestataire.options" class="muanza-details">
+            <span title="WiFi" *ngIf="prestataire.options.wifi" class="detail">
+                <span class="fg-white mif-network-wifi"></span>
+            </span>
+            <span title="Parking" *ngIf="prestataire.options.parking" class="detail">
+                <span class="fg-white mif-automobile"></span>
+            </span>
+            <span title="Petit déjeuner" *ngIf="prestataire.options.petitdej" class="detail">
+                <span class="fg-white mif-spoon-fork"></span>
+            </span>
+            <span title="Climatisation" *ngIf="prestataire.options.climatiseur" class="detail">
+                <span class="fg-white mif-air"></span>
+            </span>
+            <span title="Piscine" *ngIf="prestataire.options.piscine" class="detail">
+                <span class="fas fa-swimming-pool fg-white"></span>
+            </span>
+            <span title="Plage" *ngIf="prestataire.options.plage" class="detail">
+                <span class="fas fa-umbrella-beach fg-white"></span>
+            </span>
+            <span title="Gardien" *ngIf="prestataire.options.gardien" class="detail">
+                <span class="fas fa-user-secret fg-white"></span>
+            </span>
+        </div>
+    </div>
+    <div class="sejour__description">
+        <div class="row">
+            <div class="cell-lg-6" style="line-height: 1.15;">
+                <b>
+                    {{prestataire.nom}}
+                </b>
+            </div>
+            <div class="cell-lg-6">
+                <span class="sejour__notation orange" [innerHTML]="notationToStars(prestataire.notation)"></span>
+                
+            </div>
+        </div>
+        <div style="margin-top: -2px; width: 100%; line-height: 1.15; font-size: 0.9em;">
+            <ng-container *ngIf="prestataire.pays">{{prestataire.pays}}</ng-container>
+            <ng-container *ngIf="prestataire.ville">, {{prestataire.ville}}</ng-container>
+
+            <span *ngIf="prestataire.localisation">
+                <ng-container *ngIf="prestataire.pays || prestataire.ville"> - </ng-container>
+                <span>
+                    {{prestataire.localisation}}
+                </span>
+            </span>
+        </div>
+        <div class="sejour__prix" *ngIf="prestataire.prixMin && prestataire.prixMin > 0">
+            <span>
+                ~ {{prestataire.prixMin}} FCFA
+            </span>
+        </div>
+
+    </div>
+</div>

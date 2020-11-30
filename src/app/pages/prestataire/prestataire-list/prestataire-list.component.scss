@@ -1,0 +1,119 @@
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+.etoiles {
+    color: rgb(255, 115, 0);
+    font-size: 1.5em;
+    span {
+        margin-right: 3px;
+        cursor: pointer;
+        &:hover {
+            font-size: 1.01em;
+        }
+    }
+}
+
+.page-sejour {
+    .entete {
+
+        animation-name: progress-bar;
+        animation-duration: 500ms;
+
+        padding-top: 60px;
+        padding-left: 5vw;
+        padding-right: 5vw;
+        padding-bottom: 3vh;
+
+        .titre {
+            font-size: 2.0em;
+        }
+
+        .sous-titre {
+            margin-top: -5px;
+        }
+    }
+
+    .contenu {
+        padding-top: 1vh;
+        padding-left: 5vw;
+        padding-right: 5vw;
+        padding-bottom: 15vh;
+        min-height: 100vh;
+    }
+}
+
+
+.bordure-orange {
+    &-debut {
+        border: 2px solid rgb(255, 115, 0);
+    }
+
+    &-fin {
+        border: 2px solid rgb(255, 115, 0);
+        border-left: 0px solid #eee;
+    }
+}
+
+.bordure-grise {
+    border: 2px solid #eee;
+}
+
+.options {
+    margin-top: 0px;
+    margin-left: -5px;
+
+    span {
+        margin-right: 20px;
+        display: block;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #eee;
+    }
+}
+
+.ordre {
+    span {
+        margin-right: 25px;
+        cursor: pointer;
+        color: #777;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+        transition: letter-spacing 200ms;
+
+        &:hover {
+            letter-spacing: 1px;
+        }
+
+        &.active {
+            font-weight: bold;
+            color: rgb(255, 115, 0);
+        }
+    }
+}
+
+input.muanza {
+    border: 1px solid #fff;
+    outline: none !important;
+    padding-left: 20px;
+}
+
+.radius-gauche {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.radius-droit {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}

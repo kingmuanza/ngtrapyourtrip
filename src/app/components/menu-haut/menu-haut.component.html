@@ -18,7 +18,7 @@
             </a>
             <ul style="z-index: 2000;" class="d-menu" data-role="dropdown">
                 <li>
-                    <a routerLink="/sejour" routerLinkActive="active">
+                    <a routerLink="/offres/sejour" routerLinkActive="active">
                         Séjours
                     </a>
                 </li>
@@ -28,12 +28,12 @@
                     </a>
                 </li>
                 <li>
-                    <a routerLink="/transport" routerLinkActive="active">
+                    <a routerLink="/offres/transport" routerLinkActive="active">
                         Transport
                     </a>
                 </li>
                 <li>
-                    <a routerLink="/divertissement" routerLinkActive="active">
+                    <a routerLink="/offres/divertissement" routerLinkActive="active">
                         Divertissement
                     </a>
                 </li>
@@ -48,12 +48,62 @@
                 </b>
             </a>
         </li>
-        <li style="margin-right: 4vw;">
-            <a routerLink="dashboard" routerLinkActive="active">
-                {{utilisateur ? utilisateur.nom :'Mon'}}
-                {{utilisateur ? utilisateur.prenom :'compte'}}
-                <img src="../../../assets/img/Kribi.jpg" class="user-image">
+        <li *ngIf="!utilisateur" style="margin-right: 4vw;">
+            <a routerLink="/connexion" routerLinkActive="active">
+                <span class="mif-security"></span>
+                Connexion
             </a>
+        </li>
+        <li *ngIf="utilisateur" style="margin-right: 4vw;">
+            <a class="dropdown-toggle" [ngClass]="{'active': dashboard}">
+                <span class="nom-user">
+                    {{utilisateur ? utilisateur.nom :'Mon'}}
+                    {{utilisateur ? utilisateur.prenom :'compte'}}
+                </span>
+                <img [src]="photoURL" class="user-image">
+            </a>
+            <ul style="z-index: 2000; margin-left: 0px; padding-left: 0px;" class="d-menu" data-role="dropdown">
+                <li>
+                    <a routerLink="/dashboard/profil" routerLinkActive="active">
+                        Mon profil
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard/compte" routerLinkActive="active">
+                        Mon compte
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard/reservation" routerLinkActive="active">
+                        <ng-container *ngIf="!utilisateur.prestataire">
+                            Mes réservations
+                        </ng-container>
+                        <ng-container *ngIf="utilisateur.prestataire">
+                            Réservations
+                        </ng-container>
+                    </a>
+                </li>
+                <li *ngIf="utilisateur.prestataire">
+                    <a [routerLink]="['offres', 'hebergement', 'prestataire', utilisateur.id]">
+                        Mes offres
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard/paiement" routerLinkActive="active">
+                        <ng-container *ngIf="!utilisateur.prestataire">
+                            Mes paiements
+                        </ng-container>
+                        <ng-container *ngIf="utilisateur.prestataire">
+                            Paiements
+                        </ng-container>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="deconnexion()">
+                        Déconnexion
+                    </a>
+                </li>
+            </ul>
         </li>
     </ul>
 </div>

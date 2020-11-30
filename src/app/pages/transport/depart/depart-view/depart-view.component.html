@@ -1,0 +1,124 @@
+<div class="page-hebergement" style="min-height: 100vh;">
+    <div *ngIf="depart" class="entete">
+
+        <div class="entete__background">
+        </div>
+        <div class="entete__contenu">
+            <div class="row no-gap">
+                <div class="cell-lg-12">
+                    <div style="margin-left: -15px; margin-top: -10px;">
+                        <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
+                            <li class="page-item"><a routerLink="/offres/transport" class="page-link">Trajets</a></li>
+                            <li class="page-item" *ngIf="depart.trajet">
+                                <a class="page-link">
+                                    {{description(depart.trajet)}}
+                                </a>
+                            </li>
+                            <li class="page-item" *ngIf="depart.agence">
+                                <a class="page-link">
+                                    {{depart.agence.nom}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="titre" style="margin-top: -20px; padding-top: 0px; line-height: 1.15;">
+
+                        <b *ngIf="depart.agence" style="">
+                            {{depart.agence.nom}}
+                        </b>
+                        <span *ngIf="depart.vip" class="vip" style="float: right;">
+                            VIP
+                        </span>
+
+                    </div>
+                    <div class="text-leader2" style="padding-bottom: 15px;">
+                        <ng-container *ngIf="depart.trajet">
+                            <span *ngIf="depart.trajet.villeDepart === depart.trajet.villeArrivee">
+                                {{depart.trajet.villeDepart}}
+                            </span>
+                            <span *ngIf="depart.trajet.villeDepart !== depart.trajet.villeArrivee">
+                                {{depart.trajet.villeDepart}} - {{depart.trajet.villeArrivee}}
+                            </span>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                <div *ngIf="depart" class="row no-gap shadow-1">
+                    <div class="cell-lg-3 bordure-orange-debut" style="padding-left: 5px; background-color: #eee;">
+                        <input #calendarpickerlocale formControlName="date" data-role="calendarpicker"
+                            data-prepend="Date" class="radius-gauche">
+                    </div>
+                    <div class="cell-lg-2 bordure-orange-fin">
+                        <select data-prepend="Heure" formControlName="heure" data-role="select">
+                            <option [ngValue]="getHeure(heure)" *ngFor="let heure of depart.heures">
+                                {{getHeure(heure)}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="cell-lg-3 bordure-orange-fin">
+                        <ng-container *ngIf="depart.trajet.villeDepart !== depart.trajet.villeArrivee">
+                            <input data-prepend="Personnes" formControlName="personnes" data-role="input">
+                        </ng-container>
+                        <ng-container *ngIf="depart.trajet.villeDepart === depart.trajet.villeArrivee">
+                            <input data-prepend="Nombre de jours" formControlName="personnes" data-role="input">
+                        </ng-container>
+
+                    </div>
+                    <div class="cell-lg-2 bordure-orange-fin">
+                        <select formControlName="allerretour" data-role="select" data-filter="false">
+                            <option value="allersimple">
+                                Aller simple
+                            </option>
+                            <option *ngIf="depart.vip" value="allerretour">
+                                Aller Retour
+                            </option>
+                        </select>
+                    </div>
+                    <div class="cell-lg-2 bordure-orange-fin">
+                        <button [disabled]="!isDateValide() || form.invalid" *ngIf="!allerretour" class="button warning"
+                            style="width: 100%; background-color: rgb(255, 115, 0);">
+                            Réserver
+                        </button>
+                        <a *ngIf="allerretour && isDateValide()" class="button warning"
+                            style="width: 100%; color:white; background-color: rgb(255, 115, 0);"
+                            onclick="Metro.dialog.open('#demoDialog1')">
+                            Continuer
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="contenu-hebergement" style="padding-top: 20px">
+        
+    </div>
+</div>
+<div id="demoDialog1" class="dialog" data-role="dialog">
+    <div class="dialog-title">Voyage Retour</div>
+    <div class="dialog-content">
+        <div>
+            Veuillez remplir les informations relatives à votre Voyage retour
+        </div>
+        <div>
+            <div *ngIf="depart" class="row">
+                <div class="cell-lg-12">
+                    <input #calendarpickerlocale2 data-role="calendarpicker" data-prepend="Date">
+                </div>
+                <div class="cell-lg-12">
+                    <select [(ngModel)]="retourHeure" data-prepend="Heure" data-role="select">
+                        <option [ngValue]="getHeure(heure)" *ngFor="let heure of depart.heures">
+                            {{getHeure(heure)}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dialog-actions">
+        <button class="button js-dialog-close">Annuler</button>
+        <button (click)="saveWithRetour()" class="button warning js-dialog-close" style="background-color: rgb(255, 115, 0);">
+            Enregistrer
+        </button>
+    </div>
+</div>

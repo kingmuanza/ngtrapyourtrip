@@ -1,40 +1,49 @@
 <div class="page-sejour">
     <div class="entete" style="background-color: #eee;">
-        <div class="row">
-            <div class="cell-lg-5">
-                <div class="titre">
-                    Divertissements
-                </div>
-                <div class="sous-titre text-leader2">
-                    Retrouvez nos offres de divertissement
-                </div>
-            </div>
-            <div class="cell-lg-7">
-                <div class="text-leader2 text-right" style="padding-top: 25px;">
-                    <small>
-                        Effectuer une recherche
-                    </small>
-                </div>
-                <div class="row">
-                    <div class="cell-lg-6">
-                        <div>
-                            <input placeholder="Rechercher un séjour" data-role="input" [(ngModel)]="recherche" (ngModelChange)="rechercher($event)">
-                        </div>
+
+        <div class="entete__background">
+        </div>
+        <div class="entete__contenu">
+            <div class="row">
+                <div class="cell-lg-12">
+                    <div class="titre">
+                        Evènements
                     </div>
-                    <div class="cell-lg-6">
+                    <div class="sous-titre text-leader2">
                         <div>
-                            <select [(ngModel)]="ordre" data-filter="false"  (ngModelChange)="ordonner($event)" data-role="select">
-                                <option value="croissant">
-                                    Ordre croissant de prix
-                                </option>
-                                <option value="decroissant">
-                                    Ordre décroissant de prix
-                                </option>
-                            </select>
+                            Tous les événements
                         </div>
                     </div>
                 </div>
             </div>
+
+            <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                <div class="row no-gap shadow-1" style="border-radius: 20px;">
+
+                    <div class="cell-lg-3 bordure-orange-debut radius-gauche"
+                        style="padding-left: 5px; background-color: #eee;">
+                        <input formControlName="rechercher" placeholder="Rechercher" data-role="input"
+                            class="radius-gauche">
+                    </div>
+                    <div class="cell-lg-2 bordure-orange-fin" style="">
+                        <input #calendarpickerlocale formControlName="dateDebut" data-role="calendarpicker"
+                            data-prepend="A partir du ">
+                    </div>
+                    <div class="cell-lg-2 bordure-orange-fin">
+                        <input #calendarpickerlocale2 formControlName="dateFin" data-role="calendarpicker"
+                            data-prepend="Avant le ">
+                    </div>
+                    <div class="cell-lg-3 bordure-orange-fin">
+                        <input data-prepend="Ville" formControlName="ville" data-role="input">
+
+                    </div>
+                    <div class="cell-lg-2 bordure-orange-fin radius-droit">
+                        <button class="button warning" style="width: 100%; background-color: rgb(255, 115, 0);">
+                            Réserver
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div class="contenu">

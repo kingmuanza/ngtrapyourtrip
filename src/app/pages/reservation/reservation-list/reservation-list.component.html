@@ -1,1 +1,62 @@
-<p>reservation-list works!</p>
+<div style="min-height: 100vh;">
+    <div class="entete">
+        <div class="titre">
+            Mes réservations
+        </div>
+        <div *ngIf="utilisateur" class="sous-titre">
+            <ng-container *ngIf="!utilisateur.prestataire">
+                Retrouvez toutes les réservations que vous avez effectuées
+            </ng-container>
+            <ng-container *ngIf="utilisateur.prestataire">
+                Retrouvez toutes les réservations effectuées par des clients sur votre établissement
+            </ng-container>
+
+        </div>
+    </div>
+    <div class="contenu">
+        <div>
+            <table class="table table-border cell-border">
+                <thead>
+                    <tr>
+                        <th>Hébergement</th>
+                        <th>Début</th>
+                        <th>Fin</th>
+                        <th style="text-align: right; background-color: #fafafa;"s>Coût</th>
+                        <th>Statut</th>
+                        <th style="text-align: center;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let reservation of reservations">
+                        <td style="line-height: 1.15;">
+                            <b *ngIf="reservation.hebergement">
+                                {{reservation.hebergement.titre}}
+                            </b>
+                            <div>
+                                <small>
+                                    {{reservation.hebergement.description}}
+                                </small>
+                            </div>
+                        </td>
+                        <td>{{reservation.date | date: 'yyyy-MM-dd HH:mm'}}</td>
+                        <td>{{reservation.dateDebut | date: 'yyyy-MM-dd'}}</td>
+                        <td style="text-align: right; background-color: #fafafa;">
+                            <b>
+                                {{reservation.cout  | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                            </b>
+                        </td>
+                        <td>
+                            {{reservation.validee ? 'Validéé': 'En attente de validation'}}
+                        </td>
+                        <td style="text-align: center; white-space: nowrap;">
+                            <button class="button warning" style="background-color: rgb(255, 115, 0);">
+                                {{reservation.validee ? 'Annuler': 'Valider'}}
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

@@ -12,7 +12,9 @@ $bg-primaire: rgb(255, 115, 0);
     width: 100vw;
 }
 ul {
+
     li {
+        font-family: 'Epilogue';
         a {
             font-size: 1.0em;
             transition: letter-spacing 200ms;
@@ -35,13 +37,23 @@ ul {
 
             span {
                 margin-right: 10px;
+                &.nom-user {
+                    display: inline-block;
+                    padding-top: 4px;
+                }
+                &.icone {
+                    display: inline-block;
+                    margin-top: -3px;
+                    margin-right: 15px;
+                    font-size: 0.9em;
+                }
             }
             .superieur {
                 color: rgb(255, 115, 0);
             }
 
             .user-image {
-                margin-left: 10px;
+                
                 height: 30px;
                 width: 30px;
                 border-radius: 50%;

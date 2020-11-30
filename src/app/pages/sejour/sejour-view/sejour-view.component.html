@@ -1,32 +1,49 @@
-<div class="page" *ngIf="sejour">
+<div class="page-sejour" *ngIf="sejour">
     <div class="entete">
-        <div class="row">
-            <div class="cell-lg-9">
-                <div class="titre">
-                    {{sejour.titre}}
-                </div>
-                <div class="sous-titre text-leader2">
-                    {{sejour.description}}
-                </div>
-            </div>
-            <div class="cell-lg-3">
-            </div>
+
+        <div class="entete__background" [ngStyle]="{'background-image': 'url('+ sejour.images[0] +')'}">
         </div>
-        <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+        <div class="entete__contenu">
+
+            <div style="margin-left: -15px; margin-bottom: -20px;">
+                <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
+                    <li class="page-item"><a routerLink="accueil" class="page-link">Accueil</a></li>
+                    <li class="page-item"><a (click)="goToAll()" class="page-link">Séjours</a></li>
+                    <li class="page-item" *ngIf="sejour"><a class="page-link">{{sejour.titre}}</a></li>
+                </ul>
+            </div>
             <div class="row">
-                <div class="cell-lg-4">
-                    <input #calendarpickerlocale formControlName="date" data-role="calendarpicker" data-prepend="Date d'arrivée">
+                <div class="cell-lg-9">
+                    <div class="titre">
+                        {{sejour.titre}}
+
+                        <span class="sejour__notation orange"
+                            [innerHTML]="notationToStars(sejour.notation)"></span>
+                    </div>
+                    <div class="sous-titre text-leader2">
+                        {{sejour.description}}
+                    </div>
                 </div>
-                <div class="cell-lg-4">
-                    <input formControlName="personnes" data-role="input" data-prepend="Nombre de personnes">
-                </div>
-                <div class="cell-lg-4">
-                    <button class="button warning" style="width: 100%;">
-                        Réserver
-                    </button>
+                <div class="cell-lg-3">
                 </div>
             </div>
-        </form>
+            <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                <div class="row no-gap shadow-1" style="border-radius: 20px; margin-top: 10px;">
+                    <div class="cell-lg-4 bordure-orange-debut radius-gauche" style="padding-left: 7px; background-color: #fff;">
+                        <input formControlName="personnes" class="input" style="border: none" placeholder="Nombre de personnes">
+                    </div>
+                    <div class="cell-lg-4 bordure-orange-fin">
+                        <input #calendarpickerlocale formControlName="date" data-role="calendarpicker"
+                            data-prepend="Date d'arrivée">
+                    </div>
+                    <div class="cell-lg-4 bordure-orange-fin radius-droit">
+                        <button class="button warning" style="width: 100%;">
+                            Réserver
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
     <div class="contenu" style="padding-top: 5vh">
         <div class="row">

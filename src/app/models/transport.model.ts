@@ -1,3 +1,4 @@
+import { Depart } from './depart.model';
 import { Modele } from './model.model';
 
 export class Transport extends Modele {
@@ -9,6 +10,19 @@ export class Transport extends Modele {
     titre: string;
     tags: string;
     images: Array<string>;
+    privee: boolean;
+    agence: string;
+    vip: boolean;
+    heureDepart: Date;
+    allerRetour: boolean;
+    trajetInterne: boolean;
+    Trajet: string;
+
+    depart: Depart;
+    date: Date;
+    personnes: number;
+    retour: boolean;
+    dateRetour: Date;
 
     constructor() {
         super();

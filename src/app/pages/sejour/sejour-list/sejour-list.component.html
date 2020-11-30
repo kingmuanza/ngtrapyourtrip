@@ -5,28 +5,21 @@
                 <div class="titre">
                     Séjours
                 </div>
-                <div class="sous-titre text-leader2">
+                <div class="sous-titre text-leader2" style="font-size: 0.9em;">
                     Retrouvez les meilleurs séjours
                 </div>
             </div>
             <div class="cell-lg-12">
-                <div class="row no-gap">
-                    <div class="cell-lg-3 bordure-grise">
-                        <div style="margin-right: 10px;">
-                            <select data-cls-option="fg-orange"
-                            data-cls-selected-item="bg-orange fg-white" [(ngModel)]="ordre" data-filter="false" (ngModelChange)="ordonner($event)" data-role="select">
-                                <option value="croissant">
-                                    Ordre croissant de prix
-                                </option>
-                                <option value="decroissant">
-                                    Ordre décroissant de prix
-                                </option>
-                            </select>
+                <div class="row no-gap shadow-1 radius-gauche radius-droit">
+                    <div class="cell-lg-3 bordure-orange--debut radius-gauche">
+                        <div>
+                            <input style="padding-left: 10px;" placeholder="Ville" class="radius-gauche input iput-form"
+                                [(ngModel)]="recherche" (ngModelChange)="rechercher($event)">
                         </div>
                     </div>
-                    <div class="cell-lg-3 bordure-orange--debut">
+                    <div class="cell-lg-3 bordure-orange--fin">
                         <div>
-                            <input placeholder="Rechercher un séjour" data-role="input" [(ngModel)]="recherche" (ngModelChange)="rechercher($event)">
+                            <input placeholder="A partir du" data-role="input">
                         </div>
                     </div>
                     <div class="cell-lg-2 bordure-orange--fin">
@@ -39,7 +32,7 @@
                             <input placeholder="Enfants" data-role="input">
                         </div>
                     </div>
-                    <div class="cell-lg-2 bordure-orange--fin">
+                    <div class="cell-lg-2 bordure-orange--fin radius-droit">
                         <div>
                             <button class="button warning" style="width: 100%;">
                                 Rechercher
@@ -50,11 +43,27 @@
             </div>
         </div>
     </div>
-    <div class="contenu">
-        <div class="sejours">
-            <div class="row">
-                <div class="cell-lg-3" *ngFor="let sejour of resultats">
-                    <app-display-sejour [sejour]="sejour"></app-display-sejour>
+    <div class="contenu" style="padding-top: 15px;">
+        <div class="row">
+            <div class="cell-lg-2">
+                <div class="options">
+                    <span class="">
+                        <input type="checkbox" data-role="checkbox" data-caption="Plage">
+                    </span>
+                    <span class="">
+                        <input type="checkbox" data-role="checkbox" data-caption="Montagne">
+                    </span>
+                    <span class="">
+                        <input type="checkbox" data-role="checkbox" data-caption="Célébrations">
+                    </span>
+                </div>
+
+            </div>
+            <div class="cell-lg-10">
+                <div class="row">
+                    <div class="cell-lg-4" *ngFor="let sejour of resultats">
+                        <app-display-sejour [sejour]="sejour"></app-display-sejour>
+                    </div>
                 </div>
             </div>
         </div>

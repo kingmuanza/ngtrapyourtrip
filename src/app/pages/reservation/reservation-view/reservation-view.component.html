@@ -6,36 +6,100 @@
     </div>
     <div class="entete" *ngIf="reservation">
         <div class="titre2">
-            {{reservation.hebergement.titre}}
-            <span class="sejour__notation orange"
-                [innerHTML]="notationToStars(reservation.hebergement.notation)"></span>
-
+            <ng-container *ngIf="reservation.hebergement">
+                <b *ngIf="reservation.hebergement.prestataire" style="">
+                    {{reservation.hebergement.prestataire.nom}} -
+                </b>
+                {{reservation.hebergement.titre}}
+                <span class="sejour__notation orange"
+                    [innerHTML]="notationToStars(reservation.hebergement.notation)"></span>
+            </ng-container>
+            <ng-container *ngIf="reservation.transport">
+                {{reservation.transport.depart.agence.nom}} :
+                <b>
+                    {{reservation.transport.depart.modele}}
+                </b>
+            </ng-container>
+            <ng-container *ngIf="reservation.divertissement">
+                {{reservation.divertissement.titre}}
+            </ng-container>
         </div>
         <div class="sous-titre text-leader2">
-            {{reservation.hebergement.description}}
+            <ng-container *ngIf="reservation.hebergement">
+                {{reservation.hebergement.description}}
+            </ng-container>
+            <ng-container *ngIf="reservation.transport">
+                {{description(reservation.transport.depart.trajet)}}
+                <span *ngIf="reservation.transport.depart.vip" class="allerretour" style="float: right; font-weight: bold;">
+                    VIP
+                </span>
+            </ng-container>
+            <ng-container *ngIf="reservation.divertissement">
+                {{reservation.divertissement.description}}
+                <div>
+                    Le
+                    <b>{{reservation.divertissement.date | date: 'yyyy-MM-dd'}} </b>
+                </div>
+            </ng-container>
         </div>
 
         <div class="sejour_duree">
             <div class="row">
                 <div class="cell-lg-3">
                     <div style="padding-left: 10px;">
-                        Hébergement
+                        <ng-container *ngIf="reservation.hebergement">
+                            Hébergement
+                        </ng-container>
+                        <ng-container *ngIf="reservation.transport">
+                            Transport
+                        </ng-container>
+                        <ng-container *ngIf="reservation.divertissement">
+                            Divertissement
+                        </ng-container>
                     </div>
                 </div>
                 <div class="cell-lg-3">
                     <div>
-                        Durée séjour : {{days}} jours
+                        <ng-container *ngIf="reservation.hebergement">
+                            Durée séjour : {{days}} jours
+                        </ng-container>
+                        <ng-container *ngIf="reservation.divertissement">
+                        </ng-container>
                     </div>
                 </div>
                 <div class="cell-lg-3">
-                    {{reservation.personnes}} Adultes
+                    <ng-container *ngIf="reservation.transport">
+                        <ng-container
+                            *ngIf="reservation.transport.depart.trajet.villeDepart !== reservation.transport.depart.trajet.villeArrivee">
+                            {{reservation.personnes}} Adultes
+                        </ng-container>
+                        <ng-container
+                            *ngIf="reservation.transport.depart.trajet.villeDepart === reservation.transport.depart.trajet.villeArrivee">
+                            {{reservation.personnes}} jours
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="!(reservation.transport)">
+                        {{reservation.personnes}} Adultes
+                    </ng-container>
                 </div>
                 <div class="cell-lg-3">
-                    {{reservation.enfants}} Enfants
+                    <ng-container *ngIf="reservation.transport">
+                        <ng-container
+                            *ngIf="reservation.transport.depart.trajet.villeDepart !== reservation.transport.depart.trajet.villeArrivee">
+                            {{reservation.enfants ? reservation.enfants : 0}} Enfants
+                        </ng-container>
+                        <ng-container
+                            *ngIf="reservation.transport.depart.trajet.villeDepart === reservation.transport.depart.trajet.villeArrivee">
+
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="!(reservation.transport)">
+                        {{reservation.enfants ? reservation.enfants : 0}} Enfants
+                    </ng-container>
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 20px;">
+        <div *ngIf="reservation.hebergement" class="row" style="margin-top: 20px;">
             <div class="cell-lg-3">
                 <div>
                     <b>
@@ -43,7 +107,9 @@
                     </b>
                 </div>
                 <div>
-                    {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                    <ng-container *ngIf="reservation.hebergement">
+                        {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                    </ng-container>
                 </div>
             </div>
             <div class="cell-lg-3">
@@ -53,12 +119,17 @@
                     </b>
                 </div>
                 <div>
-                    {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                    <ng-container *ngIf="reservation.hebergement">
+                        {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                    </ng-container>
+                    <ng-container *ngIf="!reservation.hebergement">
+                        {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                    </ng-container>
                 </div>
             </div>
             <div class="cell-lg-2">
                 <div style="padding-top: 5px;">
-                    <button class="button outline warning"
+                    <button (click)="edit(reservation)" class="button outline warning"
                         style="border-color: rgb(255, 115,0); color: rgb(255, 115,0);">
                         Changer les dates
                     </button>
@@ -70,9 +141,80 @@
                 </h3>
             </div>
         </div>
+        <div *ngIf="reservation.divertissement" class="row" style="margin-top: 20px;">
+            <div class="cell-lg-3">
+                <div>
+                    <b>
+                        Arrivée
+                    </b>
+                </div>
+                <div>
+                    <div>
+                        <b>{{reservation.divertissement.date | date: 'yyyy-MM-dd'}} </b>
+                    </div>
+                </div>
+            </div>
+            <div class="cell-lg-3">
+            </div>
+            <div class="cell-lg-2">
+            </div>
+            <div class="cell-lg-4">
+                <h3 class="text-right" style="margin: 0; padding:0">
+                    {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                </h3>
+            </div>
+        </div>
+        <div *ngIf="reservation.transport" class="row" style="margin-top: 20px;">
+            <div class="cell-lg-3">
+                <div>
+                    <b>
+                        Date de Départ
+                    </b>
+                </div>
+                <div>
+                    {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                </div>
+                <h2 style="margin-top: 0px;">
+                    {{toDate(reservation.dateDebut) | date: 'HH:mm' : 'fr-FR'}}
+                </h2>
+            </div>
+            <div class="cell-lg-3">
+            <div *ngIf="reservation.transport.dateRetour">
+                <div>
+                    <b>
+                        Date de retour
+                    </b>
+                </div>
+                <div>
+                    {{toDate(reservation.transport.dateRetour) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                </div>
+                <h2 style="margin-top: 0px;">
+                    {{toDate(reservation.transport.dateRetour) | date: 'HH:mm' : 'fr-FR'}}
+                </h2>
+            </div>
+            </div>
+            <div class="cell-lg-2">
+            </div>
+            <div class="cell-lg-4 text-right">
+                <div>
+                    <b>
+                        {{reservation.personnes}} * {{reservation.transport.depart.prix | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                    </b>
+                </div>
+                <div *ngIf="reservation.transport.retour">
+                    <span class="allerretour">
+                        Aller Retour
+                    </span>
+                </div>
+                <h3 class="" style="margin: 0; padding:0">
+                    {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                </h3>
+            </div>
+        </div>
         <div style="margin-top: 40px">
-            <button class="button warning" style="background-color: rgb(255, 115,0); color: #fff;">
-                Passer aux informations personnelles
+            <button (click)="infos(reservation)" class="button warning"
+                style="background-color: rgb(255, 115,0); color: #fff;">
+                Suivant
             </button>
         </div>
 

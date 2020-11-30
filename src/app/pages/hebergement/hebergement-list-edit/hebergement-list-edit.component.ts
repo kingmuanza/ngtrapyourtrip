@@ -63,6 +63,7 @@ export class HebergementListEditComponent implements OnInit {
     }
 
     this.resultats = this.resultats.filter((hebergement) => {
+      /*
       if (hebergement.options) {
         const wifi = value.wifi ? hebergement.options.wifi : true;
         const parking = value.parking ? hebergement.options.parking : true;
@@ -78,6 +79,7 @@ export class HebergementListEditComponent implements OnInit {
         const parking = value.parking ? hebergement.parking : true;
         return wifi && parking;
       }
+      */
     });
 
   }
@@ -102,6 +104,7 @@ export class HebergementListEditComponent implements OnInit {
       db.collection('hebergements-trap').get().then((resultats) => {
         resultats.forEach((resultat) => {
           const hebergement = resultat.data() as Hebergement;
+          /*
           if (!hebergement.options) {
             hebergement.options = {
               wifi: false,
@@ -115,6 +118,7 @@ export class HebergementListEditComponent implements OnInit {
             hebergement.options.parking = hebergement.parking;
             hebergement.options.wifi = hebergement.wifi;
           }
+          */
           this.hebergements.push(hebergement);
           this.resultats.push(hebergement);
         });
@@ -150,6 +154,10 @@ export class HebergementListEditComponent implements OnInit {
         return a.nuitee - b.nuitee > 0 ? -1 : 1;
       });
     }
+  }
+
+  revenir() {
+    this.hebergement = null;
   }
 
 }

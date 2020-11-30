@@ -18,7 +18,7 @@ export class DisplaySejourComponent implements OnInit {
   }
 
   ouvrir(id) {
-    this.router.navigate(['sejour', 'view', id]);
+    this.router.navigate(['offres', 'sejour', 'view', id]);
   }
 
   notationToStars(notation: number) {
