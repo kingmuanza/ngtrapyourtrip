@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Utilisateur } from 'src/app/models/utilisateur.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -21,14 +21,45 @@ export class PrestataireListComponent implements OnInit {
   nature = '';
   triEtoiles = 0;
   triEtoilesIntention = 0;
+
+  filtersShowed = false;
+  recherchesShowed = false;
+  screenHeight: number;
+  screenWidth: number;
+  mobile = true;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder
-  ) { }
+  ) {
+
+    this.getScreenSize();
+  }
 
   ngOnInit(): void {
     this.getPrestataires();
     this.initForm();
+  }
+
+  toggleFilter() {
+    this.filtersShowed = !this.filtersShowed;
+  }
+
+  rechercheFilter() {
+    this.recherchesShowed = !this.recherchesShowed;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+    console.log('this.screenHeight, this.screenWidth');
+    console.log(this.screenHeight, this.screenWidth);
+    if (this.screenWidth > 599) {
+      this.mobile = false;
+      this.filtersShowed = true;
+      this.recherchesShowed = true;
+    }
   }
 
   changerEtoiles(nombre: number) {
@@ -56,18 +87,29 @@ export class PrestataireListComponent implements OnInit {
       mot: ['', []],
       ville: ['', []],
       nature: ['tous', []],
+      ordre: ['croissant'],
       adultes: [1, []],
       enfants: [0, []],
-      wifi: [false],
-      plage: [false],
+
       piscine: [false],
+      plage: [false],
+      spa: [false],
+      petitdej: [false],
+      dej: [false],
+      cuisine: [false],
+
+      hotel: [false],
+      appartement: [false],
+
+      wifi: [false],
       climatiseur: [false],
       parking: [false],
-      petitdej: [false],
       gardien: [false],
     });
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.subscribe((val) => {
+
       this.onSubmitForm();
+      this.changerOrdre(val.ordre);
     });
   }
 
@@ -75,7 +117,28 @@ export class PrestataireListComponent implements OnInit {
     const value = this.form.value;
     console.log('value');
     console.log(value);
-    const nature = value.nature;
+    let nature = value.nature;
+    if (nature) {
+      if (nature === 'null') {
+        if (value.hotel) {
+          nature = 'hotel';
+        }
+        if (value.appartement) {
+          nature = 'villa';
+        }
+        if (value.appartement && value.hotel) {
+          nature = null;
+        }
+      }
+
+    } else {
+      if (value.hotel) {
+        nature = 'hotel';
+      }
+      if (value.appartement) {
+        nature = 'villa';
+      }
+    }
     this.resultats = this.utilisateurs;
     if (value.mot) {
       this.resultats = this.rechercher(value.mot);
@@ -88,14 +151,13 @@ export class PrestataireListComponent implements OnInit {
 
     this.resultats = this.resultats.filter((prestataire) => {
       if (prestataire.options) {
-        const wifi = value.wifi ? prestataire.options.wifi : true;
-        const parking = value.parking ? prestataire.options.parking : true;
-        const plage = value.plage ? prestataire.options.plage : true;
         const piscine = value.piscine ? prestataire.options.piscine : true;
-        const climatiseur = value.climatiseur ? prestataire.options.climatiseur : true;
+        const plage = value.plage ? prestataire.options.plage : true;
+        const spa = value.spa ? prestataire.options.spa : true;
         const petitdej = value.petitdej ? prestataire.options.petitdej : true;
-        const gardien = value.gardien ? prestataire.options.gardien : true;
-        options = wifi && parking && plage && piscine && climatiseur && petitdej && gardien;
+        const dej = value.dej ? prestataire.options.dej : true;
+        const cuisine = value.cuisine ? prestataire.options.cuisine : true;
+        options = dej && cuisine && plage && piscine && petitdej && spa;
 
       } else {
         options = true;
@@ -111,9 +173,14 @@ export class PrestataireListComponent implements OnInit {
 
     this.ordonner(this.ordre);
 
+    console.log('Filtehffjf');
+    console.log(this.resultats);
+
   }
 
   changerOrdre(ordre) {
+    console.log('ordre');
+    console.log(ordre);
     this.ordre = ordre;
     this.ordonner(ordre);
   }
@@ -182,10 +249,38 @@ export class PrestataireListComponent implements OnInit {
       this.resultats.sort((a, b) => {
         return a.notation - b.notation > 0 ? 1 : -1;
       });
-    } else {
+    }
+    if (ev === 'decroissant') {
       this.resultats.sort((a, b) => {
         return a.notation - b.notation > 0 ? -1 : 1;
       });
     }
+    console.log(ev);
+    if (ev === 'croissant-prix') {
+      this.resultats.sort((a, b) => {
+        if (!a.prixMin) {
+          a.prixMin = 0;
+        }
+        if (!b.prixMin) {
+          b.prixMin = 0;
+        }
+        return a.prixMin - b.prixMin > 0 ? 1 : -1;
+      });
+    }
+    if (ev === 'decroissant-prix') {
+      this.resultats.sort((a, b) => {
+        if (!a.prixMin) {
+          a.prixMin = 0;
+        }
+        if (!b.prixMin) {
+          b.prixMin = 0;
+        }
+        return a.prixMin - b.prixMin > 0 ? -1 : 1;
+      });
+    }
+  }
+
+  nouveau() {
+    this.router.navigate(['prestataire', 'edit']);
   }
 }

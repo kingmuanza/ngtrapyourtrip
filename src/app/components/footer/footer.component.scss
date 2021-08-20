@@ -1,7 +1,8 @@
 .rubriques {
-    padding-top: 10vh;
-    padding-left: 5vw;
-    padding-right: 5vw;
+    padding-top: 10vmin;
+    padding-bottom: 10vmin;
+    padding-left: 10vw;
+    padding-right: 10vw;
     .rubrique {
         
     }
@@ -12,5 +13,11 @@
     cursor: pointer;
     &:hover {
         font-weight: bold;
+    }
+}
+
+* {
+    @media screen and (max-width: 599px) {
+        font-size: 12px;
     }
 }

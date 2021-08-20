@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Divertissement } from 'src/app/models/divertissement.model';
 declare const metro: any;
 
@@ -16,78 +16,90 @@ export class DivertissementEditComponent implements OnInit {
   fichiers: FileList;
   images = new Array<Blob>();
   liens = new Array<string>();
+  divertissement = new Divertissement();
+  nouveau = true;
+  type = 'restaurant';
+  dateDiver = new Date().toISOString().split('T')[0];
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
-    this.initForm();
-  }
+    this.route.paramMap.subscribe((paramMap) => {
+      const id = paramMap.get('id');
+      console.log('id');
+      console.log(id);
+      if (id) {
+        this.getDivertissement(id).then((divertissement) => {
 
-  initForm() {
-    this.form = this.formBuilder.group({
-      titre: ['Concert géant', Validators.required],
-      description: ['Venez vivre le show', Validators.required],
-      prix: ['50000', Validators.required],
-      lieu: ['Yaoundé', Validators.required],
-      date: ['', Validators.required],
-      tel: ['696543495', Validators.required],
-      notation: ['5', Validators.required],
-      tags: ['', Validators.required],
+          this.divertissement = divertissement;
+          this.nouveau = false;
+          if (divertissement.date) {
+            this.type = 'evenement';
+            this.divertissement.date = new Date(divertissement.date);
+            this.dateDiver = this.divertissement.date.toISOString().split('T')[0];
+          }
+          if (divertissement.restaurant) {
+            this.type = 'restaurant';
+          }
+          console.log('this.divertissement.restaurant');
+          console.log(this.divertissement.restaurant);
+
+        });
+      }
     });
   }
 
-  onFormSubmit() {
-    const value = this.form.value;
-    console.log('divertissemnt');
-    console.log(value);
+  enregistrer() {
+    console.log('this.divertissement');
+    console.log(this.dateDiver);
+    this.divertissement.date = new Date(this.dateDiver);
+    console.log(this.divertissement);
 
-    const titre = value.titre;
-    const description = value.description;
-    const prix = value.prix;
-    const lieu = value.lieu;
-    const tel = value.tel;
-    const notation = value.notation;
-    const tags = value.tags;
-    const date = value.date;
+    this.saveImages().then((liens) => {
+      this.images = [];
+      if (this.divertissement.images) {
+        this.divertissement.images = this.divertissement.images.concat(liens);
+      } else {
+        this.divertissement.images = liens;
+      }
+      console.log(this.divertissement);
+      this.save();
+    });
+  }
 
-    const divertissement = new Divertissement();
-    divertissement.titre = titre;
-    divertissement.description = description;
-    divertissement.prix = prix;
-    divertissement.lieu = lieu;
-    divertissement.tel = tel;
-    divertissement.notation = notation;
-    divertissement.tags = tags;
-    if (date) {
-      console.log('ya date');
-      divertissement.date = new Date(date);
-    } else {
-      console.log('ya pas date');
-      divertissement.date = null;
-    }
+  save() {
     const activity = metro().activity.open({
       type: 'square',
       overlayColor: '#fff',
       overlayAlpha: 0.8
     });
-    console.log('Activité est lancé');
-    this.save().then((liens) => {
-      console.log('liens');
-      console.log(liens);
-      divertissement.images = liens;
-      const db = firebase.firestore();
-      db.collection('divertissements-trap').doc(divertissement.id).set(JSON.parse(JSON.stringify(divertissement))).then(() => {
+    const db = firebase.firestore();
+    db.collection('divertissements-trap').doc(this.divertissement.id)
+      .set(JSON.parse(JSON.stringify(this.divertissement))).then((resultat) => {
         console.log('TERMINEEE !!!');
         metro().activity.close(activity);
-        this.router.navigate(['divertissement']);
-      }).catch(() => {
+        if (this.divertissement.date) {
+          this.router.navigate(['offres', 'divertissement', 'evenements']);
+        } else if (this.divertissement.restaurant) {
+          this.router.navigate(['offres', 'divertissement', 'restaurants']);
+        } else {
+          this.router.navigate(['offres', 'divertissement', 'loisirs']);
+        }
+      }).catch((e) => {
         metro().activity.close(activity);
       });
-    }).catch(() => {
-      console.log('Il ya un pb avec les images');
-    });
+  }
+
+  toDate(date) {
+    if (date) {
+      const d = new Date(date);
+      return d.toISOString().split('T')[0];
+    }
+    return null;
   }
 
   uploadFile(event: any) {
@@ -109,25 +121,39 @@ export class DivertissementEditComponent implements OnInit {
     }
   }
 
-  save(): Promise<Array<string>> {
+  saveImages(): Promise<Array<string>> {
     return new Promise((resolve, reject) => {
-      for (let i = 0; i < this.fichiers.length; i++) {
-        const fichier = this.fichiers[i];
-        const storageRef = firebase.storage().ref('sejours/' + Math.floor(Math.random() * 1000000) + fichier.name);
-        const task = storageRef.put(this.fichiers[i]);
-        task.then((data) => {
-          console.log('data');
-          console.log(data);
-          const imageUrl = storageRef.getDownloadURL().then((url) => {
-            this.liens.push(url);
-            console.log('liens');
-            console.log(this.liens);
-            if (this.liens.length === this.fichiers.length) {
-              resolve(this.liens);
-            }
+      if (this.fichiers) {
+        for (let i = 0; i < this.fichiers.length; i++) {
+          const fichier = this.fichiers[i];
+          const storageRef = firebase.storage().ref('sejours/' + Math.floor(Math.random() * 1000000) + fichier.name);
+          const task = storageRef.put(this.fichiers[i]);
+          task.then((data) => {
+            console.log('data');
+            console.log(data);
+            const imageUrl = storageRef.getDownloadURL().then((url) => {
+              this.liens.push(url);
+              console.log('liens');
+              console.log(this.liens);
+              if (this.liens.length === this.fichiers.length) {
+                resolve(this.liens);
+              }
+            });
           });
-        });
+        }
+      } else {
+        resolve([]);
       }
+    });
+  }
+
+  getDivertissement(id): Promise<Divertissement> {
+    const db = firebase.firestore();
+    return new Promise((resolve, reject) => {
+      db.collection('divertissements-trap').doc(id).get().then((resultat) => {
+        const div = resultat.data() as Divertissement;
+        resolve(div);
+      });
     });
   }
 

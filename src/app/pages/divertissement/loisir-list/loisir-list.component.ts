@@ -32,18 +32,34 @@ export class LoisirListComponent implements OnInit {
   initForm() {
     this.form = this.formBuilder.group({
       rechercher: ['', Validators.required],
-      dateDebut: ['', Validators.required],
-      dateFin: ['', Validators.required],
-      ville: ['Yaoundé', Validators.required],
+      ville: ['', Validators.required],
+    });
+    this.form.valueChanges.subscribe((val) => {
+      console.log('val');
+      console.log(val);
+      this.onFormSubmit();
     });
   }
 
   onFormSubmit() {
-
+    console.log('submit');
+    const value = this.form.value;
+    const texte = value.rechercher as string;
+    const ville = value.ville as string;
+    this.resultats = this.divertissements.filter((d) => {
+      const t = (texte && d.titre.toLowerCase().indexOf(texte.toLowerCase()) !== -1) || !texte;
+      const v = (ville && d.lieu && d.lieu.toLowerCase().indexOf(ville.toLowerCase()) !== -1) || !ville;
+      console.log(t);
+      console.log(v);
+      console.log(t && v);
+      return t && v;
+    });
+    console.log(this.resultats);
+    console.log(this.divertissements);
   }
 
-  ouvrir(id) {
-    this.router.navigate(['divertissement', 'view', id]);
+  goToAll() {
+    this.router.navigate(['offres', 'divertissement']);
   }
 
   getSejours() {
@@ -59,8 +75,10 @@ export class LoisirListComponent implements OnInit {
         resultats.forEach((resultat) => {
           const divertissement = resultat.data() as Divertissement;
           if (!divertissement.date) {
-            this.divertissements.push(divertissement);
-            this.resultats.push(divertissement);
+            if (!divertissement.restaurant) {
+              this.divertissements.push(divertissement);
+              this.resultats.push(divertissement);
+            }
           }
         });
         console.log('TERMINEEE !!!');

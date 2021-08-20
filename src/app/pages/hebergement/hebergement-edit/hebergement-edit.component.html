@@ -1,102 +1,157 @@
-<div class="titre">
-    {{hebergement ? hebergement.titre : "Nouvelle offre d'hébergement"}}
-</div>
-<div class="text-leader2" style="margin-bottom: 20px;">
-    {{hebergement && hebergement.prestataire ? hebergement.prestataire.nom : "Création d'une nouvelle offre d'hébergement"}}
-</div>
-<div class="formulaire">
-    <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-        <div>
-            <input data-role="input" formControlName="titre" data-prepend="Titre">
-        </div>
-        <div>
-            <input data-role="input" type="number" formControlName="nuitee" data-prepend="Nuitée">
-        </div>
-        <div>
-            <textarea data-role="textarea" formControlName="description" data-prepend="Description"></textarea>
-        </div>
-        <div class="row">
-            <div class="cell-lg-6">
-                <input data-role="input" formControlName="pays" data-prepend="Pays">
-            </div>
-            <div class="cell-lg-6">
-                <input data-role="input" formControlName="ville" data-prepend="Ville">
-            </div>
-        </div>
-        <div>
-            <input data-role="input" formControlName="lieu" data-prepend="Lieu">
-        </div>
-        <div>
-            <input data-role="input" formControlName="tel" data-prepend="Tel">
-        </div>
+<div class="page-creation">
+    <div class="row">
 
-        <div>
-            <label>
-                Quel prestataire offre cette prestation ?
-            </label>
-            <select formControlName="prestataire" class="select input-select">
-                <option>
-                    Choisir le prestataire
-                </option>
-                <option *ngFor="let p of prestataires" [ngValue]="p">
-                    {{p.nom}}
-                </option>
-            </select>
-        </div>
-        <div class="options">
-            <span class="">
-                <input type="checkbox" formControlName="baignoire" data-role="checkbox" data-caption="baignoire">
-            </span>
-            <span class="">
-                <input type="checkbox" formControlName="bouilloire" data-role="checkbox" data-caption="bouilloire">
-            </span>
-            <span class="">
-                <input type="checkbox" formControlName="climatiseur" data-role="checkbox" data-caption="climatiseur">
-            </span>
-            <span class="">
-                <input type="checkbox" formControlName="litdouble" data-role="checkbox" data-caption="litdouble">
-            </span>
-            <span class="">
-                <input type="checkbox" formControlName="litsimple" data-role="checkbox" data-caption="litsimple">
-            </span>
-            <span class="">
-                <input type="checkbox" formControlName="minibar" data-role="checkbox" data-caption="minibar">
-            </span>
-            <span class="">
-                <input type="checkbox" formControlName="tele" data-role="checkbox" data-caption="tele">
-            </span>
-            <span class="">
-                <input type="checkbox" formControlName="wifi" data-role="checkbox" data-caption="wifi">
-            </span>
-        </div>
-        <div>
-            <input data-role="input" formControlName="tags" data-prepend="Tags">
-            <small>Séparer les tags par un point-virgue ( ; )</small>
-        </div>
-        <div>
-            <input data-role="input" type="number" formControlName="notation" data-prepend="Notation">
-        </div>
-        <div>
-            <input (change)="uploadFile($event)" accept="image/*" data-role="file" type="file" multiple
-                data-prepend="Images">
-        </div>
-        <div class="row" *ngIf="hebergement">
-            <div class="cell-2" *ngFor="let image of hebergement.images">
-                <div [ngStyle]="{'background-image': 'url('+ image +')'}" class="hebergement-image"
-                    style="height: 20vh; background-size: cover;">
+        <div class="col-lg-8">
+            <div class="cadre">
+                <div class="titre">
+                    {{hebergement ? hebergement.titre : "Nouvelle offre d'hébergement"}}
+                </div>
+                <div class="text-leader2" style="margin-bottom: 20px;">
+                    {{hebergement && hebergement.prestataire ? hebergement.prestataire.nom : "Création d'une nouvelle
+                    offre
+                    d'hébergement"}}
+                </div>
+                <div class="formulaire">
+                    <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                        <div>
+                            <input data-role="input" formControlName="titre" data-prepend="Titre">
+                        </div>
+                        <div>
+                            <input data-role="input" type="number" formControlName="nuitee" data-prepend="Nuitée">
+                        </div>
+                        <div>
+                            <textarea data-role="textarea" formControlName="description"
+                                data-prepend="Description"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="cell-lg-6">
+                                <input data-role="input" formControlName="pays" data-prepend="Pays">
+                            </div>
+                            <div class="cell-lg-6">
+                                <input data-role="input" formControlName="ville" data-prepend="Ville">
+                            </div>
+                        </div>
+                        <div>
+                            <input data-role="input" formControlName="lieu" data-prepend="Lieu">
+                        </div>
+                        <div>
+                            <input data-role="input" formControlName="tel" data-prepend="Tel">
+                        </div>
 
-                </div>
-                <div style="margin-top: 5px;">
-                    <button (click)="retirerImage(image)" class="button" style="width: 100%;">
-                        Supprimer
-                    </button>
+                        <div>
+                            <label>
+                                Quel prestataire offre cette prestation ?
+                            </label>
+                            <select formControlName="prestataire" class="select input-select">
+                                <option>
+                                    Choisir le prestataire
+                                </option>
+                                <option *ngFor="let p of prestataires" [ngValue]="p">
+                                    {{p.nom}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="options">
+                            <span class="">
+                                <input type="checkbox" formControlName="baignoire" data-role="checkbox"
+                                    data-caption="baignoire">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="wifi" data-role="checkbox" data-caption="wifi">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="climatiseur" data-role="checkbox"
+                                    data-caption="climatiseur">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="bureau" data-role="checkbox"
+                                    data-caption="Espace  bureau">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="linge" data-role="checkbox"
+                                    data-caption="Lave linge">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="tele" data-role="checkbox" data-caption="tele">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="insonore" data-role="checkbox"
+                                    data-caption="insonorisation">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="bouilloire" data-role="checkbox"
+                                    data-caption="bouilloire">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="cafe" data-role="checkbox" data-caption="Café">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="minibar" data-role="checkbox"
+                                    data-caption="minibar">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="litdouble" data-role="checkbox"
+                                    data-caption="litdouble">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="litsimple" data-role="checkbox"
+                                    data-caption="litsimple">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="spa" data-role="checkbox"
+                                    data-caption="Spa et centre de bien être">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="forme" data-role="checkbox"
+                                    data-caption="Centre de remise en forme">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="navette" data-role="checkbox"
+                                    data-caption="Navette aéroport">
+                            </span>
+                        </div>
+                        <div>
+                            <input data-role="input" formControlName="tags" data-prepend="Tags">
+                            <small>Séparer les tags par un point-virgue ( ; )</small>
+                        </div>
+                        <div>
+                            <input data-role="input" type="number" formControlName="notation" data-prepend="Notation">
+                        </div>
+                        <div>
+                            <input (change)="uploadFile($event)" accept="image/*" data-role="file" type="file" multiple
+                                data-prepend="Images">
+                        </div>
+                        <div class="row" *ngIf="hebergement">
+                            <div class="cell-2" *ngFor="let image of hebergement.images">
+                                <div [ngStyle]="{'background-image': 'url('+ image +')'}" class="hebergement-image"
+                                    style="height: 20vh; background-size: cover;">
+
+                                </div>
+                                <div style="margin-top: 5px;">
+                                    <button (click)="retirerImage(image)" class="button" style="width: 100%;">
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="cell-lg-6">
+                                <button class="button warning">Enregistrer</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="cell-lg-6">
-                <button class="button warning">Enregistrer</button>
+        <div class="col-lg-4">
+            <div class="apercu">
+                <div class="apercu-titre">
+                    Aperçu de l'hébergement
+                </div>
+                <div *ngIf="hebergement">
+                    <app-display-hebergement [hebergement]="hebergement"></app-display-hebergement>
+                </div>
             </div>
         </div>
-    </form>
+    </div>
 </div>

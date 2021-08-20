@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { PanierService } from 'src/app/services/panier.service';
 import { Subscription } from 'rxjs';
 import { Trajet } from 'src/app/models/trajet.model';
+import * as firebase from 'firebase';
+declare const metro: any;
 
 @Component({
   selector: 'app-panier',
@@ -13,7 +15,7 @@ import { Trajet } from 'src/app/models/trajet.model';
 })
 export class PanierComponent implements OnInit {
 
-  reservations = [];
+  reservations = new Array<Reservation>();
   panierSubscription: Subscription;
   TOTAL = 0;
   isUser = false;
@@ -24,18 +26,28 @@ export class PanierComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.authService.utilisateur) {
-      this.isUser = true;
-    } else {
-      this.isUser = false;
-    }
-    this.panierSubscription = this.panierService.panierSubject.subscribe((reservations) => {
-      this.reservations = reservations;
-      this.reservations.forEach((reservation: Reservation) => {
-        this.TOTAL += reservation.cout;
-      });
+    const activity = metro().activity.open({
+      type: 'square',
+      overlayColor: '#fff',
+      overlayAlpha: 0.8
     });
-    this.panierService.getPanier();
+
+    const db = firebase.firestore();
+    db.collection('reservation-trap').get().then((resultats) => {
+      resultats.forEach((resultat) => {
+        const reservation = resultat.data() as Reservation;
+        if (reservation.responsable) {
+          this.reservations.push(reservation);
+        }
+        this.reservations.sort((a, b) => {
+          return new Date(a.date).getTime() - new Date(b.date).getTime() > 0 ? -1 : 1;
+        })
+      });
+      console.log('TERMINEEE !!!');
+      metro().activity.close(activity);
+    }).catch((e) => {
+      metro().activity.close(activity);
+    });
   }
 
   suivant() {
@@ -48,37 +60,12 @@ export class PanierComponent implements OnInit {
   }
 
   voir(reservation: Reservation) {
-    if (reservation.sejour) {
-      this.router.navigate(['sejour', 'view', reservation.sejour.id]);
-    }
-    if (reservation.hebergement) {
-      if (reservation.responsable) {
-        this.router.navigate(['offres', 'reservation', 'recap', reservation.id]);
-      } else {
-        this.router.navigate(['offres', 'reservation', 'infos', reservation.id]);
-      }
-    }
-    if (reservation.divertissement) {
-      this.router.navigate(['divertissement', 'view', reservation.divertissement.id]);
-    }
-    if (reservation.transport) {
-      this.router.navigate(['transport', 'view', reservation.transport.id]);
-    }
+      this.router.navigate(['offres', 'reservation', 'recap', reservation.id]);
   }
 
   modifier(reservation: Reservation) {
-    if (reservation.sejour) {
-      this.router.navigate(['sejour', 'view', reservation.sejour.id]);
-    }
-    if (reservation.hebergement) {
-      this.router.navigate(['hebergement', 'view', reservation.hebergement.id]);
-    }
-    if (reservation.divertissement) {
-      this.router.navigate(['divertissement', 'view', reservation.divertissement.id]);
-    }
-    if (reservation.transport) {
-      this.router.navigate(['transport', 'view', reservation.transport.id]);
-    }
+    this.router.navigate(['offres', 'reservation', 'view', reservation.id]);
+
   }
 
   supprimer(id) {
@@ -106,6 +93,7 @@ export class PanierComponent implements OnInit {
       localStorage.setItem('panier-trap', JSON.stringify([]));
       this.panierService.reservations = [];
       this.panierService.emit();
+      this.TOTAL = 0;
     }
   }
 

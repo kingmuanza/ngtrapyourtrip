@@ -5,6 +5,7 @@ import { ChartsModule } from 'ng2-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -78,6 +79,13 @@ import { LoisirListComponent } from './pages/divertissement/loisir-list/loisir-l
 import { LoisirViewComponent } from './pages/divertissement/loisir-view/loisir-view.component';
 import { LoisirEditComponent } from './pages/divertissement/loisir-edit/loisir-edit.component';
 import { DisplayLoisirComponent } from './components/display-loisir/display-loisir.component';
+import { RestaurantListComponent } from './pages/divertissement/restaurant-list/restaurant-list.component';
+import { RestaurantViewComponent } from './pages/divertissement/restaurant-view/restaurant-view.component';
+import { VilleComponent } from './pages/accueil/ville/ville.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { AboutComponent } from './pages/about/about.component';
+import { ConditionsComponent } from './pages/conditions/conditions.component';
+import { CharteComponent } from './pages/charte/charte.component';
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -154,7 +162,14 @@ registerLocaleData(localeFr, 'fr-FR');
     LoisirListComponent,
     LoisirViewComponent,
     LoisirEditComponent,
-    DisplayLoisirComponent
+    DisplayLoisirComponent,
+    RestaurantListComponent,
+    RestaurantViewComponent,
+    VilleComponent,
+    AdminComponent,
+    AboutComponent,
+    ConditionsComponent,
+    CharteComponent
   ],
   imports: [
     BrowserModule,
@@ -168,7 +183,8 @@ registerLocaleData(localeFr, 'fr-FR');
     {
       provide: LOCALE_ID,
       useValue: 'fr-FR'
-    }
+    },
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
 })
 export class AppModule { }

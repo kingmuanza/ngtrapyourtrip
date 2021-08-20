@@ -1,5 +1,6 @@
 import { Depart } from './depart.model';
 import { Modele } from './model.model';
+import { Modification } from './modification.model';
 
 export class Transport extends Modele {
 
@@ -23,6 +24,7 @@ export class Transport extends Modele {
     personnes: number;
     retour: boolean;
     dateRetour: Date;
+    modification: Modification;
 
     constructor() {
         super();

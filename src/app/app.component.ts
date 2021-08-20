@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
-import { AuthentificationService } from './services/authentification.service';
+import { AdminService } from './services/admin.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,7 @@ import { AuthentificationService } from './services/authentification.service';
 export class AppComponent implements OnInit {
   title = 'trap';
 
-  constructor(private authService: AuthentificationService) {
+  constructor(private authService: AdminService) {
     const FIREBASE_CONFIG = {
       apiKey: 'AIzaSyD6j-e5lYO_vfM2_PDt5Fr2tXInMEztwA4',
       authDomain: 'trapyourtrip.firebaseapp.com',
@@ -24,16 +24,16 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const utilisateurString = localStorage.getItem('trap-your-utilisateur');
+    const utilisateurString = localStorage.getItem('trap-your-admin');
     if (utilisateurString) {
-      console.log('Utilisateur trouvé... Auto connexion');
+      console.log('administrateur trouvé... Auto connexion');
       try {
 
-        const utilisateur = JSON.parse(utilisateurString);
-        this.authService.utilisateur = utilisateur;
+        const administrateur = JSON.parse(utilisateurString);
+        this.authService.administrateur = administrateur;
         this.authService.emit();
       } catch (e) {
-        localStorage.removeItem('trap-your-utilisateur');
+        localStorage.removeItem('trap-your-admin');
       }
     }
 

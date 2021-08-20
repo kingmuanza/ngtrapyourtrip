@@ -1,3 +1,5 @@
+import { Modification } from './modification.model';
+
 export class Utilisateur {
 
     id: string;
@@ -20,25 +22,25 @@ export class Utilisateur {
     prixMin: number;
 
     options: {
-        wifi: boolean,
-        plage: boolean,
-        piscine: boolean,
-        climatiseur: boolean,
-        parking: boolean,
-        petitdej: boolean,
-        gardien: boolean,
+      piscine: boolean,
+      plage: boolean,
+      spa: boolean,
+      petitdej: boolean,
+      dej: boolean,
+      cuisine: boolean,
     };
+    modification: Modification;
+    indisponible = false;
 
     constructor() {
 
         this.options = {
-            wifi: false,
-            plage: false,
             piscine: false,
-            climatiseur: false,
-            parking: false,
+            plage: false,
+            spa: false,
             petitdej: false,
-            gardien: false,
+            dej: false,
+            cuisine: false,
         };
         this.prixMin = 0;
     }

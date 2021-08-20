@@ -1,9 +1,9 @@
 {
   "targets": {
-    "trapyourtrip": {
+    "admintrapyourtrip": {
       "hosting": {
         "trap": [
-          "trapyourtrip"
+          "admintrapyourtrip"
         ]
       }
     }

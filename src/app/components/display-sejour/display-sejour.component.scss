@@ -28,8 +28,6 @@
         background-color: #eee;
         height: 250px;
         overflow: hidden;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
 
     }
 
@@ -38,7 +36,6 @@
         background-size: cover;
         background-position: center center;
         
-        border-radius: 10px;
         transition: transform 400ms;
         animation-name: opaque;
         animation-duration: 1000ms;
@@ -50,13 +47,12 @@
     }
 
     .sejour__description {
-        padding: 10px;
-        padding-left: 15px;
-        background-color: #eee;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        height: 120px;
+        padding: 0px;
+        padding-top: 5px;
+        // background-color: #eee;
+        height: 80px;
         overflow: hidden;
+        line-height: 1.15;
 
     }
 
@@ -67,40 +63,45 @@
     }
 
     .sejour__prix {
-        margin-top: -10px;
+        margin-top: -5px;
         span {
             color: #444;
-            border-radius: 5px;
             font-weight: bold;
         }
 
     }
     .sejour__calendrier {
-        font-weight: bold;
-        padding-top: 10px;
-        color: rgb(255, 115, 0);
+        // position: absolute;
+        // bottom: 10px;
+        // left: 15px;
+        // font-size: 13px;
+        opacity: 0.9;
+        margin-top: -10px;
+        span {
+            //font-weight: bold;
+            color: rgb(48, 164, 221);
+            //color: #777;
+        }
     }
 }
 
 .orange {
-    color: rgb(255, 115, 0);
+    color: rgb(48, 164, 221);
 }
 
 .muanza-details {
-    margin-top: -250px;
-    padding-top: 10px;
-    padding-left: 10px;
-    text-align: left;
-    margin-right: 30%;
-    line-height: 2.5;
 
     .detail {
-        background-color: rgb(255, 115, 0);
+        background-color: rgb(48, 164, 221);
         padding: 5px;
         padding-left: 8px;
         padding-right: 8px;
         margin-left: 3px;
         margin-right: 3px;
-        border-radius: 5px;
     }
+}
+
+.petit-titre {
+    font-size: 18px;
+    font-family: 'Raleway';
 }

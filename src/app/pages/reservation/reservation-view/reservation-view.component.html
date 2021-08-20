@@ -1,7 +1,7 @@
 <div class="page" style="min-height: 100vh; padding-top: 10px;">
     <div style="margin-top: 0px; margin-bottom: 20px;">
         <div data-role="stepper" data-steps="3" data-step="1" data-view="diamond" data-cls-step="rounded"
-            data-cls-complete="bg-green" data-cls-current="bg-orange">
+            data-cls-complete="bg-green" data-cls-current="bg-blue">
         </div>
     </div>
     <div class="entete" *ngIf="reservation">
@@ -11,7 +11,7 @@
                     {{reservation.hebergement.prestataire.nom}} -
                 </b>
                 {{reservation.hebergement.titre}}
-                <span class="sejour__notation orange"
+                <span class="sejour__notation fg-bleu"
                     [innerHTML]="notationToStars(reservation.hebergement.notation)"></span>
             </ng-container>
             <ng-container *ngIf="reservation.transport">
@@ -130,7 +130,7 @@
             <div class="cell-lg-2">
                 <div style="padding-top: 5px;">
                     <button (click)="edit(reservation)" class="button outline warning"
-                        style="border-color: rgb(255, 115,0); color: rgb(255, 115,0);">
+                        style="border-color:  rgb(48, 164, 221); color:  rgb(48, 164, 221);">
                         Changer les dates
                     </button>
                 </div>
@@ -150,7 +150,7 @@
                 </div>
                 <div>
                     <div>
-                        <b>{{reservation.divertissement.date | date: 'yyyy-MM-dd'}} </b>
+                        <b>{{reservation.divertissement.date | date: 'yyyy-MM-dd HH:mm'}} </b>
                     </div>
                 </div>
             </div>
@@ -213,8 +213,8 @@
         </div>
         <div style="margin-top: 40px">
             <button (click)="infos(reservation)" class="button warning"
-                style="background-color: rgb(255, 115,0); color: #fff;">
-                Suivant
+                style="background-color:  rgb(48, 164, 221); color: #fff;">
+                Etape suivante
             </button>
         </div>
 

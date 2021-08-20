@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Agence } from 'src/app/models/agence.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { Trajet } from 'src/app/models/trajet.model';
 import { Depart } from 'src/app/models/depart.model';
@@ -21,30 +21,70 @@ export class DepartEditComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
     this.initForm();
-    // this.getTrajets();
-    // this.getAgences();
+    this.route.paramMap.subscribe((paramMap) => {
+      const id = paramMap.get('id');
+      if (id) {
+        const db = firebase.firestore();
+        db.collection('departs-trap').doc(id).get().then((resultat) => {
+          const depart = resultat.data() as Depart;
+          this.depart = depart;
+          this.initForm();
+        }).catch((e) => {
+        });
+      }
+    });
+    this.getTrajets();
+    this.getAgences();
   }
 
   initForm() {
+    const heures = '08:00; 09:00; 10:00; 11:00; 12:00; 13:00; 14:00; 15:00';
+    let agence: Agence = null;
+    let trajet: Trajet = null;
+    if (this.depart) {
+      this.agences.forEach((a) => {
+        if (a.id === this.depart.agence.id) {
+          agence = a;
+        }
+      });
+      this.trajets.forEach((t) => {
+        if (t.id === this.depart.trajet.id) {
+          trajet = t;
+        }
+      });
+    }
     this.form = this.formBuilder.group({
-      agence: [this.depart ? this.depart.agence : null, Validators.required],
-      trajet: [this.depart ? this.depart.trajet : null, Validators.required],
+      agence: [this.depart ? agence : null, Validators.required],
+      trajet: [this.depart ? trajet : null, Validators.required],
       modele: [this.depart ? this.depart.modele : 'Gros porteur', Validators.required],
       prix: [this.depart ? this.depart.prix : '5000', Validators.required],
       vip: [this.depart ? this.depart.vip : true],
-      heures: [this.depart ? this.depart.heures : '08:00; 09:00; 10:00; 11:00; 12:00; 13:00; 14:00; 15:00', Validators.required],
+      heures: [this.depart ? this.reverseHeures(this.depart.heures) : heures, Validators.required],
     });
+  }
 
+  reverseHeures(dates: Array<Date>): string {
+    let heures = '';
+    dates.forEach((d) => {
+      const date = new Date(d);
+      heures = heures + date.toISOString().split('T')[1].substr(0, 5) + '; ';
+    });
+    return heures;
   }
 
   onSubmitForm() {
     const value = this.form.value;
-    const depart = new Depart();
+    let depart = new Depart();
+
+    if (this.depart) {
+      depart = this.depart;
+    }
 
     depart.agence = value.agence;
     depart.trajet = value.trajet;
@@ -74,7 +114,7 @@ export class DepartEditComponent implements OnInit {
     const db = firebase.firestore();
     db.collection('departs-trap').doc(depart.id).set(JSON.parse(JSON.stringify(depart))).then(() => {
       metro().activity.close(activity);
-      this.router.navigate(['offres', 'transport']);
+      this.router.navigate(['offres', 'transport', 'depart', 'list', depart.trajet.id]);
     }).catch((e) => {
       metro().activity.close(activity);
     });
@@ -90,6 +130,7 @@ export class DepartEditComponent implements OnInit {
         this.trajets.push(trajet);
       });
       console.log('tajets fin');
+      this.initForm();
     }).catch((e) => {
       console.log(e);
     });
@@ -102,6 +143,7 @@ export class DepartEditComponent implements OnInit {
         const agence = resultat.data() as Agence;
         this.agences.push(agence);
       });
+      this.initForm();
     }).catch((e) => {
     });
   }

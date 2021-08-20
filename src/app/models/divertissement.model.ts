@@ -1,4 +1,5 @@
 import { Modele } from './model.model';
+import { Modification } from './modification.model';
 
 export class Divertissement extends Modele {
 
@@ -11,9 +12,12 @@ export class Divertissement extends Modele {
     notation: number;
     tags: string;
     date: Date;
-    images: Array<string>;
+    images = new Array<string>();
+    restaurant: boolean;
+    modification: Modification;
 
     constructor() {
         super();
+        this.prix = 0;
     }
 }

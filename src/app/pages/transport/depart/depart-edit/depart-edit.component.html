@@ -1,7 +1,10 @@
 <div class="page">
     <div class="entete">
-        <div class="titre">
+        <div *ngIf="!depart" class="titre">
             Nouveau départ
+        </div>
+        <div *ngIf="depart" class="titre">
+            Départ
         </div>
     </div>
     <div class="contenu">
@@ -32,7 +35,7 @@
                 </small>
             </div>
             <div>
-                <input formControlName="vip" value="muanza" data-role="checkbox" data-caption="Service VIP">
+                <input formControlName="vip" type="checkbox" value="muanza" data-role="checkbox" data-caption="Service VIP">
             </div>
             <div>
                 <input formControlName="prix" data-role="input" type="number" data-prepend="Coût du trajet">

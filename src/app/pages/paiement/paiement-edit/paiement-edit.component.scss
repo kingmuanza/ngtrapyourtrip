@@ -2,10 +2,19 @@
 .page-sejour {
     .entete {
 
+        background-color: rgb(48, 164, 221);
+        color: white;
         padding-top: 60px;
-        padding-left: 5vw;
-        padding-right: 5vw;
-        padding-bottom: 5vh;
+        padding-bottom: 3vh;
+        padding-left: 10vw;
+        padding-right: 10vw;
+
+        @media screen and (max-width: 599px) {
+            padding-top: 50px;
+            padding-left: 5vw;
+            padding-right: 5vw;
+            text-align: center;
+        }
 
         .titre {
             font-size: 3.0em;
@@ -17,10 +26,33 @@
     }
 
     .contenu {
-        padding-top: 5vh;
-        padding-left: 5vw;
-        padding-right: 5vw;
-        padding-bottom: 5vh;
+        padding-top: 2vh;
         min-height: 80vh;
+        padding-bottom: 5vh;
+        padding-left: 10vw;
+        padding-right: 10vw;
+
+        @media screen and (max-width: 599px) {
+            padding-top: 50px;
+            padding-left: 5vw;
+            padding-right: 5vw;
+            text-align: center;
+        }
     }
 }
+
+.logo {
+    height: 200px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.7;
+    }
+
+} 

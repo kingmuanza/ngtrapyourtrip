@@ -30,6 +30,14 @@
                         </div>
                         <div *ngIf="trajet.villeDepart !== trajet.villeArrivee">
                             {{trajet.villeDepart}} - {{trajet.villeArrivee}}
+                            <span style="float:right">
+                                <span class="mif-meter">
+
+                                </span>
+                                <span style="margin-left: 10px;">
+                                    {{trajet.duree ? trajet.duree: 'Aucune information sur la durée du trajet'}}
+                                </span>
+                            </span>
                         </div>
                     </div>
                 </div>

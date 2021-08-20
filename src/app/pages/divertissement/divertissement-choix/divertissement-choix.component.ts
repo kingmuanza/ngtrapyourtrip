@@ -23,4 +23,12 @@ export class DivertissementChoixComponent implements OnInit {
     this.router.navigate(['offres', 'divertissement', 'loisirs']);
   }
 
+  restaurants() {
+    this.router.navigate(['offres', 'divertissement', 'restaurants']);
+  }
+
+  nouveau() {
+    this.router.navigate(['offres', 'divertissement', 'edit']);
+  }
+
 }

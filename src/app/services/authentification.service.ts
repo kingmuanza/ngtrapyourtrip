@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Utilisateur } from '../models/utilisateur.model';
 import * as firebase from 'firebase';
 import { Subject } from 'rxjs';
+import { PanierService } from './panier.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,9 @@ export class AuthentificationService {
 
   utilisateur: Utilisateur;
   utilisateurSubject = new Subject();
-  constructor() { }
+  constructor(
+    private panierService: PanierService
+  ) { }
 
   emit() {
     this.utilisateurSubject.next(this.utilisateur);
@@ -62,6 +65,14 @@ export class AuthentificationService {
   deconnexion() {
     this.utilisateur = null;
     localStorage.removeItem('trap-your-utilisateur');
+    this.deletePanier();
+    this.emit();
+  }
+
+  deletePanier() {
+    localStorage.removeItem('panier-trap');
+    this.panierService.reservations = [];
+    this.panierService.emit();
     this.emit();
   }
 }

@@ -61,7 +61,7 @@ export class OubliComponent implements OnInit {
       if (ya) {
         const auth = firebase.auth();
         const actionCodeSettings = {
-          url: 'https://trapyourtrip.web.app',
+          url: 'https://trapyourtrip.com',
           handleCodeInApp: true,
           // When multiple custom dynamic link domains are defined, specify which
           // one to use.

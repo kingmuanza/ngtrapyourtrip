@@ -1,38 +1,382 @@
-<div class="titre">
-    Nouveau séjour
-</div>
-<div class="text-leader2" style="margin-bottom: 20px;">
-    Création d'un nouveau séjour
-</div>
-<div class="formulaire">
-    <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-        <div>
-            <input data-role="input" formControlName="titre" data-prepend="Titre">
-        </div>
-        <div>
-            <input data-role="input" type="number" formControlName="prixUnitaire" data-prepend="Prix Unitaire">
-        </div>
-        <div>
-            <input data-role="input" formControlName="ville" data-prepend="Ville">
-        </div>
-        <div>
-            <textarea data-role="textarea" formControlName="description" data-prepend="Description"></textarea>
-        </div>
-
-        <div>
-            <input data-role="input" formControlName="tags" data-prepend="Tags">
-            <small>Séparer les tags par un point-virgue ( ; )</small>
-        </div>
-        <div>
-            <input data-role="input" type="number" formControlName="notation" data-prepend="Notation">
-        </div>
-        <div>
-            <input (change)="uploadFile($event)" data-role="file" type="file" multiple data-prepend="Images">
-        </div>
+<app-admin>
+    <div class="muanza-padding-sejour">
         <div class="row">
-            <div class="cell-lg-6">
-                <button class="button warning">Enregistrer</button>
+            <div class="col-lg-8">
+                <div class="cadre">
+                    <div class="titre" *ngIf="!sejour">
+                        Nouveau séjour
+                    </div>
+                    <div class="titre" *ngIf="sejour">
+                        {{sejour.titre}}
+                    </div>
+                    <div class="text-leader2" style="margin-bottom: 20px;">
+                        Création d'un nouveau séjour
+                    </div>
+                    <div class="formulaire">
+                        <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                            <div class="bloc">
+                                <h4>
+                                    Informations générales
+                                </h4>
+                                <div class="row">
+                                    <div class="cell-lg-8">
+                                        <input data-role="input" formControlName="titre" data-prepend="Titre">
+                                    </div>
+                                    <div class="cell-lg-4">
+                                        <input data-role="input" type="number" formControlName="notation"
+                                            data-prepend="Notation">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="cell-lg-6">
+                                        <input data-role="input" formControlName="ville" data-prepend="Ville">
+                                    </div>
+                                    <div class="cell-lg-6">
+                                        <input data-role="input" type="number" formControlName="prixUnitaire"
+                                            data-prepend="Prix Unitaire">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div>
+                                            <textarea data-role="textarea" formControlName="description"
+                                                data-prepend="Description"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="cell-lg-6">
+                                        <input data-role="input" type="date" formControlName="dateDebut"
+                                            data-prepend="Date de début">
+                                    </div>
+                                    <div class="cell-lg-6">
+                                        <input data-role="input" type="date" formControlName="dateFin"
+                                            data-prepend="Date de fin">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bloc" *ngIf="prestataires">
+                                <h4>
+                                    Hébergements
+                                </h4>
+                                <div class="row">
+                                    <div class="cell-lg-8">
+                                        <div class="text-leader2">
+                                            Choississez parmi les logements disponibles,
+                                            le logement qui sera proposé au client durant son séjour
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <select formControlName="prestataire" class="select input-select"
+                                                    style="padding-left: 20px;">
+                                                    <option value="0">
+                                                        Choisir le prestataire
+                                                    </option>
+                                                    <option *ngFor="let p of prestataires" [ngValue]="p">
+                                                        {{p.nom}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <select formControlName="hebergement" class="select input-select"
+                                                    style="padding-left: 20px;">
+                                                    <option *ngIf="hebergement">
+                                                        {{hebergement.titre}}
+                                                    </option>
+                                                    <option value="0">
+                                                        Aucun hébergement
+                                                    </option>
+                                                    <option *ngFor="let h of resultatsHebergements" [ngValue]="h">
+                                                        {{h.titre}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cell-lg-4">
+                                        <div *ngIf="hebergement">
+                                            <app-display-hebergement [cliquable]="false" [hebergement]="hebergement">
+                                            </app-display-hebergement>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bloc">
+                                <h4>
+                                    Divertissements
+                                </h4>
+                                <div>
+                                    <select [compareWith]="compareTech" *ngIf="divertissementsGood"
+                                        formControlName="divertissements" data-role="select" multiple>
+
+                                        <option *ngFor="let d of divertissements" [ngValue]="d">
+                                            {{d.titre}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="cell-lg-4" *ngFor="let md of mesDivertissements">
+                                        <ng-container *ngIf="md.date">
+                                            <app-display-divertissement [cliquable]="false" [divertissement]="md">
+                                            </app-display-divertissement>
+                                        </ng-container>
+                                        <ng-container *ngIf="!md.date">
+                                            <app-display-loisir [cliquable]="false" [divertissement]="md">
+
+                                            </app-display-loisir>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bloc">
+                                
+                                <h4>
+                                    Options
+                                </h4>
+                                <div class="les-options">
+                                    <div class="les-options-contenant">
+                                        <div class="les-options-contenu">
+                                            <div class="options-titres">
+                                                Filtres populaires
+                                            </div>
+                                            <div class="options">
+                                                <span class="">
+                                                    <input formControlName="relaxation" type="checkbox" data-role="checkbox"
+                                                        data-caption="Relaxation">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="pieds" type="checkbox" data-role="checkbox"
+                                                        data-caption="Pieds dans le sable">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="phasenature" type="checkbox" data-role="checkbox"
+                                                        data-caption="En phase avec la nature">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="sportif" type="checkbox" data-role="checkbox"
+                                                        data-caption="Sportif">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="gastronomique" type="checkbox" data-role="checkbox"
+                                                        data-caption="Découverte gastronomique">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="insolite" type="checkbox" data-role="checkbox"
+                                                        data-caption="Hébergement insolite">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="festive" type="checkbox" data-role="checkbox"
+                                                        data-caption="Ambiance festive">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="affaire" type="checkbox" data-role="checkbox"
+                                                        data-caption="Séjour d'affaire">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="culturel" type="checkbox" data-role="checkbox"
+                                                        data-caption="Evènement culturel">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="animaux" type="checkbox" data-role="checkbox"
+                                                        data-caption="A la rencontre des animaux">
+                                                </span>
+                                            </div>
+        
+                                            <div class="options-titres">
+                                                Activités
+                                            </div>
+                                            <div class="options">
+                                                <span class="">
+                                                    <input formControlName="spa" type="checkbox" data-role="checkbox"
+                                                        data-caption="Accès au spa">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="soin" type="checkbox" data-role="checkbox"
+                                                        data-caption="Soin de corps">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="massage" type="checkbox" data-role="checkbox"
+                                                        data-caption="Massage et modélage">
+                                                </span>
+                                            </div>
+        
+                                            <div class="options-titres">
+                                                Dîner
+                                            </div>
+                                            <div class="options">
+                                                <span class="">
+                                                    <input formControlName="pension" type="checkbox" data-role="checkbox"
+                                                        data-caption="Demi pension">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="diner" type="checkbox" data-role="checkbox"
+                                                        data-caption="Dîner">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="degustation" type="checkbox" data-role="checkbox"
+                                                        data-caption="Dégustation">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="pensioncomplete" type="checkbox"
+                                                        data-role="checkbox" data-caption="Pension complète">
+                                                </span>
+                                            </div>
+        
+                                            <div class="options-titres">
+                                                Culture
+                                            </div>
+                                            <div class="options">
+                                                <span class="">
+                                                    <input formControlName="visiteguidee" type="checkbox" data-role="checkbox"
+                                                        data-caption="Visite guidée">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="autresvisites" type="checkbox" data-role="checkbox"
+                                                        data-caption="Autres visites">
+                                                </span>
+                                            </div>
+        
+                                            <div class="options-titres">
+                                                Sport
+                                            </div>
+                                            <div class="options">
+                                                <span class="">
+                                                    <input formControlName="golf" type="checkbox" data-role="checkbox"
+                                                        data-caption="Golf à proximité">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="sallesport" type="checkbox" data-role="checkbox"
+                                                        data-caption="Forfait inclus salle de sport">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="velo" type="checkbox" data-role="checkbox"
+                                                        data-caption="Vélo">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="tennis" type="checkbox" data-role="checkbox"
+                                                        data-caption="Accès au terrain de tennis">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="basket" type="checkbox" data-role="checkbox"
+                                                        data-caption="Accès au terrain de basket">
+                                                </span>
+                                            </div>
+                                            <div class="options-titres">
+                                                Divertissement
+                                            </div>
+                                            <div class="options">
+                                                <span class="">
+                                                    <input formControlName="ponctuel" type="checkbox" data-role="checkbox"
+                                                        data-caption="Evènement ponctuel">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="attraction" type="checkbox" data-role="checkbox"
+                                                        data-caption="Parc d'attraction">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="spectacle" type="checkbox" data-role="checkbox"
+                                                        data-caption="Spectacle">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="zoo" type="checkbox" data-role="checkbox"
+                                                        data-caption="Zoo">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="foire" type="checkbox" data-role="checkbox"
+                                                        data-caption="Foire">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="randonnee" type="checkbox" data-role="checkbox"
+                                                        data-caption="Randonnée">
+                                                </span>
+                                            </div>
+                                            <div class="options-titres">
+                                                Catégorie propriété
+                                            </div>
+                                            <div class="options">
+                                                <span class="">
+                                                    <input formControlName="maisonvacances" type="checkbox" data-role="checkbox"
+                                                        data-caption="Maison de vacances">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="appartementvacances" type="checkbox"
+                                                        data-role="checkbox" data-caption="Appartement de vacances">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="chambrehotel" type="checkbox" data-role="checkbox"
+                                                        data-caption="Chambre d'hôtel">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="villagevacances" type="checkbox"
+                                                        data-role="checkbox" data-caption="Village de vacances">
+                                                </span>
+                                            </div>
+                                            <div class="options-titres">
+                                                Lieu de prise en charge de l'activité
+                                            </div>
+                                            <div class="options">
+                                                <span class="">
+                                                    <input formControlName="hotel" type="checkbox" data-role="checkbox"
+                                                        data-caption="Hôtel">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="pointrencontre" type="checkbox" data-role="checkbox"
+                                                        data-caption="Point de rencontre">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="lieuactivite" type="checkbox" data-role="checkbox"
+                                                        data-caption="Lieu de l'activité">
+                                                </span>
+                                            </div>
+                                            <div class="options-titres">
+                                                Langues disponibles
+                                            </div>
+                                            <div class="options">
+                                                <span class="">
+                                                    <input formControlName="francais" type="checkbox" data-role="checkbox"
+                                                        data-caption="Français">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="anglais" type="checkbox" data-role="checkbox"
+                                                        data-caption="Anglais">
+                                                </span>
+                                                <span class="">
+                                                    <input formControlName="arabe" type="checkbox" data-role="checkbox"
+                                                        data-caption="Arabe">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bloc">
+                                <h4>
+                                    Images
+                                </h4>
+                                <div>
+                                    <input (change)="uploadFile($event)" data-role="file" type="file" multiple
+                                        data-prepend="Images">
+                                </div>
+                                <div class="row">
+                                    <div class="cell-lg-6">
+                                        <button class="button warning">Enregistrer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="apercu">
+                    <div class="apercu-titre">
+                        Aperçu du séjour
+                    </div>
+                    <app-display-sejour [sejour]="sejour">
+
+                    </app-display-sejour>
+                </div>
             </div>
         </div>
-    </form>
-</div>
+    </div>
+</app-admin>

@@ -49,7 +49,7 @@
 
 .formulaire {
     height: 60vh;
-    border: 2px solid rgb(255, 115, 0);
+    border: 2px solid rgb(48, 164, 221);
     padding: 20px;
     border-radius: 10px;
 }
@@ -146,11 +146,11 @@
 
 .bordure-orange {
     &-debut {
-        border: 2px solid rgb(255, 115, 0);
+        border: 2px solid rgb(48, 164, 221);
     }
 
     &-fin {
-        border: 2px solid rgb(255, 115, 0);
+        border: 2px solid rgb(48, 164, 221);
         border-left: 0px solid #eee;
     }
 }
@@ -177,7 +177,7 @@ input.muanza {
     border-bottom-right-radius: 10px;
 }
 .vip {
-    background-color: rgb(255, 115, 0);
+    background-color: rgb(48, 164, 221);
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 2px;

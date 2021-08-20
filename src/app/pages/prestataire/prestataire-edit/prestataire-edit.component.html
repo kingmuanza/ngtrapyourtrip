@@ -1,72 +1,133 @@
-<h1>
-    Nouveau Prestataire
-</h1>
-<div class="text-leader2" style="margin-bottom: 20px;">
-    Créer un compte pour un prestataire
-</div>
-<div class="formulaire">
-    <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-        <div>
-            <input data-role="input" formControlName="nom" data-prepend="Nom complet">
-        </div>
-        <div>
-            <input data-role="input" formControlName="tel" data-prepend="Tel">
-        </div>
-        <div>
-            <input data-role="input" formControlName="email" data-prepend="Email">
-        </div>
-        <div class="row">
-            <div class="cell-lg-6">
-                <input data-role="input" type="password" formControlName="passe" data-prepend="Mot de passe">
-            </div>
-            <div class="cell-lg-6">
-                <input data-role="input" type="password" formControlName="confirm"
-                    data-prepend="Confirmer mot de passe">
-            </div>
-        </div>
-        <div>
-            <textarea data-role="textarea" formControlName="description" data-prepend="Description"></textarea>
-        </div>
-        
-        <div class="row">
-            <div class="cell-lg-6">
-                <input data-role="input" formControlName="pays" data-prepend="Pays">
-            </div>
-            <div class="cell-lg-6">
-                <input data-role="input" formControlName="ville" data-prepend="Ville">
-            </div>
-        </div>
-        <div>
-            <input data-role="input" formControlName="lieu" data-prepend="Localisation">
-        </div>
+<div class="page-creation">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="cadre">
+                <h1>
+                    {{prestataire ? prestataire.nom : 'Nouveau Prestataire'}}
+                </h1>
+                <div class="text-leader2" style="margin-bottom: 20px;">
+                    <ng-container *ngIf="!prestataire">
+                        Ajouter un prestataire d'hébergement
+                    </ng-container>
+                    <ng-container *ngIf="prestataire">
+                        Modifier les infos du prestataire...
+                    </ng-container>
 
-        <div>
-            <label>
-                De quel type d'établissement s'agit-il ?
-            </label>
-            <select class="select input-select" formControlName="type">
-                <option value="hotel">
-                    Hôtel
-                </option>
-                <option value="villa">
-                    Villa
-                </option>
-            </select>
-        </div>
-        <div *ngIf="hotel">
-            <input data-role="input" type="number" formControlName="notation" data-prepend="Notation">
-        </div>
+                </div>
+                <div class="formulaire">
+                    <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <input data-role="input" formControlName="nom" data-prepend="Nom complet">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <input data-role="input" formControlName="tel" data-prepend="Tel">
+                            </div>
+                            <div class="col-lg-6">
+                                <input data-role="input" formControlName="email" data-prepend="Email">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <textarea data-role="textarea" formControlName="description"
+                                    data-prepend="Description"></textarea>
+                            </div>
+                        </div>
 
-        <div>
-            <input (change)="uploadFile($event)" type="file" data-role="file" data-prepend="Images">
-        </div>
-        <div class="row" *ngIf="prestataire">
+                        <div class="row">
+                            <div class="cell-lg-6">
+                                <input data-role="input" formControlName="pays" data-prepend="Pays">
+                            </div>
+                            <div class="cell-lg-6">
+                                <input data-role="input" formControlName="ville" data-prepend="Ville">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="cell-lg-12">
+                                <input data-role="input" formControlName="lieu" data-prepend="Localisation">
+                            </div>
+                        </div>
 
-        </div>
-        <div class="row">
-            <div class="cell-lg-6">
-                <button class="button warning">Enregistrer</button>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label>
+                                    De quel type d'établissement s'agit-il ?
+                                </label>
+                                <select class="select input-select" formControlName="type">
+                                    <option value="hotel">
+                                        Hôtel
+                                    </option>
+                                    <option value="villa">
+                                        Villa
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="hotel">
+                            <div class="col-lg-12" *ngIf="hotel">
+                                <input data-role="input" type="number" formControlName="notation"
+                                    data-prepend="Notation">
+                            </div>
+                        </div>
+
+
+                        <div class="options">
+                            <span class="">
+                                <input type="checkbox" formControlName="piscine" data-role="checkbox"
+                                    data-caption="piscine">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="plage" data-role="checkbox"
+                                    data-caption="plage">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="spa" data-role="checkbox" data-caption="spa">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="petitdej" data-role="checkbox"
+                                    data-caption="petitdej">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="dej" data-role="checkbox" data-caption="dej">
+                            </span>
+                            <span class="">
+                                <input type="checkbox" formControlName="cuisine" data-role="checkbox"
+                                    data-caption="cuisine">
+                            </span>
+                        </div>
+
+                        <div>
+                            <input (change)="uploadFile($event)" type="file" data-role="file" data-prepend="Images">
+                        </div>
+                        <div class="row" *ngIf="prestataire">
+                            <div class="cell-lg-4">
+                                <img style="width: 100%;" [src]="prestataire.photoURL">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="cell-lg-6">
+                                <button class="button warning" style="background-color: rgb(48, 164, 221);">
+                                    Enregistrer
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </form>
+        <div class="col-lg-4">
+            <div class="apercu">
+                <div class="apercu-titre">
+                    Aperçu du prestataire
+                </div>
+                <div *ngIf="prestataire">
+                    <app-display-prestataire [prestataire]="prestataire">
+
+                    </app-display-prestataire>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

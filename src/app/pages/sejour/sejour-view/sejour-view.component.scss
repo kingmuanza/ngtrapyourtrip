@@ -1,11 +1,13 @@
-
+.page-sejour {
+    min-height: 100vh;
+}
 .entete {
-    height: 270px;
+    height: 200px;
     overflow: hidden;
 
     .entete__background {
 
-        height: 270px;
+        height: 200px;
         overflow: hidden;
 
         animation-name: progress-bar;
@@ -21,11 +23,11 @@
 
     .entete__contenu {
         padding-top: 55px;
-        padding-left: 5vw;
-        padding-right: 5vw;
+        padding-left:10vw;
+        padding-right: 10vw;
         padding-bottom: 3vh;
-        margin-top: -270px;
-        height: 270px;
+        margin-top: -200px;
+        height: 200px;
         overflow: hidden;
         //background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5));
         background-color: rgba(255,255,255,0.85);
@@ -44,19 +46,19 @@
 
 .contenu {
     padding-top: 1vh;
-    padding-left: 5vw;
-    padding-right: 5vw;
+    padding-left: 10vw;
+    padding-right: 10vw;
     padding-bottom: 15vh;
     min-height: 100vh;
 }
 
-.bordure-orange {
+.bordure-bleu {
     &-debut {
-        border: 2px solid rgb(255, 115, 0);
+        border: 2px solid rgb(48, 164, 221);
     }
 
     &-fin {
-        border: 2px solid rgb(255, 115, 0);
+        border: 2px solid rgb(48, 164, 221);
         border-left: 0px solid #eee;
     }
 }
@@ -67,13 +69,13 @@
 
 .formulaire {
     height: 60vh;
-    border: 2px solid rgb(255, 115, 0);
+    border: 2px solid rgb(48, 164, 221);
     padding: 20px;
     border-radius: 10px;
 }
 
 .trap-image {
-    height: 50vh;
+    height: 300px;
     background-size: cover;
     background-position: center center;
 }
@@ -104,4 +106,15 @@
     padding-left: 20px;
     padding-right: 20px;
     border-radius: 10px;
+}
+
+.options-titres {
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 5px; 
+}
+input:checked {
+  opacity: 0.5;
 }

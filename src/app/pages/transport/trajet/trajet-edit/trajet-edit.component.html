@@ -1,7 +1,10 @@
 <div class="page">
     <div class="entete">
-        <div class="titre">
+        <div *ngIf="!trajet" class="titre">
             Créez un nouveau trajet
+        </div>
+        <div *ngIf="trajet" class="titre">
+            Modifier le trajet : {{trajet.villeDepart}} - {{trajet.villeArrivee}}
         </div>
     </div>
     <div class="contenu">
@@ -13,6 +16,9 @@
                 <input formControlName="villeArrivee" data-role="input" data-prepend="Ville d'arrivée">
             </div>
             <div>
+                <input formControlName="duree" data-role="input" data-prepend="Durée estimée">
+            </div>
+            <div *ngIf="!trajet">
                 <input formControlName="retour" data-role="checkbox" data-caption="Enregistrer le trajet retour">
             </div>
             <div>

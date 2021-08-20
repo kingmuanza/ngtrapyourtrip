@@ -22,11 +22,13 @@
                 <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                     <div>
                         <input class="hideOnMObile" formControlName="nom" data-role="input" data-prepend="Nom">
-                        <input class="showOnMObile" formControlName="nom" data-role="materialinput" placeholder="Votre nom">
+                        <input class="showOnMObile" formControlName="nom" data-role="materialinput"
+                            placeholder="Votre nom">
                     </div>
                     <div>
                         <input class="hideOnMObile" formControlName="prenom" data-role="input" data-prepend="Prénom">
-                        <input class="showOnMObile" formControlName="prenom" data-role="materialinput" placeholder="Votre prénom">
+                        <input class="showOnMObile" formControlName="prenom" data-role="materialinput"
+                            placeholder="Votre prénom">
                     </div>
                     <div>
                         <select formControlName="sexe" data-role="select" data-prepend="Sexe" data-filter="false">
@@ -40,25 +42,29 @@
                     </div>
                     <div>
                         <input class="hideOnMObile" formControlName="login" data-role="input" data-prepend="Email">
-                        <input class="showOnMObile" formControlName="login" data-role="materialinput" placeholder="Votre adresse mail">
+                        <input class="showOnMObile" formControlName="login" data-role="materialinput"
+                            placeholder="Votre adresse mail">
                         <small class="fg-red">
                             {{messageEmail}}
                         </small>
                     </div>
                     <div>
-                        <input class="hideOnMObile" formControlName="passe" type="password" data-role="input" data-prepend="Mot de passe">
-                        <input class="showOnMObile" formControlName="passe" type="password" data-role="materialinput" placeholder="Mot de passe">
+                        <input class="hideOnMObile" formControlName="passe" type="password" data-role="input"
+                            data-prepend="Mot de passe">
+                        <input class="showOnMObile" formControlName="passe" type="password" data-role="materialinput"
+                            placeholder="Mot de passe">
                     </div>
                     <div>
                         <input class="hideOnMObile" formControlName="confirmation" type="password" data-role="input"
                             data-prepend="Confirmer mot de passe">
-                        <input class="showOnMObile" formControlName="confirmation" type="password" data-role="materialinput" placeholder="Confirmez le mot de passe">
+                        <input class="showOnMObile" formControlName="confirmation" type="password"
+                            data-role="materialinput" placeholder="Confirmez le mot de passe">
                         <small class="fg-red">
                             {{messagePasse}}
                         </small>
                     </div>
                     <div>
-                        <button class="button warning" style="background-color: rgb(255, 155, 0); width: 100%;">
+                        <button class="button warning" style="background-color: rgb(48, 164, 221);width: 100%;">
                             S'inscrire
                         </button>
                     </div>

@@ -1,0 +1,57 @@
+<div class="page-sejour">
+    <div class="entete" style="background-color: #eee;">
+
+        <div class="entete__background">
+        </div>
+        <div class="entete__contenu">
+            <div style="margin-left: -15px; margin-bottom: -20px;">
+                <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
+                    <li class="page-item"><a routerLink="accueil" class="page-link">Accueil</a></li>
+                    <li class="page-item"><a (click)="goToAll()" class="page-link">Divertissements</a></li>
+                    <li class="page-item"><a class="page-link">
+                        Restaurants
+                    </a></li>
+                </ul>
+            </div>
+            <div class="row no-gap">
+                <div class="cell-lg-12">
+                    <div class="titre">
+                        Restaurants
+                    </div>
+                    <div class="sous-titre">
+                        <div>
+                            Tous les restaurants
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contenu">
+        <form class="formulaire" [formGroup]="form" (ngSubmit)="onFormSubmit()">
+            <div class="row no-gap shadow-3">
+
+                <div class="cell-lg-5 bordure-orange-debut">
+                    <input formControlName="rechercher" placeholder="Rechercher" data-role="input"
+                        >
+                </div>
+                <div class="cell-lg-5 bordure-orange-fin">
+                    <input data-prepend="Ville" formControlName="ville" data-role="input">
+
+                </div>
+                <div class="cell-lg-2 bordure-orange-fin">
+                    <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
+                        Rechercher
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div class="sejours">
+            <div class="row">
+                <div class="cell-lg-4" *ngFor="let divertissement of resultats">
+                    <app-display-loisir [divertissement]="divertissement"></app-display-loisir>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

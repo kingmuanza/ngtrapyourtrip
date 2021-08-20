@@ -1,6 +1,7 @@
 import { Modele } from './model.model';
 import { Utilisateur } from './utilisateur.model';
 import * as firebase from 'firebase';
+import { Modification } from './modification.model';
 
 export class Hebergement extends Modele {
 
@@ -15,13 +16,20 @@ export class Hebergement extends Modele {
 
     options: {
         baignoire: boolean,
-        tele: boolean,
-        bouilloire: boolean,
-        climatiseur: boolean,
-        minibar: boolean,
-        litdouble: boolean,
-        litsimple: boolean,
         wifi: boolean,
+        climatiseur: boolean,
+        bureau: boolean,
+        linge: boolean,
+        tele: boolean,
+        insonore: boolean,
+        bouilloire: boolean,
+        cafe: boolean,
+        minibar: boolean,
+        litsimple: boolean,
+        litdouble: boolean,
+        spa: boolean,
+        forme: boolean,
+        navette: boolean,
     };
 
     notation: number;
@@ -38,18 +46,26 @@ export class Hebergement extends Modele {
     nature: string;
     adultes: number;
     enfants: number;
+    modification: Modification;
 
     constructor(hebergement?: Hebergement) {
         super();
         this.options = {
             baignoire: false,
-            tele: false,
-            bouilloire: false,
-            climatiseur: false,
-            minibar: false,
-            litdouble: false,
-            litsimple: false,
             wifi: false,
+            climatiseur: false,
+            bureau: false,
+            linge: false,
+            tele: false,
+            insonore: false,
+            bouilloire: false,
+            cafe: false,
+            minibar: false,
+            litsimple: false,
+            litdouble: false,
+            spa: false,
+            forme: false,
+            navette: false,
         };
 
         if (hebergement) {

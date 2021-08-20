@@ -29,7 +29,12 @@ export class Reservation extends Modele {
         prenom: string,
         tel: string,
         numero: string,
+        indicatif: string,
+        typepiece: string
     };
+
+    orangemoney = false;
+    orangemoneyinfos: any;
 
     utilisateur: Utilisateur;
 

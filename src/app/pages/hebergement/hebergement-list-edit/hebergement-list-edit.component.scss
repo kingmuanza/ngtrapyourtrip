@@ -45,11 +45,11 @@
 
 .bordure-orange {
     &-debut {
-        border: 2px solid rgb(255, 115, 0);
+        border: 2px solid rgb(48, 164, 221);
     }
 
     &-fin {
-        border: 2px solid rgb(255, 115, 0);
+        border: 2px solid rgb(48, 164, 221);
         border-left: 0px solid #eee;
     }
 }
@@ -86,7 +86,7 @@
 
         &.active {
             font-weight: bold;
-            color: rgb(255, 115, 0);
+            color: rgb(48, 164, 221);
         }
     }
 }

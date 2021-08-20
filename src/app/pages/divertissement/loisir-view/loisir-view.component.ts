@@ -33,9 +33,22 @@ export class LoisirViewComponent implements OnInit {
     this.initForm();
   }
 
+  modifier(element) {
+    this.router.navigate(['offres', 'divertissement', 'edit', element.id]);
+  }
+
+  supprimer(element) {
+    const oui = confirm('Etes vous sûr de vouloir supprimer cet élément ?');
+    const db = firebase.firestore();
+    db.collection('divertissements').doc(element.id).delete().then(() => {
+      this.router.navigate(['offres', 'divertissement']);
+    });
+  }
+
   initForm() {
     this.form = this.formBuilder.group({
       date: ['', Validators.required],
+      heure: ['', Validators.required],
       personnes: [1, Validators.required]
     });
 
@@ -55,7 +68,7 @@ export class LoisirViewComponent implements OnInit {
 
     if (true) {
       const reservation = new Reservation();
-      this.divertissement.date = new Date(date);
+      this.divertissement.date = new Date(date + ' ' + value.heure);
       reservation.divertissement = this.divertissement;
       reservation.personnes = personnes;
       reservation.dateDebut = new Date(date);

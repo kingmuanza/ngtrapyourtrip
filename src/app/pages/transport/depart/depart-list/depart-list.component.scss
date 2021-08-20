@@ -97,7 +97,7 @@
 
         &.active {
             font-weight: bold;
-            color: rgb(255, 115, 0);
+            color: rgb(48, 164, 221);
         }
     }
 }
@@ -115,11 +115,11 @@ input.muanza {
 
 .bordure-orange {
     &-debut {
-        border: 2px solid rgb(255, 115, 0);
+        border: 2px solid rgb(48, 164, 221);
     }
 
     &-fin {
-        border: 2px solid rgb(255, 115, 0);
+        border: 2px solid rgb(48, 164, 221);
         border-left: 0px solid #eee;
     }
 }
@@ -141,7 +141,7 @@ tr {
 }
 
 .vip {
-    background-color: rgb(255, 115, 0);
+    background-color: rgb(48, 164, 221);
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 2px;

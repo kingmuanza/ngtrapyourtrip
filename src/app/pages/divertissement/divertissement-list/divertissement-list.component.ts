@@ -46,6 +46,10 @@ export class DivertissementListComponent implements OnInit {
     this.router.navigate(['divertissement', 'view', id]);
   }
 
+  goToAll() {
+    this.router.navigate(['offres', 'divertissement']);
+  }
+
   getSejours() {
     this.divertissements = new Array<Divertissement>();
     const activity = metro().activity.open({

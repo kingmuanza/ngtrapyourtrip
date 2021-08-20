@@ -9,21 +9,33 @@
                     {{divertissement.description}}
                 </div>
             </div>
-            <div class="cell-lg-3">
+            <div class="cell-lg-3 text-right">
+                <app-admin>
+                    <div class="administration">
+                        <button class="button primary" style="background-color: rgb(48, 164, 221);"
+                            (click)="modifier(divertissement)">
+                            Modifier
+                        </button>
+                        <button class="button alert" style="margin-left: 10px;" (click)="supprimer(divertissement)">
+                            Supprimer
+                        </button>
+                    </div>
+                </app-admin>
             </div>
         </div>
         <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-            <div class="row no-gap shadow-1" style="border-radius: 20px;">
-                <div class="cell-lg-4 bordure-orange-debut radius-gauche"
-                    style="padding-left: 5px; background-color: #eee;">
+            <div class="row no-gap shadow-3">
+                <div class="cell-lg-4 bordure-bleu-debut">
                     <input formControlName="personnes" data-role="input" data-prepend="Personnes">
                 </div>
-                <div class="cell-lg-4 bordure-orange-fin" style="padding-left: 5px; background-color: #eee;">
-                    <input #calendarpickerlocale formControlName="date" data-role="calendarpicker"
-                        data-prepend="Date">
+                <div class="cell-lg-3 bordure-bleu-fin">
+                    <input #calendarpickerlocale formControlName="date" data-role="calendarpicker" data-prepend="Date">
                 </div>
-                <div class="cell-lg-4 bordure-orange-fin radius-droit">
-                    <button class="button warning" style="width: 100%; background-color: rgb(255, 115, 0);">
+                <div class="cell-lg-3 bordure-bleu-fin">
+                    <input formControlName="heure" type="time" data-role="input" data-prepend="Heure">
+                </div>
+                <div class="cell-lg-2 bordure-bleu-fin">
+                    <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
                         Réserver
                     </button>
                 </div>

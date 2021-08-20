@@ -1,70 +1,86 @@
 <div class="page-sejour">
-    <div class="entete" style="background-color: #eee;">
+    <div class="entete2" style="">
         <div class="row">
             <div class="cell-lg-5">
                 <div class="titre">
-                    Mon panier
+                    Réservations
                 </div>
                 <div class="sous-titre text-leader2">
-                    Vos réservations ici
+                    Réservations dont le paiement a été initié
                 </div>
             </div>
         </div>
     </div>
-    <div class="contenu">
-        <table class="table table-border cell-border">
+    <div class="contenu2 hideOnMObile">
+        <table style="margin-top: -3vh; padding-top: 0;" class="table table-border cell-border">
             <thead>
                 <tr>
-                    <th>Date</th>
+                    <th class="hideOnMObile">Date</th>
                     <th>Date début</th>
                     <th>Prestation</th>
-                    <th>Description</th>
+                    <th>Responsable</th>
                     <th style="background-color: #fafafa;">Coût</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let reservation of reservations">
-                    <td>{{reservation.date | date: 'yyyy-MM-dd HH:mm'}}</td>
+                    <td class="hideOnMObile">{{reservation.date | date: 'yyyy-MM-dd HH:mm'}}</td>
                     <td>{{reservation.dateDebut | date: 'yyyy-MM-dd'}}</td>
                     <td>
                         <span *ngIf="reservation.sejour">
+                            <b>Séjour</b>
+                            <br>
                             {{reservation.sejour.titre}}
                         </span>
                         <span *ngIf="reservation.hebergement">
+                            <b>Hébergement</b>
+                            <br>
                             {{reservation.hebergement.titre}}
                         </span>
                         <span *ngIf="reservation.divertissement">
+                            <b>Divertissement</b>
+                            <br>
                             {{reservation.divertissement.titre}}
                         </span>
-                        <span *ngIf="reservation.transport">
+                        <span *ngIf="reservation.transport && reservation.transport.depart">
+                            <b>Transport</b>
+                            <br>
                             {{reservation.transport.depart.agence.nom}}
                         </span>
                     </td>
                     <td>
-                        <span *ngIf="reservation.sejour">
-                            {{reservation.sejour.description}}
-                        </span>
-                        <span *ngIf="reservation.hebergement">
-                            {{reservation.hebergement.description}}
-                        </span>
-                        <span *ngIf="reservation.divertissement">
-                            {{reservation.divertissement.description}}
-                        </span>
-                        <span *ngIf="reservation.transport">
-                            {{description(reservation.transport.depart.trajet)}}
-                        </span>
+                        <div *ngIf="reservation.responsable">
+                            <b>
+                                {{reservation.responsable.nom}}
+                                {{reservation.responsable.prenom}}
+                            </b>
+                            <div>
+                                Tel : {{reservation.responsable.indicatif}}
+                                {{reservation.responsable.numero}}
+                            </div>
+                        </div>
+                        <div *ngIf="reservation.utilisateur">
+                            <b>
+                                {{reservation.utilisateur.nom}}
+                                {{reservation.utilisateur.prenom}}
+                            </b>
+                            <div>
+                                Tel : {{reservation.utilisateur.numero}}
+                            </div>
+                        </div>
                     </td>
                     <td style="text-align: right; background-color: #fafafa;">
                         <b>
-                            {{reservation.cout  | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
                         </b>
                     </td>
-                    <td style="white-space: nowrap;">
+                    <td class="white-space" style="">
                         <button (click)="voir(reservation)" class="button success">
                             Voir
                         </button>
-                        <button (click)="modifier(reservation)" class="button warning" style="background-color: rgb(255, 115, 0);">
+                        <button (click)="modifier(reservation)" class="button warning"
+                            style="background-color: rgb(48, 164, 221);">
                             Modifier
                         </button>
                         <button (click)="supprimer(reservation.id)" class="button alert danger">
@@ -75,7 +91,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th style="font-size: 1.2em;" colspan="4">Total</th> 
+                    <th style="font-size: 1.2em;" colspan="4">Total</th>
                     <th style="font-size: 1.2em; text-align: right;background-color: #fafafa;">
                         {{TOTAL | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
                     </th>
@@ -84,18 +100,106 @@
             </tfoot>
         </table>
         <div style="margin-top: 20px;">
-            <button (click)="supprimerTout()" class="button alert danger">
+            <button *ngIf="reservations && reservations.length > 0" (click)="supprimerTout()"
+                class="button alert danger">
                 Annuler toutes les réservations
             </button>
-            <button (click)="suivant()" class="button warning" style="background-color: rgb(255, 115, 0); float: right;">
+            <button (click)="suivant()" class="button warning"
+                style="background-color: rgb(48, 164, 221); float: right;">
                 <ng-container *ngIf="isUser">
                     Suivant
                 </ng-container>
                 <ng-container *ngIf="!isUser">
                     Passer au paiement
                 </ng-container>
-                
+
             </button>
+        </div>
+    </div>
+    <div class="contenu2 showOnMObile" style="width: 100vw; overflow-x: hidden;">
+        <table style="margin-top: 0; padding-top: 0;" class="table table-border cell-border">
+            <thead>
+                <tr>
+                    <th>Prestations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let reservation of reservations">
+                    <td>
+                        <b>Date</b> : {{reservation.date | date: 'yyyy-MM-dd HH:mm'}}<br>
+                        <b>Date début</b> : {{reservation.dateDebut | date: 'yyyy-MM-dd'}}<br>
+                        <b>Prestation</b> :
+                        <span *ngIf="reservation.sejour">
+                            {{reservation.sejour.titre}}
+                        </span>
+                        <span *ngIf="reservation.hebergement">
+                            {{reservation.hebergement.titre}}
+                        </span>
+                        <span *ngIf="reservation.divertissement">
+                            {{reservation.divertissement.titre}}
+                        </span>
+                        <span *ngIf="reservation.transport && reservation.transport.depart">
+                            {{reservation.transport.depart.agence.nom}}
+                        </span>
+                        <br>
+                        <b>Description</b> :
+                        <span *ngIf="reservation.sejour">
+                            {{reservation.sejour.description}}
+                        </span>
+                        <span *ngIf="reservation.hebergement">
+                            {{reservation.hebergement.description}}
+                        </span>
+                        <span *ngIf="reservation.divertissement">
+                            {{reservation.divertissement.description}}
+                        </span>
+                        <span *ngIf="reservation.transport && reservation.transport.depart">
+                            {{description(reservation.transport.depart.trajet)}}
+                        </span>
+                        <br>
+                        <b>Coût</b> : {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}<br>
+
+                        <div class="white-space" style="margin-top: 10px; margin-bottom: 10px;">
+                            <button (click)="voir(reservation)" class="button success">
+                                Voir
+                            </button>
+                            <button (click)="modifier(reservation)" class="button warning"
+                                style="background-color: rgb(48, 164, 221);">
+                                Modifier
+                            </button>
+                            <button (click)="supprimer(reservation.id)" class="button alert danger">
+                                Supprimer
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th style="font-size: 1.2em; text-align: right;background-color: #fafafa;">
+                        Total : {{TOTAL | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+        <div style="margin-top: 20px;" *ngIf="reservations && reservations.length > 0">
+            <div>
+                <button (click)="supprimerTout()"
+                    class="button alert danger" style="width: 100%;">
+                    Annuler toutes les réservations
+                </button>
+            </div>
+            <div>
+                <button (click)="suivant()" class="button warning"
+                    style="background-color: rgb(48, 164, 221); width: 100%;">
+                    <ng-container *ngIf="isUser">
+                        Suivant
+                    </ng-container>
+                    <ng-container *ngIf="!isUser">
+                        Passer au paiement
+                    </ng-container>
+    
+                </button>
+            </div>
         </div>
     </div>
 </div>

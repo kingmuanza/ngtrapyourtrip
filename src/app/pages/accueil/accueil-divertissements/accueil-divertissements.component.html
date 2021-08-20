@@ -4,33 +4,21 @@
 </div>
 <div class="titre">
     <span>
-        Nos offres de divertissements
+        Dernières offres de divertissements
     </span>
 </div>
 
 <div class="sejours">
     <div class="row">
-        <div class="cell-lg-3 muanza-mobile">
-            <div class="description text-leader2 text-center">
-                Découvrez toutes nos offres de divertissements pour un confort sans pareil
-            </div>
-        </div>
 
-        <div class="cell-lg-9">
+        <div class="cell-lg-12">
             <div class="row">
-                <div class="cell-lg-6" *ngFor="let divertissement of divertissements; let index = index;">
+                <div class="cell-lg-4" *ngFor="let divertissement of divertissements; let index = index;">
                     <div *ngIf="index < 6">
                         <app-display-divertissement [divertissement]="divertissement"></app-display-divertissement>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="cell-lg-3 muanza-desktop">
-            <div class="description text-leader2 text-right">
-                Découvrez toutes nos offres de divertissements pour un confort sans pareil
-            </div>
-
         </div>
     </div>
 </div>

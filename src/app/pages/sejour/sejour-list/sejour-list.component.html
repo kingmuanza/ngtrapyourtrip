@@ -1,71 +1,321 @@
-<div class="page-sejour">
-    <div class="entete" style="background-color: #eee;">
-        <div class="row">
-            <div class="cell-lg-12">
-                <div class="titre">
-                    Séjours
+<form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+    <div class="page-sejour">
+        <div class="entete" style="background-color: #eee;">
+            <div class="row">
+                <div class="cell-lg-9">
+                    <div class="titre">
+                        Séjours
+                    </div>
+                    <div class="sous-titre text-leader2" style="font-size: 0.9em;">
+                        Retrouvez les meilleurs séjours
+                    </div>
                 </div>
-                <div class="sous-titre text-leader2" style="font-size: 0.9em;">
-                    Retrouvez les meilleurs séjours
+                <div class="cell-lg-3">
+                    <app-admin>
+                        <div class="administration">
+                            <div>
+                                <button class="button" (click)="nouveau()">
+                                    Nouveau
+                                </button>
+                            </div>
+                        </div>
+                    </app-admin>
                 </div>
             </div>
-            <div class="cell-lg-12">
-                <div class="row no-gap shadow-1 radius-gauche radius-droit">
-                    <div class="cell-lg-3 bordure-orange--debut radius-gauche">
-                        <div>
-                            <input style="padding-left: 10px;" placeholder="Ville" class="radius-gauche input iput-form"
-                                [(ngModel)]="recherche" (ngModelChange)="rechercher($event)">
+            <div class="row">
+                <div class="cell-lg-12">
+                    <div class="row no-gap shadow-1">
+                        <div class="cell-lg-3 bordure-orange--debut">
+                            <div>
+                                <input style="padding-left: 10px;" placeholder="Ville" class="input iput-form">
+                            </div>
                         </div>
-                    </div>
-                    <div class="cell-lg-3 bordure-orange--fin">
-                        <div>
-                            <input placeholder="A partir du" data-role="input">
+                        <div class="cell-lg-3 bordure-orange--fin">
+                            <div>
+                                <input placeholder="A partir du" data-role="input">
+                            </div>
                         </div>
-                    </div>
-                    <div class="cell-lg-2 bordure-orange--fin">
-                        <div>
-                            <input placeholder="Parent" data-role="input">
+                        <div class="cell-lg-2 bordure-orange--fin">
+                            <div>
+                                <input placeholder="Parent" type="number" data-role="input">
+                            </div>
                         </div>
-                    </div>
-                    <div class="cell-lg-2 bordure-orange--fin">
-                        <div>
-                            <input placeholder="Enfants" data-role="input">
+                        <div class="cell-lg-2 bordure-orange--fin">
+                            <div>
+                                <input placeholder="Enfants" type="number" data-role="input">
+                            </div>
                         </div>
-                    </div>
-                    <div class="cell-lg-2 bordure-orange--fin radius-droit">
-                        <div>
-                            <button class="button warning" style="width: 100%;">
-                                Rechercher
-                            </button>
+                        <div class="cell-lg-2 bordure-orange--fin">
+                            <div>
+                                <button class="button warning"
+                                    style="width: 100%; background-color: rgb(48, 164, 221);">
+                                    Rechercher
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="contenu" style="padding-top: 15px;">
-        <div class="row">
-            <div class="cell-lg-2">
-                <div class="options">
-                    <span class="">
-                        <input type="checkbox" data-role="checkbox" data-caption="Plage">
-                    </span>
-                    <span class="">
-                        <input type="checkbox" data-role="checkbox" data-caption="Montagne">
-                    </span>
-                    <span class="">
-                        <input type="checkbox" data-role="checkbox" data-caption="Célébrations">
-                    </span>
-                </div>
+        <div class="contenu" style="padding-top: 15px;">
+            <div class="row">
+                <div class="cell-lg-2">
+                    <div *ngIf="filtersShowed" class="les">
+                        <div (click)="toggleFilter()" class="fermer-options">
 
-            </div>
-            <div class="cell-lg-10">
-                <div class="row">
-                    <div class="cell-lg-4" *ngFor="let sejour of resultats">
-                        <app-display-sejour [sejour]="sejour"></app-display-sejour>
+                        </div>
+                        <div class="les-options">
+                            <div class="les-options-contenant">
+                                <div class="les-options-contenu">
+                                    <div class="options-titres">
+                                        Filtres populaires
+                                    </div>
+                                    <div class="options">
+                                        <span class="">
+                                            <input formControlName="relaxation" type="checkbox" data-role="checkbox"
+                                                data-caption="Relaxation">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="pieds" type="checkbox" data-role="checkbox"
+                                                data-caption="Pieds dans le sable">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="phasenature" type="checkbox" data-role="checkbox"
+                                                data-caption="En phase avec la nature">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="sportif" type="checkbox" data-role="checkbox"
+                                                data-caption="Sportif">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="gastronomique" type="checkbox" data-role="checkbox"
+                                                data-caption="Découverte gastronomique">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="insolite" type="checkbox" data-role="checkbox"
+                                                data-caption="Hébergement insolite">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="festive" type="checkbox" data-role="checkbox"
+                                                data-caption="Ambiance festive">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="affaire" type="checkbox" data-role="checkbox"
+                                                data-caption="Séjour d'affaire">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="culturel" type="checkbox" data-role="checkbox"
+                                                data-caption="Evènement culturel">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="animaux" type="checkbox" data-role="checkbox"
+                                                data-caption="A la rencontre des animaux">
+                                        </span>
+                                    </div>
+
+                                    <div class="options-titres">
+                                        Activités
+                                    </div>
+                                    <div class="options">
+                                        <span class="">
+                                            <input formControlName="spa" type="checkbox" data-role="checkbox"
+                                                data-caption="Accès au spa">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="soin" type="checkbox" data-role="checkbox"
+                                                data-caption="Soin de corps">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="massage" type="checkbox" data-role="checkbox"
+                                                data-caption="Massage et modélage">
+                                        </span>
+                                    </div>
+
+                                    <div class="options-titres">
+                                        Dîner
+                                    </div>
+                                    <div class="options">
+                                        <span class="">
+                                            <input formControlName="pension" type="checkbox" data-role="checkbox"
+                                                data-caption="Demi pension">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="diner" type="checkbox" data-role="checkbox"
+                                                data-caption="Dîner">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="degustation" type="checkbox" data-role="checkbox"
+                                                data-caption="Dégustation">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="pensioncomplete" type="checkbox"
+                                                data-role="checkbox" data-caption="Pension complète">
+                                        </span>
+                                    </div>
+
+                                    <div class="options-titres">
+                                        Durée du séjour
+                                    </div>
+                                    <div class="etoiles">
+                                        <span (click)="changerEtoiles(1)" (mouseenter)="changerEtoilesIntention(1)"
+                                            (mouseleave)="reinitEtoiles()"
+                                            [ngClass]="{'mif-star-empty': triEtoilesIntention < 1, 'mif-star-full': triEtoilesIntention > 0 || triEtoiles > 0}"></span>
+
+                                        <span (click)="changerEtoiles(2)" (mouseenter)="changerEtoilesIntention(2)"
+                                            (mouseleave)="reinitEtoiles()"
+                                            [ngClass]="{'mif-star-empty': triEtoilesIntention < 2, 'mif-star-full': triEtoilesIntention > 1 || triEtoiles > 1}"></span>
+
+                                        <span (click)="changerEtoiles(3)" (mouseenter)="changerEtoilesIntention(3)"
+                                            (mouseleave)="reinitEtoiles()"
+                                            [ngClass]="{'mif-star-empty': triEtoilesIntention < 3, 'mif-star-full': triEtoilesIntention > 2 || triEtoiles > 2}"></span>
+
+                                        <span (click)="changerEtoiles(4)" (mouseenter)="changerEtoilesIntention(4)"
+                                            (mouseleave)="reinitEtoiles()"
+                                            [ngClass]="{'mif-star-empty': triEtoilesIntention < 4, 'mif-star-full': triEtoilesIntention > 3 || triEtoiles > 3}"></span>
+
+                                        <span (click)="changerEtoiles(5)" (mouseenter)="changerEtoilesIntention(5)"
+                                            (mouseleave)="reinitEtoiles()"
+                                            [ngClass]="{'mif-star-empty': triEtoilesIntention < 5, 'mif-star-full': triEtoilesIntention > 4 || triEtoiles > 4}"></span>
+
+                                    </div>
+
+                                    <div class="options-titres">
+                                        Culture
+                                    </div>
+                                    <div class="options">
+                                        <span class="">
+                                            <input formControlName="visiteguidee" type="checkbox" data-role="checkbox"
+                                                data-caption="Visite guidée">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="autresvisites" type="checkbox" data-role="checkbox"
+                                                data-caption="Autres visites">
+                                        </span>
+                                    </div>
+
+                                    <div class="options-titres">
+                                        Sport
+                                    </div>
+                                    <div class="options">
+                                        <span class="">
+                                            <input formControlName="golf" type="checkbox" data-role="checkbox"
+                                                data-caption="Golf à proximité">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="sallesport" type="checkbox" data-role="checkbox"
+                                                data-caption="Forfait inclus salle de sport">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="velo" type="checkbox" data-role="checkbox"
+                                                data-caption="Vélo">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="tennis" type="checkbox" data-role="checkbox"
+                                                data-caption="Accès au terrain de tennis">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="basket" type="checkbox" data-role="checkbox"
+                                                data-caption="Accès au terrain de basket">
+                                        </span>
+                                    </div>
+                                    <div class="options-titres">
+                                        Divertissement
+                                    </div>
+                                    <div class="options">
+                                        <span class="">
+                                            <input formControlName="ponctuel" type="checkbox" data-role="checkbox"
+                                                data-caption="Evènement ponctuel">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="attraction" type="checkbox" data-role="checkbox"
+                                                data-caption="Parc d'attraction">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="spectacle" type="checkbox" data-role="checkbox"
+                                                data-caption="Spectacle">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="zoo" type="checkbox" data-role="checkbox"
+                                                data-caption="Zoo">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="foire" type="checkbox" data-role="checkbox"
+                                                data-caption="Foire">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="randonnee" type="checkbox" data-role="checkbox"
+                                                data-caption="Randonnée">
+                                        </span>
+                                    </div>
+                                    <div class="options-titres">
+                                        Catégorie propriété
+                                    </div>
+                                    <div class="options">
+                                        <span class="">
+                                            <input formControlName="maisonvacances" type="checkbox" data-role="checkbox"
+                                                data-caption="Maison de vacances">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="appartementvacances" type="checkbox"
+                                                data-role="checkbox" data-caption="Appartement de vacances">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="chambrehotel" type="checkbox" data-role="checkbox"
+                                                data-caption="Chambre d'hôtel">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="villagevacances" type="checkbox"
+                                                data-role="checkbox" data-caption="Village de vacances">
+                                        </span>
+                                    </div>
+                                    <div class="options-titres">
+                                        Lieu de prise en charge de l'activité
+                                    </div>
+                                    <div class="options">
+                                        <span class="">
+                                            <input formControlName="hotel" type="checkbox" data-role="checkbox"
+                                                data-caption="Hôtel">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="pointrencontre" type="checkbox" data-role="checkbox"
+                                                data-caption="Point de rencontre">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="lieuactivite" type="checkbox" data-role="checkbox"
+                                                data-caption="Lieu de l'activité">
+                                        </span>
+                                    </div>
+                                    <div class="options-titres">
+                                        Langues disponibles
+                                    </div>
+                                    <div class="options">
+                                        <span class="">
+                                            <input formControlName="francais" type="checkbox" data-role="checkbox"
+                                                data-caption="Français">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="anglais" type="checkbox" data-role="checkbox"
+                                                data-caption="Anglais">
+                                        </span>
+                                        <span class="">
+                                            <input formControlName="arabe" type="checkbox" data-role="checkbox"
+                                                data-caption="Arabe">
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="cell-lg-10">
+                    <div class="row">
+                        <div class="cell-lg-4" *ngFor="let sejour of resultats">
+                            <app-display-sejour [sejour]="sejour"></app-display-sejour>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>

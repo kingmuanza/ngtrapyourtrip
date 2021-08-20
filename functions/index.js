@@ -34,7 +34,7 @@ exports.bienvenue = functions.firestore.document("utilisateurs-trap/{userId}")
         const user = snap.data();
         // Grab the current value of what was written to the Realtime Database.
         var texte = `<div>
-        <img src="https://firebasestorage.googleapis.com/v0/b/trapyourtrip.appspot.com/o/trap.png?alt=media&token=0c5620dc-3d4d-4dc1-b94b-7e250a5eb9b4" style="height: 100px; margin-bottom: 20px">
+        <img src="https://firebasestorage.googleapis.com/v0/b/trapyourtrip.appspot.com/o/nouveauxassets%2FTrap%20Your%20Trip%20Logo%202.png?alt=media&token=d47152d4-0dc0-4021-b491-9513b1358a51" style="height: 100px; margin-bottom: 20px">
   <h4>Bienvenue chez Trap Your Trip ` + user.prenom + ` ` + user.nom + ` !</h4>
   <p style="margin-top: 20px">
   Nous vous remercions pour votre inscription.

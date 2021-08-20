@@ -1,11 +1,13 @@
 .sejour {
+    &.passee {
+        filter: grayscale(95%);
+    }
     cursor: pointer;
 
     .sejour__conteneur {
 
         height: 40vh;
         overflow: hidden;
-        border-radius: 10px;
 
         @media screen and (max-width: 599px) {
             height: 25vh;
@@ -15,10 +17,8 @@
 
     .sejour__image {
         height: 40vh;
-        background-image: url('../../../assets/img/limbe.png');
         background-size: cover;
         background-position: center center;
-        border-radius: 10px;
         transition: transform 200ms;
 
         &:hover {
@@ -51,20 +51,18 @@
         text-align: right;
 
         span {
-            background-color: rgb(255, 115, 0);
+            background-color: rgb(48, 164, 221);
             font-size: 20px;
             padding: 7px;
             padding-left: 20px;
             padding-right: 20px;
             font-weight: bold;
             color: white;
-            border-bottom-left-radius: 10px;
-            border-top-left-radius: 10px;
         }
 
     }
 }
 
 .orange {
-    color: rgb(255, 115, 0);
+    color: rgb(48, 164, 221);
 }

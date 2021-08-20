@@ -1,3 +1,4 @@
+import { Modification } from './modification.model';
 import { Utilisateur } from './utilisateur.model';
 
 export class Prestataire extends Utilisateur {
@@ -19,6 +20,7 @@ export class Prestataire extends Utilisateur {
         x: number,
         y: number
     };
+    modification: Modification;
 
     constructor(nom?: string) {
         super();

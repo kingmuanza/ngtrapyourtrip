@@ -1,3 +1,7 @@
+.page-creation {
+    padding: 10vw;
+    padding-top: 10vh;
+}
 .formulaire {
     div {
         margin-bottom: 10px;
@@ -5,13 +9,24 @@
 }
 
 .titre {
-    font-size: 2.5em;
+    font-size: 1.5em;
     font-weight: bold;
 }
 
+.cadre {
+    padding-right: 20px;
+    border-right: 1px solid #eee;
+}
 
-.options {
+.apercu {
+    padding-left: 20px;
+    &-titre {
+        margin-bottom: 20px;
+    }
+}
+
+.type-divertissement {
     span {
-        margin-right: 20px;
+        padding-right: 20px;
     }
 }

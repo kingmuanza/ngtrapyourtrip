@@ -25,10 +25,10 @@ export class DisplayTransportComponent implements OnInit {
     notation = Math.floor(notation);
     let stars = '';
     for (let i = 0; i < notation; i++) {
-      stars = stars + '<span class="mif-star-full" style="color: rgb(255, 115, 0);"></span>';
+      stars = stars + '<span class="mif-star-full" style="color: rgb(48, 164, 221);"></span>';
     }
     for (let j = 0; j < 5 - notation; j++) {
-      stars = stars + '<span class="mif-star-empty" style="color: rgb(255, 115, 0);"></span>';
+      stars = stars + '<span class="mif-star-empty" style="color: rgb(48, 164, 221);"></span>';
     }
     return stars;
   }

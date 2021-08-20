@@ -1,46 +1,104 @@
-<div class="titre">
-    Nouvelle offre de divertissement
-</div>
-<div class="text-leader2" style="margin-bottom: 20px;">
-    Création d'une nouvelle offre de divertissement
-</div>
-<div class="formulaire">
-    <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-        <div>
-            <input data-role="input" formControlName="titre" data-prepend="Titre">
-        </div>
-        <div>
-            <label>
-                Date
-            </label>
-            <input class="input" formControlName="date" type="date">
-        </div>
-        <div>
-            <input data-role="input" type="number" formControlName="prix" data-prepend="Prix">
-        </div>
-        <div>
-            <textarea data-role="textarea" formControlName="description" data-prepend="Description"></textarea>
-        </div>
-        <div>
-            <input data-role="input" formControlName="lieu" data-prepend="Lieu">
-        </div>
-        <div>
-            <input data-role="input" formControlName="tel" data-prepend="Tel">
-        </div>
-        <div>
-            <input data-role="input" formControlName="tags" data-prepend="Tags">
-            <small>Séparer les tags par un point-virgue ( ; )</small>
-        </div>
-        <div>
-            <input data-role="input" type="number" formControlName="notation" data-prepend="Notation">
-        </div>
-        <div>
-            <input (change)="uploadFile($event)" data-role="file" type="file" multiple data-prepend="Images">
-        </div>
-        <div class="row">
-            <div class="cell-lg-6">
-                <button class="button warning">Enregistrer</button>
+<div class="page-creation">
+    <div class="row">
+        <div class="cell-lg-8">
+            <div class="cadre">
+                <div class="titre">
+                    <ng-container *ngIf="nouveau">
+                        Nouvelle offre de divertissement
+                    </ng-container>
+                    <ng-container *ngIf="!nouveau">
+                        {{divertissement.titre}}
+                    </ng-container>
+
+                </div>
+                <div style="margin-bottom: 20px; font-weight: 100; font-size: 0.9em;">
+                    <ng-container *ngIf="!divertissement">
+                        Création d'une nouvelle offre de divertissement
+                    </ng-container>
+                    <ng-container *ngIf="divertissement">
+                        Modifier l'offre de divertissement
+                    </ng-container>
+                </div>
+                <div class="formulaire">
+                    <div>
+                        <div>
+                            <input [(ngModel)]="divertissement.titre" data-role="input" data-prepend="Titre">
+                        </div>
+                        <div class="type-divertissement">
+                            <span>
+                                <input type="radio" [(ngModel)]="type" value="restaurant" data-role="radio"
+                                    data-caption="Restaurant">
+                            </span>
+                            <span>
+                                <input type="radio" [(ngModel)]="type" value="attraction" data-role="radio"
+                                    data-caption="Attraction">
+                            </span>
+                            <span>
+                                <input type="radio" [(ngModel)]="type" value="evenement" data-role="radio"
+                                    data-caption="Evènement">
+                            </span>
+                        </div>
+                        <div *ngIf="type === 'evenement'">
+                            <label>
+                                Date
+                            </label>
+                            <input *ngIf="!nouveau" class="input" [(ngModel)]="dateDiver" type="date">
+                            <input *ngIf="nouveau" class="input" [(ngModel)]="divertissement.date" type="date">
+                        </div>
+                        <div *ngIf="type !== 'restaurant'">
+                            <input data-role="input" [(ngModel)]="divertissement.prix" type="number"
+                                data-prepend="Prix">
+                        </div>
+                        <div>
+                            <textarea data-role="textarea" [(ngModel)]="divertissement.description"
+                                data-prepend="Description"></textarea>
+                        </div>
+                        <div>
+                            <input data-role="input" [(ngModel)]="divertissement.ville" data-prepend="Ville">
+                        </div>
+                        <div>
+                            <input data-role="input" [(ngModel)]="divertissement.lieu" data-prepend="Adresse">
+                        </div>
+                        <div>
+                            <input data-role="input" [(ngModel)]="divertissement.tel" data-prepend="Tel">
+                        </div>
+                        <div>
+                            <input (change)="uploadFile($event)" data-role="file" type="file" multiple
+                                data-prepend="Images">
+                        </div>
+                        <div *ngIf="divertissement">
+                            <div class="row">
+                                <div *ngFor="let image of divertissement.images" class="cell-lg-2">
+                                    <img [src]="image" style="width: 100%;">
+                                </div>
+                                <div *ngFor="let image of images" class="cell-lg-2">
+                                    <img [src]="image" style="width: 100%;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="cell-lg-6">
+                                <button (click)="enregistrer()" style="background-color: rgb(48, 164, 221);"
+                                    class="button warning">
+                                    Enregistrer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </form>
+        <div class="cell-lg-4">
+            <div class="apercu">
+                <div class="apercu-titre">
+                    Aperçu du divertissement
+                </div>
+                <div *ngIf="divertissement">
+                    <app-display-divertissement [divertissement]="divertissement">
+
+                    </app-display-divertissement>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

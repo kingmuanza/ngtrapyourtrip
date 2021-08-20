@@ -1,7 +1,7 @@
 <div class="page" style="min-height: 100vh; padding-top: 10px;">
     <div style="margin-top: 0px; margin-bottom: 20px;">
         <div data-role="stepper" data-steps="3" data-step="2" data-view="diamond" data-cls-step="rounded"
-            data-cls-complete="bg-green" data-cls-current="bg-orange">
+            data-cls-complete="bg-green" data-cls-current="bg-blue">
         </div>
     </div>
     <div class="entete" *ngIf="reservation">
@@ -13,7 +13,7 @@
                             {{reservation.hebergement.prestataire.nom}} -
                         </b>
                         {{reservation.hebergement.titre}}
-                        <span class="sejour__notation orange"
+                        <span class="sejour__notation fg-bleu"
                             [innerHTML]="notationToStars(reservation.hebergement.notation)"></span>
                     </ng-container>
                     <ng-container *ngIf="reservation.transport">
@@ -48,8 +48,9 @@
                         {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
                     </b>
                 </div>
-                
-                <span *ngIf="reservation.transport && reservation.transport.depart.vip" class="allerretour" style="float: right; font-weight: bold;">
+
+                <span *ngIf="reservation.transport && reservation.transport.depart.vip" class="allerretour"
+                    style="float: right; font-weight: bold;">
                     VIP
                 </span>
             </div>
@@ -146,26 +147,27 @@
                 </h2>
             </div>
             <div class="cell-lg-3">
-            <div *ngIf="reservation.transport.dateRetour">
-                <div>
-                    <b>
-                        Date de retour
-                    </b>
+                <div *ngIf="reservation.transport.dateRetour">
+                    <div>
+                        <b>
+                            Date de retour
+                        </b>
+                    </div>
+                    <div>
+                        {{toDate(reservation.transport.dateRetour) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                    </div>
+                    <h2 style="margin-top: 0px;">
+                        {{toDate(reservation.transport.dateRetour) | date: 'HH:mm' : 'fr-FR'}}
+                    </h2>
                 </div>
-                <div>
-                    {{toDate(reservation.transport.dateRetour) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
-                </div>
-                <h2 style="margin-top: 0px;">
-                    {{toDate(reservation.transport.dateRetour) | date: 'HH:mm' : 'fr-FR'}}
-                </h2>
-            </div>
             </div>
             <div class="cell-lg-2">
             </div>
             <div class="cell-lg-4 text-right">
                 <div>
                     <b>
-                        {{reservation.personnes}} * {{reservation.transport.depart.prix | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                        {{reservation.personnes}} * {{reservation.transport.depart.prix |
+                        currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
                     </b>
                 </div>
                 <div *ngIf="reservation.transport.retour">
@@ -200,7 +202,7 @@
                     </div>
                     <div class="cell-lg-4">
                         <div>
-                            <input formControlName="tel" data-role="input" data-prepend="Indicatif">
+                            <input formControlName="indicatif" data-role="input" data-prepend="Indicatif">
                         </div>
                     </div>
                     <div class="cell-lg-8">
@@ -210,8 +212,19 @@
                     </div>
                     <div class="cell-lg-6">
                         <div>
-                            <select formControlName="numero" data-role="select" data-prepend="Pièce d'identification">
-
+                            <select formControlName="typepiece" data-role="select" data-prepend="Pièce d'identification">
+                                <option value="cni">
+                                    Carte Nationale d'Identité
+                                </option>
+                                <option value="passeport">
+                                    Passeport
+                                </option>
+                                <option value="sejour">
+                                    Carte de séjour 
+                                </option>
+                                <option value="permis">
+                                    Permis de conduire
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -224,7 +237,7 @@
             </form>
             <div style="margin-top: 20px">
                 <button [disabled]="form.invalid" (click)="onFormSubmit()" class="button warning"
-                    style="background-color: rgb(255, 115,0); color: #fff;">
+                    style="background-color:  rgb(48, 164, 221); color: #fff;">
                     Enregistrement des informations
                 </button>
             </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Agence } from 'src/app/models/agence.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
 declare const metro: any;
 
@@ -17,24 +17,39 @@ export class AgenceEditComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
     this.initForm();
+    this.route.paramMap.subscribe((paramMap) => {
+      const id = paramMap.get('id');
+      const db = firebase.firestore();
+      db.collection('agences-trap').doc(id).get().then((resultat) => {
+        const agence = resultat.data() as Agence;
+        this.agence = agence;
+        this.initForm();
+      }).catch((e) => {
+      });
+    });
   }
 
   initForm() {
     this.form = this.formBuilder.group({
-      nom: ['', Validators.required],
-      bus: [false]
+      nom: [this.agence ? this.agence.nom : '', Validators.required],
+      bus: [this.agence ? Boolean(this.agence.bus) : false]
     });
 
   }
 
   onSubmitForm() {
     const value = this.form.value;
-    const agence = new Agence();
+    let agence = new Agence();
+
+    if (this.agence) {
+      agence = this.agence;
+    }
 
     agence.nom = value.nom;
     if (value.bus) {
@@ -52,7 +67,7 @@ export class AgenceEditComponent implements OnInit {
     const db = firebase.firestore();
     db.collection('agences-trap').doc(agence.id).set(JSON.parse(JSON.stringify(agence))).then(() => {
       metro().activity.close(activity);
-      this.router.navigate(['offres', 'transport']);
+      this.router.navigate(['offres', 'transport', 'agence']);
     }).catch((e) => {
       metro().activity.close(activity);
     });

@@ -1,5 +1,5 @@
-<div class="page-sejour" *ngIf="sejour">
-    <div class="entete">
+<div class="page-sejour">
+    <div class="entete" *ngIf="sejour">
 
         <div class="entete__background" [ngStyle]="{'background-image': 'url('+ sejour.images[0] +')'}">
         </div>
@@ -17,39 +17,294 @@
                     <div class="titre">
                         {{sejour.titre}}
 
-                        <span class="sejour__notation orange"
+                        <span class="sejour__notation" style="color: rgb(48, 164, 221);"
                             [innerHTML]="notationToStars(sejour.notation)"></span>
                     </div>
-                    <div class="sous-titre text-leader2">
-                        {{sejour.description}}
-                    </div>
+                    <small style="text-transform: capitalize;">
+                        <ng-container *ngIf="sejour.dateDebut && sejour.dateFin">
+                            Du {{sejour.dateDebut | date: 'yyyy-MM-dd'}}
+                            au {{sejour.dateFin | date: 'yyyy-MM-dd'}},
+                        </ng-container>
+
+                        {{sejour.ville}}, {{sejour.prixUnitaire}} FCFA par personne
+                    </small>
                 </div>
                 <div class="cell-lg-3">
+                    <app-admin>
+                        <div class="administration text-right">
+                            <button class="button primary" style="background-color: rgb(48, 164, 221);"
+                                (click)="modifier(sejour)">
+                                Modifier
+                            </button>
+                            <button class="button alert" style="margin-left: 10px;" (click)="supprimer(sejour)">
+                                Supprimer
+                            </button>
+                        </div>
+                    </app-admin>
                 </div>
             </div>
-            <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-                <div class="row no-gap shadow-1" style="border-radius: 20px; margin-top: 10px;">
-                    <div class="cell-lg-4 bordure-orange-debut radius-gauche" style="padding-left: 7px; background-color: #fff;">
-                        <input formControlName="personnes" class="input" style="border: none" placeholder="Nombre de personnes">
-                    </div>
-                    <div class="cell-lg-4 bordure-orange-fin">
-                        <input #calendarpickerlocale formControlName="date" data-role="calendarpicker"
-                            data-prepend="Date d'arrivée">
-                    </div>
-                    <div class="cell-lg-4 bordure-orange-fin radius-droit">
-                        <button class="button warning" style="width: 100%;">
-                            Réserver
-                        </button>
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
-    <div class="contenu" style="padding-top: 5vh">
+    <div *ngIf="sejour" class="contenu" style="padding-top: 2.5vh">
         <div class="row">
-            <div *ngFor="let image of sejour.images" class="cell-lg-4">
-                <div class="trap-image" [ngStyle]="{'background-image': 'url(' + image +')'}">
+            <div class="cell-lg-3 text-leader2">
+                <div class="sous-titre text-leader2">
+                    {{sejour.description}}
+                </div>
+                <div *ngIf="sejour.pack">
+                    <div style="padding-top: 10px; margin-left: 0;">
+                        <div *ngIf="sejour.pack.hebergement" style="line-height: 1.15;">
+                            <b style="text-transform: uppercase;">Hébergement</b>
+                            <div style="margin-top: 5px;">
+                                {{sejour.pack.hebergement.prestataire.nom}}
+                            </div>
+                            <div>
+                                {{sejour.pack.hebergement.titre}}
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding-top: 10px; margin-left: 0;">
+                        <div *ngIf="sejour.pack.divertissements" style="line-height: 1.15;">
+                            <b style="text-transform: uppercase;">divertissements</b>
+                            <ul style="padding:0; margin: 0; margin-top: 5px;">
+                                <li *ngFor="let d of sejour.pack.divertissements">
+                                    <a (click)="voirDivertissement(d)">
+                                        {{d.titre}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cell-lg-9">
+                <div class="row">
+                    <div *ngFor="let image of sejour.images" class="cell-lg-4">
+                        <div class="trap-image" [ngStyle]="{'background-image': 'url(' + image +')'}">
 
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="cell-lg-12">
+                        <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                            <div *ngIf="optionsVisibles" class="les-options">
+                                <div class="les-options-contenant">
+                                    <div class="les-options-contenu">
+                                        <div class="options-titres">
+                                            Filtres populaires
+                                        </div>
+                                        <div class="options">
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.relaxation" type="checkbox" data-role="checkbox"
+                                                    data-caption="Relaxation">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.pieds" type="checkbox" data-role="checkbox"
+                                                    data-caption="Pieds dans le sable">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.phasenature" type="checkbox"
+                                                    data-role="checkbox" data-caption="En phase avec la nature">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.sportif" type="checkbox" data-role="checkbox"
+                                                    data-caption="Sportif">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.gastronomique" type="checkbox"
+                                                    data-role="checkbox" data-caption="Découverte gastronomique">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.insolite" type="checkbox" data-role="checkbox"
+                                                    data-caption="Hébergement insolite">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.festive" type="checkbox" data-role="checkbox"
+                                                    data-caption="Ambiance festive">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.affaire" type="checkbox" data-role="checkbox"
+                                                    data-caption="Séjour d'affaire">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.culturel" type="checkbox" data-role="checkbox"
+                                                    data-caption="Evènement culturel">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.animaux" type="checkbox" data-role="checkbox"
+                                                    data-caption="A la rencontre des animaux">
+                                            </span>
+                                        </div>
+
+                                        <div class="options-titres">
+                                            Activités
+                                        </div>
+                                        <div class="options">
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.spa" type="checkbox" data-role="checkbox"
+                                                    data-caption="Accès au spa">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.soin" type="checkbox" data-role="checkbox"
+                                                    data-caption="Soin de corps">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.massage" type="checkbox" data-role="checkbox"
+                                                    data-caption="Massage et modélage">
+                                            </span>
+                                        </div>
+
+                                        <div class="options-titres">
+                                            Dîner
+                                        </div>
+                                        <div class="options">
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.pension" type="checkbox" data-role="checkbox"
+                                                    data-caption="Demi pension">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.diner" type="checkbox" data-role="checkbox"
+                                                    data-caption="Dîner">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.degustation" type="checkbox"
+                                                    data-role="checkbox" data-caption="Dégustation">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.pensioncomplete" type="checkbox"
+                                                    data-role="checkbox" data-caption="Pension complète">
+                                            </span>
+                                        </div>
+
+                                        <div class="options-titres">
+                                            Culture
+                                        </div>
+                                        <div class="options">
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.visiteguidee" type="checkbox"
+                                                    data-role="checkbox" data-caption="Visite guidée">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.autresvisites" type="checkbox"
+                                                    data-role="checkbox" data-caption="Autres visites">
+                                            </span>
+                                        </div>
+
+                                        <div class="options-titres">
+                                            Sport
+                                        </div>
+                                        <div class="options">
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.golf" type="checkbox" data-role="checkbox"
+                                                    data-caption="Golf à proximité">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.sallesport" type="checkbox" data-role="checkbox"
+                                                    data-caption="Forfait inclus salle de sport">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.velo" type="checkbox" data-role="checkbox"
+                                                    data-caption="Vélo">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.tennis" type="checkbox" data-role="checkbox"
+                                                    data-caption="Accès au terrain de tennis">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.basket" type="checkbox" data-role="checkbox"
+                                                    data-caption="Accès au terrain de basket">
+                                            </span>
+                                        </div>
+                                        <div class="options-titres">
+                                            Divertissement
+                                        </div>
+                                        <div class="options">
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.ponctuel" type="checkbox" data-role="checkbox"
+                                                    data-caption="Evènement ponctuel">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.attraction" type="checkbox" data-role="checkbox"
+                                                    data-caption="Parc d'attraction">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.spectacle" type="checkbox" data-role="checkbox"
+                                                    data-caption="Spectacle">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.zoo" type="checkbox" data-role="checkbox"
+                                                    data-caption="Zoo">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.foire" type="checkbox" data-role="checkbox"
+                                                    data-caption="Foire">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.randonnee" type="checkbox" data-role="checkbox"
+                                                    data-caption="Randonnée">
+                                            </span>
+                                        </div>
+                                        <div class="options-titres">
+                                            Catégorie propriété
+                                        </div>
+                                        <div class="options">
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.maisonvacances" type="checkbox"
+                                                    data-role="checkbox" data-caption="Maison de vacances">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.appartementvacances" type="checkbox"
+                                                    data-role="checkbox" data-caption="Appartement de vacances">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.chambrehotel" type="checkbox"
+                                                    data-role="checkbox" data-caption="Chambre d'hôtel">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.villagevacances" type="checkbox"
+                                                    data-role="checkbox" data-caption="Village de vacances">
+                                            </span>
+                                        </div>
+                                        <div class="options-titres">
+                                            Lieu de prise en charge de l'activité
+                                        </div>
+                                        <div class="options">
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.hotel" type="checkbox" data-role="checkbox"
+                                                    data-caption="Hôtel">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.pointrencontre" type="checkbox"
+                                                    data-role="checkbox" data-caption="Point de rencontre">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.lieuactivite" type="checkbox"
+                                                    data-role="checkbox" data-caption="Lieu de l'activité">
+                                            </span>
+                                        </div>
+                                        <div class="options-titres">
+                                            Langues disponibles
+                                        </div>
+                                        <div class="options">
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.francais" type="checkbox" data-role="checkbox"
+                                                    data-caption="Français">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.anglais" type="checkbox" data-role="checkbox"
+                                                    data-caption="Anglais">
+                                            </span>
+                                            <span class="">
+                                                <input checked readonly *ngIf="sejour.options.arabe" type="checkbox" data-role="checkbox"
+                                                    data-caption="Arabe">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

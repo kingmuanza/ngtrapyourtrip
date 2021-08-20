@@ -10,6 +10,7 @@ import { Divertissement } from 'src/app/models/divertissement.model';
 export class DisplayLoisirComponent implements OnInit {
 
   @Input() divertissement?: Divertissement;
+  @Input() cliquable = true;
 
   date = new Date();
 
@@ -21,17 +22,19 @@ export class DisplayLoisirComponent implements OnInit {
   }
 
   ouvrir(id) {
-    this.router.navigate(['offres', 'divertissement', 'loisirs', 'view', id]);
+    if (this.cliquable) {
+      this.router.navigate(['offres', 'divertissement', 'loisirs', 'view', id]);
+    }
   }
 
   notationToStars(notation: number) {
     notation = Math.floor(notation);
     let stars = '';
     for (let i = 0; i < notation; i++) {
-      stars = stars + '<span class="mif-star-full" style="color: rgb(255, 115, 0);"></span>';
+      stars = stars + '<span class="mif-star-full" style="color: rgb(48, 164, 221);"></span>';
     }
     for (let j = 0; j < 5 - notation; j++) {
-      stars = stars + '<span class="mif-star-empty" style="color: rgb(255, 115, 0);"></span>';
+      stars = stars + '<span class="mif-star-empty" style="color: rgb(48, 164, 221);"></span>';
     }
     return stars;
   }

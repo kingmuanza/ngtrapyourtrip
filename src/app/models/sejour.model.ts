@@ -3,6 +3,7 @@ import { Divertissement } from './divertissement.model';
 import { Hebergement } from './hebergement.model';
 import { Transport } from './transport.model';
 import { Depart } from './depart.model';
+import { Modification } from './modification.model';
 
 export class Sejour extends Modele {
     public prixUnitaire: number;
@@ -14,19 +15,17 @@ export class Sejour extends Modele {
     public actif: boolean;
     public notation: number;
     public pack: {
-        hebergements: Array<Hebergement>,
+        hebergement: Hebergement,
         transportAller: Depart,
         transportRetour: Depart,
         transportInterne: Depart,
         divertissements: Array<Divertissement>
     };
-    public options: {
-        plage: boolean,
-        montagne: boolean,
-        celebrations: boolean
-    };
+    public options: any;
     dateDebut: Date;
     dateFin: Date;
+
+    modification: Modification;
 
     constructor() {
         super();
@@ -34,6 +33,14 @@ export class Sejour extends Modele {
             plage: false,
             montagne: false,
             celebrations: false
+        };
+
+        this.pack = {
+            hebergement: null,
+            transportAller: null,
+            transportRetour: null,
+            transportInterne: null,
+            divertissements: []
         };
     }
 

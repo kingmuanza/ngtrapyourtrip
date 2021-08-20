@@ -1,7 +1,12 @@
-$bg-primaire: rgb(255, 115, 0);
+$bg-primaire: rgb(48, 164, 221);
+$bg-primaire: rgb(48, 164, 221);
+$couleur: rgb(48, 164, 221);
+$couleur: rgb(48, 164, 221);
+
+
 .image-logo {
     height: 35px; 
-    margin-left: 4vw;
+    margin-left: 9vw;
 
     @media screen and (max-width: 599px) {
         margin-left: -1vw;
@@ -10,6 +15,7 @@ $bg-primaire: rgb(255, 115, 0);
 .muanza-appbar {
     z-index: 2000;
     width: 100vw;
+    background-color: #fefefe;
 }
 ul {
 
@@ -19,14 +25,18 @@ ul {
             font-size: 1.0em;
             transition: letter-spacing 200ms;
             padding-right: 20px;
+            color: #303030;
+            
+            background-color: white;
             &:hover {
                 background-color: $bg-primaire;
-                background-color: lighten($bg-primaire, 30%);
-                letter-spacing: 1px;
+                background-color: lighten($bg-primaire, 10%);
+                // letter-spacing: 1px;
             }
             &.active {
-                background-color: $bg-primaire;
-                color: white;
+                background-color: white;
+                color: $bg-primaire;
+                border-bottom: 1px solid $bg-primaire;
                 .superieur {
                     color: white;
                 }
@@ -40,6 +50,7 @@ ul {
                 &.nom-user {
                     display: inline-block;
                     padding-top: 4px;
+                    white-space: nowrap;
                 }
                 &.icone {
                     display: inline-block;
@@ -49,7 +60,7 @@ ul {
                 }
             }
             .superieur {
-                color: rgb(255, 115, 0);
+                color: $couleur;
             }
 
             .user-image {
@@ -57,8 +68,73 @@ ul {
                 height: 30px;
                 width: 30px;
                 border-radius: 50%;
-                border: 1px solid rgb(255, 115, 0);
+                border: 2px solid $couleur;
             }
         }
+    }
+}
+
+ul.onscroll {
+
+    li {
+        font-family: 'Epilogue';
+        a {
+            font-size: 1.0em;
+            transition: letter-spacing 200ms;
+            padding-right: 20px;
+            color: #303030;
+            
+            background-color: white;
+            &:hover {
+                background-color: $bg-primaire;
+                background-color: lighten($bg-primaire, 10%);
+                // letter-spacing: 1px;
+            }
+            &.active {
+                background-color: white;
+                color: $bg-primaire;
+                border-bottom: 0px solid $bg-primaire;
+                .superieur {
+                    color: white;
+                }
+                .user-image {
+                    border: 2px solid white;
+                }
+            }
+
+            span {
+                margin-right: 10px;
+                &.nom-user {
+                    display: inline-block;
+                    padding-top: 4px;
+                    white-space: nowrap;
+                }
+                &.icone {
+                    display: inline-block;
+                    margin-top: -3px;
+                    margin-right: 15px;
+                    font-size: 0.9em;
+                }
+            }
+            .superieur {
+                color: $couleur;
+            }
+
+            .user-image {
+                
+                height: 30px;
+                width: 30px;
+                border-radius: 50%;
+                border: 2px solid $couleur;
+            }
+        }
+    }
+}
+
+.muanza-padding-droit {
+    margin-right: 10vw;
+    
+    @media screen and (max-width: 599px) {
+        margin-right: 0vw;
     }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Trajet } from 'src/app/models/trajet.model';
 import { FormBuilder, Form, FormGroup, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 declare const metro: any;
 
 @Component({
@@ -17,17 +17,29 @@ export class TrajetEditComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
     this.initForm();
+    this.route.paramMap.subscribe((paramMap) => {
+      const id = paramMap.get('id');
+      const db = firebase.firestore();
+      db.collection('trajets-trap').doc(id).get().then((resultat) => {
+        const trajet = resultat.data() as Trajet;
+        this.trajet = trajet;
+        this.initForm();
+      }).catch((e) => {
+      });
+    });
   }
 
   initForm() {
     this.form = this.formBuilder.group({
-      villeDepart: ['', Validators.required],
-      villeArrivee: ['', Validators.required],
+      villeDepart: [this.trajet ? this.trajet.villeDepart : '', Validators.required],
+      villeArrivee: [this.trajet ? this.trajet.villeArrivee : '', Validators.required],
+      duree: [this.trajet ? this.trajet.duree : ''],
       retour: [false]
     });
 
@@ -35,17 +47,25 @@ export class TrajetEditComponent implements OnInit {
 
   onSubmitForm() {
     const value = this.form.value;
-    const trajet = new Trajet();
+    let trajet = new Trajet();
+    if (this.trajet) {
+      trajet = this.trajet;
+    }
     const trajetRetour = new Trajet();
 
     let retour = value.retour;
+    if (this.trajet) {
+      retour = false;
+    }
     console.log('retour');
     console.log(retour);
     trajet.villeArrivee = value.villeArrivee;
     trajet.villeDepart = value.villeDepart;
+    trajet.duree = value.duree;
 
     trajetRetour.villeArrivee = value.villeDepart;
     trajetRetour.villeDepart = value.villeArrivee;
+    trajetRetour.duree = value.duree;
 
     if (value.villeArrivee === value.villeDepart) {
       retour = false;
@@ -69,7 +89,7 @@ export class TrajetEditComponent implements OnInit {
         });
       } else {
         metro().activity.close(activity);
-        // this.router.navigate(['offres', 'transport']);
+        this.router.navigate(['offres', 'transport']);
       }
     }).catch((e) => {
       metro().activity.close(activity);

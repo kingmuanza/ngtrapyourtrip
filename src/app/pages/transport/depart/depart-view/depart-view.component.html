@@ -45,7 +45,7 @@
             </div>
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                 <div *ngIf="depart" class="row no-gap shadow-1">
-                    <div class="cell-lg-3 bordure-orange-debut" style="padding-left: 5px; background-color: #eee;">
+                    <div class="cell-lg-3 bordure-orange-debut">
                         <input #calendarpickerlocale formControlName="date" data-role="calendarpicker"
                             data-prepend="Date" class="radius-gauche">
                     </div>
@@ -76,12 +76,16 @@
                         </select>
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin">
-                        <button [disabled]="!isDateValide() || form.invalid" *ngIf="!allerretour" class="button warning"
-                            style="width: 100%; background-color: rgb(255, 115, 0);">
+                        <button [disabled]="form.invalid" *ngIf="!allerretour" class="button warning"
+                            style="width: 100%; background-color: rgb(48, 164, 221);">
                             Réserver
                         </button>
+                        <a *ngIf="allerretour && !isDateValide()" class="button warning"
+                            style="width: 100%; color:white; background-color: rgb(48, 164, 221);" (click)="avertir()">
+                            Continuer
+                        </a>
                         <a *ngIf="allerretour && isDateValide()" class="button warning"
-                            style="width: 100%; color:white; background-color: rgb(255, 115, 0);"
+                            style="width: 100%; color:white; background-color: rgb(48, 164, 221);"
                             onclick="Metro.dialog.open('#demoDialog1')">
                             Continuer
                         </a>
@@ -91,7 +95,13 @@
         </div>
     </div>
     <div class="contenu-hebergement" style="padding-top: 20px">
-        
+        <app-admin>
+            <div>
+                <button class="button" (click)="modifier()">
+                    Modifier
+                </button>
+            </div>
+        </app-admin>
     </div>
 </div>
 <div id="demoDialog1" class="dialog" data-role="dialog">
@@ -117,7 +127,8 @@
     </div>
     <div class="dialog-actions">
         <button class="button js-dialog-close">Annuler</button>
-        <button (click)="saveWithRetour()" class="button warning js-dialog-close" style="background-color: rgb(255, 115, 0);">
+        <button (click)="saveWithRetour()" class="button warning js-dialog-close"
+            style="background-color: rgb(48, 164, 221);">
             Enregistrer
         </button>
     </div>

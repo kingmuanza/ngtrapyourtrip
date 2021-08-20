@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
 import { Sejour } from 'src/app/models/sejour.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Hebergement } from 'src/app/models/hebergement.model';
 import { Prestataire } from 'src/app/models/prestataire.model';
 import { Utilisateur } from 'src/app/models/utilisateur.model';
@@ -24,11 +24,24 @@ export class HebergementEditComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
     this.initForm();
     this.getPrestataires();
+
+    this.route.paramMap.subscribe((paramMap) => {
+      const id = paramMap.get('id');
+      if (id) {
+        const db = firebase.firestore();
+        db.collection('hebergements-trap').doc(id).get().then((resultat) => {
+          const h = resultat.data() as Hebergement;
+          this.hebergement = h;
+          this.initForm();
+        });
+      }
+    });
   }
 
   getPrestataires() {
@@ -77,14 +90,21 @@ export class HebergementEditComponent implements OnInit {
       ville: [this.hebergement ? this.hebergement.ville : 'Yaoundé', [Validators.required]],
       prestataire: [this.hebergement ? prestataire : '', []],
 
-      baignoire: [this.hebergement && this.hebergement.options ? this.hebergement.options.baignoire : true],
-      bouilloire: [this.hebergement && this.hebergement.options ? this.hebergement.options.bouilloire : false],
+      baignoire: [this.hebergement && this.hebergement.options ? this.hebergement.options.baignoire : false],
+      wifi: [this.hebergement && this.hebergement.options ? this.hebergement.options.wifi : false],
       climatiseur: [this.hebergement && this.hebergement.options ? this.hebergement.options.climatiseur : false],
+      bureau: [this.hebergement && this.hebergement.options ? this.hebergement.options.bureau : false],
+      linge: [this.hebergement && this.hebergement.options ? this.hebergement.options.linge : false],
+      tele: [this.hebergement && this.hebergement.options ? this.hebergement.options.tele : false],
+      insonore: [this.hebergement && this.hebergement.options ? this.hebergement.options.insonore : false],
+      bouilloire: [this.hebergement && this.hebergement.options ? this.hebergement.options.bouilloire : false],
+      cafe: [this.hebergement && this.hebergement.options ? this.hebergement.options.cafe : false],
+      minibar: [this.hebergement && this.hebergement.options ? this.hebergement.options.minibar : false],
       litdouble: [this.hebergement && this.hebergement.options ? this.hebergement.options.litdouble : false],
       litsimple: [this.hebergement && this.hebergement.options ? this.hebergement.options.litsimple : false],
-      minibar: [this.hebergement && this.hebergement.options ? this.hebergement.options.minibar : false],
-      tele: [this.hebergement && this.hebergement.options ? this.hebergement.options.tele : false],
-      wifi: [this.hebergement && this.hebergement.options ? this.hebergement.options.wifi : false],
+      spa: [this.hebergement && this.hebergement.options ? this.hebergement.options.spa : false],
+      forme: [this.hebergement && this.hebergement.options ? this.hebergement.options.forme : false],
+      navette: [this.hebergement && this.hebergement.options ? this.hebergement.options.navette : false],
 
       notation: [this.hebergement ? this.hebergement.notation : '3', [Validators.required]],
       tags: [this.hebergement ? this.hebergement.tags : ''],
@@ -128,13 +148,20 @@ export class HebergementEditComponent implements OnInit {
     hebergement.prestataire = prestataire;
 
     hebergement.options.baignoire = value.baignoire;
-    hebergement.options.bouilloire = value.bouilloire;
+    hebergement.options.wifi = value.wifi;
     hebergement.options.climatiseur = value.climatiseur;
+    hebergement.options.bureau = value.bureau;
+    hebergement.options.linge = value.linge;
+    hebergement.options.tele = value.tele;
+    hebergement.options.insonore = value.insonore;
+    hebergement.options.bouilloire = value.bouilloire;
+    hebergement.options.cafe = value.cafe;
+    hebergement.options.minibar = value.minibar;
     hebergement.options.litdouble = value.litdouble;
     hebergement.options.litsimple = value.litsimple;
-    hebergement.options.minibar = value.minibar;
-    hebergement.options.tele = value.tele;
-    hebergement.options.wifi = value.wifi;
+    hebergement.options.spa = value.spa;
+    hebergement.options.forme = value.forme;
+    hebergement.options.navette = value.navette;
 
     const activity = metro().activity.open({
       type: 'square',

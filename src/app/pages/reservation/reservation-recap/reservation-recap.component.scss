@@ -17,3 +17,28 @@
     padding-bottom: 5px;
     background-color: #eee;
 }
+
+.paiement {
+    height: 600px;
+    padding: 20px;
+    margin-left: 20px;
+    background-color: #eee;
+
+    &-titre {
+        font-weight: bold;
+        font-size: 1.2em;
+        font-family: 'Raleway';
+    }
+
+    &-statut {
+        margin-top: 20px;
+    }
+
+    &-mode {
+        margin-top: 20px;
+    }
+    
+    &-verifier {
+        margin-top: 20px;
+    }
+}
