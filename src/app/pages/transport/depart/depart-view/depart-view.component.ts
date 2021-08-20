@@ -143,7 +143,7 @@ export class DepartViewComponent implements OnInit {
     console.log(heure);
     console.log(dateDebut);
 
-    if (date && new Date().getTime() < dateDebut.getTime()) {
+    if (this.isDateValide()) {
 
       console.log('dateDebut');
       console.log(dateDebut);
@@ -191,15 +191,20 @@ export class DepartViewComponent implements OnInit {
         metro().activity.close(activity);
       });
     } else {
-      const notify = metro().notify;
-      notify.create('La date n\'est pas valide', null, {
-        cls: 'alert notify-marge',
-        keepOpen: false,
-        position: 'bottom right',
-        elementPosition: 'bottom right',
-        globalPosition: 'bottom right',
-      });
+      this.initForm();
+      this.avertir();
     }
+  }
+
+  avertir() {
+    const notify = metro().notify;
+    notify.create('La date n\'est pas valide', null, {
+      cls: 'alert notify-marge',
+      keepOpen: false,
+      position: 'bottom right',
+      elementPosition: 'bottom right',
+      globalPosition: 'bottom right',
+    });
   }
 
   getDepart(id: string): Promise<Depart> {
@@ -218,10 +223,10 @@ export class DepartViewComponent implements OnInit {
     notation = Math.floor(notation);
     let stars = '';
     for (let i = 0; i < notation; i++) {
-      stars = stars + '<span class="mif-star-full" style="color: rgb(255, 115, 0);"></span>';
+      stars = stars + '<span class="mif-star-full" style="color: rgb(48, 164, 221);"></span>';
     }
     for (let j = 0; j < 5 - notation; j++) {
-      stars = stars + '<span class="mif-star-empty" style="color: rgb(255, 115, 0);"></span>';
+      stars = stars + '<span class="mif-star-empty" style="color: rgb(48, 164, 221);"></span>';
     }
     return stars;
   }
@@ -236,6 +241,10 @@ export class DepartViewComponent implements OnInit {
     } else {
       return '';
     }
+  }
+
+  modifier() {
+    this.router.navigate(['offres', 'transport', 'depart', 'edit', this.depart.id]);
   }
 
 }

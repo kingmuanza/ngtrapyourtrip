@@ -1,129 +1,198 @@
-<div class="page-sejour">
+<div class="page-sejour" *ngIf="prestataire">
     <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
         <div class="entete">
             <div class="entete__background" [ngStyle]="{'background-image': 'url('+ prestataire.photoURL +')'}">
             </div>
             <div class="entete__contenu">
-                <div style="margin-left: -15px; margin-bottom: -20px;">
-                    <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
-                        <li class="page-item"><a routerLink="accueil" class="page-link">Accueil</a></li>
-                        <li class="page-item"><a (click)="goToAll()" class="page-link">Hébergement</a></li>
-                        <li class="page-item" *ngIf="prestataire"><a class="page-link">{{prestataire.nom}}</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <div *ngIf="prestataire">
-                        <div class="titre">
-                            {{prestataire.nom}}
-                            <span class="sejour__notation orange"
-                                [innerHTML]="notationToStars(prestataire.notation)"></span>
+                <div class="row no-gap">
+                    <div class="cell-lg-9">
+                        <div style="margin-left: -15px; margin-bottom: -20px;">
+                            <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
+                                <li class="page-item"><a routerLink="accueil" class="page-link">Accueil</a></li>
+                                <li class="page-item"><a (click)="goToAll()" class="page-link">Hébergement</a></li>
+                                <li class="page-item" *ngIf="prestataire"><a class="page-link">{{prestataire.nom}}</a>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="sous-titre text-leader2" style="font-size: 1.1em;">
-                            <ng-container *ngIf="prestataire.pays">
-                                {{prestataire.pays}},
-                            </ng-container>
-                            <ng-container *ngIf="prestataire.ville">
-                                {{prestataire.ville}},
-                            </ng-container>
-                            <ng-container *ngIf="prestataire.localisation">
-                                {{prestataire.localisation}},
-                            </ng-container>
-                            <ng-container *ngIf="prestataire.tel">
-                                {{prestataire.tel}},
-                            </ng-container>
-                            <ng-container *ngIf="prestataire.email">
-                                {{prestataire.email}}
-                            </ng-container>
+                        <div *ngIf="prestataire">
+                            <div class="titre">
+                                {{prestataire.nom}}
+                                <a class="button small showOnMObile" (click)="rechercheFilter()"
+                                    style="float: right; margin-left: 10px;">
+                                    <i class="mif-search fg-blue"></i>
+                                </a>
+                                <a class="button small showOnMObile" (click)="toggleFilter()"
+                                    style="float: right; margin-left: 10px;">
+                                    <i class="mif-filter fg-blue"></i>
+                                </a>
+                                <span class="sejour__notation bleu"
+                                    [innerHTML]="notationToStars(prestataire.notation)"></span>
+                            </div>
+                            <div class="sous-titre text-leader2" style="font-size: 1.1em;">
+                                <ng-container *ngIf="prestataire.pays">
+                                    {{prestataire.pays}},
+                                </ng-container>
+                                <ng-container *ngIf="prestataire.ville">
+                                    {{prestataire.ville}},
+                                </ng-container>
+                                <ng-container *ngIf="prestataire.localisation">
+                                    {{prestataire.localisation}},
+                                </ng-container>
+                                <ng-container *ngIf="prestataire.tel">
+                                    {{prestataire.tel}},
+                                </ng-container>
+                                <ng-container *ngIf="prestataire.email">
+                                    {{prestataire.email}}
+                                </ng-container>
+                            </div>
                         </div>
                     </div>
-                    <div style="margin-top: 15px;">
-                        <div class="row no-gap shadow-1" style="border-radius: 20px;">
-                            <div class="cell-lg-5 bordure-orange-debut radius-gauche">
-                                <div class="radius-gauche">
-                                    <input formControlName="adultes" style="text-align: right;" type="number"
-                                        placeholder="Adultes" class="input muanza radius-gauche">
-                                    <div style="margin-top: -30px; padding-left: 10px; width: 50%; color: #888;">
-                                        <span>
-                                            Adultes
-                                        </span>
-                                    </div>
-                                </div>
+                    <div class="cell-lg-3 text-right">
+                        <app-admin>
+                            <div class="administration">
+                                <button *ngIf="prestataire.indisponible" class="button warning"
+                                    (click)="setDisponible()">
+                                    Rendre disponible
+                                </button>
+                                <button *ngIf="!prestataire.indisponible" class="button warning"
+                                    (click)="setIndisponible()">
+                                    Rendre indisponible
+                                </button>
+                                <button class="button primary" style="background-color: rgb(48, 164, 221);"
+                                    (click)="modifier(prestataire)">
+                                    Modifier
+                                </button>
+                                <button class="button alert" style="margin-left: 10px;"
+                                    (click)="supprimer(prestataire)">
+                                    Supprimer
+                                </button>
                             </div>
-                            <div class="cell-lg-5 bordure-orange-fin">
-                                <div>
-                                    <input formControlName="enfants" style="text-align: right;" type="number"
-                                        placeholder="Enfants" class="input muanza">
-                                    <div style="margin-top: -30px; padding-left: 10px; width: 50%; color: #888;">
-                                        <span>
-                                            Enfants
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="cell-lg-2 bordure-orange-fin radius-droit" style="background-color: rgb(255, 115, 0);">
-                                <button class="button radius-droit"
-                                    style="background-color: rgb(255, 115, 0); color: #fff;  width: 100%;">Rechercher</button>
-                            </div>
-                        </div>
+                        </app-admin>
                     </div>
                 </div>
             </div>
         </div>
         <div class="contenu">
+            <div style="margin-top: -20px; margin-bottom: 10px;">
+                <div *ngIf="recherchesShowed" class="mobile-recherche">
+
+                    <div class="row no-gap shadow-2" style="border-radius: 0px;">
+                        <div class="cell-lg-9 bordure-orange-debut">
+                            <div style="color: #303030">
+                                <select style="color: #303030" placeholder="Ordre" data-prepend="Ordre"
+                                    formControlName="ordre" data-role="select" data-filter="false">
+                                    <option value="null" disabled="true" [selected]="true">
+                                        Ordre d'affichage
+                                    </option>
+                                    <option value="croissant">
+                                        Ordre croissant de prix
+                                    </option>
+                                    <option value="decroissant">
+                                        Ordre décroissant de prix
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="cell-lg-3 bordure-orange-fin radius-droit2"
+                            style="background-color: rgb(48, 164, 221);">
+                            <button class="button rechercher">Rechercher</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="cell-lg-12">
                     <div class="ordre">
-                        <span (click)="changerOrdre('croissant')" [ngClass]="{'active': ordre === 'croissant'}">
-                            <a>Ordre croissant de prix</a>
-                        </span>
-                        <span (click)="changerOrdre('decroissant')" [ngClass]="{'active': ordre !== 'croissant'}">
-                            <a>Ordre décroissant de prix</a>
-                        </span>
                     </div>
                 </div>
             </div>
             <div class="sejours">
                 <div class="row">
                     <div class="cell-lg-2">
-                        <div class="options">
-                            <span class="">
-                                <input formControlName="wifi" type="checkbox" data-role="checkbox" data-caption="WiFi">
-                            </span>
-                            <span class="">
-                                <input formControlName="baignoire" type="checkbox" data-role="checkbox"
-                                    data-caption="Baignoire">
-                            </span>
-                            <span class="">
-                                <input formControlName="tele" type="checkbox" data-role="checkbox"
-                                    data-caption="Télévision">
-                            </span>
-                            <span class="">
-                                <input formControlName="bouilloire" type="checkbox" data-role="checkbox"
-                                    data-caption="Machine à café">
-                            </span>
-                            <span class="">
-                                <input formControlName="climatiseur" type="checkbox" data-role="checkbox"
-                                    data-caption="Climatiseur">
-                            </span>
-                            <span class="">
-                                <input formControlName="minibar" type="checkbox" data-role="checkbox"
-                                    data-caption="Mini Bar">
-                            </span>
-                            <span class="">
-                                <input formControlName="litsimple" type="checkbox" data-role="checkbox"
-                                    data-caption="Lit simple">
-                            </span>
-                            <span class="">
-                                <input formControlName="litdouble" type="checkbox" data-role="checkbox"
-                                    data-caption="lit double">
-                            </span>
+                        <div *ngIf="filtersShowed" class="les">
+                            <div (click)="toggleFilter()" class="fermer-options showOnMObile">
+
+                            </div>
+                            <div class="les-options">
+                                <div class="les-options-contenant">
+                                    <div class="les-options-contenu">
+                                        <div class="options">
+                                            <span class="">
+                                                <input formControlName="baignoire" type="checkbox" data-role="checkbox"
+                                                    data-caption="Baignoire">
+                                            </span>
+                                            <span class="">
+                                                <input formControlName="wifi" type="checkbox" data-role="checkbox"
+                                                    data-caption="WiFi">
+                                            </span>
+                                            <span class="">
+                                                <input formControlName="climatiseur" type="checkbox"
+                                                    data-role="checkbox" data-caption="Climatisation">
+                                            </span>
+                                            <span class="">
+                                                <input formControlName="bureau" type="checkbox" data-role="checkbox"
+                                                    data-caption="Espace bureau">
+                                            </span>
+                                            <span class="">
+                                                <input formControlName="linge" type="checkbox" data-role="checkbox"
+                                                    data-caption="Lave linge">
+                                            </span>
+                                            <span class="">
+                                                <input formControlName="tele" type="checkbox" data-role="checkbox"
+                                                    data-caption="Télévision">
+                                            </span>
+                                            <span class="">
+                                                <input formControlName="insonore" type="checkbox" data-role="checkbox"
+                                                    data-caption="Insonorisation">
+                                            </span>
+                                            <span class="">
+                                                <input formControlName="bouilloire" type="checkbox" data-role="checkbox"
+                                                    data-caption="Bouilloire électrique">
+                                            </span>
+                                            <span class="">
+                                                <input formControlName="cafe" type="checkbox" data-role="checkbox"
+                                                    data-caption="Machine à café">
+                                            </span>
+                                            <span class="">
+                                                <input formControlName="minibar" type="checkbox" data-role="checkbox"
+                                                    data-caption="Mini Bar">
+                                            </span>
+                                            <span class="">
+                                                <input formControlName="litsimple" type="checkbox" data-role="checkbox"
+                                                    data-caption="Lit simple">
+                                            </span>
+                                            <span class="">
+                                                <input formControlName="litdouble" type="checkbox" data-role="checkbox"
+                                                    data-caption="lit double">
+                                            </span>
+                                            <span class="">
+                                                <input formControlName="spa" type="checkbox" data-role="checkbox"
+                                                    data-caption="Spa et centre de bien être">
+                                            </span>
+                                            <span class="">
+                                                <input formControlName="forme" type="checkbox" data-role="checkbox"
+                                                    data-caption="Centre de remise en forme">
+                                            </span>
+                                            <span class="">
+                                                <input formControlName="navette" type="checkbox" data-role="checkbox"
+                                                    data-caption="Navette aéroport">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="cell-lg-10">
+                    <div class="cell-lg-7">
                         <div class="row">
-                            <div class="cell-lg-3 cell-md-4" *ngFor="let hebergement of resultats">
+                            <div class="cell-lg-6 cell-md-6" *ngFor="let hebergement of resultats">
                                 <app-display-hebergement [hebergement]="hebergement"></app-display-hebergement>
                             </div>
+                        </div>
+                    </div>
+                    <div class="cell-lg-3">
+                        <div [innerHTML]="prestataire.description" class="descrire-prestataire shadow-1">
+
                         </div>
                     </div>
                 </div>
@@ -131,3 +200,7 @@
         </div>
     </form>
 </div>
+<div>
+    <div style="height: 100vh;" *ngIf="!prestataire">
+
+    </div>

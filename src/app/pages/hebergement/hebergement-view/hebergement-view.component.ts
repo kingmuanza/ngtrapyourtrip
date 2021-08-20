@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as firebase from 'firebase';
 import { Sejour } from 'src/app/models/sejour.model';
@@ -12,7 +12,7 @@ declare const metro: any;
   templateUrl: './hebergement-view.component.html',
   styleUrls: ['./hebergement-view.component.scss']
 })
-export class HebergementViewComponent implements OnInit {
+export class HebergementViewComponent implements OnInit, OnDestroy {
 
   @ViewChild('calendarpickerlocale', { static: false }) calendarpickerlocale;
   @ViewChild('calendarpickerlocale2', { static: false }) calendarpickerlocale2;
@@ -22,6 +22,16 @@ export class HebergementViewComponent implements OnInit {
   hebergements = new Array<Hebergement>();
   HEBERGEMENTS = new Array<Hebergement>();
   resultats = new Array<Hebergement>();
+
+  indexImages = 0;
+  changeImage;
+
+  filtersShowed = false;
+  recherchesShowed = false;
+  screenHeight: number;
+  screenWidth: number;
+  mobile = true;
+  formReservationShowed: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,11 +45,38 @@ export class HebergementViewComponent implements OnInit {
       if (id) {
         this.getSejour(id).then((hebergement) => {
           this.hebergement = hebergement;
+          this.changementDimages();
           this.getSejours();
         });
       }
     });
     this.initForm();
+    this.getScreenSize();
+  }
+
+  showFormReservation() {
+    this.formReservationShowed = !this.formReservationShowed;
+  }
+
+  toggleFilter() {
+    this.filtersShowed = !this.filtersShowed;
+  }
+
+  rechercheFilter() {
+    this.recherchesShowed = !this.recherchesShowed;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+    console.log('this.screenHeight, this.screenWidth');
+    console.log(this.screenHeight, this.screenWidth);
+    if (this.screenWidth > 599) {
+      this.mobile = false;
+      this.filtersShowed = true;
+      this.formReservationShowed = true;
+    }
   }
 
   initForm() {
@@ -54,6 +91,30 @@ export class HebergementViewComponent implements OnInit {
       console.log('value');
       console.log(value);
     });
+  }
+
+  changementDimages() {
+    if (this.hebergement) {
+      if (this.hebergement.images) {
+        if (this.hebergement.images.length > 0) {
+          this.indexImages = 0;
+          this.changeImage = setInterval(() => {
+            const i = this.indexImages + 1;
+            if (i < this.hebergement.images.length) {
+              this.indexImages++;
+            } else {
+              this.indexImages = 0;
+            }
+            console.log('changement dimage');
+            console.log(this.indexImages + ' sur ' + this.hebergement.images.length);
+          }, 10000);
+        }
+      }
+    }
+  }
+
+  choisir(i) {
+    this.indexImages = i;
   }
 
   goToAll() {
@@ -167,10 +228,10 @@ export class HebergementViewComponent implements OnInit {
     notation = Math.floor(notation);
     let stars = '';
     for (let i = 0; i < notation; i++) {
-      stars = stars + '<span class="mif-star-full" style="color: rgb(255, 115, 0);"></span>';
+      stars = stars + '<span class="mif-star-full" style="color: rgb(48, 164, 221);"></span>';
     }
     for (let j = 0; j < 5 - notation; j++) {
-      stars = stars + '<span class="mif-star-empty" style="color: rgb(255, 115, 0);"></span>';
+      stars = stars + '<span class="mif-star-empty" style="color: rgb(48, 164, 221);"></span>';
     }
     return stars;
   }
@@ -210,6 +271,26 @@ export class HebergementViewComponent implements OnInit {
         reject(e);
       });
     });
+  }
+
+  modifier(prestataire) {
+    this.router.navigate(['offres', 'hebergement', 'edit', prestataire.id]);
+  }
+
+  supprimer(element) {
+    const oui = confirm('Etes vous sûr de vouloir supprimer cet élément ?');
+    const db = firebase.firestore();
+    if (oui) {
+      db.collection('hebergements-trap').doc(element.id).delete().then(() => {
+        this.router.navigate(['offres', 'hebergement']);
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.changeImage) {
+      clearInterval(this.changeImage);
+    }
   }
 
 }

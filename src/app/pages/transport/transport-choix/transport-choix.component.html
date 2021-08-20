@@ -1,0 +1,44 @@
+<div class="page">
+    <div class="entete">
+        <div style="margin-top: 100px; text-align: center;">
+
+            <h1 class="titre">
+                Quel type de transport désirez-vous ?
+            </h1>
+        </div>
+    </div>
+    <div class="contenu" style="min-height: 100vh;">
+        <div class="row">
+            <div class="cell-lg-1">
+
+            </div>
+            <div class="cell-lg-5">
+                <div (click)="interurbain()" class="categorie shadow-1">
+                    <div class="evenements">
+                        <div style="height: 5vh;"></div>
+                    </div>
+                    <div class="titre-divertissement">
+                        <button class="button warning" style="background-color: rgb(48, 164, 221);">
+                            Transport interurbain
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="cell-lg-5">
+                <div  (click)="location()" class="categorie shadow-1">
+                    <div class="attractions">
+                        <div style="height: 5vh;"></div>
+                    </div>
+                    <div class="titre-divertissement">
+                        <button class="button warning" style="background-color: rgb(48, 164, 221);">
+                            Location de voiture
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="cell-lg-1">
+
+            </div>
+        </div>
+    </div>
+</div>

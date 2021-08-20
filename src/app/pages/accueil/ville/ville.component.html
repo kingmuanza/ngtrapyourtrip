@@ -1,0 +1,105 @@
+<div class="page-ville" style="">
+    <div class="entete" style="border-bottom: 0px solid rgb(48, 164, 221); padding-bottom: 10px;">
+        <div style="margin-left: -15px; margin-bottom: -10px;">
+            <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
+                <li class="page-item">
+                    <a routerLink="accueil" class="page-link">
+                        Résultats de la recherche
+                    </a>
+                </li>
+                <li class="page-item" *ngIf="nom">
+                    <a style="text-transform: capitalize;" class="page-link">{{nom}}</a>
+                </li>
+            </ul>
+        </div>
+        <h1>
+            <span class="mif-location fg-blue" style="margin-right: 5px;"></span>
+            <span style="text-transform: capitalize;">
+                {{nom}}
+            </span>
+        </h1>
+    </div>
+
+    <div class="muanza-pills-container">
+        <div class="muanza-pills">
+            <ul data-role="tabs" data-tabs-type="pills" data-expand="true">
+                <li class="active">
+                    <a href="#games">
+                        Hébergements
+                        <span style="margin-left: 10px;" class="fg-blue">
+                            {{prestataires.length}}
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#applications">
+                        Evènements
+                        <span style="margin-left: 10px;" class="fg-blue">
+                            {{evenements.length}}
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#music">
+                        Attractions
+                        <span style="margin-left: 10px;" class="fg-blue">
+                            {{loisirs.length}}
+                        </span>
+                    </a>
+                </li>
+                <li><a href="#films">
+                    Restaurants
+                    <span style="margin-left: 10px;" class="fg-blue">
+                        {{restaurants.length}}
+                    </span>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="offres-ville">
+        <div id="games">
+            <div class="row">
+                <div class="cell-lg-3" *ngFor="let prestataire of prestataires; let index = index;">
+                    <div>
+                        <app-display-prestataire [prestataire]="prestataire"></app-display-prestataire>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="applications">
+            <div class="row">
+                <div class="cell-lg-4" *ngFor="let divertissement of evenements; let index = index;">
+                    <div>
+                        <app-display-divertissement [divertissement]="divertissement">
+                        </app-display-divertissement>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="music">
+            <div class="row">
+                <div class="cell-lg-4" *ngFor="let divertissement of loisirs; let index = index;">
+                    <div>
+                        <app-display-loisir [divertissement]="divertissement"></app-display-loisir>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="films">
+            <div class="row">
+                <div class="cell-lg-4" *ngFor="let divertissement of restaurants; let index = index;">
+                    <div>
+                        <app-display-loisir [divertissement]="divertissement"></app-display-loisir>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div style="height: 100px;">
+
+    </div>
+
+</div>

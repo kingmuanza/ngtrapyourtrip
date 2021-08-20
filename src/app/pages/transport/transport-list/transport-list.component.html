@@ -1,111 +1,136 @@
 <div class="page-transport">
     <div class="entete" style="">
 
-        <div class="entete__background">
+        <div class="entete__background"
+            [ngClass]="{'interurbain': type==='interurbain', 'location': type==='location'}">
         </div>
-        <div class="entete__contenu">
-            <div class="row">
+        <div class="entete__contenu" [ngClass]="{'interurbain': type==='interurbain', 'location': type==='location'}">
+            <div class="row no-gap">
                 <div class="cell-lg-12">
+                    <div style="margin-left: -15px; margin-bottom: -20px; margin-top: 0px;">
+                        <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
+                            <li class="page-item"><a routerLink="accueil" class="page-link">Accueil</a></li>
+                            <li class="page-item">
+                                <a routerLink="/offres/transport" class="page-link">Transports</a>
+                            </li>
+                            <li class="page-item"><a routerLink="/offres/transport/recherche" class="page-link">Transports interurbains</a></li>
+                        </ul>
+                    </div>
                     <div class="titre">
-                        Transports
+                        Transports interurbains
                     </div>
                 </div>
             </div>
-            <div>
-                <div style="margin-top: 10px;">
-                    <ul data-role="tabs" data-expand="true">
-                        <li><a href="#_target_1">Transport inter urbain</a></li>
-                        <li><a href="#_target_2">Location de voiture</a></li>
-                    </ul>
+            <div style="display: none;" class="row no-gap">
+                <div class="cell-lg-6">
+                    <div class="titre fg-white">
+                        <span class="">
+                            <input type="radio" (change)="handleChange($event)" value="interurbain" [(ngModel)]="type"
+                                data-role="radio" data-caption="Transport interurbain">
+                        </span>
+                        <span class="">
+                            <input type="radio" (change)="handleChange($event)" value="location" [(ngModel)]="type"
+                                data-role="radio" data-caption="Location de voiture">
+                        </span>
+                    </div>
                 </div>
-                <div id="_target_1" style="margin-top: 25px;">
-                    <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-                        <div class="row no-gap shadow-1">
-                            <div class="cell-lg-5 bordure-orange-debut">
-                                <div>
-                                    <input #depart formControlName="depart" style="text-align: right;" data-role="input"
-                                        data-prepend="Ville de départ"
-                                        data-autocomplete="Douala, Yaoundé, Kribi, Limbé">
-                                </div>
-                            </div>
-                            <div class="cell-lg-5 bordure-orange-fin">
-                                <div>
-                                    <input #arrivee style="text-align: right;" formControlName="arrivee" data-role="input"
-                                        data-prepend="Ville d'arrivée"
-                                        data-autocomplete="Douala, Yaoundé, Kribi, Limbé">
-                                </div>
-                            </div>
-                            <div class="cell-lg-2 bordure-orange-fin">
-                                <button [disabled]="form.invalid" class="button warning"
-                                    style="width: 100%; background-color: rgb(255, 115, 0);">
-                                    Rechercher
-                                </button>
-                            </div>
+                <div class="cell-lg-6">
+                    <app-admin>
+                        <div class="administration">
+                            <button class="button" (click)="trajet()">
+                                Nouveau trajet
+                            </button>
+                            <button class="button" (click)="agences()">
+                                Agences
+                            </button>
+                            <button class="button" (click)="agence()">
+                                Nouvelle agence
+                            </button>
+                            <button class="button" (click)="lesdepart()">
+                                Nouveau départ
+                            </button>
                         </div>
-                    </form>
-                </div>
-                <div id="_target_2" style="margin-top: 25px;">
-                    <form [formGroup]="form2" (ngSubmit)="onFormSubmit2()">
-                        <div class="row no-gap shadow-1" style="border-radius: 20px;">
-                            <div class="cell-lg-10 bordure-orange-debut radius-gauche">
-                                <div>
-                                    <input formControlName="ville" style="text-align: right; padding-right: 10px;"
-                                        placeholder="Ville de départ" class="input muanza radius-gauche">
-                                    <div class="radius-gauche"
-                                        style="margin-top: -30px; padding-left: 10px; width: 50%; color: #111">
-                                        <span>
-                                            Ville de location du véhicule
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="cell-lg-2 bordure-orange-fin radius-droit">
-                                <button class="button warning" style="width: 100%; background-color: rgb(255, 115, 0);">
-                                    Rechercher
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    </app-admin>
                 </div>
             </div>
         </div>
     </div>
-    <div class="contenu" [ngClass]="{'visible': resultatsVisible, 'invisible': !resultatsVisible}">
-        <div class="trajets">
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Ville de départ</th>
-                        <th>Ville d'arrivée</th>
-                        <th>Supprimer</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let trajet of trajets" style="cursor: pointer;">
-                        <td (click)="departs(trajet)">{{ trajet.id }}</td>
-                        <td (click)="departs(trajet)">{{ trajet.villeDepart | uppercase}}</td>
-                        <td (click)="departs(trajet)">{{ trajet.villeArrivee | uppercase}}</td>
-                        <td>
-                            <button class="button" (click)="supprimer(trajet)">
-                                Supprimer
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+
+    <div class="contenu">
+        <div *ngIf=" type==='interurbain' " class="formulaire-recherche">
+            <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                <div class="row no-gap shadow-3">
+                    <div class="cell-lg-5 bordure-orange-debut">
+                        <div>
+                            <input #depart formControlName="depart" data-role="input"
+                                data-prepend="Ville de départ" data-autocomplete="Douala, Yaoundé, Kribi, Limbé">
+                        </div>
+                    </div>
+                    <div class="cell-lg-5 bordure-orange-fin">
+                        <div>
+                            <input #arrivee formControlName="arrivee" data-role="input"
+                                data-prepend="Ville d'arrivée" data-autocomplete="Douala, Yaoundé, Kribi, Limbé">
+                        </div>
+                    </div>
+                    <div class="cell-lg-2 bordure-orange-fin bg-dark">
+                        <button class="button warning"
+                            style="width: 100%; background-color: rgb(48, 164, 221);">
+                            Rechercher
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div *ngIf=" type==='location' " class="formulaire-recherche">
+            <form [formGroup]="form2" (ngSubmit)="onFormSubmit2()">
+                <div class="row no-gap shadow-3">
+                    <div class="cell-lg-10 bordure-orange-debut">
+                        <div>
+                            <input data-role="input" formControlName="ville"
+                                data-prepend="Ville de location du véhicule">
+                        </div>
+                    </div>
+                    <div class="cell-lg-2 bordure-orange-fin" style="background-color:  rgb(48, 164, 221);">
+                        <button class="button warning" style="width: 100%; background-color:  rgb(48, 164, 221);">
+                            Rechercher
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+    <div class="contenu" [ngClass]="{'visible': resultatsVisible, 'invisible': !resultatsVisible}">
+        <app-admin>
+            <div class="trajets">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ville de départ</th>
+                            <th>Ville d'arrivée</th>
+                            <th>Supprimer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let trajet of trajets" style="cursor: pointer;">
+                            <td (click)="departs(trajet)">{{ trajet.id }}</td>
+                            <td (click)="departs(trajet)">{{ trajet.villeDepart | uppercase}}</td>
+                            <td (click)="departs(trajet)">{{ trajet.villeArrivee | uppercase}}</td>
+                            <td>
+                                <button class="button" (click)="modifier(trajet)">
+                                    Modifier
+                                </button>
+                                <button style="margin-left: 10px;" class="button alert" (click)="supprimer(trajet)">
+                                    Supprimer
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </app-admin>
+    </div>
 </div>
+<div style="height: 50vmax;">
 
-<div>
-    <button class="button" (click)="trajet()">
-        Nouveau trajet
-    </button>
-    <button class="button" (click)="agence()">
-        Nouvelle agence
-    </button>
-    <button class="button" (click)="lesdepart()">
-        Nouveau départ
-    </button>
 </div>

@@ -1,3 +1,6 @@
+
+$couleur: rgb(48, 164, 221);
+$couleur: rgb(48, 164, 221);
 @keyframes progress-bar {
     0% {
         transform: scaleX(0);
@@ -19,6 +22,21 @@
 }
 
 .sejour {
+    
+    &.indisponible {
+        filter: grayscale(95%);
+    }
+
+    &:hover {
+        // -webkit-box-shadow: 0 17px 50px 0 rgba(0, 0, 0, 0.19), 0 12px 15px 0 rgba(0, 0, 0, 0.24);
+        // box-shadow: 0 17px 50px 0 rgba(0, 0, 0, 0.19), 0 12px 15px 0 rgba(0, 0, 0, 0.24);
+        border: 0px solid #f0f0f0;
+
+        .sejour__image {
+            transform: scale(1.2);
+        }
+    }
+
     cursor: pointer;
     animation-name: progress-bar;
     animation-duration: 500ms;
@@ -28,8 +46,8 @@
         background-color: #eee;
         height: 250px;
         overflow: hidden;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
 
     }
 
@@ -37,12 +55,12 @@
         height: 250px;
         background-size: cover;
         background-position: center center;
-        
-        border-radius: 10px;
+
+        border-radius: 0px;
         transition: transform 400ms;
         animation-name: opaque;
         animation-duration: 1000ms;
-        background-color: #eee;
+        background-color: #303030;
 
         &:hover {
             transform: scale(1.2);
@@ -53,8 +71,8 @@
         padding: 10px;
         padding-left: 15px;
         background-color: #eee;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
         height: 120px;
         overflow: hidden;
 
@@ -63,14 +81,16 @@
     .sejour__notation {
         margin-top: -3px;
         float: right;
-        font-size: 1.2em;;
+        font-size: 1.2em;
+        ;
     }
 
     .sejour__prix {
         margin-top: 0px;
+
         span {
             color: #444;
-            border-radius: 5px;
+            border-radius: 0px;
             font-weight: bold;
         }
 
@@ -78,7 +98,7 @@
 }
 
 .orange {
-    color: rgb(255, 115, 0);
+    color: $couleur;
 }
 
 .muanza-details {
@@ -90,12 +110,39 @@
     line-height: 2.5;
 
     .detail {
-        background-color: rgb(255, 115, 0);
+        background-color: $couleur;
         padding: 5px;
         padding-left: 8px;
         padding-right: 8px;
         margin-left: 3px;
         margin-right: 3px;
-        border-radius: 5px;
+        border-radius: 0px;
     }
+}
+
+.nature {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    color: #aaa;
+    font-size: 13px;
+}
+
+.prix {
+    // position: absolute;
+    left: 0;
+    bottom: 0;
+    // padding-left: 15px;
+    padding-top: 2px;
+    color: #303030;
+    font-size: 13px;
+}
+
+.petit-titre {
+    width: 150px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display:inline-block;
 }

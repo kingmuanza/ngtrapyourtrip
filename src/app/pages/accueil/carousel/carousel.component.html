@@ -1,6 +1,6 @@
 <div class="image-arriere">
-    <div data-role="carousel" data-height="16/9" data-period="5000" data-duration="500" data-auto-start="true"
-        data-bullets="false" data-controls="false">
+    <div class="hideOnMObile" data-role="carousel" data-height="400" data-period="5000" data-duration="1000"
+        data-auto-start="true" data-bullets="false" data-controls="false">
 
         <div class="slide" data-cover="../../../../assets/img/zanzibar.jpg"></div>
         <div class="slide" data-cover="../../../../assets/img/ciel.jpg"></div>
@@ -8,23 +8,37 @@
     </div>
 </div>
 <div class="cadre">
-    <div class="recherche">
-        <div class="titre">
-            Rechercher une destination
+    <div class="row no-gap">
+        <div class="cell-lg-8">
+            <div class="recherche">
+                <div class="carousel-titre">
+                    Rechercher une destination
+                </div>
+                <div class="complement">
+                    Veuillez saisir le nom d'une ville, afin d'y décourvrir toutes nos offres
+                </div>
+                <input *ngIf="mobile" [(ngModel)]="recherche" (ngModelChange)="rechercher($event)" data-role="materialinput" placeholder="Entrez le nom d'une ville">
+                <input *ngIf="!mobile" [(ngModel)]="recherche" (ngModelChange)="rechercher($event)" class="trap-input hideOnMObile shadow-3">
+                <div (click)="verifier()" class="resultats">
+                    <small class="showOnMObile propositions-titre">
+                        Quelques propositions
+                    </small>
+                    <ng-container *ngFor="let v of villesResultats; let i = index">
+                        <div *ngIf="i < nombreVilles" (click)="ouvrir(v)" class="resultat">
+                            <span class="photo">
+                                <img src="../../../../assets/img/villa1.jpg">
+                            </span>
+                            <span class="details" style="text-transform: capitalize;">
+                                <span class="nom">{{v}}</span>
+                            </span>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
         </div>
-
-        <input [(ngModel)]="recherche" (ngModelChange)="rechercher($event)" class="trap-input shadow-3">
-
-        <div  (click)="verifier()" class="resultats">
-            <div (click)="ouvrir(h)" *ngFor="let h of resultats" class="resultat">
-                <span class="photo">
-                    <img [src]="h.photoURL ? h.photoURL : '../../../../assets/img/villa1.jpg'">
-                </span>
-                <span class="details">
-                    <span class="nom">{{h.nom}}</span>
-                    <br>
-                    <span class="description">{{h.localisation}}</span>
-                </span>
+        <div class="cell-lg-4">
+            <div class="icone-recherche hideOnMObile">
+                <i class="mif-search"></i>
             </div>
         </div>
     </div>

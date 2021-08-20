@@ -1,14 +1,35 @@
+h1,
+h2,
+h3 {
+    font-family: 'Raleway';
+}
+
 .titre {
-    padding-top: 10vh;
+    padding: 5vmin;
+    padding-top: 10vmin;
+    padding-bottom: 1vmin;
     font-size: 3.0em;
     text-align: center;
+    line-height: 1.15;
+
+    @media only screen and (max-width: 600px) {
+        font-size: 25px;
+        font-family: 'Raleway';
+    }
 }
+
 .formulaire {
     padding: 5vmin;
-    padding-left: 20vmax;
-    padding-right: 20vmax;
-    padding-bottom: 20vh;
+    padding-left: 20vw;
+    padding-right: 20vw;
+    padding-bottom: 20vmin;
+
+    @media only screen and (max-width: 600px) {
+        padding: 5vmin;
+        padding-bottom: 20vmin;
+    }
 }
+
 .trap-input {
     font-size: 35px;
     padding-left: 10px;
@@ -20,10 +41,34 @@
     border: none;
     opacity: 0.8;
 }
+
 .button.muanza {
     margin-top: 1vmax;
     width: 100%;
-    background-color: #000;
+    background-color: #303030;
     color: white;
     border-radius: 5px;
+    font-family: 'Raleway';
+}
+
+input::placeholder {
+    text-align: center;
+}
+
+::-webkit-input-placeholder {
+    text-align: center;
+}
+
+:-moz-placeholder {
+    /* Firefox 18- */
+    text-align: center;
+}
+
+::-moz-placeholder {
+    /* Firefox 19+ */
+    text-align: center;
+}
+
+:-ms-input-placeholder {
+    text-align: center;
 }

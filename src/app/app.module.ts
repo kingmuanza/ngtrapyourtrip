@@ -5,6 +5,7 @@ import { ChartsModule } from 'ng2-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -78,6 +79,16 @@ import { LoisirListComponent } from './pages/divertissement/loisir-list/loisir-l
 import { LoisirViewComponent } from './pages/divertissement/loisir-view/loisir-view.component';
 import { LoisirEditComponent } from './pages/divertissement/loisir-edit/loisir-edit.component';
 import { DisplayLoisirComponent } from './components/display-loisir/display-loisir.component';
+import { RestaurantListComponent } from './pages/divertissement/restaurant-list/restaurant-list.component';
+import { RestaurantViewComponent } from './pages/divertissement/restaurant-view/restaurant-view.component';
+import { VilleComponent } from './pages/accueil/ville/ville.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { AboutComponent } from './pages/about/about.component';
+import { ConditionsComponent } from './pages/conditions/conditions.component';
+import { CharteComponent } from './pages/charte/charte.component';
+import { TransportChoixComponent } from './pages/transport/transport-choix/transport-choix.component';
+import { TransportLocationListComponent } from './pages/transport/transport-location-list/transport-location-list.component';
+import { TransportLocationViewComponent } from './pages/transport/transport-location-view/transport-location-view.component';
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -154,7 +165,17 @@ registerLocaleData(localeFr, 'fr-FR');
     LoisirListComponent,
     LoisirViewComponent,
     LoisirEditComponent,
-    DisplayLoisirComponent
+    DisplayLoisirComponent,
+    RestaurantListComponent,
+    RestaurantViewComponent,
+    VilleComponent,
+    AdminComponent,
+    AboutComponent,
+    ConditionsComponent,
+    CharteComponent,
+    TransportChoixComponent,
+    TransportLocationListComponent,
+    TransportLocationViewComponent
   ],
   imports: [
     BrowserModule,
@@ -165,6 +186,7 @@ registerLocaleData(localeFr, 'fr-FR');
     ChartsModule,
   ],
   providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     {
       provide: LOCALE_ID,
       useValue: 'fr-FR'

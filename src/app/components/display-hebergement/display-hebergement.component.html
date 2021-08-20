@@ -7,14 +7,29 @@
             <span title="baignoire" *ngIf="hebergement.options.baignoire" class="detail">
                 <span class="fas fa-bath fg-white"></span>
             </span>
+            <span title="wifi" *ngIf="hebergement.options.wifi" class="detail">
+                <span class="fg-white mif-network-wifi"></span>
+            </span>
+            <span title="climatisation" *ngIf="hebergement.options.climatiseur" class="detail">
+                <span class="fg-white mif-air"></span>
+            </span>
+            <span title="Espace bureau" *ngIf="hebergement.options.bureau" class="detail">
+                <span class="fg-white fas fa-chair"></span>
+            </span>
+            <span title="Lave linge" *ngIf="hebergement.options.linge" class="detail">
+                <span class="fg-white far fa-washer"></span>
+            </span>
             <span title="télévision" *ngIf="hebergement.options.tele" class="detail">
                 <span class="fas fa-tv fg-white"></span>
+            </span>
+            <span title="Insonorisation" *ngIf="hebergement.options.insonore" class="detail">
+                <span class="fas fa-volume-mute fg-white"></span>
             </span>
             <span title="bouilloire" *ngIf="hebergement.options.bouilloire" class="detail">
                 <span class="fas fa-mug-hot fg-white"></span>
             </span>
-            <span title="climatisation" *ngIf="hebergement.options.climatiseur" class="detail">
-                <span class="fg-white mif-air"></span>
+            <span title="Machine à café" *ngIf="hebergement.options.cafe" class="detail">
+                <span class="fas fa-coffee-pot fg-white"></span>
             </span>
             <span title="mini bar" *ngIf="hebergement.options.minibar" class="detail">
                 <span class="fas fa-wine-bottle fg-white"></span>
@@ -26,17 +41,25 @@
             <span title="lit simple" *ngIf="hebergement.options.litsimple" class="detail">
                 <span class="fas fa-bed fg-white"></span>
             </span>
-            <span title="wifi" *ngIf="hebergement.options.wifi" class="detail">
-                <span class="fg-white mif-network-wifi"></span>
+            <span title="Spa et centre de bien être" *ngIf="hebergement.options.spa" class="detail">
+                <span class="fas fa-hot-tub fg-white"></span>
+            </span>
+            <span title="Centre de remise en forme" *ngIf="hebergement.options.forme" class="detail">
+                <span class="fas fa-dumbbell fg-white"></span>
+            </span>
+            <span title="Navette aéroport" *ngIf="hebergement.options.forme" class="detail">
+                <span class="fas fa-bus fg-white"></span>
             </span>
         </div>
     </div>
     <div class="sejour__description">
-        {{hebergement.titre}} 
-        <b *ngIf="hebergement.prestataire">
-            -
-            {{hebergement.prestataire.nom}} 
-        </b>
+        <span class="petit-titre">
+            {{hebergement.titre}} 
+            <b *ngIf="hebergement.prestataire">
+                -
+                {{hebergement.prestataire.nom}} 
+            </b>
+        </span>
         <div class="sejour__notation orange" [innerHTML]="notationToStars(hebergement.notation)"></div>
         <div class="sejour__prix">
             {{hebergement.nuitee | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}

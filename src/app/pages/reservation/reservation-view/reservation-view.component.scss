@@ -1,6 +1,7 @@
 .titre2 {
     font-size: 2.0em;
 }
+
 .orange {
     color: rgba(255, 115, 0);
 }
@@ -16,4 +17,23 @@
     padding: 5px;
     padding-bottom: 5px;
     background-color: #eee;
+}
+
+.petit-padding {
+    padding-left: 10px;
+
+    @media screen and (max-width: 599px) {
+        padding-left: 0px;
+    }
+}
+
+.muanza-text-right {
+    text-align: right;
+    margin: 0;
+    padding: 0;
+
+    @media screen and (max-width: 599px) {
+        text-align: left;
+        padding-top: 20px;
+    }
 }

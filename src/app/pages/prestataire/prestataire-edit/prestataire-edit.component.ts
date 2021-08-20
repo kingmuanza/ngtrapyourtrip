@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { Prestataire } from 'src/app/models/prestataire.model';
 import { Utilisateur } from 'src/app/models/utilisateur.model';
@@ -22,10 +22,25 @@ export class PrestataireEditComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.initForm();
+    this.route.paramMap.subscribe((paramMap) => {
+      const id = paramMap.get('id');
+      if (id) {
+        const db = firebase.firestore();
+        db.collection('utilisateurs-trap').doc(id).get().then((resultat) => {
+          const prestataire = resultat.data() as Utilisateur;
+          this.prestataire = prestataire;
+          console.log('prestataire');
+          console.log(prestataire);
+          this.initForm();
+        }).catch((e) => {
+        });
+      }
+    });
   }
 
   retirerImage(image) {
@@ -43,11 +58,17 @@ export class PrestataireEditComponent implements OnInit {
       pays: [this.prestataire ? this.prestataire.pays : 'Cameroun', [Validators.required]],
       ville: [this.prestataire ? this.prestataire.ville : 'Yaoundé', [Validators.required]],
       lieu: [this.prestataire ? this.prestataire.localisation : 'Etoa meki, Yaoundé', [Validators.required]],
-      tel: ['696543495', [Validators.required]],
-      type: ['hotel', [Validators.required]],
-      passe: ['', [Validators.required]],
-      confirm: ['', [Validators.required]],
+      tel: [this.prestataire ? this.prestataire.tel : '696543495', [Validators.required]],
+      type: [this.prestataire && this.prestataire.hotel ? 'hotel' : 'villa', [Validators.required]],
+      passe: ['0', [Validators.required]],
+      confirm: ['0', [Validators.required]],
       notation: [this.prestataire ? this.prestataire.notation : '3', [Validators.required]],
+      piscine: [this.prestataire && this.prestataire.options && this.prestataire.options.piscine ? true : false],
+      plage: [this.prestataire && this.prestataire.options && this.prestataire.options.plage ? true : false],
+      spa: [this.prestataire && this.prestataire.options && this.prestataire.options.spa ? true : false],
+      petitdej: [this.prestataire && this.prestataire.options && this.prestataire.options.petitdej ? true : false],
+      dej: [this.prestataire && this.prestataire.options && this.prestataire.options.dej ? true : false],
+      cuisine: [this.prestataire && this.prestataire.options && this.prestataire.options.cuisine ? true : false],
     });
     this.form.controls.type.valueChanges.subscribe((val) => {
       console.log('val');
@@ -73,41 +94,60 @@ export class PrestataireEditComponent implements OnInit {
     const type = value.type;
     const confirmer = value.confirm;
 
-    if (passe === confirmer) {
-      let prestataire = new Utilisateur();
-      if (this.prestataire) {
-        prestataire = this.prestataire;
-      }
-      prestataire.nom = nom;
-      prestataire.description = description;
-      prestataire.email = email;
-      prestataire.localisation = lieu;
-      prestataire.pays = pays;
-      prestataire.ville = ville;
-      prestataire.tel = tel;
-      // prestataire.passe = passe;
-      prestataire.notation = notation;
-      if (type === 'hotel') {
-        prestataire.hotel = true;
-        prestataire.villa = false;
-      } else {
-        prestataire.hotel = false;
-        prestataire.villa = true;
-      }
-      prestataire.prestataire = true;
+    if (true) {
+      if (passe === confirmer) {
+        let prestataire = new Utilisateur();
+        if (this.prestataire) {
+          prestataire = this.prestataire;
+          prestataire.options = {
+            piscine: false,
+            plage: false,
+            spa: false,
+            petitdej: false,
+            dej: false,
+            cuisine: false,
+          };
+        }
 
-      if (this.prestataire) {
-        this.save(prestataire);
-      } else {
-        const auth = firebase.auth();
-        auth.createUserWithEmailAndPassword(email, passe).then((user) => {
-          prestataire.id = user.user.uid;
+        // Options
+        prestataire.options.piscine = value.piscine ? true : false;
+        prestataire.options.plage = value.plage ? true : false;
+        prestataire.options.spa = value.spa ? true : false;
+        prestataire.options.petitdej = value.petitdej ? true : false;
+        prestataire.options.dej = value.dej ? true : false;
+        prestataire.options.cuisine = value.cuisine ? true : false;
+
+        prestataire.nom = nom;
+        prestataire.description = description;
+        prestataire.email = email;
+        prestataire.localisation = lieu;
+        prestataire.pays = pays;
+        prestataire.ville = ville;
+        prestataire.tel = tel;
+        // prestataire.passe = passe;
+        prestataire.notation = notation;
+        if (type === 'hotel') {
+          prestataire.hotel = true;
+          prestataire.villa = false;
+        } else {
+          prestataire.hotel = false;
+          prestataire.villa = true;
+        }
+        prestataire.prestataire = true;
+
+        if (this.prestataire) {
           this.save(prestataire);
-        });
-      }
+        } else {
+          const auth = firebase.auth();
+          auth.createUserWithEmailAndPassword(email, passe).then((user) => {
+            prestataire.id = user.user.uid;
+            this.save(prestataire);
+          });
+        }
 
-    } else {
-      alert('les mots de passe ne sont pas identiques !');
+      } else {
+        alert('les mots de passe ne sont pas identiques !');
+      }
     }
   }
 

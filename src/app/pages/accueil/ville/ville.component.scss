@@ -1,0 +1,49 @@
+.page-ville {
+    padding-top: 70px;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    min-height: 100vh;
+
+    @media screen and (max-width: 599px) {
+        padding-top: 50px;
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+
+    .contenu {
+        margin-top: 20px;
+
+        .sous-titre {
+            font-family: 'Roboto Condensed';
+        }
+    }
+
+    h1 {
+        @media screen and (max-width: 599px) {
+            font-size: 25px;
+        }
+    }
+}
+
+.muanza-pills-container {
+    @media screen and (max-width: 599px) {
+        width: 100vw;
+        padding-bottom: 20px;
+        overflow-x: scroll;
+        
+    }
+}
+.muanza-pills {
+    @media screen and (max-width: 599px) {
+        width: 200vw;
+        
+    }
+}
+
+.offres-ville {
+    margin-top: 20px;
+    @media screen and (max-width: 599px) {
+        margin-top: -10px;
+        
+    }
+}

@@ -36,8 +36,8 @@
 
     .entete__contenu {
         padding-top: 55px;
-        padding-left: 5vw;
-        padding-right: 5vw;
+        padding-left: 10vw;
+        padding-right: 10vw;
         padding-bottom: 3vh;
         margin-top: -200px;
         height: 200px;
@@ -45,6 +45,18 @@
         //background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5));
         background-color: rgba(255,255,255,0.85);
         //color: white;
+        @media screen and (max-width: 599px) {
+            padding-top: 55px;
+            padding-left: 5vw;
+            padding-right: 5vw;
+            padding-bottom: 3vh;
+            margin-top: -200px;
+            height: 200px;
+            overflow: hidden;
+            //background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5));
+            background-color: rgba(255,255,255,0.85);
+            //color: white;
+        }
 
         .titre {
             font-size: 2.0em;
@@ -59,10 +71,17 @@
 
 .contenu {
     padding-top: 1vh;
-    padding-left: 5vw;
-    padding-right: 5vw;
+    padding-left: 10vw;
+    padding-right: 10vw;
     padding-bottom: 15vh;
     min-height: 100vh;
+    @media screen and (max-width: 599px) {
+        padding-top: 1vh;
+        padding-left: 5vw;
+        padding-right: 5vw;
+        padding-bottom: 15vh;
+        min-height: 100vh;
+    }
 }
 
 .bordure-grise {
@@ -97,7 +116,7 @@
 
         &.active {
             font-weight: bold;
-            color: rgb(255, 115, 0);
+            color: rgb(48, 164, 221);
         }
     }
 }
@@ -115,11 +134,11 @@ input.muanza {
 
 .bordure-orange {
     &-debut {
-        border: 2px solid rgb(255, 115, 0);
+        border: 2px solid rgb(48, 164, 221);
     }
 
     &-fin {
-        border: 2px solid rgb(255, 115, 0);
+        border: 2px solid rgb(48, 164, 221);
         border-left: 0px solid #eee;
     }
 }
@@ -141,11 +160,20 @@ tr {
 }
 
 .vip {
-    background-color: rgb(255, 115, 0);
+    background-color: rgb(48, 164, 221);
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 2px;
     color: white;
     letter-spacing: 1.5;
     font-weight: bold;
+}
+
+.petit-float {
+    float: right;
+    @media screen and (max-width: 599px) {
+        float: none;
+        float: initial;
+        display: block;
+    }
 }

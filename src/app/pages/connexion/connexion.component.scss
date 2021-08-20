@@ -1,6 +1,6 @@
 .inscription-page {
     min-height: 100vh;
-    padding-top: 20vh;
+    padding-top: 10vh;
     padding-left: 10vw;
     padding-right: 10vw;
     padding-bottom: 10vw;
@@ -8,8 +8,8 @@
     .formulaire {
         border: 0px solid rgb(255, 155, 0);
         border-radius: 20px;
-        padding: 20px;
-        padding-top: 40px;
+        padding: 0px;
+        padding-top: 0px;
         padding-bottom: 40px;
 
         form {
@@ -24,4 +24,23 @@
 .titre {
     font-size: 2.0em;
     font-weight: bold;
+    line-height: 1.15;
+}
+
+.google-connexion {
+    border: 1px solid #aaa;
+    // border-radius: 10px;
+    text-align: center;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.8;
+        background-color: #eee;
+    }
+
 }

@@ -1,7 +1,10 @@
 <div class="page">
     <div class="entete">
-        <div class="titre">
+        <div *ngIf="!agence" class="titre">
             Ajoutez une nouvelle agence
+        </div>
+        <div *ngIf="agence" class="titre">
+            Modifier l'agence : {{agence.nom}}
         </div>
     </div>
     <div class="contenu">
@@ -9,8 +12,11 @@
             <div>
                 <input formControlName="nom" data-role="input" data-prepend="Nom de la compagnie">
             </div>
-            <div>
+            <div *ngIf="!agence">
                 <input formControlName="bus" data-role="checkbox" data-caption="Agence de voyage">
+            </div>
+            <div *ngIf="agence">
+                <input formControlName="bus" type="checkbox" data-role="checkbox" data-caption="Agence de voyage">
             </div>
             <div>
                 <button class="button">Enregistrer</button>

@@ -49,36 +49,29 @@ export class PanierComponent implements OnInit {
 
   voir(reservation: Reservation) {
     if (reservation.sejour) {
-      this.router.navigate(['sejour', 'view', reservation.sejour.id]);
+      this.router.navigate(['offres', 'sejour', 'view', reservation.sejour.id]);
     }
     if (reservation.hebergement) {
-      if (reservation.responsable) {
-        this.router.navigate(['offres', 'reservation', 'recap', reservation.id]);
-      } else {
-        this.router.navigate(['offres', 'reservation', 'infos', reservation.id]);
-      }
+      this.router.navigate(['offres', 'hebergement', 'view', reservation.hebergement.id]);
     }
     if (reservation.divertissement) {
-      this.router.navigate(['divertissement', 'view', reservation.divertissement.id]);
+      if (reservation.divertissement.date) {
+        this.router.navigate(['offres', 'divertissement', 'evenements', 'view', reservation.divertissement.id]);
+      } else {
+        this.router.navigate(['offres', 'divertissement', 'loisirs', 'view', reservation.divertissement.id]);
+      }
     }
     if (reservation.transport) {
-      this.router.navigate(['transport', 'view', reservation.transport.id]);
+      this.router.navigate(['offres', 'reservation', 'view', reservation.id]);
+    }
+    if (reservation.locationVoiture) {
+      this.router.navigate(['offres', 'transport', 'location', reservation.locationVoiture.voiture.id]);
     }
   }
 
   modifier(reservation: Reservation) {
-    if (reservation.sejour) {
-      this.router.navigate(['sejour', 'view', reservation.sejour.id]);
-    }
-    if (reservation.hebergement) {
-      this.router.navigate(['hebergement', 'view', reservation.hebergement.id]);
-    }
-    if (reservation.divertissement) {
-      this.router.navigate(['divertissement', 'view', reservation.divertissement.id]);
-    }
-    if (reservation.transport) {
-      this.router.navigate(['transport', 'view', reservation.transport.id]);
-    }
+    this.router.navigate(['offres', 'reservation', 'view', reservation.id]);
+
   }
 
   supprimer(id) {
@@ -106,6 +99,7 @@ export class PanierComponent implements OnInit {
       localStorage.setItem('panier-trap', JSON.stringify([]));
       this.panierService.reservations = [];
       this.panierService.emit();
+      this.TOTAL = 0;
     }
   }
 
@@ -120,5 +114,10 @@ export class PanierComponent implements OnInit {
       return '';
     }
   }
+  
+  toDate(str) {
+    return new Date(str);
+  }
+
 
 }

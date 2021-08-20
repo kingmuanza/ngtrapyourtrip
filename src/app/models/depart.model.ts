@@ -1,6 +1,7 @@
 import { Trajet } from './trajet.model';
 import { Agence } from './agence.model';
 import { v4 as uuidv4 } from 'uuid';
+import { Modification } from './modification.model';
 
 export class Depart {
 
@@ -11,6 +12,7 @@ export class Depart {
     heures: Array<Date>;
     prix: number;
     vip: boolean;
+    modification: Modification;
 
     constructor() {
         this.id = this.generateID();

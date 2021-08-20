@@ -1,11 +1,57 @@
 .categorie {
-    border: 2px solid rgb(255, 115, 0);;
-    padding: 30px;
+    height: 35vh;
+    overflow: hidden;
     text-align: center;
+    margin-right: 10px;
     cursor: pointer;
     background-color: rgba(#000, 0.05);
 
     &:hover {
-        opacity: 0.8;
+        border: 2px solid rgb(48, 164, 221);
+
+        .evenements {
+            transform: scale(1.2) rotate(-5deg);
+            opacity: 0.9;
+        }
+
+        .attractions {
+            transform: scale(1.2) rotate(0deg);
+            opacity: 0.9;
+        }
+
+        .restaurants {
+            transform: scale(1.2) rotate(5deg);
+            opacity: 0.9;
+        }
+    }
+
+    .evenements {
+        background-image: url('../../../../assets/img/evenements.jpg');
+        background-position: center center;
+        background-size: cover;
+        height: 100%;
+        transition: transform 400ms;
+    }
+
+    .attractions {
+        background-image: url('../../../../assets/img/attractions.jpg');
+        background-position: center center;
+        background-size: cover;
+        height: 100%;
+        transition: transform 400ms;
+    }
+
+    .restaurants {
+        background-image: url('../../../../assets/img/restaurants.jpg');
+        background-position: center center;
+        background-size: cover;
+        height: 100%;
+        transition: transform 400ms;
+    }
+
+
+    .titre-divertissement {
+        margin-top: -17.5vh;
+        transform: translateY(-50%);
     }
 }

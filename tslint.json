@@ -34,6 +34,7 @@
       "rxjs/Rx"
     ],
     "import-spacing": true,
+    "interface-name": false,
     "indent": {
       "options": [
         "spaces"
@@ -74,6 +75,7 @@
     "no-redundant-jsdoc": true,
     "no-switch-case-fall-through": true,
     "no-var-requires": false,
+    "no-var-keyword": true,
     "object-literal-key-quotes": [
       true,
       "as-needed"

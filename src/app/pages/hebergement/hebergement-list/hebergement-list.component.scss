@@ -14,12 +14,12 @@
 }
 
 .entete {
-    height: 250px;
+    height: 210px;
     overflow: hidden;
 
     .entete__background {
 
-        height: 250px;
+        height: 210px;
         overflow: hidden;
 
         animation-name: progress-bar;
@@ -34,20 +34,34 @@
     }
 
     .entete__contenu {
-        padding-top: 55px;
-        padding-left: 5vw;
-        padding-right: 5vw;
+        padding-top: 50px;
+        padding-left: 10vw;
+        padding-right: 10vw;
         padding-bottom: 3vh;
-        margin-top: -250px;
-        height: 250px;
+        margin-top: -210px;
+        height: 210px;
         overflow: hidden;
-        //background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5));
-        background-color: rgba(255,255,255,0.85);
-        //color: white;
+        background-color: rgba(255, 255, 255, 0.85);
+
+        @media screen and (max-width: 599px) {
+            padding-top: 40px;
+            padding-left: 5vw;
+            padding-right: 5vw;
+            padding-bottom: 3vh;
+            margin-top: -210px;
+            height: 210px;
+            overflow: visible;
+            background-color: rgba(255, 255, 255, 0.95);
+        }
 
         .titre {
             font-size: 2.0em;
             line-height: 1.15;
+            font-family: 'Raleway';
+            @media screen and (max-width: 599px) {
+                font-size: 22px;
+                padding-top: 10px;
+            }
         }
 
         .sous-titre {
@@ -57,11 +71,15 @@
 }
 
 .contenu {
-    padding-top: 1vh;
-    padding-left: 5vw;
-    padding-right: 5vw;
+    // padding-top: 1vh;
+    padding-left: 10vw;
+    padding-right: 10vw;
     padding-bottom: 15vh;
     min-height: 100vh;
+    @media screen and (max-width: 599px) {
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
 }
 
 .bordure-grise {
@@ -96,7 +114,7 @@
 
         &.active {
             font-weight: bold;
-            color: rgb(255, 115, 0);
+            color: rgb(48, 164, 221);
         }
     }
 }
@@ -114,12 +132,16 @@ input.muanza {
 
 .bordure-orange {
     &-debut {
-        border: 2px solid rgb(255, 115, 0);
+        border: 2px solid rgb(48, 164, 221);
     }
 
     &-fin {
-        border: 2px solid rgb(255, 115, 0);
+        border: 2px solid rgb(48, 164, 221);
         border-left: 0px solid #eee;
+
+        @media screen and (max-width: 599px) {
+            border-left: 2px solid rgb(48, 164, 221);
+        }
     }
 }
 
@@ -128,7 +150,188 @@ input.muanza {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 }
+
 .radius-droit {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+
+.descrire-prestataire {
+    min-height: 400px;
+    // border-radius: 20px;
+    background-color: #fefefe;
+    border: 1px solid #aaa;
+    padding: 20px;
+    margin-left: 10px;
+    @media screen and (max-width: 599px) {
+        margin-left: 0px;
+    }
+}
+
+button.rechercher {
+    background-color: rgb(48, 164, 221);
+    color: #fff;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+$border-rad: 2rem;
+$clr-btn: #15DEA5;
+
+.btn {
+    // border-radius: $border-rad;
+    background-color: $clr-btn;
+    position: relative;
+    z-index: 1;
+    font-size: 2em;
+
+    &:hover {
+        &::after {
+            opacity: 1;
+        }
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: radial-gradient(circle, lighten($clr-btn, 5) 0%, darken($clr-btn, 10) 100%);
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 250ms;
+    }
+}
+
+.bleu {
+    color: rgb(48, 164, 221);
+}
+
+.administration {
+    margin-top: 20px;
+}
+
+
+
+
+.les {
+    @media screen and (max-width: 599px) {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(#000, 0.5);
+        animation-name: apparaitSoft;
+        animation-duration: 200ms;
+        z-index: 147852369;
+    }
+
+    .fermer-options {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 30vh;
+        // background-color: rgba(red, 0.5);
+    }
+
+    .les-options {
+        animation-name: apparaitDeHaut;
+        animation-duration: 1000ms;
+        position: relative;
+
+        @media screen and (max-width: 599px) {
+            border: 0px solid #bbb;
+            // border-radius: 20px;
+            border-top-left-radius: 40px;
+            border-top-right-radius: 42px;
+            padding: 30px;
+            padding-left: 35px;
+            padding-right: 0px;
+            padding-top: 30px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100vw;
+            height: 80vh;
+            overflow-y: hidden;
+            background-color: #fff;
+        }
+
+        .les-options-contenant {
+            @media screen and (max-width: 599px) {
+                height: 75vh;
+                overflow-y: scroll;
+            }
+        }
+
+        .les-options-contenu {
+            @media screen and (max-width: 599px) {}
+        }
+    }
+}
+
+.mobile-recherche {
+    @media screen and (max-width: 599px) {
+        position: fixed;
+        z-index: 147852369;
+        top: 30px;
+        left: 0;
+        width: 100vw;
+        animation-name: apparaitDeBas;
+        animation-duration: 1000ms;
+    }
+}
+
+.muanza-padding-mobile {
+    @media screen and (max-width: 599px) {
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+}
+
+.sejour__notation {
+    @media screen and (max-width: 599px) {
+        display: block;
+    }
+}
+
+
+@keyframes apparaitDeBas {
+    0% {
+        transform-origin: bottom left;
+        transform: translateY(-100vh);
+
+    }
+
+    100% {
+        transform: translateY(0vh);
+    }
+}
+
+@keyframes apparaitDeHaut {
+    0% {
+        transform-origin: bottom left;
+        transform: translateY(100vh);
+
+    }
+
+    100% {
+        transform: translateY(0vh);
+    }
+}
+
+@keyframes apparaitSoft {
+    0% {
+        opacity: 0;
+
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

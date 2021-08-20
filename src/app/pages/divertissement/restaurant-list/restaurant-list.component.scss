@@ -1,0 +1,152 @@
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+.entete {
+    height: 190px;
+    overflow: hidden;
+
+    .entete__background {
+
+        height: 190px;
+        overflow: hidden;
+
+        animation-name: progress-bar;
+        animation-duration: 500ms;
+        background-size: cover;
+        background-position: center center;
+        background-color: #444;
+        // background-attachment: fixed;
+        background-image: url('../../../../assets/img/clasico3.jpg');
+
+        filter: blur(5px);
+        transform: scale(1.2);
+
+    }
+
+    .entete__contenu {
+        padding-top: 45px;
+        padding-left: 10vw;
+        padding-right: 10vw;
+        padding-bottom: 3vh;
+        margin-top: -190px;
+        height: 190px;
+        overflow: hidden;
+        //background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5));
+        background-color: rgba(255,255,255,0.85);
+        //color: white;
+
+        @media screen and (max-width: 599px) {
+            padding-left: 5vw;
+            padding-right: 5vw;
+        }
+        .titre {
+            font-size: 2.0em;
+            line-height: 1.15;
+        }
+
+        .sous-titre {
+            margin-bottom: 5px;
+        }
+    }
+}
+
+.contenu {
+    padding-top: 1vh;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    padding-bottom: 15vh;
+    min-height: 100vh;
+    @media screen and (max-width: 599px) {
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+}
+
+.bordure-grise {
+    border: 2px solid #eee;
+}
+
+.options {
+    margin-top: 0px;
+    margin-left: -5px;
+
+    span {
+        margin-right: 20px;
+        display: block;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #eee;
+    }
+}
+
+.ordre {
+    span {
+        margin-right: 25px;
+        cursor: pointer;
+        color: #777;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+        transition: letter-spacing 200ms;
+
+        &:hover {
+            letter-spacing: 1px;
+        }
+
+        &.active {
+            font-weight: bold;
+            color: rgb(48, 164, 221);
+        }
+    }
+}
+
+input.muanza {
+    border: 1px solid #fff;
+    outline: none !important;
+    padding-left: 20px;
+}
+
+.orange {
+    color: rgba(255, 115, 0);
+}
+
+
+.bordure-orange {
+    &-debut {
+        border: 2px solid rgb(48, 164, 221);
+    }
+
+    &-fin {
+        border: 2px solid rgb(48, 164, 221);
+        border-left: 0px solid #eee;
+        @media screen and (max-width: 599px) {
+            border-left: 2px solid rgb(48, 164, 221);
+        }
+    }
+}
+
+
+.radius-gauche {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.radius-droit {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.formulaire {
+    margin-top: -30px;
+    margin-bottom: 20px;
+}

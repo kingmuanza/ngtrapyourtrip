@@ -1,9 +1,13 @@
 <div class="page">
     <app-rubriques></app-rubriques>
     <app-carousel></app-carousel>
-    <app-accueil-sejours></app-accueil-sejours>
-    <app-accueil-divertissements></app-accueil-divertissements>
-    <app-accueil-hebergements></app-accueil-hebergements>
-    <app-accueil-transports></app-accueil-transports>
+    <div [ngClass]="{'surMobile': mobile}">
+        <app-accueil-sejours></app-accueil-sejours>
+        <app-accueil-divertissements></app-accueil-divertissements>
+        <app-accueil-hebergements></app-accueil-hebergements>
+        <app-accueil-transports></app-accueil-transports>
+    </div>
 </div>
-<app-news-letter></app-news-letter>
+<div>
+    <app-news-letter></app-news-letter>
+</div>

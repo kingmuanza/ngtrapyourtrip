@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Trajet } from 'src/app/models/trajet.model';
 import { DATATABLES_OPTIONS_LANGUAGE } from 'src/app/data/datatable.options';
 import { Subject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as firebase from 'firebase';
 import { Depart } from 'src/app/models/depart.model';
+import { Transport } from 'src/app/models/transport.model';
 
 @Component({
   selector: 'app-depart-list',
@@ -18,9 +19,16 @@ export class DepartListComponent implements OnInit {
   resultats = new Array<Transport>();
 
   dtOptions = {
-    language: DATATABLES_OPTIONS_LANGUAGE
+    language: DATATABLES_OPTIONS_LANGUAGE,
+    responsive: true
   };
   dtTrigger = new Subject();
+
+  filtersShowed = false;
+  recherchesShowed = false;
+  screenHeight: number;
+  screenWidth: number;
+  mobile = true;
 
   constructor(
     private router: Router,
@@ -35,6 +43,24 @@ export class DepartListComponent implements OnInit {
         this.getDeparts(id);
       }
     });
+    this.getScreenSize();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+    console.log('this.screenHeight, this.screenWidth');
+    console.log(this.screenHeight, this.screenWidth);
+    if (this.screenWidth > 599) {
+      this.mobile = false;
+      this.filtersShowed = true;
+      this.recherchesShowed = true;
+      this.dtOptions = {
+        language: DATATABLES_OPTIONS_LANGUAGE,
+        responsive: false
+      };
+    }
   }
 
   getTrajet(id: string) {
@@ -82,4 +108,7 @@ export class DepartListComponent implements OnInit {
 
   }
 
+  alerter(mot) {
+    alert('oui');
+  }
 }

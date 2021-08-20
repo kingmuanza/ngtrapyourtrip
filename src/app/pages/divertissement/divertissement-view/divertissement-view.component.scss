@@ -4,7 +4,7 @@
 
 .formulaire {
     height: 60vh;
-    border: 2px solid rgb(255, 115, 0);
+    border: 2px solid rgb(48, 164, 221);
     padding: 20px;
     border-radius: 10px;
 }
@@ -42,3 +42,19 @@
     padding-right: 20px;
     border-radius: 10px;
 }
+
+.bordure-bleu {
+    &-debut {
+        border: 2px solid rgb(48, 164, 221);
+    }
+
+    &-fin {
+        border: 2px solid rgb(48, 164, 221);
+        border-left: 0px solid #eee;
+    }
+}
+
+.administration {
+    margin-top: 20px;
+}
+

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccueilComponent } from './pages/accueil/accueil.component';
 import { SejourViewComponent } from './pages/sejour/sejour-view/sejour-view.component';
+
 // tslint:disable-next-line:ordered-imports
 import { SejourListComponent } from './pages/sejour/sejour-list/sejour-list.component';
 import { SejourEditComponent } from './pages/sejour/sejour-edit/sejour-edit.component';
@@ -43,6 +44,16 @@ import { DepartViewComponent } from './pages/transport/depart/depart-view/depart
 import { DivertissementChoixComponent } from './pages/divertissement/divertissement-choix/divertissement-choix.component';
 import { LoisirListComponent } from './pages/divertissement/loisir-list/loisir-list.component';
 import { LoisirViewComponent } from './pages/divertissement/loisir-view/loisir-view.component';
+import { RestaurantListComponent } from './pages/divertissement/restaurant-list/restaurant-list.component';
+import { RestaurantViewComponent } from './pages/divertissement/restaurant-view/restaurant-view.component';
+import { VilleComponent } from './pages/accueil/ville/ville.component';
+import { AgenceListComponent } from './pages/transport/agence/agence-list/agence-list.component';
+import { AboutComponent } from './pages/about/about.component';
+import { ConditionsComponent } from './pages/conditions/conditions.component';
+import { CharteComponent } from './pages/charte/charte.component';
+import { TransportChoixComponent } from './pages/transport/transport-choix/transport-choix.component';
+import { TransportLocationListComponent } from './pages/transport/transport-location-list/transport-location-list.component';
+import { TransportLocationViewComponent } from './pages/transport/transport-location-view/transport-location-view.component';
 
 const routes: Routes = [
   { path: 'accueil', component: AccueilComponent },
@@ -65,6 +76,8 @@ const routes: Routes = [
 
   { path: 'admin/connexion', component: AdminConnexionComponent },
   { path: 'admin/console', component: ConsoleComponent },
+
+  { path: 'offres/villes/view/:id', component: VilleComponent },
 
   { path: 'offres/sejour', component: SejourListComponent },
   { path: 'offres/sejour/view/:id', component: SejourViewComponent },
@@ -92,20 +105,29 @@ const routes: Routes = [
   { path: 'offres/divertissement', component: DivertissementChoixComponent },
   { path: 'offres/divertissement/evenements', component: DivertissementListComponent },
   { path: 'offres/divertissement/loisirs', component: LoisirListComponent },
+  { path: 'offres/divertissement/restaurants', component: RestaurantListComponent },
+  { path: 'offres/divertissement/restaurants/view/:id', component: RestaurantViewComponent },
   { path: 'offres/divertissement/evenements/view/:id', component: DivertissementViewComponent },
   { path: 'offres/divertissement/loisirs/view/:id', component: LoisirViewComponent },
   { path: 'offres/divertissement/edit', component: DivertissementEditComponent },
   { path: 'offres/divertissement/edit/:id', component: DivertissementEditComponent },
 
-  { path: 'offres/transport', component: TransportListComponent },
+  { path: 'offres/transport', component: TransportChoixComponent },
+  { path: 'offres/transport/recherche', component: TransportListComponent },
+  { path: 'offres/transport/location', component: TransportLocationListComponent },
+  { path: 'offres/transport/location/:id', component: TransportLocationViewComponent },
   { path: 'offres/transport/view/:id', component: TransportViewComponent },
   { path: 'offres/transport/edit', component: TransportEditComponent },
   { path: 'offres/transport/edit/:id', component: TransportEditComponent },
 
   { path: 'offres/transport/trajet/edit', component: TrajetEditComponent },
+  { path: 'offres/transport/trajet/edit/:id', component: TrajetEditComponent },
+  { path: 'offres/transport/agence', component: AgenceListComponent },
   { path: 'offres/transport/agence/edit', component: AgenceEditComponent },
+  { path: 'offres/transport/agence/edit/:id', component: AgenceEditComponent },
 
   { path: 'offres/transport/depart/edit', component: DepartEditComponent },
+  { path: 'offres/transport/depart/edit/:id', component: DepartEditComponent },
   { path: 'offres/transport/depart/list/:id', component: DepartListComponent },
   { path: 'offres/transport/depart/view/:id/:heure', component: DepartViewComponent },
 
@@ -115,6 +137,9 @@ const routes: Routes = [
   { path: 'prestataire/edit/:id', component: PrestataireEditComponent },
 
   { path: 'accueil', component: AccueilComponent },
+  { path: 'charte', component: CharteComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'conditions', component: ConditionsComponent },
   { path: '**', redirectTo: 'accueil' },
 ];
 

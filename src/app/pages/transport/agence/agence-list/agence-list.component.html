@@ -1,1 +1,36 @@
-<p>agence-list works!</p>
+<div class="page">
+    <div class="entete">
+        <div class="titre">
+            Liste des agences
+        </div>
+    </div>
+    <div class="contenu">
+        <div class="agences">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Type</th>
+                        <th>Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let agence of agences" style="cursor: pointer;">
+                        <td>{{ agence.id }}</td>
+                        <td>{{ agence.nom | uppercase}}</td>
+                        <td>{{ agence.bus ? 'Agence de voyage': ''}}</td>
+                        <td>
+                            <button class="button" (click)="modifier(agence)">
+                                Modifier
+                            </button>
+                            <button style="margin-left: 10px;" class="button alert" (click)="supprimer(agence)">
+                                Supprimer
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

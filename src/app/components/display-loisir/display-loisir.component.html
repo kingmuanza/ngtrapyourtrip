@@ -15,9 +15,10 @@
                 {{divertissement.titre}}
             </div>
             <div>
-                <b>
+                <b>{{divertissement.ville}}</b><span *ngIf="divertissement.ville && divertissement.lieu">,</span>
+                <span>
                     {{divertissement.lieu}}
-                </b>
+                </span>
             </div>
         </div>
         <div class="cell-4">

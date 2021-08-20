@@ -1,0 +1,107 @@
+Table des matières
+MENU
+ACCUEIL
+premier compartiment
+Offres
+Appels d’offres
+Bons de commande
+Suivi des travaux
+Factures
+Paiements
+Statut ANR
+Statut ATD
+deuxième compartiment
+Liste des entreprises affiliées au logiciel
+Accès rapide de quelques fonctionnalités
+Vérification contribuable
+VERIFICATIONS
+Nouvelle vérification
+Liste des entreprises affiliées au logiciel
+Accès rapide de quelques fonctionnalités
+Vérification contribuable
+Historique des vérifications
+Tableau de bord de présentation de l’historique de recherche
+Onglet d’ajout d’une nouvelle vérification
+Barre de recherche d’une vérification
+Statuts de mes fournisseurs
+GESTION ADMINISTRATIVE
+ATD
+ATD reçus
+Barre de recherches des ATD reçus
+ATD non exécuté
+Barre de recherches des ATD non exécutés
+ATD exécutés en totalités
+ANR
+Ajouter un ANR
+Liste des ANR
+Barre de recherche des ANR
+Document
+Attestation de vérification
+Bon de commande
+Réception des travaux
+Factures
+ATD
+Secrétariat public
+Fournisseurs
+Sollicitations émises
+Sollicitations reçues
+Tous mes fournisseurs
+Appels d’offres
+Nouvel appel d’offre
+Appels d’offres émis
+Appels d’offres reçus
+Offres
+Offres reçues
+Offres émises
+Offre instantanée
+Contrat
+Nouveau Contrat
+Récapitulatif
+Contrat émis
+Contrats reçus
+GESTION COMMERCIALE
+Bon de commande
+Emettre un bon de commande
+Régulariser un bon de commande
+Bon de commande reçue
+Bon de commande émis
+Evolution des travaux
+Suivi des travaux
+Demande de réception
+Barre de recherche des travaux de réception
+Travaux commandés
+Travaux réalisés
+GESTION FINANCIERE
+PAIEMENTS
+Nouveau paiement
+Paiement reçu
+Paiement émis
+Barre de recherche des paiements émis
+Cautions
+Nouvelle caution
+Free-vending (non fonctionnel)
+Gestion des chèques (non fonctionnel)
+GESTION BANCAIRE
+Tableau de bord de présentation de la gestion bancaire
+Demande d’accès aux données
+Préfinancement pour enregistrement de contrat
+Attestation de paiement des droits d’enregistrement
+Attestation de domiciliation bancaire
+Demande de virement ou attestation de virement irrévocable
+Attestation de capacité financière
+Demande de caution de soumission
+Demande de caution de retenue de garantie
+Demande de caution définitive
+Demande de garantie de paiement
+Demande de caution douanière
+Demande de paiement d’assurance
+Demande de provisionnement de recours gracieux
+Demande de main levée
+Cantonnement des ATD
+RECOURS GRACIEUX
+Requête pour remise gracieuse
+Requête pour moratoire
+MESSAGERIE
+Nouveau
+Reçus
+Emis

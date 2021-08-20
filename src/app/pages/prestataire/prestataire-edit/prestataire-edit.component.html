@@ -1,8 +1,16 @@
+<div style="padding: 10vmin">
 <h1>
-    Nouveau Prestataire
+    {{prestataire ? prestataire.nom : 'Nouveau Prestataire'}}
 </h1>
 <div class="text-leader2" style="margin-bottom: 20px;">
-    Créer un compte pour un prestataire
+    <ng-container *ngIf="prestataire">
+        Créer un compte pour un prestataire
+    </ng-container>
+    <ng-container *ngIf="!prestataire">
+        Modifier les infos du prestataire... 
+        Attention vous ne pourrez pas Modifier son mot de passe 
+    </ng-container>
+    
 </div>
 <div class="formulaire">
     <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
@@ -57,16 +65,43 @@
             <input data-role="input" type="number" formControlName="notation" data-prepend="Notation">
         </div>
 
+        
+        <div class="options">
+            <span class="">
+                <input type="checkbox" formControlName="piscine" data-role="checkbox" data-caption="piscine">
+            </span>
+            <span class="">
+                <input type="checkbox" formControlName="plage" data-role="checkbox" data-caption="plage">
+            </span>
+            <span class="">
+                <input type="checkbox" formControlName="spa" data-role="checkbox" data-caption="spa">
+            </span>
+            <span class="">
+                <input type="checkbox" formControlName="petitdej" data-role="checkbox" data-caption="petitdej">
+            </span>
+            <span class="">
+                <input type="checkbox" formControlName="dej" data-role="checkbox" data-caption="dej">
+            </span>
+            <span class="">
+                <input type="checkbox" formControlName="cuisine" data-role="checkbox" data-caption="cuisine">
+            </span>
+        </div>
+
         <div>
             <input (change)="uploadFile($event)" type="file" data-role="file" data-prepend="Images">
         </div>
         <div class="row" *ngIf="prestataire">
-
+            <div class="cell-lg-4">
+                <img style="width: 100%;" [src]="prestataire.photoURL">
+            </div>
         </div>
         <div class="row">
             <div class="cell-lg-6">
-                <button class="button warning">Enregistrer</button>
+                <button class="button warning" style="background-color: rgb(48, 164, 221);">
+                    Enregistrer
+                </button>
             </div>
         </div>
     </form>
+</div>
 </div>

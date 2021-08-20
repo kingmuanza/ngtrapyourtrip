@@ -4,6 +4,7 @@ import { Utilisateur } from './utilisateur.model';
 import { Hebergement } from './hebergement.model';
 import { Divertissement } from './divertissement.model';
 import { Transport } from './transport.model';
+import { LocationVoiture } from './location.voiture.model';
 
 export class Reservation extends Modele {
 
@@ -11,6 +12,7 @@ export class Reservation extends Modele {
     divertissement?: Divertissement;
     hebergement?: Hebergement;
     transport?: Transport;
+    locationVoiture?: LocationVoiture;
 
     cout: number;
     dateDebut: Date;
@@ -29,9 +31,12 @@ export class Reservation extends Modele {
         prenom: string,
         tel: string,
         numero: string,
+        indicatif: string,
+        typepiece: string
     };
 
     utilisateur: Utilisateur;
+    statut: string;
 
     constructor() {
         super();

@@ -1,4 +1,4 @@
-<div *ngIf="divertissement" class="sejour" (click)="ouvrir(divertissement.id)">
+<div *ngIf="divertissement" [ngClass]="{'passee': passee}" class="sejour" (click)="ouvrir(divertissement.id)">
     <div class="sejour__conteneur">
         <div class="sejour__image" [ngStyle]="{'background-image': 'url(' + divertissement.images[0] +')'}">
 

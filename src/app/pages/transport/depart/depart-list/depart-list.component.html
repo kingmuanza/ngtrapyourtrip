@@ -30,6 +30,14 @@
                         </div>
                         <div *ngIf="trajet.villeDepart !== trajet.villeArrivee">
                             {{trajet.villeDepart}} - {{trajet.villeArrivee}}
+                            <span class="petit-float">
+                                <span class="mif-meter">
+
+                                </span>
+                                <span style="margin-left: 10px;">
+                                    {{trajet.duree ? trajet.duree: 'Aucune information sur la durée du trajet'}}
+                                </span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -72,12 +80,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <ng-container *ngFor="let depart of departs" style="cursor: pointer;">
+                        <ng-container *ngFor="let depart of departs">
                             <tr (click)="reservation(depart, null)" style="cursor: pointer;">
 
                                 <td>{{ depart.trajet.villeDepart }}</td>
-                                <td>{{ depart.trajet.villeArrivee }}</td>
-                                <td>
+                                <td (click)="reservation(depart, null)">{{ depart.trajet.villeArrivee }}</td>
+                                <td (click)="reservation(depart, null)">
                                     <span *ngIf="depart.vip" class="vip">
                                         VIP
                                     </span>
@@ -90,6 +98,15 @@
                             </tr>
                         </ng-container>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Ville de départ</th>
+                            <th>Ville d'arrivée</th>
+                            <th>Type</th>
+                            <th>Agence</th>
+                            <th>Prix</th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

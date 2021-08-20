@@ -1,39 +1,73 @@
 .trait {
-    height: 2px;
-    background-color: black;
-    margin-top: 10vh;
+    height: 1px;
+    background-color: #303030;
+    margin-top: 4vmin;
 }
 
 .titre {
-    margin-top: -5vh;
+    margin-top: -3.5vmin;
     text-align: center;
-    font-size: 5vh;
+    font-size: 4vmin;
+    font-family: 'Raleway';
+
+    @media screen and (max-width: 599px) {
+        line-height: 1.15;
+    }
+
     span {
         background-color: white;
         padding-left: 5vw;
         padding-right: 5vw;
         font-weight: bold;
+
+        @media screen and (max-width: 599px) {
+            display: inline-block;
+            margin-left: 15vw;
+            margin-right: 15vw;
+        }
     }
 }
 
 .description {
-    font-size: 5vh;
-    padding-top: 20px;
+    font-size: 3vh;
+    padding-top: 0px;
     padding-right: 20px;
+
+    @media screen and (max-width: 599px) {
+        padding-right: 0px;
+        padding-top: 0px;
+        font-size: 3vh;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
 
 .sejours {
     padding-top: 30px;
+
+    @media screen and (max-width: 599px) {
+        padding-top: 0px;
+    }
+}
+
+.mobile-center {
+    @media screen and (max-width: 599px) {
+        text-align: center;
+    }
 }
 
 .sejour {
     .sejour__image {
         height: 40vh;
-        background-image: url('../../../../assets/img/limbe.png');
         background-size: cover;
         background-position: center center;
         border-radius: 10px;
+
+        @media screen and (max-width: 599px) {
+            height: 20vh;
+        }
     }
+
     .sejour__description {
         padding-top: 10px;
 

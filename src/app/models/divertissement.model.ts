@@ -1,4 +1,5 @@
 import { Modele } from './model.model';
+import { Modification } from './modification.model';
 
 export class Divertissement extends Modele {
 
@@ -12,6 +13,8 @@ export class Divertissement extends Modele {
     tags: string;
     date: Date;
     images: Array<string>;
+    restaurant: boolean;
+    modification: Modification;
 
     constructor() {
         super();

@@ -20,177 +20,421 @@
                         </ul>
                     </div>
                     <div class="titre" style="margin-top: -20px; padding-top: 0px; line-height: 1.15;">
-
                         <b *ngIf="hebergement.prestataire" style="">
                             {{hebergement.prestataire.nom}} -
                         </b>
                         {{hebergement.titre}}
                     </div>
-                    <div class="text-leader2" style="padding-bottom: 10px;">
-                        {{hebergement.description}}
-                    </div>
 
+                    <div class="row hideOnMObile" style="margin-top: 10px;">
+                        <div class="cell-lg-12">
+                            <div *ngIf="hebergement.options" class="details minime">
+                                <span title="Baignoire" *ngIf="hebergement.options.baignoire" class="detail2">
+                                    <span class="icone">
+                                        <i class="fas fa-bath fg-bleu">
+
+                                        </i>
+                                    </span>
+                                    <span class="libelle">
+                                        Baignoire
+                                    </span>
+                                </span>
+                                <span title="WiFi" *ngIf="hebergement.options.wifi" class="detail2">
+                                    <span class="icone">
+                                        <i class="mif-network-wifi fg-bleu">
+
+                                        </i>
+                                    </span>
+                                    <span class="libelle">
+                                        WiFi
+                                    </span>
+                                </span>
+                                <span title="Climatisation" *ngIf="hebergement.options.climatiseur" class="detail2">
+                                    <span class="icone">
+                                        <i class="mif-air fg-bleu">
+
+                                        </i>
+                                    </span>
+                                    <span class="libelle">
+                                        Climatisation
+                                    </span>
+                                </span>
+                                <span title="Espace bureau" *ngIf="hebergement.options.bureau" class="detail2">
+                                    <span class="icone">
+                                        <i class="fas fa-chair fg-bleu">
+
+                                        </i>
+                                    </span>
+                                    <span class="libelle">
+                                        Espace bureau
+                                    </span>
+                                </span>
+                                <span title="Lave linge" *ngIf="hebergement.options.linge" class="detail2">
+                                    <span class="icone">
+                                        <i class="fas fa-washer fg-bleu">
+
+                                        </i>
+                                    </span>
+                                    <span class="libelle">
+                                        Lave linge
+                                    </span>
+                                </span>
+                                <span title="Télévision" *ngIf="hebergement.options.tele" class="detail2">
+                                    <span class="icone">
+                                        <i class="fas fa-tv fg-bleu">
+
+                                        </i>
+                                    </span>
+                                    <span class="libelle">
+                                        Télévision
+                                    </span>
+                                </span>
+                                <span title="Insonorisation" *ngIf="hebergement.options.insonore" class="detail2">
+                                    <span class="icone">
+                                        <i class="fas fa-volume-mute fg-bleu">
+
+                                        </i>
+                                    </span>
+                                    <span class="libelle">
+                                        Insonorisation
+                                    </span>
+                                </span>
+                                <span title="Bouilloire" *ngIf="hebergement.options.bouilloire" class="detail2">
+                                    <span class="icone">
+                                        <i class="fas fa-mug-hot fg-bleu">
+
+                                        </i>
+                                    </span>
+                                    <span class="libelle">
+                                        Bouilloire
+                                    </span>
+                                </span>
+                                <span title="Machine à café" *ngIf="hebergement.options.cafe" class="detail2">
+                                    <span class="icone">
+                                        <i class="fas fa-mug-hot fg-bleu">
+
+                                        </i>
+                                    </span>
+                                    <span class="libelle">
+                                        Machine à café
+                                    </span>
+                                </span>
+                                <span title="Mini bar" *ngIf="hebergement.options.minibar" class="detail2">
+                                    <span class="icone">
+                                        <i class="fas fa-wine-bottle fg-bleu">
+
+                                        </i>
+                                    </span>
+                                    <span class="libelle">
+                                        Mini bar
+                                    </span>
+                                </span>
+                                <span title="Lit double" *ngIf="hebergement.options.litdouble" class="detail2">
+                                    <span class="icone">
+                                        <i class="fas fa-bed fg-bleu">
+
+                                        </i>
+                                        <span style="color: orangered;">²</span>
+                                    </span>
+                                    <span class="libelle">
+                                        Lit double
+                                    </span>
+                                </span>
+                                <span title="Lit simple" *ngIf="hebergement.options.litsimple" class="detail2">
+                                    <span class="icone">
+                                        <i class="fas fa-bed fg-bleu">
+
+                                        </i>
+                                    </span>
+                                    <span class="libelle">
+                                        Lit simple
+                                    </span>
+                                </span>
+                                <span title="Spa et centre de bien être" *ngIf="hebergement.options.spa"
+                                    class="detail2">
+                                    <span class="icone">
+                                        <i class="fas fa-hot-tub fg-bleu">
+
+                                        </i>
+                                    </span>
+                                    <span class="libelle">
+                                        Spa et centre de bien être
+                                    </span>
+                                </span>
+                                <span title="Centre de remise en forme" *ngIf="hebergement.options.forme"
+                                    class="detail2">
+                                    <span class="icone">
+                                        <i class="fas fa-dumbbell fg-bleu">
+
+                                        </i>
+                                    </span>
+                                    <span class="libelle">
+                                        Centre de remise en forme
+                                    </span>
+                                </span>
+                                <span title="Navette aéroport" *ngIf="hebergement.options.navette" class="detail2">
+                                    <span class="icone">
+                                        <i class="fas fa-bus fg-bleu">
+
+                                        </i>
+                                    </span>
+                                    <span class="libelle">
+                                        Navette aéroport
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="cell-lg-4">
-                    <div class="sejour__notation orange" [innerHTML]="notationToStars(hebergement.notation)"></div>
-                    <div class="text-right" style="margin-top: -5px; color: #444">
+                    <div style="height: 10px;">
+
+                    </div>
+                    <div class="sejour__notation" style="color: rgb(48, 164, 221);;"
+                        [innerHTML]="notationToStars(hebergement.notation)"></div>
+                    <div [ngClass]="{'text-right': !mobile}" class="" style="margin-top: -5px; color: #444">
                         <span style="font-size: 1.2em;">
                             {{hebergement.nuitee | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
                         </span>
                     </div>
-                </div>
-            </div>
-            <div class="row no-gap">
-                <div class="cell-lg-12">
-                    <div *ngIf="hebergement.options" class="details">
-                        <span title="Baignoire" *ngIf="hebergement.options.baignoire" class="detail2">
-                            <span class="icone" >
-                                <i class="fas fa-bath fg-orange">
-
-                                </i>
-                            </span>
-                            <span class="libelle">
-                                Baignoire
-                            </span>
-                        </span>
-                        <span title="Télévision" *ngIf="hebergement.options.tele" class="detail2">
-                            <span class="icone" >
-                                <i class="fas fa-tv fg-orange">
-
-                                </i>
-                            </span>
-                            <span class="libelle">
-                                Télévision
-                            </span>
-                        </span>
-                        <span title="Bouilloire" *ngIf="hebergement.options.bouilloire" class="detail2">
-                            <span class="icone" >
-                                <i class="fas fa-mug-hot fg-orange">
-
-                                </i>
-                            </span>
-                            <span class="libelle">
-                                Bouilloire
-                            </span>
-                        </span>
-                        <span title="Climatisation" *ngIf="hebergement.options.climatiseur" class="detail2">
-                            <span class="icone" >
-                                <i class="mif-air fg-orange">
-
-                                </i>
-                            </span>
-                            <span class="libelle">
-                                Climatisation
-                            </span>
-                        </span>
-                        <span title="Lit double" *ngIf="hebergement.options.litdouble" class="detail2">
-                            <span class="icone" >
-                                <i class="fas fa-bed fg-orange">
-
-                                </i>
-                                <span style="color: orangered;">²</span>
-                            </span>
-                            <span class="libelle">
-                                Lit double
-                            </span>
-                        </span>
-                        <span title="Lit simple" *ngIf="hebergement.options.litsimple" class="detail2">
-                            <span class="icone" >
-                                <i class="fas fa-bed fg-orange">
-
-                                </i>
-                            </span>
-                            <span class="libelle">
-                                Lit simple
-                            </span>
-                        </span>
-                        <span title="Mini bar" *ngIf="hebergement.options.minibar" class="detail2">
-                            <span class="icone">
-                                <i class="fas fa-wine-bottle fg-orange">
-
-                                </i>
-                            </span>
-                            <span class="libelle">
-                                Mini bar
-                            </span>
-                        </span>
-                        <span title="WiFi" *ngIf="hebergement.options.wifi" class="detail2">
-                            <span class="icone" >
-                                <i class="mif-network-wifi fg-orange">
-
-                                </i>
-                            </span>
-                            <span class="libelle">
-                                WiFi
-                            </span>
-                        </span>
+                    <div class="showOnMObile" style="margin-top: 10px;">
+                        <button class="button primary small" style="background-color: rgb(48, 164, 221);" (click)="showFormReservation()">
+                            Réserver
+                        </button>
                     </div>
+                    <app-admin>
+                        <div class="administration text-right">
+                            <button class="button primary" style="background-color: rgb(48, 164, 221);"
+                                (click)="modifier(hebergement)">
+                                Modifier
+                            </button>
+                            <button class="button alert" style="margin-left: 10px;" (click)="supprimer(hebergement)">
+                                Supprimer
+                            </button>
+                        </div>
+                    </app-admin>
                 </div>
             </div>
         </div>
     </div>
-    <div *ngIf="hebergement" class="contenu-hebergement" style="padding-top: 20px; padding-bottom: 20px;">
-        <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-            <div class="row no-gap shadow-1" style="border-radius: 20px;">
-                <div class="cell-lg-3 bordure-orange-debut radius-gauche"
-                    style="padding-left: 5px; background-color: #eee;">
-                    <input #calendarpickerlocale formControlName="date" data-role="calendarpicker"
-                        data-prepend="Arrivée" class="radius-gauche">
-                </div>
-                <div class="cell-lg-3 bordure-orange-fin">
-                    <input #calendarpickerlocale2 formControlName="dateFin" data-role="calendarpicker"
-                        data-prepend="Départ">
-                </div>
+    <div *ngIf="hebergement" class="contenu-hebergement" style="margin-top: -20px;">
+        <div class="mobile-recherche" *ngIf="formReservationShowed">
+            <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                <div class="row no-gap shadow-3">
+                    <div class="cell-lg-3 bordure-orange-debut">
+                        <input #calendarpickerlocale formControlName="date" data-role="calendarpicker"
+                            data-prepend="Arrivée">
+                    </div>
+                    <div class="cell-lg-3 bordure-orange-fin">
+                        <input #calendarpickerlocale2 formControlName="dateFin" data-role="calendarpicker"
+                            data-prepend="Départ">
+                    </div>
 
-                <div class="cell-lg-2 bordure-orange-fin">
-                    <div>
-                        <input formControlName="adultes" style="text-align: right;" type="number" placeholder="Adultes"
-                            class="input muanza">
-                        <div style="margin-top: -30px; padding-left: 10px; width: 50%; color: #888;">
-                            <span>
-                                Adultes
-                            </span>
+                    <div class="cell-lg-2 bordure-orange-fin">
+                        <div>
+                            <input formControlName="adultes" data-role="input" type="number" data-prepend="Adultes">
+                        </div>
+                    </div>
+                    <div class="cell-lg-2 bordure-orange-fin">
+                        <div>
+                            <input formControlName="enfants" data-role="input" type="number" data-prepend="Enfants">
+                        </div>
+                    </div>
+                    <div class="cell-lg-2 bordure-orange-fin">
+                        <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
+                            Réserver
+                        </button>
+                    </div>
+                    <div class="showOnMObile mobile-recherche-fermer cell-lg-2">
+                        <a (click)="showFormReservation()" class="button dark"
+                            style="color: #fff;  width: 100%;">Fermer</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row" style="padding-top: 30px">
+            <div *ngIf="hebergement.images[0]" class="cell-lg-7">
+                <div class="trap-image-big">
+                    <ng-container *ngFor="let image of hebergement.images; let i = index">
+
+                        <div *ngIf="i === indexImages" class="trap-image-big animer"
+                            [ngStyle]="{'background-image': 'url(' + hebergement.images[i] +')'}">
+
+                        </div>
+
+                    </ng-container>
+                </div>
+                <div class="row" style="margin-top: 5px;">
+                    <div (click)="choisir(i)" class="cell-lg-1 cell-3" *ngFor="let image of hebergement.images; let i = index">
+                        <div [ngClass]="{'actuelle': i === indexImages}"
+                            style="height: 60px; cursor: pointer; background-size: cover; background-position: center center;"
+                            [ngStyle]="{'background-image': 'url(' + image +')'}">
+
                         </div>
                     </div>
                 </div>
-                <div class="cell-lg-2 bordure-orange-fin">
-                    <div>
-                        <input formControlName="enfants" style="text-align: right;" type="number" placeholder="Enfants"
-                            class="input muanza">
-                        <div style="margin-top: -30px; padding-left: 10px; width: 50%; color: #888;">
-                            <span>
-                                Enfants
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="cell-lg-2 bordure-orange-fin radius-droit">
-                    <button class="button warning" style="width: 100%; background-color: rgb(255, 115, 0);">
-                        Réserver
-                    </button>
-                </div>
             </div>
-        </form>
-        <div class="row" style="padding-top: 20px">
-            <div *ngIf="hebergement.images[0]" class="cell-lg-8">
-                <div class="trap-image-big" [ngStyle]="{'background-image': 'url(' + hebergement.images[0] +')'}">
-
+            <div class="cell-lg-5">
+                <div [innerHTML]="hebergement.description" class="text-leader2" style="padding-bottom: 10px;">
                 </div>
-            </div>
-            <div class="cell-lg-4">
-                <div *ngIf="hebergement.images[1]" class="trap-image"
-                    [ngStyle]="{'background-image': 'url(' + hebergement.images[1] +')'}">
+                <div *ngIf="hebergement.options" class="details" style="margin-top: 20px;">
+                    <span title="Baignoire" *ngIf="hebergement.options.baignoire" class="detail2">
+                        <span class="icone">
+                            <i class="fas fa-bath fg-bleu">
 
-                </div>
-                <div *ngIf="hebergement.images[2]" class="trap-image"
-                    [ngStyle]="{'background-image': 'url(' + hebergement.images[2] +')'}">
+                            </i>
+                        </span>
+                        <span class="libelle">
+                            Baignoire
+                        </span>
+                    </span>
+                    <span title="WiFi" *ngIf="hebergement.options.wifi" class="detail2">
+                        <span class="icone">
+                            <i class="mif-network-wifi fg-bleu">
 
+                            </i>
+                        </span>
+                        <span class="libelle">
+                            WiFi
+                        </span>
+                    </span>
+                    <span title="Climatisation" *ngIf="hebergement.options.climatiseur" class="detail2">
+                        <span class="icone">
+                            <i class="mif-air fg-bleu">
+
+                            </i>
+                        </span>
+                        <span class="libelle">
+                            Climatisation
+                        </span>
+                    </span>
+                    <span title="Espace bureau" *ngIf="hebergement.options.bureau" class="detail2">
+                        <span class="icone">
+                            <i class="fas fa-chair fg-bleu">
+
+                            </i>
+                        </span>
+                        <span class="libelle">
+                            Espace bureau
+                        </span>
+                    </span>
+                    <span title="Lave linge" *ngIf="hebergement.options.linge" class="detail2">
+                        <span class="icone">
+                            <i class="fas fa-washer fg-bleu">
+
+                            </i>
+                        </span>
+                        <span class="libelle">
+                            Lave linge
+                        </span>
+                    </span>
+                    <span title="Télévision" *ngIf="hebergement.options.tele" class="detail2">
+                        <span class="icone">
+                            <i class="fas fa-tv fg-bleu">
+
+                            </i>
+                        </span>
+                        <span class="libelle">
+                            Télévision
+                        </span>
+                    </span>
+                    <span title="Insonorisation" *ngIf="hebergement.options.insonore" class="detail2">
+                        <span class="icone">
+                            <i class="fas fa-volume-mute fg-bleu">
+
+                            </i>
+                        </span>
+                        <span class="libelle">
+                            Insonorisation
+                        </span>
+                    </span>
+                    <span title="Bouilloire" *ngIf="hebergement.options.bouilloire" class="detail2">
+                        <span class="icone">
+                            <i class="fas fa-mug-hot fg-bleu">
+
+                            </i>
+                        </span>
+                        <span class="libelle">
+                            Bouilloire
+                        </span>
+                    </span>
+                    <span title="Machine à café" *ngIf="hebergement.options.cafe" class="detail2">
+                        <span class="icone">
+                            <i class="fas fa-mug-hot fg-bleu">
+
+                            </i>
+                        </span>
+                        <span class="libelle">
+                            Machine à café
+                        </span>
+                    </span>
+                    <span title="Mini bar" *ngIf="hebergement.options.minibar" class="detail2">
+                        <span class="icone">
+                            <i class="fas fa-wine-bottle fg-bleu">
+
+                            </i>
+                        </span>
+                        <span class="libelle">
+                            Mini bar
+                        </span>
+                    </span>
+                    <span title="Lit double" *ngIf="hebergement.options.litdouble" class="detail2">
+                        <span class="icone">
+                            <i class="fas fa-bed fg-bleu">
+
+                            </i>
+                            <span style="color: orangered;">²</span>
+                        </span>
+                        <span class="libelle">
+                            Lit double
+                        </span>
+                    </span>
+                    <span title="Lit simple" *ngIf="hebergement.options.litsimple" class="detail2">
+                        <span class="icone">
+                            <i class="fas fa-bed fg-bleu">
+
+                            </i>
+                        </span>
+                        <span class="libelle">
+                            Lit simple
+                        </span>
+                    </span>
+                    <span title="Spa et centre de bien être" *ngIf="hebergement.options.spa" class="detail2">
+                        <span class="icone">
+                            <i class="fas fa-hot-tub fg-bleu">
+
+                            </i>
+                        </span>
+                        <span class="libelle">
+                            Spa et centre de bien être
+                        </span>
+                    </span>
+                    <span title="Centre de remise en forme" *ngIf="hebergement.options.forme" class="detail2">
+                        <span class="icone">
+                            <i class="fas fa-dumbbell fg-bleu">
+
+                            </i>
+                        </span>
+                        <span class="libelle">
+                            Centre de remise en forme
+                        </span>
+                    </span>
+                    <span title="Navette aéroport" *ngIf="hebergement.options.navette" class="detail2">
+                        <span class="icone">
+                            <i class="fas fa-bus fg-bleu">
+
+                            </i>
+                        </span>
+                        <span class="libelle">
+                            Navette aéroport
+                        </span>
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div style="min-height: 50vh; background-color: #eee; padding: 5vw; padding-top: 2.5vw;">
+<div style="min-height: 50vh; background-color: #eee; padding: 5vw; padding-top: 2.5vw; margin-top: 30px;">
     <div style="font-size: 1.8em; font-weight: bold; margin-bottom: 2vw;">
         Vous pourriez aussi aimer
     </div>

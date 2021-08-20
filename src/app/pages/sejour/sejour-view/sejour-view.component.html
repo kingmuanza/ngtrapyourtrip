@@ -1,5 +1,5 @@
-<div class="page-sejour" *ngIf="sejour">
-    <div class="entete">
+<div class="page-sejour">
+    <div class="entete" *ngIf="sejour">
 
         <div class="entete__background" [ngStyle]="{'background-image': 'url('+ sejour.images[0] +')'}">
         </div>
@@ -16,40 +16,102 @@
                 <div class="cell-lg-9">
                     <div class="titre">
                         {{sejour.titre}}
-
-                        <span class="sejour__notation orange"
-                            [innerHTML]="notationToStars(sejour.notation)"></span>
                     </div>
-                    <div class="sous-titre text-leader2">
-                        {{sejour.description}}
+                    <div class="muanza-description">
+                        <small>
+                            <ng-container *ngIf="sejour.dateDebut && sejour.dateFin">
+                                Du {{sejour.dateDebut | date: 'yyyy-MM-dd'}}
+                                au {{sejour.dateFin | date: 'yyyy-MM-dd'}},
+                            </ng-container>
+
+                            {{sejour.ville}}, {{sejour.prixUnitaire}} FCFA par personne
+                        </small>
+                    </div>
+                    <div class="showOnMObile" style="margin-top: 10px;">
+                        <button (click)="showFormReservation()" class="button primary small" style="background-color: rgb(48, 164, 221);">
+                            Réserver
+                        </button>
                     </div>
                 </div>
                 <div class="cell-lg-3">
+                    <app-admin>
+                        <div class="administration text-right">
+                            <button class="button primary" style="background-color: rgb(48, 164, 221);"
+                                (click)="modifier(sejour)">
+                                Modifier
+                            </button>
+                            <button class="button alert" style="margin-left: 10px;" (click)="supprimer(sejour)">
+                                Supprimer
+                            </button>
+                        </div>
+                    </app-admin>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="contenu" *ngIf="sejour" style="padding-top: 0vh">
+        <div class="">
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-                <div class="row no-gap shadow-1" style="border-radius: 20px; margin-top: 10px;">
-                    <div class="cell-lg-4 bordure-orange-debut radius-gauche" style="padding-left: 7px; background-color: #fff;">
-                        <input formControlName="personnes" class="input" style="border: none" placeholder="Nombre de personnes">
+                <div *ngIf="formReservationShowed" class="row no-gap shadow-2 muanza-box-reservation" style="">
+                    <div class="cell-lg-4 bordure-bleu-debut">
+                        <input formControlName="personnes" type="number" data-role="input"
+                            data-prepend="Nombre de personnes">
                     </div>
-                    <div class="cell-lg-4 bordure-orange-fin">
+                    <div class="cell-lg-4 bordure-bleu-fin">
                         <input #calendarpickerlocale formControlName="date" data-role="calendarpicker"
                             data-prepend="Date d'arrivée">
                     </div>
-                    <div class="cell-lg-4 bordure-orange-fin radius-droit">
-                        <button class="button warning" style="width: 100%;">
+                    <div class="cell-lg-4 bordure-bleu-fin">
+                        <button class="button" style="width: 100%; background-color: rgb(48, 164, 221); color: #fff;">
                             Réserver
                         </button>
+                    </div>
+                    <div class="showOnMObile mobile-recherche-fermer cell-lg-2">
+                        <a (click)="showFormReservation()" class="button dark"
+                            style="color: #fff;  width: 100%;">Fermer</a>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <div class="contenu" style="padding-top: 5vh">
+    <div *ngIf="sejour" class="images-sejour">
         <div class="row">
-            <div *ngFor="let image of sejour.images" class="cell-lg-4">
+            <div *ngFor="let image of sejour.images" class="cell-lg-2 cell-6">
                 <div class="trap-image" [ngStyle]="{'background-image': 'url(' + image +')'}">
 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="sejour" class="sejour-autres-details">
+        <div *ngIf="sejour" class="row">
+            <div class="cell-lg-3 cell-6">
+                <div class="box-details">
+                    {{sejour.description}}
+                </div>
+            </div>
+            <div class="cell-lg-3 cell-6">
+                <div class="box-details" *ngIf="sejour.pack.hebergement" style="">
+                    <div class="box-details-titre">Hébergements</div>
+                    <div style="margin-top: 5px;">
+                        {{sejour.pack.hebergement.prestataire.nom}}
+                    </div>
+                    <div>
+                        {{sejour.pack.hebergement.titre}}
+                    </div>
+                </div>
+            </div>
+            <div class="cell-lg-3">
+                <div class="box-details" *ngIf="sejour.pack.divertissements" style="line-height: 1.15;">
+                    
+                    <div >
+                        <div class="box-details-titre">Divertissements</div>
+                        <ul style="padding:0; margin: 0; margin-top: 5px;">
+                            <li *ngFor="let d of sejour.pack.divertissements">
+                                {{d.titre}}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

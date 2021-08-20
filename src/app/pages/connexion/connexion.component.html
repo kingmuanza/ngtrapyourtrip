@@ -1,6 +1,13 @@
 <div class="inscription-page">
+    <div style="margin-bottom: 40px;">
     <div class="row">
-        <div class="cell-lg-12">
+        <div class="cell-lg-2">
+            <img src="../../../assets/img/Trap Your Trip Logo 2.png" style="width: 100%; display: none;">
+        </div>
+    </div>
+    </div>
+    <div class="row">
+        <div class="cell-lg-6">
             <div class="formulaire">
                 <div class="titre">
                     Connectez-vous !
@@ -15,15 +22,15 @@
                 </div>
                 <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                     <div class="row">
-                        <div class="cell-lg-5">
+                        <div class="cell-lg-12">
                             <input formControlName="login" data-role="input" data-prepend="Email">
                         </div>
-                        <div class="cell-lg-5">
+                        <div class="cell-lg-12">
                             <input formControlName="passe" type="password" data-role="input"
                                 data-prepend="Mot de passe">
                         </div>
-                        <div class="cell-lg-2">
-                            <button class="button warning" style="background-color: rgb(255, 155, 0);">
+                        <div class="cell-lg-12">
+                            <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
                                 Connexion
                             </button>
                         </div>
@@ -34,6 +41,31 @@
                     <a routerLink="/oubli">
                         Mot de passe oublié
                     </a>
+                </div>
+            </div>
+        </div>
+        <div class="cell-lg-2">
+
+        </div>
+        <div class="cell-lg-4">
+            <div (click)="connexionGoogle()" class="google-connexion">
+                <div class="row">
+                    <div class="cell-12">
+                        <span class="mif-google " style="margin-right: 40px;">
+
+                        </span>
+                        Continuer avec Google
+                    </div>
+                </div>
+            </div>
+            <div (click)="connexionFacebook()" class="google-connexion">
+                <div class="row">
+                    <div class="cell-12">
+                        <span class="mif-facebook" style="margin-right: 40px;">
+
+                        </span>
+                        Continuer avec Facebook
+                    </div>
                 </div>
             </div>
         </div>

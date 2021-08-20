@@ -1,29 +1,48 @@
-<div class="page" style="height: 100vh;">
+<div *ngIf="!admin" class="page" style="height: 100vh;">
     <div class="entete">
         <div class="titre">
-            Console d'administration
+            Administration
         </div>
         <div class="sous-titre">
-            Veuillez vous connecter !
+            Connectez-vous en tant qu'administrateur
         </div>
     </div>
     <div class="contenu">
         <div class="formulaire">
             <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
-                <div class="row">
-                    <div class="cell-lg-5">
+                <div class="">
+                    <div>
                         <input formControlName="login" data-role="input" data-prepend="Login">
                     </div>
-                    <div class="cell-lg-5">
+                    <div>
                         <input formControlName="passe" data-role="input" type="password" data-prepend="Mot de passe">
                     </div>
-                    <div class="cell-lg-2">
-                        <button class="button warning">
+                    <div>
+                        <button class="button warning" style="background-color: rgb(48, 164, 221);">
                             Connexion
                         </button>
                     </div>
                 </div>
             </form>
+        </div>
+        <div *ngIf="error" class="fg-red">
+            Login ou mot de passe incorrects
+        </div>
+    </div>
+</div>
+
+<div *ngIf="admin" class="page" style="height: 100vh;">
+    <div class="entete">
+        <div class="titre">
+            Bienvenue {{admin.login}} !
+        </div>
+        <div class="sous-titre">
+            Des fonctionnalités ont été débloquées
+        </div>
+        <div style="margin-top: 20px;">
+            <button (click)="accueil()" class="button warning" style="background-color: rgb(48, 164, 221);">
+                Retour à l'accueil
+            </button>
         </div>
     </div>
 </div>

@@ -5,6 +5,9 @@ import { Sejour } from 'src/app/models/sejour.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Reservation } from 'src/app/models/reservation.model';
 import { Divertissement } from 'src/app/models/divertissement.model';
+import { Subscription } from 'rxjs';
+import { Administrateur } from 'src/app/models/administrateur.model';
+import { AdminService } from 'src/app/services/admin.service';
 declare const metro: any;
 
 @Component({
@@ -18,10 +21,16 @@ export class DivertissementViewComponent implements OnInit {
 
   divertissement: Divertissement;
   form: FormGroup;
+
+  admin: Administrateur;
+  adminSubscription: Subscription;
+  passee = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private adminService: AdminService
   ) { }
 
   ngOnInit(): void {
@@ -32,6 +41,18 @@ export class DivertissementViewComponent implements OnInit {
       }
     });
     this.initForm();
+  }
+
+  modifier(element) {
+    this.router.navigate(['offres', 'divertissement', 'edit', element.id]);
+  }
+
+  supprimer(element) {
+    const oui = confirm('Etes vous sûr de vouloir supprimer cet élément ?');
+    const db = firebase.firestore();
+    db.collection('divertissements').doc(element.id).delete().then(() => {
+      this.router.navigate(['offres', 'divertissement']);
+    });
   }
 
   initForm() {
@@ -109,6 +130,10 @@ export class DivertissementViewComponent implements OnInit {
       db.collection('divertissements-trap').doc(id).get().then((resultat) => {
         const divertissement = resultat.data() as Divertissement;
         this.divertissement = divertissement;
+        const date = new Date(this.divertissement?.date);
+        if (date.getTime() < new Date().getTime()) {
+          this.passee = true;
+        }
         console.log('TERMINEEE !!!');
         console.log(this.divertissement);
         metro().activity.close(activity);

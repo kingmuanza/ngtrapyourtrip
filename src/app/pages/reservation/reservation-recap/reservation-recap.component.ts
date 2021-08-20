@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { Trajet } from 'src/app/models/trajet.model';
+import { PanierService } from 'src/app/services/panier.service';
 
 declare const metro: any;
 
@@ -22,6 +23,7 @@ export class ReservationRecapComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
+    private panierService: PanierService,
 
   ) { }
 
@@ -63,19 +65,26 @@ export class ReservationRecapComponent implements OnInit {
       panier = JSON.parse(panierString);
     }
     const newPanier = [];
-    panier.forEach((reservation: Reservation) => {
-      if (reservation.id === this.reservation.id) {
-        newPanier.push(this.reservation);
-      } else {
-        newPanier.push(reservation);
-      }
-    });
+    if (panier.length > 0 ) {
+      panier.forEach((reservation: Reservation) => {
+        if (reservation.id === this.reservation.id) {
+          newPanier.push(this.reservation);
+        } else {
+          newPanier.push(reservation);
+        }
+      });
+    } else {
+      newPanier.push(this.reservation);
+    }
     localStorage.setItem('panier-trap', JSON.stringify(newPanier));
 
     const db = firebase.firestore();
     db.collection('reservation-trap').doc(this.reservation.id).set(JSON.parse(JSON.stringify(this.reservation))).then((resultats) => {
       console.log('TERMINEEE !!!');
       metro().activity.close(activity);
+
+      this.panierService.reservations = newPanier;
+      this.panierService.emit();
       this.router.navigate(['offres', 'reservation', 'recap', this.reservation.id]);
     }).catch((e) => {
       metro().activity.close(activity);
@@ -103,10 +112,10 @@ export class ReservationRecapComponent implements OnInit {
     notation = Math.floor(notation);
     let stars = '';
     for (let i = 0; i < notation; i++) {
-      stars = stars + '<span class="mif-star-full" style="color: rgb(255, 115, 0);"></span>';
+      stars = stars + '<span class="mif-star-full" style="color: rgb(48, 164, 221);"></span>';
     }
     for (let j = 0; j < 5 - notation; j++) {
-      stars = stars + '<span class="mif-star-empty" style="color: rgb(255, 115, 0);"></span>';
+      stars = stars + '<span class="mif-star-empty" style="color: rgb(48, 164, 221);"></span>';
     }
     return stars;
   }
@@ -132,6 +141,25 @@ export class ReservationRecapComponent implements OnInit {
   }
 
   panier() {
+    console.log('voici alors le panier');
+    const panierString = localStorage.getItem('panier-trap');
+    let panier = [];
+    if (panierString) {
+      panier = JSON.parse(panierString);
+    }
+    const newPanier = [];
+    if (panier.length > 0 ) {
+      panier.forEach((reservation: Reservation) => {
+        if (reservation.id === this.reservation.id) {
+          newPanier.push(this.reservation);
+        } else {
+          newPanier.push(reservation);
+        }
+      });
+    } else {
+      newPanier.push(this.reservation);
+    }
+    localStorage.setItem('panier-trap', JSON.stringify(newPanier));
     this.router.navigate(['panier']);
   }
 

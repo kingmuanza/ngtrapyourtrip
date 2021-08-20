@@ -1,1 +1,239 @@
-<p>paiement-list works!</p>
+<div class="page-sejour" style="min-height: 50vh;">
+    <div class="entete2" style="">
+        <div class="row">
+            <div class="cell-lg-12">
+                <div class="titre" style="line-height: 1.1;">
+                    Paiements effectués
+                </div>
+                <div class="sous-titre text-leader2">
+                    Liste des paiements effectués sur Trap Your Trip
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contenu2 hideOnMObile" *ngFor="let paiement of paiements">
+        <div style="border-bottom: 1px solid #bbb; margin-bottom: 30px;">
+            <div class="row">
+                <div class="cell-lg-8">
+                    <h2>
+                        Paiement :
+                        <span style="color: rgb(48, 164, 221);">
+                            {{paiement.id}}
+                        </span>
+                    </h2>
+                </div>
+                <div class="cell-lg-4">
+                    <h2 class="text-right">
+                        Statut :
+                        <span class="fg-red">
+                            Inconnu
+                        </span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <table style="margin-top: 0vh; padding-top: 0;" class="table table-border cell-border">
+            <thead>
+                <tr>
+                    <th class="hideOnMObile">Date</th>
+                    <th>Date début</th>
+                    <th>Prestation</th>
+                    <th>Description</th>
+                    <th style="background-color: #fafafa;">Coût</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let reservation of paiement.reservations">
+                    <td class="hideOnMObile">{{reservation.date | date: 'yyyy-MM-dd HH:mm'}}</td>
+                    <td>{{reservation.dateDebut | date: 'yyyy-MM-dd'}}</td>
+                    <td>
+                        <span *ngIf="reservation.sejour">
+                            {{reservation.sejour.titre}}
+                        </span>
+                        <span *ngIf="reservation.hebergement">
+                            {{reservation.hebergement.titre}}
+                        </span>
+                        <span *ngIf="reservation.divertissement">
+                            {{reservation.divertissement.titre}}
+                        </span>
+                        <span *ngIf="reservation.transport">
+                            {{reservation.transport.depart.agence.nom}}
+                        </span>
+                        <span *ngIf="reservation.locationVoiture">
+                            Location de voiture :
+                            {{reservation.locationVoiture.voiture.modele}}
+                        </span>
+                    </td>
+                    <td>
+                        <span *ngIf="reservation.sejour">
+                            {{reservation.sejour.description}}
+                        </span>
+                        <span *ngIf="reservation.hebergement">
+                            {{reservation.hebergement.description}}
+                        </span>
+                        <span *ngIf="reservation.divertissement">
+                            {{reservation.divertissement.description}}
+                        </span>
+                        <span *ngIf="reservation.transport">
+                            {{description(reservation.transport.depart.trajet)}}
+                        </span>
+                        <span *ngIf="reservation.locationVoiture">
+                            Du
+                            {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                            à
+                            {{toDate(reservation.dateDebut) | date: 'HH:mm'}}
+                            <br>
+                            {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                            à
+                            {{toDate(reservation.dateFin) | date: 'HH:mm'}}
+                        </span>
+                    </td>
+                    <td style="text-align: right; background-color: #fafafa;">
+                        <b>
+                            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                        </b>
+                    </td>
+                    <td class="white-space" style="">
+                        <button (click)="voir(reservation)" class="button success">
+                            Voir
+                        </button>
+                        <button (click)="modifier(reservation)" class="button warning"
+                            style="background-color: rgb(48, 164, 221);">
+                            Modifier
+                        </button>
+                        <button (click)="supprimer(reservation.id)" class="button alert danger">
+                            Supprimer
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th style="font-size: 1.2em;" colspan="4">Total</th>
+                    <th style="font-size: 1.2em; text-align: right;background-color: #fafafa;">
+                        {{TOTAL | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                    </th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="contenu2 showOnMObile"  *ngFor="let paiement of paiements" style="width: 100vw; overflow-x: hidden;">
+        <div style="border-bottom: 1px solid #bbb; margin-bottom: 30px;">
+            <div class="row">
+                <div class="cell-lg-8">
+                    <h6>
+                        Paiement :
+                        <small style="color: rgb(48, 164, 221);">
+                            {{paiement.id}}
+                        </small>
+                    </h6>
+                    <h6 class="">
+                        Statut :
+                        <span class="fg-red">
+                            Inconnu
+                        </span>
+                    </h6>
+                </div>
+            </div>
+        </div>
+        <table style="margin-top: 0; padding-top: 0;" class="table table-border cell-border">
+            <thead>
+                <tr>
+                    <th>Prestations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let reservation of paiement.reservations">
+                    <td>
+                        <b>Date</b> : {{reservation.date | date: 'yyyy-MM-dd HH:mm'}}<br>
+                        <b>Date début</b> : {{reservation.dateDebut | date: 'yyyy-MM-dd'}}<br>
+                        <b>Prestation</b> :
+                        <span *ngIf="reservation.sejour">
+                            {{reservation.sejour.titre}}
+                        </span>
+                        <span *ngIf="reservation.hebergement">
+                            {{reservation.hebergement.titre}}
+                        </span>
+                        <span *ngIf="reservation.divertissement">
+                            {{reservation.divertissement.titre}}
+                        </span>
+                        <span *ngIf="reservation.transport">
+                            {{reservation.transport.depart.agence.nom}}
+                        </span>
+                        <span *ngIf="reservation.locationVoiture">
+                            Location de voiture :
+                            {{reservation.locationVoiture.voiture.modele}}
+                        </span>
+                        <br>
+                        <b>Description</b> :
+                        <span *ngIf="reservation.sejour">
+                            {{reservation.sejour.description}}
+                        </span>
+                        <span *ngIf="reservation.hebergement">
+                            {{reservation.hebergement.description}}
+                        </span>
+                        <span *ngIf="reservation.divertissement">
+                            {{reservation.divertissement.description}}
+                        </span>
+                        <span *ngIf="reservation.transport">
+                            {{description(reservation.transport.depart.trajet)}}
+                        </span>
+                        <span *ngIf="reservation.locationVoiture">
+                            Du
+                            {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                            à
+                            {{toDate(reservation.dateDebut) | date: 'HH:mm'}}
+                            <br>
+                            {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                            à
+                            {{toDate(reservation.dateFin) | date: 'HH:mm'}}
+                        </span>
+                        <br>
+                        <b>Coût</b> : {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}<br>
+
+                        <div class="white-space" style="margin-top: 10px; margin-bottom: 10px;">
+                            <button (click)="voir(reservation)" class="button success">
+                                Voir
+                            </button>
+                            <button (click)="modifier(reservation)" class="button warning"
+                                style="background-color: rgb(48, 164, 221);">
+                                Modifier
+                            </button>
+                            <button (click)="supprimer(reservation.id)" class="button alert danger">
+                                Supprimer
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th style="font-size: 1.2em; text-align: right;background-color: #fafafa;">
+                        Total : {{TOTAL | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+        <div style="margin-top: 20px;" *ngIf="reservations && reservations.length > 0">
+            <div>
+                <button (click)="supprimerTout()" class="button alert danger" style="width: 100%;">
+                    Annuler toutes les réservations
+                </button>
+            </div>
+            <div>
+                <button (click)="suivant()" class="button warning"
+                    style="background-color: rgb(48, 164, 221); width: 100%;">
+                    <ng-container *ngIf="isUser">
+                        Suivant
+                    </ng-container>
+                    <ng-container *ngIf="!isUser">
+                        Passer au paiement
+                    </ng-container>
+
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

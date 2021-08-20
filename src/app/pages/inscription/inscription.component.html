@@ -1,7 +1,7 @@
-<div style="background-color: #eee; height: 320px;">
+<div style="background-color: #eee; height: 60vh;">
 
 </div>
-<div class="inscription-page" style="margin-top: -320px;">
+<div class="inscription-page" style="margin-top: -60vh">
     <div class="row">
         <div class="cell-lg-5">
             <div class="titre">
@@ -15,6 +15,26 @@
         </div>
         <div class="cell-lg-1"></div>
         <div class="cell-lg-5">
+            <div (click)="connexionGoogle()" class="google-connexion">
+                <div class="row">
+                    <div class="cell-12">
+                        <span class="mif-google " style="margin-right: 40px;">
+
+                        </span>
+                        Continuer avec Google
+                    </div>
+                </div>
+            </div>
+            <div (click)="connexionFacebook()" class="google-connexion">
+                <div class="row">
+                    <div class="cell-12">
+                        <span class="mif-facebook" style="margin-right: 40px;">
+
+                        </span>
+                        Continuer avec Facebook
+                    </div>
+                </div>
+            </div>
             <div class="formulaire shadow-1">
                 <div class="text-leader2 text-center" style="margin-bottom: 30px;">
                     Veuillez remplir ce formulaire
@@ -22,11 +42,13 @@
                 <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                     <div>
                         <input class="hideOnMObile" formControlName="nom" data-role="input" data-prepend="Nom">
-                        <input class="showOnMObile" formControlName="nom" data-role="materialinput" placeholder="Votre nom">
+                        <input class="showOnMObile" formControlName="nom" data-role="materialinput"
+                            placeholder="Votre nom">
                     </div>
                     <div>
                         <input class="hideOnMObile" formControlName="prenom" data-role="input" data-prepend="Prénom">
-                        <input class="showOnMObile" formControlName="prenom" data-role="materialinput" placeholder="Votre prénom">
+                        <input class="showOnMObile" formControlName="prenom" data-role="materialinput"
+                            placeholder="Votre prénom">
                     </div>
                     <div>
                         <select formControlName="sexe" data-role="select" data-prepend="Sexe" data-filter="false">
@@ -40,25 +62,29 @@
                     </div>
                     <div>
                         <input class="hideOnMObile" formControlName="login" data-role="input" data-prepend="Email">
-                        <input class="showOnMObile" formControlName="login" data-role="materialinput" placeholder="Votre adresse mail">
+                        <input class="showOnMObile" formControlName="login" data-role="materialinput"
+                            placeholder="Votre adresse mail">
                         <small class="fg-red">
                             {{messageEmail}}
                         </small>
                     </div>
                     <div>
-                        <input class="hideOnMObile" formControlName="passe" type="password" data-role="input" data-prepend="Mot de passe">
-                        <input class="showOnMObile" formControlName="passe" type="password" data-role="materialinput" placeholder="Mot de passe">
+                        <input class="hideOnMObile" formControlName="passe" type="password" data-role="input"
+                            data-prepend="Mot de passe">
+                        <input class="showOnMObile" formControlName="passe" type="password" data-role="materialinput"
+                            placeholder="Mot de passe">
                     </div>
                     <div>
                         <input class="hideOnMObile" formControlName="confirmation" type="password" data-role="input"
                             data-prepend="Confirmer mot de passe">
-                        <input class="showOnMObile" formControlName="confirmation" type="password" data-role="materialinput" placeholder="Confirmez le mot de passe">
+                        <input class="showOnMObile" formControlName="confirmation" type="password"
+                            data-role="materialinput" placeholder="Confirmez le mot de passe">
                         <small class="fg-red">
                             {{messagePasse}}
                         </small>
                     </div>
                     <div>
-                        <button class="button warning" style="background-color: rgb(255, 155, 0); width: 100%;">
+                        <button class="button warning" style="background-color: rgb(48, 164, 221);width: 100%;">
                             S'inscrire
                         </button>
                     </div>

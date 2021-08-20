@@ -15,8 +15,8 @@ declare const metro: any;
 })
 export class TransportListComponent implements OnInit {
 
-  @ViewChild('depart', { static: false }) departInput: ElementRef ;
-  @ViewChild('arrivee', { static: false }) arriveeInput: ElementRef ;
+  @ViewChild('depart', { static: false }) departInput: ElementRef;
+  @ViewChild('arrivee', { static: false }) arriveeInput: ElementRef;
 
   transports = new Array<Transport>();
   trajets = new Array<Trajet>();
@@ -31,7 +31,9 @@ export class TransportListComponent implements OnInit {
   };
   dtTrigger = new Subject();
 
-  resultatsVisible = false;
+  resultatsVisible = true;
+
+  type = 'interurbain';
 
   constructor(
     private router: Router,
@@ -47,6 +49,11 @@ export class TransportListComponent implements OnInit {
       this.dtTrigger.next();
     });
     this.initForm();
+  }
+
+  handleChange(ev) {
+    console.log('ev');
+    console.log(ev.target.value);
   }
 
   initForm() {
@@ -71,26 +78,41 @@ export class TransportListComponent implements OnInit {
     const depart = this.departInput.nativeElement.value;
     const arrivee = this.arriveeInput.nativeElement.value;
 
-    this.dtTrigger = new Subject();
-    this.getTrajets().then((trajets) => {
-      if (trajets && trajets.length > 0 ) {
-        console.log('les trjats ont été récupéres');
-        this.trajets = this.trierResultatsInterUrbain(depart, arrivee, trajets);
-        this.dtTrigger.next();
-        this.resultatsVisible = true;
-        if (this.trajets && this.trajets.length > 0) {
-          this.departs(this.trajets[0]);
+    if (depart && arrivee) {
+      this.dtTrigger = new Subject();
+      this.getTrajets().then((trajets) => {
+        if (trajets && trajets.length > 0) {
+          console.log('les trjats ont été récupéres');
+          this.trajets = this.trierResultatsInterUrbain(depart, arrivee, trajets);
+          this.dtTrigger.next();
+          this.resultatsVisible = true;
+          if (this.trajets && this.trajets.length > 0) {
+            this.departs(this.trajets[0]);
+          } else {
+            console.log('Nous n\'effectuons pas ce trajet !');
+            console.log(this.trajets);
+            this.avertir('Nous n\'effectuons pas ce trajet !');
+          }
         } else {
-          console.log('Nous n\'effectuons pas ce trajet !');
-          console.log(this.trajets);
-          alert('Nous n\'effectuons pas ce trajet !');
+          console.log('Il n\'y a mm dabord auccun trajet ');
         }
-      } else {
-        console.log('Il n\'y a mm dabord auccun trajet ');
-      }
-    }).catch((e) => {
-      console.log('erreur');
-      console.log(e);
+      }).catch((e) => {
+        console.log('erreur');
+        console.log(e);
+      });
+    } else {
+      alert('Veuillez définir les destinations');
+    }
+  }
+
+  avertir(message) {
+    const notify = metro().notify;
+    notify.create(message, null, {
+      cls: 'alert notify-marge',
+      keepOpen: false,
+      position: 'bottom right',
+      elementPosition: 'bottom right',
+      globalPosition: 'bottom right',
     });
   }
 
@@ -244,6 +266,10 @@ export class TransportListComponent implements OnInit {
     this.router.navigate(['offres', 'transport', 'agence', 'edit']);
   }
 
+  agences() {
+    this.router.navigate(['offres', 'transport', 'agence']);
+  }
+
   lesdepart() {
     console.log('depaaaart');
     this.router.navigate(['offres', 'transport', 'depart', 'edit']);
@@ -261,6 +287,10 @@ export class TransportListComponent implements OnInit {
         window.location.reload();
       });
     }
+  }
+
+  modifier(trajet: Trajet) {
+    this.router.navigate(['offres', 'transport', 'trajet', 'edit', trajet.id]);
   }
 
 }

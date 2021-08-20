@@ -1,46 +1,81 @@
-<div class="titre">
-    Nouvelle offre de divertissement
-</div>
-<div class="text-leader2" style="margin-bottom: 20px;">
-    Création d'une nouvelle offre de divertissement
-</div>
-<div class="formulaire">
-    <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-        <div>
-            <input data-role="input" formControlName="titre" data-prepend="Titre">
+<app-admin>
+    <div class="cadre">
+        <div class="titre">
+            <ng-container *ngIf="!divertissement">
+                Nouvelle offre de divertissement
+            </ng-container>
+            <ng-container *ngIf="divertissement">
+                {{divertissement.titre}}
+            </ng-container>
+
         </div>
-        <div>
-            <label>
-                Date
-            </label>
-            <input class="input" formControlName="date" type="date">
+        <div class="text-leader2" style="margin-bottom: 20px;">
+            <ng-container *ngIf="!divertissement">
+                Création d'une nouvelle offre de divertissement
+            </ng-container>
+            <ng-container *ngIf="divertissement">
+                Modifier l'offre de divertissement
+            </ng-container>
         </div>
-        <div>
-            <input data-role="input" type="number" formControlName="prix" data-prepend="Prix">
+        <div class="formulaire">
+            <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+                <div>
+                    <input data-role="input" formControlName="titre" data-prepend="Titre">
+                </div>
+                <div>
+                    <label>
+                        Date // Uniquement pour les évènements
+                    </label>
+                    <input class="input" formControlName="date" type="date">
+                </div>
+                <div>
+                    <input data-role="input" type="number" formControlName="prix" data-prepend="Prix">
+                </div>
+                <div>
+                    <textarea data-role="textarea" formControlName="description" data-prepend="Description"></textarea>
+                </div>
+                <div>
+                    <input data-role="input" formControlName="ville" data-prepend="Ville">
+                </div>
+                <div>
+                    <input data-role="input" formControlName="lieu" data-prepend="Lieu">
+                </div>
+                <div>
+                    <input data-role="input" formControlName="tel" data-prepend="Tel">
+                </div>
+                <div>
+                    <input data-role="input" formControlName="tags" data-prepend="Tags">
+                    <small>Séparer les tags par un point-virgue ( ; )</small>
+                </div>
+                <div>
+                    <input data-role="input" type="number" formControlName="notation" data-prepend="Notation">
+                </div>
+                <div>
+                    <input (change)="uploadFile($event)" data-role="file" type="file" multiple data-prepend="Images">
+                </div>
+                <div *ngIf="divertissement">
+                    <div class="row">
+                        <div *ngFor="let image of divertissement.images" class="cell-lg-2">
+                            <img [src]="image" style="width: 100%;">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <span *ngIf="divertissement">
+                        <input type="checkbox" formControlName="restaurant" data-role="checkbox"
+                            data-caption="C'est un restaurant">
+                    </span>
+                    <span *ngIf="!divertissement">
+                        <input type="checkbox" formControlName="restaurant" data-role="checkbox"
+                            data-caption="C'est un restaurant">
+                    </span>
+                </div>
+                <div class="row">
+                    <div class="cell-lg-6">
+                        <button class="button warning">Enregistrer</button>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div>
-            <textarea data-role="textarea" formControlName="description" data-prepend="Description"></textarea>
-        </div>
-        <div>
-            <input data-role="input" formControlName="lieu" data-prepend="Lieu">
-        </div>
-        <div>
-            <input data-role="input" formControlName="tel" data-prepend="Tel">
-        </div>
-        <div>
-            <input data-role="input" formControlName="tags" data-prepend="Tags">
-            <small>Séparer les tags par un point-virgue ( ; )</small>
-        </div>
-        <div>
-            <input data-role="input" type="number" formControlName="notation" data-prepend="Notation">
-        </div>
-        <div>
-            <input (change)="uploadFile($event)" data-role="file" type="file" multiple data-prepend="Images">
-        </div>
-        <div class="row">
-            <div class="cell-lg-6">
-                <button class="button warning">Enregistrer</button>
-            </div>
-        </div>
-    </form>
-</div>
+    </div>
+</app-admin>

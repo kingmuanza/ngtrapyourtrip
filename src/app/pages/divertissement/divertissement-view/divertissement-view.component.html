@@ -13,17 +13,27 @@
                     <b>{{divertissement.date | date: 'yyyy-MM-dd'}} </b>
                 </div>
             </div>
-            <div class="cell-lg-3">
+            <div class="cell-lg-3 text-right">
+                <app-admin>
+                    <div class="administration">
+                        <button class="button primary" style="background-color: rgb(48, 164, 221);"
+                            (click)="modifier(divertissement)">
+                            Modifier
+                        </button>
+                        <button class="button alert" style="margin-left: 10px;" (click)="supprimer(divertissement)">
+                            Supprimer
+                        </button>
+                    </div>
+                </app-admin>
             </div>
         </div>
         <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-            <div class="row no-gap shadow-1" style="border-radius: 20px;">
-                <div class="cell-lg-8 bordure-orange-debut radius-gauche"
-                style="padding-left: 5px; background-color: #eee;">
+            <div *ngIf="!passee" class="row no-gap shadow-3">
+                <div class="cell-lg-8 bordure-bleu-debut">
                     <input formControlName="personnes" data-role="input" data-prepend="Personnes">
                 </div>
-                <div class="cell-lg-4 bordure-orange-fin radius-droit">
-                    <button class="button warning" style="width: 100%; background-color: rgb(255, 115, 0);">
+                <div class="cell-lg-4 bordure-bleu-fin">
+                    <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
                         Réserver
                     </button>
                 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
@@ -11,6 +11,8 @@ declare const metro: any;
   styleUrls: ['./divertissement-list.component.scss']
 })
 export class DivertissementListComponent implements OnInit {
+
+  @ViewChild('ville', { static: false }) departInput: ElementRef;
 
   divertissements = new Array<Divertissement>();
   resultats = new Array<Divertissement>();
@@ -44,6 +46,10 @@ export class DivertissementListComponent implements OnInit {
 
   ouvrir(id) {
     this.router.navigate(['divertissement', 'view', id]);
+  }
+
+  goToAll() {
+    this.router.navigate(['offres', 'divertissement']);
   }
 
   getSejours() {

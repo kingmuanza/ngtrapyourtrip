@@ -1,25 +1,58 @@
 <div class="page">
     <div class="entete">
-        <div style="margin-top: 100px;">
+        <div style="margin-top: 100px; text-align: center;">
+
             <h1 class="titre">
                 Quel type de divertissements désirez-vous ?
             </h1>
+
+            <div>
+                <app-admin>
+                    <div class="administration">
+                        <button class="button primary" style="background-color: rgb(48, 164, 221);" (click)="nouveau()">
+                            Nouveau
+                        </button>
+                    </div>
+                </app-admin>
+            </div>
         </div>
     </div>
     <div class="contenu" style="min-height: 100vh;">
         <div class="row">
             <div class="cell-lg-4">
-                <div (click)="evenements()" class="categorie">
-                    <h3>
-                        Evènements
-                    </h3>
+                <div (click)="evenements()" class="categorie shadow-1">
+                    <div class="evenements">
+                        <div style="height: 5vh;"></div>
+                    </div>
+                    <div class="titre-divertissement">
+                        <button class="button warning" style="background-color: rgb(48, 164, 221);">
+                            Evènements
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="cell-lg-4">
-                <div (click)="loisirs()" class="categorie">
-                    <h3>
-                        Centres de loisirs
-                    </h3>
+                <div (click)="loisirs()" class="categorie shadow-1">
+                    <div class="attractions">
+                        <div style="height: 5vh;"></div>
+                    </div>
+                    <div class="titre-divertissement">
+                        <button class="button warning" style="background-color: rgb(48, 164, 221);">
+                            Attractions
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="cell-lg-4">
+                <div (click)="restaurants()" class="categorie shadow-1">
+                    <div class="restaurants">
+                        <div style="height: 5vh;"></div>
+                    </div>
+                    <div class="titre-divertissement">
+                        <button class="button warning" style="background-color: rgb(48, 164, 221);">
+                            Restaurants
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

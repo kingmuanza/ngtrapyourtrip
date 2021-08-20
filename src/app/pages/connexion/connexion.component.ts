@@ -60,8 +60,53 @@ export class ConnexionComponent implements OnInit {
       }
     }).catch((e) => {
       metro().activity.close(activity);
+      const notify = metro().notify;
+      notify.create('Login ou mot de passe incorrect', null, {
+        cls: 'alert',
+        keepOpen: false
+      });
     });
 
+  }
+
+  connexionGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        const credential = result.credential;
+        const user = result.user;
+        console.log('user');
+        console.log(user);
+        this.authService.connexionExterne(user);
+        // ...
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = error.credential;
+        // ...
+      });
+  }
+
+  connexionFacebook() {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    firebase.auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        const credential = result.credential;
+        const user = result.user;
+        console.log('user');
+        console.log(user);
+        this.authService.connexionExterne(user);
+        // ...
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = error.credential;
+        console.log(error);
+      });
   }
 
 }
