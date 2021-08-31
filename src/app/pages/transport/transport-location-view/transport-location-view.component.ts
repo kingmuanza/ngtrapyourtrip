@@ -23,6 +23,8 @@ export class TransportLocationViewComponent implements OnInit {
   @ViewChild('fin', { static: false }) fin;
   @ViewChild('date', { static: false }) date;
 
+  @ViewChild('heureDebut', { static: false }) heureDebut;
+
   voiture: Voiture;
   voitures = [];
   form: FormGroup;
@@ -63,8 +65,8 @@ export class TransportLocationViewComponent implements OnInit {
   initForm() {
     this.form = this.formBuilder.group({
       ville: ['', []],
-      heureDebut: ['', []],
-      heureFin: ['', []],
+      heureDebut: ['oui', []],
+      heureFin: ['oui', []],
       heure: ['', []],
       categorie: ['', []],
       allerretour: ['simple', []],
@@ -195,6 +197,12 @@ export class TransportLocationViewComponent implements OnInit {
       metro().activity.close(activity);
     });
 
+  }
+
+  selectionnerHeureDebut() {
+    console.log(this.heureDebut.nativeElement);
+    console.log(this.heureDebut.nativeElement.click());
+    this.heureDebut.nativeElement.click();
   }
 
 }

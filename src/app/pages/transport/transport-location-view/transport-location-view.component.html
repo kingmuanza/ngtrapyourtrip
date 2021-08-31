@@ -52,7 +52,7 @@
                                 data-autocomplete="Douala, Yaoundé, Kribi, Limbé">
                         </div>
                     </div>
-                    <div class="cell-lg-2 bordure-orange-fin">
+                    <div class="cell-lg-3 bordure-orange-fin">
                         <div>
                             <input #arrivee data-role="input" data-clear-button="false" data-prepend="Arrivée"
                             data-autocomplete="Douala, Yaoundé, Kribi, Limbé">
@@ -70,7 +70,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="cell-lg-2 bordure-orange-fin bg-dark">
+                    <div class="cell-lg-1 bordure-orange-fin bg-dark">
                         <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
                             Réserver
                         </button>
@@ -81,37 +81,45 @@
         <div *ngIf=" type === 'location' " class="formulaire-recherche">
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                 <div class="row no-gap shadow-3">
-                    <div class="cell-lg-2 bordure-orange-debut">
+                    <div class="cell-lg-3 bordure-orange-debut">
                         <div>
                             <input #ville data-clear-button="false" data-role="input" data-prepend="Ville"
                                 data-autocomplete="Douala, Yaoundé, Kribi, Limbé">
                         </div>
                     </div>
-                    <div class="cell-lg-2 bordure-orange-fin">
+                    <div class="cell-lg-3 bordure-orange-milieu">
                         <div>
-                            <input #debut data-clear-button="false" data-role="calendarpicker" data-prepend="Début">
+                            <input #debut data-clear-button="false" data-role="calendarpicker" data-prepend="Date début">
                         </div>
                     </div>
-                    <div class="cell-lg-2 bordure-orange-fin">
-                        <div>
-                            <select formControlName="heureDebut" data-role="select" data-prepend="Heure Début" data-filter="false">
+                    <div class="cell-lg-1 bordure-orange-fin">
+                        <div style="position: relative;">
+                            <select #heureDebut formControlName="heureDebut">
+                                <option value="oui">--:--</option>
                                 <option *ngFor="let h of heures" [ngValue]="h">{{h}}</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="cell-lg-2 bordure-orange-fin">
-                        <div>
-                            <input #fin data-clear-button="false"  data-role="calendarpicker" data-prepend="Fin">
+                        <div class="icone-heure" (click)="selectionnerHeureDebut()">
+                            <span class="mif-alarm"></span>
                         </div>
                     </div>
-                    <div class="cell-lg-2 bordure-orange-fin">
+                    <div class="cell-lg-3 bordure-orange-milieu">
                         <div>
-                            <select formControlName="heureFin" data-role="select" data-prepend="Heure Fin" data-filter="false">
+                            <input #fin data-clear-button="false"  data-role="calendarpicker" data-prepend="Date fin">
+                        </div>
+                    </div>
+                    <div class="cell-lg-1 bordure-orange-fin">
+                        <div style="text-align: center;">
+                            <select formControlName="heureFin" >
+                                <option value="oui">--:--</option>
                                 <option *ngFor="let h of heures" [ngValue]="h">{{h}}</option>
                             </select>
                         </div>
+                        <div class="icone-heure" (click)="selectionnerHeureDebut()">
+                            <span class="mif-alarm"></span>
+                        </div>
                     </div>
-                    <div class="cell-lg-2 bordure-orange-fin bg-dark">
+                    <div class="cell-lg-1 bordure-orange-fin bg-dark">
                         <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
                             Réserver
                         </button>

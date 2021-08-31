@@ -44,7 +44,7 @@
                 </div>
             </div>
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-                <div *ngIf="depart"  class="row no-gap shadow-1 le-formulaire-mm">
+                <div *ngIf="depart" class="row no-gap shadow-1 le-formulaire-mm">
                     <div class="cell-lg-3 bordure-orange-debut">
                         <input #calendarpickerlocale formControlName="date" data-role="calendarpicker"
                             data-prepend="Date" type="date" class="radius-gauche">
@@ -107,23 +107,25 @@
 <div style="height: 100vh;">
 
 </div>
-<div id="demoDialog1" class="dialog" data-role="dialog">
+<div id="demoDialog1" class="dialog" data-role="dialog" style="margin-top: 0px;">
     <div class="dialog-title">Voyage Retour</div>
     <div class="dialog-content">
-        <div>
-            Veuillez remplir les informations relatives à votre Voyage retour
-        </div>
-        <div>
-            <div *ngIf="depart" class="row">
-                <div class="cell-lg-12">
-                    <input #calendarpickerlocale2 data-role="calendarpicker" data-prepend="Date">
-                </div>
-                <div class="cell-lg-12">
-                    <select [(ngModel)]="retourHeure" data-prepend="Heure" data-role="select">
-                        <option [ngValue]="getHeure(heure)" *ngFor="let heure of depart.heures">
-                            {{getHeure(heure)}}
-                        </option>
-                    </select>
+        <div style="margin-top: 0px; margin-bottom: 40px;">
+            <div>
+                Veuillez remplir les informations relatives à votre Voyage retour
+            </div>
+            <div>
+                <div *ngIf="depart" class="row">
+                    <div class="cell-lg-12">
+                        <input #calendarpickerlocale2 data-role="calendarpicker" data-cls-calendar="compact" data-prepend="Date">
+                    </div>
+                    <div class="cell-lg-12">
+                        <select [(ngModel)]="retourHeure" data-prepend="Heure" data-role="select">
+                            <option [ngValue]="getHeure(heure)" *ngFor="let heure of depart.heures">
+                                {{getHeure(heure)}}
+                            </option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
