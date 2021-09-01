@@ -154,8 +154,11 @@
                             <div class="voiture-image" [ngStyle]="{'background-image': 'url('+ voiture.image +')'}">
 
                             </div>
-                            <div class="voiture-cout">
+                            <div *ngIf=" type === 'location' " class="voiture-cout">
                                 {{voiture.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                            </div>
+                            <div *ngIf=" type === 'interurbain' " class="voiture-cout">
+                                {{voiture.cout / 2 | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
                             </div>
                         </div>
                     </div>
