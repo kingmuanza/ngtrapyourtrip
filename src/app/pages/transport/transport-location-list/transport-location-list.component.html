@@ -24,13 +24,7 @@
         <div class="formulaire-recherche">
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                 <div class="row no-gap shadow-3">
-                    <div class="cell-lg-3 bordure-orange-debut">
-                        <div>
-                            <input #arrivee formControlName="ville" data-role="input" data-prepend="Ville"
-                                data-autocomplete="Douala, Yaoundé, Kribi, Limbé, Garoua, Maroua">
-                        </div>
-                    </div>
-                    <div class="cell-lg-3 bordure-orange-fin">
+                    <div class="cell-lg-5 bordure-orange-debut">
                         <div>
                             <input formControlName="rechercher" data-role="input" data-prepend="Rechercher">
                         </div>
@@ -42,7 +36,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="cell-lg-2 bordure-orange-fin">
+                    <div class="cell-lg-3 bordure-orange-fin">
                         <div>
                             <select #depart formControlName="transmission" data-role="select" data-prepend="Transmission">
                                 <option value="Automatique">
@@ -52,7 +46,7 @@
                                     Manuelle
                                 </option>
                             </select>
-                               
+
                         </div>
                     </div>
                     <div class="cell-lg-1 bordure-orange-fin bg-dark">
@@ -72,7 +66,7 @@
                                 <div class="voiture-categorie">
                                     {{v.categorie}}
                                 </div>
-                                <div class="voiture-modele">
+                                <div class="voiture-modele" style="display: none;">
                                     {{v.modele}}
                                 </div>
                             </div>
@@ -83,7 +77,7 @@
                             </div>
                         </div>
                         <div class="voiture-description">
-                            
+
                             {{v.sieges}} sièges | {{v.portieres}} portières | {{v.transmission}}
                         </div>
                         <div class="voiture-image" [ngStyle]="{'background-image': 'url('+ v.image +')'}">

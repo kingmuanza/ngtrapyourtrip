@@ -31,6 +31,7 @@ export class TransportLocationViewComponent implements OnInit {
   type = 'interurbain';
 
   heures = [];
+  retourHeure = '';
 
   constructor(
     private router: Router,
@@ -67,7 +68,7 @@ export class TransportLocationViewComponent implements OnInit {
       ville: ['', []],
       heureDebut: ['oui', []],
       heureFin: ['oui', []],
-      heure: ['', []],
+      heure: ['oui', []],
       categorie: ['', []],
       allerretour: ['simple', []],
     });
@@ -204,5 +205,7 @@ export class TransportLocationViewComponent implements OnInit {
     console.log(this.heureDebut.nativeElement.click());
     this.heureDebut.nativeElement.click();
   }
+
+  saveWithRetour() {}
 
 }

@@ -145,7 +145,7 @@ export class PrestataireListComponent implements OnInit {
       this.resultats = this.rechercher(value.mot);
     }
     if (value.ville) {
-      this.resultats = this.rechercher(value.ville);
+      this.resultats = this.rechercherParVille(value.ville);
     }
 
     let options = true;
@@ -241,6 +241,13 @@ export class PrestataireListComponent implements OnInit {
       const lieu = utilisateur.localisation ? utilisateur.localisation.toLowerCase().indexOf(mot.toLowerCase()) !== -1 : false;
       return titre || description || pays || ville || lieu;
 
+    });
+  }
+
+  rechercherParVille(mot: string) {
+    return this.resultats.filter((utilisateur) => {
+      const ville = utilisateur.ville ? utilisateur.ville.toLowerCase().indexOf(mot.toLowerCase()) !== -1 : false;
+      return ville;
     });
   }
 
