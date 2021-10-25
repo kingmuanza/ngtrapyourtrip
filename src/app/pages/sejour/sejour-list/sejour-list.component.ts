@@ -203,7 +203,42 @@ export class SejourListComponent implements OnInit {
   }
 
   rechercheFilter() {
-    this.recherchesShowed = !this.recherchesShowed;
+    if (this.departInput) {
+      const texte = this.departInput.nativeElement.value;
+      const date = this.calendarpickerlocale.nativeElement.value;
+      console.log(texte);
+      console.log(date);
+      let ladate = new Date('2020-01-01');
+      if (date) {
+        ladate = new Date(date);
+      }
+      console.log(ladate);
+      this.resultats = this.sejours.filter((sejour) => {
+        if (texte) {
+          if (sejour.ville) {
+            return sejour.ville.indexOf(texte) !== -1;
+          } else {
+            return false;
+          }
+        } else {
+          return true;
+        }
+      });
+      this.resultats = this.resultats.filter((sejour) => {
+        if (ladate) {
+          if (sejour.dateDebut) {
+            return new Date(sejour.dateDebut).getTime() - ladate.getTime() > 0;
+          } else {
+            return false;
+          }
+        } else {
+          return true;
+        }
+      });
+    } else {
+      this.recherchesShowed = !this.recherchesShowed;
+
+    }
   }
 
   @HostListener('window:resize', ['$event'])

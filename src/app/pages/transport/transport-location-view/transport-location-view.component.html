@@ -158,7 +158,12 @@
                                 {{voiture.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
                             </div>
                             <div *ngIf=" type === 'interurbain' " class="voiture-cout">
-                                {{voiture.cout / 2 | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                                <ng-container *ngIf="voiture.coutInterurbain">
+                                    {{voiture.coutInterurbain | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                                </ng-container>
+                                <ng-container *ngIf="!voiture.coutInterurbain">
+                                    {{voiture.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                                </ng-container>
                             </div>
                         </div>
                     </div>

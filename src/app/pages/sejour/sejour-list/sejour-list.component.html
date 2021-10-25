@@ -8,12 +8,10 @@
                     <div class="cell-lg-9">
                         <div class="titre">
                             Séjours
-                            <a class="button small showOnMObile" (click)="rechercheFilter()"
-                                style="float: right; margin-left: 10px;">
+                            <a class="button small showOnMObile" (click)="rechercheFilter()" style="float: right; margin-left: 10px;">
                                 <i class="mif-search fg-blue"></i>
                             </a>
-                            <a class="button small showOnMObile" (click)="toggleFilter()"
-                                style="float: right; margin-left: 10px;">
+                            <a class="button small showOnMObile" (click)="toggleFilter()" style="float: right; margin-left: 10px;">
                                 <i class="mif-filter fg-blue"></i>
                             </a>
                         </div>
@@ -41,8 +39,8 @@
                 <div class="row no-gap shadow-1">
                     <div class="cell-lg-5 bordure-orange-debut">
                         <div>
-                            <input #ville style="padding-left: 10px;" data-prepend="Ville"
-                                data-role="input" data-autocomplete="Douala, Yaoundé, Kribi, Limbé, Garoua, Maroua">
+                            <input #ville style="padding-left: 10px;" data-prepend="Ville" data-role="input" data-autocomplete="Douala, Yaoundé, Kribi, Limbé, Garoua, Maroua">
+
                         </div>
                     </div>
                     <div class="cell-lg-4 bordure-orange-fin">
@@ -52,9 +50,9 @@
                     </div>
                     <div class="cell-lg-3 bordure-orange-fin">
                         <div>
-                            <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
+                            <a (click)="rechercheFilter()" class="button warning" style="width: 100%; background-color: rgb(48, 164, 221); color: white">
                                 Rechercher
-                            </button>
+                            </a>
                         </div>
                     </div>
                     <div class="showOnMObile mobile-recherche-fermer cell-lg-2">
@@ -162,25 +160,15 @@
                                         Durée du séjour
                                     </div>
                                     <div class="etoiles">
-                                        <span (click)="changerEtoiles(1)" (mouseenter)="changerEtoilesIntention(1)"
-                                            (mouseleave)="reinitEtoiles()"
-                                            [ngClass]="{'mif-star-empty': triEtoilesIntention < 1, 'mif-star-full': triEtoilesIntention > 0 || triEtoiles > 0}"></span>
+                                        <span (click)="changerEtoiles(1)" (mouseenter)="changerEtoilesIntention(1)" (mouseleave)="reinitEtoiles()" [ngClass]="{'mif-star-empty': triEtoilesIntention < 1, 'mif-star-full': triEtoilesIntention > 0 || triEtoiles > 0}"></span>
 
-                                        <span (click)="changerEtoiles(2)" (mouseenter)="changerEtoilesIntention(2)"
-                                            (mouseleave)="reinitEtoiles()"
-                                            [ngClass]="{'mif-star-empty': triEtoilesIntention < 2, 'mif-star-full': triEtoilesIntention > 1 || triEtoiles > 1}"></span>
+                                        <span (click)="changerEtoiles(2)" (mouseenter)="changerEtoilesIntention(2)" (mouseleave)="reinitEtoiles()" [ngClass]="{'mif-star-empty': triEtoilesIntention < 2, 'mif-star-full': triEtoilesIntention > 1 || triEtoiles > 1}"></span>
 
-                                        <span (click)="changerEtoiles(3)" (mouseenter)="changerEtoilesIntention(3)"
-                                            (mouseleave)="reinitEtoiles()"
-                                            [ngClass]="{'mif-star-empty': triEtoilesIntention < 3, 'mif-star-full': triEtoilesIntention > 2 || triEtoiles > 2}"></span>
+                                        <span (click)="changerEtoiles(3)" (mouseenter)="changerEtoilesIntention(3)" (mouseleave)="reinitEtoiles()" [ngClass]="{'mif-star-empty': triEtoilesIntention < 3, 'mif-star-full': triEtoilesIntention > 2 || triEtoiles > 2}"></span>
 
-                                        <span (click)="changerEtoiles(4)" (mouseenter)="changerEtoilesIntention(4)"
-                                            (mouseleave)="reinitEtoiles()"
-                                            [ngClass]="{'mif-star-empty': triEtoilesIntention < 4, 'mif-star-full': triEtoilesIntention > 3 || triEtoiles > 3}"></span>
+                                        <span (click)="changerEtoiles(4)" (mouseenter)="changerEtoilesIntention(4)" (mouseleave)="reinitEtoiles()" [ngClass]="{'mif-star-empty': triEtoilesIntention < 4, 'mif-star-full': triEtoilesIntention > 3 || triEtoiles > 3}"></span>
 
-                                        <span (click)="changerEtoiles(5)" (mouseenter)="changerEtoilesIntention(5)"
-                                            (mouseleave)="reinitEtoiles()"
-                                            [ngClass]="{'mif-star-empty': triEtoilesIntention < 5, 'mif-star-full': triEtoilesIntention > 4 || triEtoiles > 4}"></span>
+                                        <span (click)="changerEtoiles(5)" (mouseenter)="changerEtoilesIntention(5)" (mouseleave)="reinitEtoiles()" [ngClass]="{'mif-star-empty': triEtoilesIntention < 5, 'mif-star-full': triEtoilesIntention > 4 || triEtoiles > 4}"></span>
 
                                     </div>
 

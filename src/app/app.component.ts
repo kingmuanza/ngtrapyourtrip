@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
 import { AuthentificationService } from './services/authentification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { AuthentificationService } from './services/authentification.service';
 export class AppComponent implements OnInit {
   title = 'trap';
 
-  constructor(private authService: AuthentificationService) {
+  constructor(private authService: AuthentificationService, private router: Router) {
     const FIREBASE_CONFIG = {
       apiKey: 'AIzaSyD6j-e5lYO_vfM2_PDt5Fr2tXInMEztwA4',
       authDomain: 'trapyourtrip.firebaseapp.com',
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
       appId: '1:339042367276:web:c0367f5a67aec947301e89'
     };
     firebase.initializeApp(FIREBASE_CONFIG);
+    console.log(this.router.url);
   }
 
   ngOnInit(): void {

@@ -2,7 +2,6 @@
     0% {
         transform: scaleX(0);
     }
-
     100% {
         transform: scaleX(1);
     }
@@ -12,7 +11,6 @@
     0% {
         transform: scale(1.5);
     }
-
     100% {
         transform: scale(1);
     }
@@ -23,52 +21,43 @@
     animation-name: progress-bar;
     animation-duration: 500ms;
     margin-bottom: 10px;
-
     .sejour__conteneur {
         background-color: #eee;
         height: 250px;
         overflow: hidden;
-
     }
-
     .sejour__image {
         height: 250px;
         background-size: cover;
         background-position: center center;
-        
         transition: transform 400ms;
         animation-name: opaque;
         animation-duration: 1000ms;
         background-color: #eee;
-
         &:hover {
             transform: scale(1.2);
         }
     }
-
     .sejour__description {
         padding: 0px;
         padding-top: 5px;
         // background-color: #eee;
-        height: 80px;
+        height: 100px;
         overflow: hidden;
         line-height: 1.15;
-
     }
-
     .sejour__notation {
         margin-top: -3px;
         float: right;
-        font-size: 1.2em;;
+        font-size: 1.2em;
+        ;
     }
-
     .sejour__prix {
         margin-top: -5px;
         span {
             color: #444;
             font-weight: bold;
         }
-
     }
     .sejour__calendrier {
         // position: absolute;
@@ -90,7 +79,6 @@
 }
 
 .muanza-details {
-
     .detail {
         background-color: rgb(48, 164, 221);
         padding: 5px;

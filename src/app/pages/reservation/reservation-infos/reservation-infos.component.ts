@@ -4,6 +4,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { Trajet } from 'src/app/models/trajet.model';
+import { Subscription } from 'rxjs';
+import { Utilisateur } from 'src/app/models/utilisateur.model';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 
 declare const metro: any;
 
@@ -17,8 +20,11 @@ export class ReservationInfosComponent implements OnInit {
   reservation: Reservation;
   days = 0;
   form: FormGroup;
+  utilisateur: Utilisateur;
+  utilisateurSubscription: Subscription;
 
   constructor(
+    private authService: AuthentificationService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -26,6 +32,11 @@ export class ReservationInfosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.utilisateurSubscription = this.authService.utilisateurSubject.subscribe((utilisateur: Utilisateur) => {
+      this.utilisateur = utilisateur;
+      this.initForm();
+    });
+    this.authService.emit();
     this.route.paramMap.subscribe((paramMap) => {
       const id = paramMap.get('id');
       this.getReservation(id);
@@ -36,9 +47,9 @@ export class ReservationInfosComponent implements OnInit {
 
   initForm() {
     this.form = this.formBuilder.group({
-      nom: ['', Validators.required],
-      prenom: ['', Validators.required],
-      tel: ['', Validators.required],
+      nom: [this.utilisateur ? this.utilisateur.nom : '', Validators.required],
+      prenom: [this.utilisateur ? this.utilisateur.prenom : '', Validators.required],
+      tel: [this.utilisateur ? this.utilisateur.tel : '', Validators.required],
       numero: ['', Validators.required],
       typepiece: ['cni', Validators.required],
       indicatif: ['+237', Validators.required]
