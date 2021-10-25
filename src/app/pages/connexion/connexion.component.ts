@@ -78,13 +78,16 @@ export class ConnexionComponent implements OnInit {
         const user = result.user;
         console.log('user');
         console.log(user);
+        localStorage.setItem('trap-your-utilisateur', JSON.stringify(user));
         this.authService.connexionExterne(user);
+        this.router.navigate(['accueil']);
         // ...
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         const email = error.email;
         const credential = error.credential;
+        alert('Echec de la connexion');
         // ...
       });
   }
@@ -98,7 +101,9 @@ export class ConnexionComponent implements OnInit {
         const user = result.user;
         console.log('user');
         console.log(user);
+        localStorage.setItem('trap-your-utilisateur', JSON.stringify(user));
         this.authService.connexionExterne(user);
+        this.router.navigate(['accueil']);
         // ...
       }).catch((error) => {
         const errorCode = error.code;
@@ -106,6 +111,7 @@ export class ConnexionComponent implements OnInit {
         const email = error.email;
         const credential = error.credential;
         console.log(error);
+        alert('Echec de la connexion');
       });
   }
 

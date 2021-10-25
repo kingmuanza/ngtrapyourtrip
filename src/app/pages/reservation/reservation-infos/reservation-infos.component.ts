@@ -22,6 +22,7 @@ export class ReservationInfosComponent implements OnInit {
   form: FormGroup;
   utilisateur: Utilisateur;
   utilisateurSubscription: Subscription;
+  responsable: any;
 
   constructor(
     private authService: AuthentificationService,
@@ -35,6 +36,16 @@ export class ReservationInfosComponent implements OnInit {
     this.utilisateurSubscription = this.authService.utilisateurSubject.subscribe((utilisateur: Utilisateur) => {
       this.utilisateur = utilisateur;
       this.initForm();
+      if (this.utilisateur) {
+        if (this.utilisateur.uid) {
+          const db = firebase.firestore();
+          db.collection('responsables-trap')
+            .doc(this.utilisateur.uid).get().then((resultat) => {
+              this.responsable = resultat.data();
+              this.initForm();
+            });
+        }
+      }
     });
     this.authService.emit();
     this.route.paramMap.subscribe((paramMap) => {
@@ -47,12 +58,12 @@ export class ReservationInfosComponent implements OnInit {
 
   initForm() {
     this.form = this.formBuilder.group({
-      nom: [this.utilisateur ? this.utilisateur.nom : '', Validators.required],
-      prenom: [this.utilisateur ? this.utilisateur.prenom : '', Validators.required],
-      tel: [this.utilisateur ? this.utilisateur.tel : '', Validators.required],
-      numero: ['', Validators.required],
-      typepiece: ['cni', Validators.required],
-      indicatif: ['+237', Validators.required]
+      nom: [this.utilisateur ? this.responsable ? this.responsable.prenom : this.utilisateur.nom : '', Validators.required],
+      prenom: [this.responsable ? this.responsable.prenom : '', Validators.required],
+      tel: [this.responsable ? this.responsable.tel : '', Validators.required],
+      numero: [this.responsable ? this.responsable.numero : '', Validators.required],
+      typepiece: [this.responsable ? this.responsable.typepiece : 'cni', Validators.required],
+      indicatif: [this.responsable ? this.responsable.indicatif : '+237', Validators.required]
     });
   }
 
@@ -86,13 +97,19 @@ export class ReservationInfosComponent implements OnInit {
     localStorage.setItem('panier-trap', JSON.stringify(newPanier));
 
     const db = firebase.firestore();
-    db.collection('reservation-trap').doc(this.reservation.id).set(JSON.parse(JSON.stringify(this.reservation))).then((resultats) => {
-      console.log('TERMINEEE !!!');
-      metro().activity.close(activity);
-      this.router.navigate(['offres', 'reservation', 'recap', this.reservation.id]);
-    }).catch((e) => {
-      metro().activity.close(activity);
-    });
+    db.collection('responsables-trap')
+      .doc(this.utilisateur.uid)
+      .set(JSON.parse(JSON.stringify(this.reservation.responsable))).then(() => {
+        db.collection('reservation-trap').doc(this.reservation.id).set(JSON.parse(JSON.stringify(this.reservation))).then(() => {
+          console.log('TERMINEEE !!!');
+          metro().activity.close(activity);
+          this.router.navigate(['offres', 'reservation', 'recap', this.reservation.id]);
+        }).catch((e) => {
+          metro().activity.close(activity);
+        });
+      }).catch((e) => {
+      });
+
   }
 
   getReservation(id) {

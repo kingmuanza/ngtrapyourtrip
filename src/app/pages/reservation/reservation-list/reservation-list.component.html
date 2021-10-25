@@ -1,5 +1,5 @@
-<div style="min-height: 100vh;">
-    <div class="entete">
+<div style="min-height: 100vh; padding-top: 10px;">
+    <div class="entete2">
         <div class="titre">
             Mes réservations
         </div>
@@ -21,9 +21,9 @@
                         <th>Hébergement</th>
                         <th>Début</th>
                         <th>Fin</th>
-                        <th style="text-align: right; background-color: #fafafa;"s>Coût</th>
+                        <th style="text-align: right; background-color: #fafafa;" s>Coût</th>
                         <th>Statut</th>
-                        <th style="text-align: center;">Action</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -47,11 +47,6 @@
                         </td>
                         <td>
                             {{reservation.validee ? 'Validéé': 'En attente de validation'}}
-                        </td>
-                        <td style="text-align: center; white-space: nowrap;">
-                            <button class="button warning" style="background-color: rgb(48, 164, 221);">
-                                {{reservation.validee ? 'Annuler': 'Valider'}}
-                            </button>
                         </td>
                     </tr>
                 </tbody>

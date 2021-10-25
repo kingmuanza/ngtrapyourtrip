@@ -1,21 +1,18 @@
-
 <div #menuMobile data-role="appbar" [ngClass]="{'shadow-1': !primarycolor || mobile}" data-expand-point="md" class="muanza-appbar" style="">
     <a href="#" class="brand no-hover">
-        
-            <img class="image-logo" src="../../../assets/img/Trap Your Trip Logo 2.png">
+
+        <img class="image-logo" src="../../../assets/img/Trap Your Trip Logo 2.png">
     </a>
 
     <ul class="app-bar-menu ml-auto" [ngClass]="{'onscroll': !primarycolor || mobile}" (click)="hamburger()">
         <li>
             <a routerLink="accueil" routerLinkActive="active">
-                <span class="mif-home"></span>
-                Accueil
+                <span class="mif-home"></span> Accueil
             </a>
         </li>
         <li>
             <a [ngClass]="{'active': offres}" (click)="check()" class="dropdown-toggle">
-                <span class="mif-star-full"></span>
-                Nos offres
+                <span class="mif-star-full"></span> Nos offres
             </a>
             <ul style="z-index: 2000;" class="d-menu" data-role="dropdown" style="background-color: #303030;">
                 <li>
@@ -42,21 +39,19 @@
         </li>
         <li>
             <a routerLink="panier" routerLinkActive="active">
-                <span class="mif-cart"></span>
-                Panier
+                <span class="mif-cart"></span> Panier
                 <b class="superieur" style="margin-left: 3px;">
                     <sup>{{reservations.length}}</sup>
                 </b>
             </a>
         </li>
-        
-        <li *ngIf="admin"  class="muanza-padding-droit">
+
+        <li *ngIf="admin" class="muanza-padding-droit">
             <a class="dropdown-toggle">
-                <span class="mif-cog fg-blue"></span>
-                Administration
+                <span class="mif-cog fg-blue"></span> Administration
             </a>
             <ul style="z-index: 2000;" class="d-menu" data-role="dropdown" style="background-color: #303030;">
-                
+
                 <li>
                     <a>
                         Administrateurs
@@ -71,18 +66,22 @@
         </li>
         <li *ngIf="!utilisateur && !admin" class="muanza-padding-droit">
             <a routerLink="/connexion" routerLinkActive="active">
-                <span class="mif-security"></span>
-                Connexion
+                <span class="mif-security"></span> Connexion
             </a>
         </li>
         <li *ngIf="utilisateur" class="muanza-padding-droit">
             <a class="dropdown-toggle" [ngClass]="{'active': dashboard}">
-                
+
                 <span class="nom-user">
                     <i *ngIf="mobile" class="mif-user" style="margin-right: 10px;"></i>
+                    <ng-container *ngIf="utilisateur.nom">
+                        {{utilisateur ? utilisateur.nom :'Mon'}}
+                        {{utilisateur ? utilisateur.prenom :'compte'}}
+                    </ng-container>
+                    <ng-container *ngIf="utilisateur.displayName">
+                        {{utilisateur.displayName}}
+                    </ng-container>
                     
-                    {{utilisateur ? utilisateur.nom :'Mon'}}
-                    {{utilisateur ? utilisateur.prenom :'compte'}}
                 </span>
                 <img [src]="photoURL" class="user-image">
             </a>

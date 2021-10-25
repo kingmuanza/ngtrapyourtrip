@@ -6,6 +6,7 @@ export class Utilisateur {
     uid: string;
     nom: string;
     prenom: string;
+    displayName: string;
     sexe: string;
     login: string;
     photoURL: string;

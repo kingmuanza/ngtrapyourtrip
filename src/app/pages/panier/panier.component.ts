@@ -114,7 +114,7 @@ export class PanierComponent implements OnInit {
       return '';
     }
   }
-  
+
   toDate(str) {
     return new Date(str);
   }

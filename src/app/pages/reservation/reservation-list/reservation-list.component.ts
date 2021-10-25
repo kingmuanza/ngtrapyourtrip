@@ -36,14 +36,16 @@ export class ReservationListComponent implements OnInit {
   getReservationsNormales(id: string) {
     const db = firebase.firestore();
     this.reservations = new Array<Reservation>();
-    db.collection('reservation-trap').where('utilisateur.id', '==', id).get().then((resultats) => {
-      resultats.forEach((resultat) => {
-        const resa = resultat.data() as Reservation;
-        this.reservations.push(resa);
+    if (this.utilisateur.uid) {
+      db.collection('reservation-trap').where('utilisateur.uid', '==', this.utilisateur.uid).get().then((resultats) => {
+        resultats.forEach((resultat) => {
+          const resa = resultat.data() as Reservation;
+          this.reservations.push(resa);
+        });
+        console.log('this.reservations');
+        console.log(this.reservations);
       });
-      console.log('this.reservations');
-      console.log(this.reservations);
-    });
+    }
   }
 
   getReservationsPrestataire(id: string) {

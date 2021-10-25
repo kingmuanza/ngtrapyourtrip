@@ -107,32 +107,27 @@ export class SejourListComponent implements OnInit {
   }
 
   onSubmitForm() {
-    const value = this.form.value;
-    console.log('value');
-    console.log(value);
-    let nature = value.nature;
-    if (nature) {
-      if (nature === 'null') {
-        if (value.hotel) {
-          nature = 'hotel';
-        }
-        if (value.appartement) {
-          nature = 'villa';
-        }
-        if (value.appartement && value.hotel) {
-          nature = null;
-        }
-      }
 
-    } else {
-      if (value.hotel) {
-        nature = 'hotel';
-      }
-      if (value.appartement) {
-        nature = 'villa';
-      }
-    }
+    const value = this.form.value;
+    this.resultats = this.sejours;
     this.resultats = this.resultats.filter((prestataire) => {
+      const keys = Object.keys(value);
+      let toutOK = true;
+      keys.forEach((key) => {
+        // console.log(key);
+        if (value[key] === true) {
+          // console.log(key);
+          if (prestataire.options && !prestataire.options[key]) {
+            toutOK = false;
+          }
+
+          if (!prestataire.options) {
+            toutOK = false;
+          }
+
+        }
+      });
+      return toutOK;
     });
 
     this.ordonner(this.ordre);

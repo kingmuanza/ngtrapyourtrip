@@ -239,7 +239,7 @@ export class PrestataireListComponent implements OnInit {
       const pays = utilisateur.pays ? utilisateur.pays.toLowerCase().indexOf(mot.toLowerCase()) !== -1 : false;
       const ville = utilisateur.ville ? utilisateur.ville.toLowerCase().indexOf(mot.toLowerCase()) !== -1 : false;
       const lieu = utilisateur.localisation ? utilisateur.localisation.toLowerCase().indexOf(mot.toLowerCase()) !== -1 : false;
-      return titre || description || pays || ville || lieu;
+      return titre;
 
     });
   }
