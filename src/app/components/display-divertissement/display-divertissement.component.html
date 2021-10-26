@@ -15,9 +15,9 @@
                 {{divertissement.titre}}
             </div>
             <div>
-                <b>
-                    {{divertissement.lieu}}
-                </b>
+                <b *ngIf="divertissement.ville">
+                    {{divertissement.ville}}<ng-container *ngIf="divertissement.lieu" >,</ng-container>
+                </b> {{divertissement.lieu}}
             </div>
             <div *ngIf="divertissement.date">
                 {{divertissement.date | date: 'yyyy-MM-dd' }}
@@ -30,7 +30,7 @@
             <div style="padding-top: 10px; text-align: right;">
                 <div class="sejour__notation orange" [innerHTML]="notationToStars(divertissement.notation)"></div>
 
-                
+
             </div>
         </div>
     </div>

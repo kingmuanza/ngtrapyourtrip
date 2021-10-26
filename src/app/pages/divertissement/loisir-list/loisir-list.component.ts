@@ -11,7 +11,7 @@ declare const metro: any;
   styleUrls: ['./loisir-list.component.scss']
 })
 export class LoisirListComponent implements OnInit {
-  @ViewChild('ville', { static: false }) departInput: ElementRef;
+  @ViewChild('ville', { static: false }) ville: ElementRef;
 
   divertissements = new Array<Divertissement>();
   resultats = new Array<Divertissement>();
@@ -43,20 +43,21 @@ export class LoisirListComponent implements OnInit {
   }
 
   onFormSubmit() {
-    console.log('submit');
-    const value = this.form.value;
-    const texte = value.rechercher as string;
-    const ville = value.ville as string;
-    this.resultats = this.divertissements.filter((d) => {
-      const t = (texte && d.titre.toLowerCase().indexOf(texte.toLowerCase()) !== -1) || !texte;
-      const v = (ville && d.lieu && d.lieu.toLowerCase().indexOf(ville.toLowerCase()) !== -1) || !ville;
-      console.log(t);
-      console.log(v);
-      console.log(t && v);
-      return t && v;
-    });
-    console.log(this.resultats);
-    console.log(this.divertissements);
+    const ville: string = this.ville.nativeElement.value;
+    const texte = this.form.value.rechercher;
+    console.log(ville);
+    console.log(texte);
+    this.resultats = this.divertissements;
+    if (ville) {
+      this.resultats = this.divertissements.filter((divertissement) => {
+        return divertissement.ville && divertissement.ville.toLowerCase().indexOf(ville.toLowerCase()) !== -1;
+      });
+    }
+    if (texte) {
+      this.resultats = this.resultats.filter((divertissement) => {
+        return divertissement.titre && divertissement.titre.toLowerCase().indexOf(texte.toLowerCase()) !== -1;
+      });
+    }
   }
 
   goToAll() {

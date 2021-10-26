@@ -1,6 +1,5 @@
 $couleur: rgb(48, 164, 221);
 $couleur: rgb(48, 164, 221);
-
 .bg-couleur {
     background-color: $couleur;
 }
@@ -10,11 +9,9 @@ $couleur: rgb(48, 164, 221);
         transform: scaleX(0);
         opacity: 0;
     }
-
     50% {
         opacity: 0.5;
     }
-
     100% {
         transform: scaleX(1);
     }
@@ -25,11 +22,9 @@ $couleur: rgb(48, 164, 221);
     font-size: 1.5em;
     margin-bottom: 10px;
     margin-left: 15px;
-
     span {
         margin-right: 3px;
         cursor: pointer;
-
         &:hover {
             font-size: 1.01em;
         }
@@ -37,29 +32,22 @@ $couleur: rgb(48, 164, 221);
 }
 
 .page-sejour {
-
     .entete {
         height: 170px;
         overflow: hidden;
-
         .entete__background {
-
             height: 170px;
             overflow: hidden;
-
             background-image: url('../../../../assets/img/exterior.jpg');
             background-size: cover;
             background-position: center center;
             // background-attachment: fixed;
-
             filter: blur(5px);
             transform: scale(1.2);
             @media screen and (max-width: 599px) {
                 background: none!important;
             }
-
         }
-
         .entete__contenu {
             padding-top: 70px;
             padding-left: 10vw;
@@ -69,7 +57,6 @@ $couleur: rgb(48, 164, 221);
             height: 170px;
             overflow: hidden;
             background-color: rgba(255, 255, 255, 0.85);
-
             @media screen and (max-width: 599px) {
                 padding-top: 70px;
                 padding-left: 5vw;
@@ -80,10 +67,8 @@ $couleur: rgb(48, 164, 221);
                 overflow: visible;
                 background-color: rgba(255, 255, 255, 0.95);
             }
-
             //background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5));
             //color: white;
-
             .titre {
                 font-size: 2.0em;
                 line-height: 1.15;
@@ -93,20 +78,17 @@ $couleur: rgb(48, 164, 221);
                     padding-top: 10px;
                 }
             }
-
             .sous-titre {
                 margin-top: 5px;
             }
         }
     }
-
     .contenu {
         padding-top: 1vh;
         padding-left: 10vw;
         padding-right: 10vw;
         padding-bottom: 15vh;
         min-height: 100vh;
-
         @media screen and (max-width: 599px) {
             padding-left: 0vw;
             padding-right: 0vw;
@@ -116,16 +98,13 @@ $couleur: rgb(48, 164, 221);
     }
 }
 
-
 .bordure-orange {
     &-debut {
         border: 2px solid $couleur;
     }
-
     &-fin {
         border: 2px solid $couleur;
         border-left: 0px solid #eee;
-
         @media screen and (max-width: 599px) {
             border-left: 2px solid $couleur;
         }
@@ -139,7 +118,6 @@ $couleur: rgb(48, 164, 221);
 .options {
     margin-bottom: 10px;
     margin-left: 15px;
-
     span {
         margin-right: 20px;
         display: block;
@@ -168,11 +146,9 @@ $couleur: rgb(48, 164, 221);
         font-size: 0.9em;
         margin-bottom: 10px;
         transition: letter-spacing 200ms;
-
         &:hover {
             letter-spacing: 1px;
         }
-
         &.active {
             font-weight: bold;
             color: $couleur;
@@ -185,6 +161,7 @@ input.muanza {
     outline: none !important;
     padding-left: 20px;
 }
+
 
 /*
 .radius-gauche {
@@ -242,14 +219,12 @@ input.muanza {
             overflow-y: hidden;
             background-color: #fff;
         }
-
         .les-options-contenant {
             @media screen and (max-width: 599px) {
                 height: 75vh;
                 overflow-y: scroll;
             }
         }
-
         .les-options-contenu {
             @media screen and (max-width: 599px) {}
         }
@@ -260,7 +235,7 @@ input.muanza {
     @media screen and (max-width: 599px) {
         position: fixed;
         z-index: 147852369;
-        top:30px;
+        top: 30px;
         left: 0;
         width: 100vw;
         animation-name: apparaitDeBas;
@@ -279,26 +254,25 @@ input.muanza {
     0% {
         transform-origin: bottom left;
         transform: translateY(-100vh);
-        
     }
     100% {
         transform: translateY(0vh);
     }
 }
+
 @keyframes apparaitDeHaut {
     0% {
         transform-origin: bottom left;
         transform: translateY(100vh);
-        
     }
     100% {
         transform: translateY(0vh);
     }
 }
+
 @keyframes apparaitSoft {
     0% {
         opacity: 0;
-        
     }
     100% {
         opacity: 1;

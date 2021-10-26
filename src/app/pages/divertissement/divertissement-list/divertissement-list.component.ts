@@ -12,7 +12,9 @@ declare const metro: any;
 })
 export class DivertissementListComponent implements OnInit {
 
-  @ViewChild('ville', { static: false }) departInput: ElementRef;
+  @ViewChild('ville', { static: false }) ville: ElementRef;
+  @ViewChild('calendarpickerlocale', { static: false }) calendarpickerlocale;
+  @ViewChild('calendarpickerlocale2', { static: false }) calendarpickerlocale2;
 
   divertissements = new Array<Divertissement>();
   resultats = new Array<Divertissement>();
@@ -41,6 +43,43 @@ export class DivertissementListComponent implements OnInit {
   }
 
   onFormSubmit() {
+    const ville: string = this.ville.nativeElement.value;
+    const texte = this.form.value.rechercher;
+    const dateDebut = this.calendarpickerlocale.nativeElement.value;
+    const dateFin = this.calendarpickerlocale2.nativeElement.value;
+
+    console.log(ville);
+    console.log(texte);
+    console.log(dateDebut);
+    console.log(dateFin);
+
+    this.resultats = this.divertissements;
+    if (ville) {
+      this.resultats = this.divertissements.filter((divertissement) => {
+        return divertissement.ville && divertissement.ville.toLowerCase().indexOf(ville.toLowerCase()) !== -1;
+
+      });
+    }
+    if (texte) {
+      this.resultats = this.resultats.filter((divertissement) => {
+        return divertissement.titre && divertissement.titre.toLowerCase().indexOf(texte.toLowerCase()) !== -1;
+
+      });
+    }
+
+    if (dateDebut) {
+      this.resultats = this.resultats.filter((divertissement) => {
+        return divertissement.date && new Date(divertissement.date).getTime() - new Date(dateDebut).getTime() > 0;
+
+      });
+    }
+
+    if (dateFin) {
+      this.resultats = this.resultats.filter((divertissement) => {
+        return divertissement.date && new Date(dateFin).getTime() - new Date(divertissement.date).getTime() > 0;
+
+      });
+    }
 
   }
 
