@@ -14,8 +14,6 @@ declare const metro: any;
 })
 export class SejourViewComponent implements OnInit {
 
-  @ViewChild('calendarpickerlocale', { static: false }) calendarpickerlocale;
-
   sejour: Sejour;
   form: FormGroup;
   formReservationShowed = false;
@@ -49,7 +47,7 @@ export class SejourViewComponent implements OnInit {
       personnes: [1, Validators.required]
     });
 
-    this.form.controls['date'].valueChanges.subscribe((value) => {
+    this.form.controls.date.valueChanges.subscribe((value) => {
       console.log('value');
       console.log(value);
     });
@@ -77,16 +75,15 @@ export class SejourViewComponent implements OnInit {
     const value = this.form.value;
     console.log('value');
     console.log(value);
-    console.log('this.calendarpickerlocale.nativeElement.value');
-    console.log(this.calendarpickerlocale.nativeElement.value);
 
     const personnes = value.personnes;
-    let date = this.calendarpickerlocale.nativeElement.value;
-    if (date && date.length > 2) {
+    let date = new Date(this.sejour.dateDebut);
+    if (date) {
 
       const reservation = new Reservation();
       reservation.sejour = this.sejour;
       reservation.personnes = personnes;
+
       if (this.sejour.dateDebut) {
         if (new Date( this.sejour.dateDebut).getTime() > new Date().getTime()) {
           date = this.sejour.dateDebut;
@@ -99,10 +96,7 @@ export class SejourViewComponent implements OnInit {
       console.log('reservation');
       console.log(reservation);
 
-      if (
-        reservation.dateDebut &&
-        reservation.dateFin &&
-        reservation.dateDebut.getTime() > new Date().getTime()) {
+      if (true) {
 
         const activity = metro().activity.open({
           type: 'square',
@@ -118,18 +112,10 @@ export class SejourViewComponent implements OnInit {
           metro().activity.close(activity);
         });
       } else {
-        const notify = metro().notify;
-        notify.create('Les dates ne sont pas valides', null, {
-          cls: 'alert',
-          keepOpen: false
-        });
+        alert('Les dates ne sont pas valides');
       }
     } else {
-      const notify = metro().notify;
-      notify.create('Veuillez renseigner la date', null, {
-        cls: 'alert',
-        keepOpen: false
-      });
+      alert('Le séjour n\'a pas de date de début valide');
     }
 
   }

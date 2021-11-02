@@ -58,10 +58,12 @@ export class DepartViewComponent implements OnInit {
       allerretour: ['allersimple'],
     });
 
+    // tslint:disable-next-line:no-string-literal
     this.form.controls['date'].valueChanges.subscribe((value) => {
       console.log('value');
       console.log(value);
     });
+    // tslint:disable-next-line:no-string-literal
     this.form.controls['allerretour'].valueChanges.subscribe((value) => {
       console.log('allerretour');
       console.log(value);
@@ -86,7 +88,7 @@ export class DepartViewComponent implements OnInit {
     const dateAller = new Date(date + ' ' + heure);
     const dateRetour = new Date(date2 + ' ' + this.retourHeure);
 
-    if (dateAller.getTime() < dateRetour.getTime()) {
+    if (dateAller.getTime() <= dateRetour.getTime()) {
       this.onFormSubmit();
     } else {
       alert('La date de Retour doit être supérieure à la date d\'Aller');

@@ -46,8 +46,7 @@
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                 <div *ngIf="depart" class="row no-gap shadow-1 le-formulaire-mm">
                     <div class="cell-lg-3 bordure-orange-debut">
-                        <input #calendarpickerlocale formControlName="date" data-role="calendarpicker"
-                            data-prepend="Date" type="date" class="radius-gauche">
+                        <input #calendarpickerlocale formControlName="date" data-role="calendarpicker" data-prepend="Date" type="date" class="radius-gauche">
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin">
                         <select data-prepend="Heure" formControlName="heure" data-role="select">
@@ -76,17 +75,13 @@
                         </select>
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin">
-                        <button [disabled]="form.invalid" *ngIf="!allerretour" class="button warning"
-                            style="width: 100%; background-color: rgb(48, 164, 221);">
+                        <button [disabled]="form.invalid" *ngIf="!allerretour" class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
                             Réserver
                         </button>
-                        <a *ngIf="allerretour && !isDateValide()" class="button warning"
-                            style="width: 100%; color:white; background-color: rgb(48, 164, 221);" (click)="avertir()">
+                        <a *ngIf="allerretour && !isDateValide()" class="button warning" style="width: 100%; color:white; background-color: rgb(48, 164, 221);" (click)="avertir()">
                             Continuer
                         </a>
-                        <a *ngIf="allerretour && isDateValide()" class="button warning"
-                            style="width: 100%; color:white; background-color: rgb(48, 164, 221);"
-                            onclick="Metro.dialog.open('#demoDialog1')">
+                        <a *ngIf="allerretour && isDateValide()" class="button warning" style="width: 100%; color:white; background-color: rgb(48, 164, 221);" onclick="Metro.dialog.open('#demoDialog1')">
                             Continuer
                         </a>
                     </div>
@@ -132,8 +127,7 @@
     </div>
     <div class="dialog-actions">
         <button class="button js-dialog-close">Annuler</button>
-        <button (click)="saveWithRetour()" class="button warning js-dialog-close"
-            style="background-color: rgb(48, 164, 221);">
+        <button (click)="saveWithRetour()" class="button warning" style="background-color: rgb(48, 164, 221);">
             Enregistrer
         </button>
     </div>
