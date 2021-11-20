@@ -6,6 +6,7 @@ export class LocationVoiture extends Modele {
     depart = '';
     arrivee = '';
     date: Date;
+    dateRetour: Date;
     allerretour = false;
 
     ville = '';

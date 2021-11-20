@@ -22,6 +22,7 @@ export class TransportLocationViewComponent implements OnInit {
   @ViewChild('debut', { static: false }) debut;
   @ViewChild('fin', { static: false }) fin;
   @ViewChild('date', { static: false }) date;
+  @ViewChild('calendarpickerlocale2', { static: false }) date2;
 
   @ViewChild('heureDebut', { static: false }) heureDebut;
 
@@ -66,11 +67,11 @@ export class TransportLocationViewComponent implements OnInit {
   initForm() {
     this.form = this.formBuilder.group({
       ville: ['', []],
-      heureDebut: ['oui', []],
-      heureFin: ['oui', []],
-      heure: ['oui', []],
+      heureDebut: ['00:00', []],
+      heureFin: ['00:00', []],
+      heure: ['00:00', []],
       categorie: ['', []],
-      allerretour: ['simple', []],
+      allerretour: [true, []],
     });
   }
 
@@ -78,7 +79,6 @@ export class TransportLocationViewComponent implements OnInit {
     const value = this.form.value;
     console.log('value');
     console.log(value);
-
     const heureDebut = value.heureDebut;
     const heureFin = value.heureFin;
     const allerretour = value.allerretour;
@@ -103,10 +103,25 @@ export class TransportLocationViewComponent implements OnInit {
         const dateDepart = new Date(date + ' ' + heure);
         if (dateDepart.getTime() - new Date().getTime() > 0) {
           location.date = dateDepart;
+          location.debut = dateDepart;
+          location.fin = dateDepart;
           location.allerretour = allerretour;
           console.log('location');
           console.log(location);
-          this.reserver(location);
+
+          const activity = metro().activity.open({
+            type: 'square',
+            overlayColor: '#fff',
+            overlayAlpha: 0.8
+          });
+
+          this.reserver(location).then((reservation) => {
+            metro().activity.close(activity);
+            this.router.navigate(['offres', 'reservation', 'view', reservation.id]);
+          }).catch((e) => {
+            metro().activity.close(activity);
+            alert('Erreur dans la réservation');
+          });
         } else {
           alert('Veuillez rentrer une date valide');
         }
@@ -117,13 +132,10 @@ export class TransportLocationViewComponent implements OnInit {
 
     if (this.type === 'location') {
       const ville = this.villeInput.nativeElement.value;
-
       const debut = this.debut.nativeElement.value;
       const fin = this.fin.nativeElement.value;
-
       console.log('ville');
       console.log(ville);
-
       if (ville && debut && fin && heureDebut && heureFin) {
         const location = new LocationVoiture('location', this.voiture);
         location.ville = ville;
@@ -133,7 +145,17 @@ export class TransportLocationViewComponent implements OnInit {
           if (location.fin.getTime() - location.debut.getTime() > 0) {
             console.log('location');
             console.log(location);
-            this.reserver(location);
+
+            const activity = metro().activity.open({
+              type: 'square',
+              overlayColor: '#fff',
+              overlayAlpha: 0.8
+            });
+
+            this.reserver(location).then((reservation) => {
+              metro().activity.close(activity);
+              this.router.navigate(['offres', 'reservation', 'view', reservation.id]);
+            });
           } else {
             alert('Veuillez rentrer une date de fin valide');
           }
@@ -143,9 +165,7 @@ export class TransportLocationViewComponent implements OnInit {
       } else {
         alert('Veuillez remplir le formulaire de réservation');
       }
-
     }
-
   }
 
   avertir(message) {
@@ -161,41 +181,46 @@ export class TransportLocationViewComponent implements OnInit {
 
   voir(voiture: Voiture) {
     this.router.navigate(['offres', 'transport', 'location', voiture.id]);
-    this.router.navigate(['offres', 'transport', 'location', voiture.id]);
   }
 
   handleChange($event) {
 
   }
 
-  reserver(location: LocationVoiture) {
+  reserver(location: LocationVoiture, allerretour?: boolean): Promise<Reservation> {
 
-    const activity = metro().activity.open({
-      type: 'square',
-      overlayColor: '#fff',
-      overlayAlpha: 0.8
-    });
+    return new Promise((resolve, reject) => {
+      const reservation = new Reservation();
+      reservation.locationVoiture = location;
+      reservation.dateDebut = location.debut;
+      reservation.dateFin = location.fin;
+      if (location.type === 'location') {
+        const diff = new Date(reservation.dateFin).getTime() - new Date(reservation.dateDebut).getTime();
+        const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+        reservation.cout = location.voiture.cout * days;
+      }
+      if (location.type === 'interurbain') {
+        if (location.voiture.coutInterurbain) {
+          reservation.cout = location.voiture.coutInterurbain;
+          if (allerretour) {
+            reservation.cout = location.voiture.coutInterurbain * 2;
+          }
+        } else {
+          reservation.cout = location.voiture.cout;
+          if (allerretour) {
+            reservation.cout = location.voiture.cout * 2;
+          }
+        }
+      }
 
-    const reservation = new Reservation();
-    reservation.locationVoiture = location;
-    reservation.dateDebut = location.debut;
-    reservation.dateFin = location.fin;
-    if (location.type === 'location') {
-      const diff = new Date(reservation.dateFin).getTime() - new Date(reservation.dateDebut).getTime();
-      const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-      reservation.cout = location.voiture.cout * days;
-    }
-    if (location.type === 'interurbain') {
-      reservation.cout = location.voiture.cout;
-    }
+      const db = firebase.firestore();
+      db.collection('reservation-trap').doc(reservation.id).set(JSON.parse(JSON.stringify(reservation))).then((resultats) => {
+        console.log('TERMINEEE !!!');
+        resolve(reservation);
+      }).catch((e) => {
+        reject(e);
+      });
 
-    const db = firebase.firestore();
-    db.collection('reservation-trap').doc(reservation.id).set(JSON.parse(JSON.stringify(reservation))).then((resultats) => {
-      console.log('TERMINEEE !!!');
-      metro().activity.close(activity);
-      this.router.navigate(['offres', 'reservation', 'view', reservation.id]);
-    }).catch((e) => {
-      metro().activity.close(activity);
     });
 
   }
@@ -206,6 +231,72 @@ export class TransportLocationViewComponent implements OnInit {
     this.heureDebut.nativeElement.click();
   }
 
-  saveWithRetour() {}
+  saveWithRetour() {
+    const value = this.form.value;
+    console.log('value');
+    console.log(value);
+    const heureDebut = value.heureDebut;
+    const heureFin = value.heureFin;
+    const allerretour = value.allerretour;
+
+    console.log('heureDebut');
+    console.log(heureDebut);
+
+    console.log('heureFin');
+    console.log(heureFin);
+
+    if (this.type === 'interurbain') {
+      const depart = this.departInput.nativeElement.value;
+      const arrivee = this.arriveeInput.nativeElement.value;
+      const date = this.date.nativeElement.value;
+      const date2 = this.date2.nativeElement.value;
+      const heure = value.heure;
+
+      console.log('depart');
+      console.log(depart);
+      console.log('arrivee');
+      console.log(arrivee);
+      console.log('date');
+      console.log(date);
+
+      if (depart && arrivee && date && heure) {
+        const location = new LocationVoiture('interurbain', this.voiture);
+        location.depart = depart;
+        location.arrivee = arrivee;
+        const dateDepart = new Date(date + ' ' + heureDebut);
+        const dateRetour = new Date(date2 + ' ' + heureFin);
+        console.log('dateDepart');
+        console.log(dateDepart);
+        console.log('dateRetour');
+        console.log(dateRetour);
+        if (dateDepart.getTime() - new Date().getTime() > 0 && dateRetour.getTime() - dateDepart.getTime() > 0) {
+          location.date = dateDepart;
+          location.dateRetour = dateRetour;
+          location.allerretour = allerretour;
+          location.debut = dateDepart;
+          location.fin = dateRetour;
+
+          console.log('location');
+          console.log(location);
+
+          const activity = metro().activity.open({
+            type: 'square',
+            overlayColor: '#fff',
+            overlayAlpha: 0.8
+          });
+
+          this.reserver(location, true).then((reservation) => {
+            metro().activity.close(activity);
+            this.router.navigate(['offres', 'reservation', 'view', reservation.id]);
+          });
+        } else {
+          alert('Veuillez rentrer une date valide');
+        }
+      } else {
+        alert('Veuillez remplir le formulaire de réservation');
+      }
+    }
+
+  }
 
 }

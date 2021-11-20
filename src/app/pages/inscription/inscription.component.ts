@@ -54,6 +54,7 @@ export class InscriptionComponent implements OnInit {
     const utilisateur = new Utilisateur();
     utilisateur.nom = nom;
     utilisateur.prenom = prenom;
+    utilisateur.displayName = prenom + ' ' + nom;
     utilisateur.login = login;
     utilisateur.sexe = sexe;
 
@@ -112,8 +113,6 @@ export class InscriptionComponent implements OnInit {
     }
   }
 
-  
-
   connexionGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth()
@@ -124,7 +123,7 @@ export class InscriptionComponent implements OnInit {
         console.log('user');
         console.log(user);
         this.authService.connexionExterne(user);
-        // ...
+        this.envoiMail(user);
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -144,7 +143,7 @@ export class InscriptionComponent implements OnInit {
         console.log('user');
         console.log(user);
         this.authService.connexionExterne(user);
-        // ...
+        this.envoiMail(user);
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -154,5 +153,42 @@ export class InscriptionComponent implements OnInit {
       });
   }
 
+  envoiMail(user: firebase.User) {
+    console.log('envoiMail');
+    console.log(user);
+    console.log(user.displayName);
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener('readystatechange', () => {
+      if (xhr.readyState === 4) {
+        console.log(xhr.responseText);
+        const reponseOrange = JSON.parse((xhr.responseText));
+        console.log(reponseOrange);
+      }
+    });
+    const lien = '/trapyourtripback/envoi_email_inscription.php?';
+    xhr.open('GET', lien + 'email=' + user.email + '&nom=' + user.displayName);
+    xhr.send();
+  }
+
+  envoiMail2(user: Utilisateur) {
+    console.log('envoiMail');
+    console.log(user);
+    console.log(user.displayName);
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener('readystatechange', () => {
+      if (xhr.readyState === 4) {
+        console.log(xhr.responseText);
+        const reponseOrange = JSON.parse((xhr.responseText));
+        console.log(reponseOrange);
+      }
+    });
+    const lien = '/trapyourtripback/envoi_email_inscription.php?';
+    xhr.open('GET', lien + 'email=' + user.login + '&nom=' + user.displayName);
+    xhr.send();
+  }
 
 }

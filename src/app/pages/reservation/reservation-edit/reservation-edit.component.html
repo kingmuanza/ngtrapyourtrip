@@ -1,21 +1,60 @@
 <div class="page" style="min-height: 100vh; padding-top: 10px;">
     <div style="margin-top: 0px; margin-bottom: 20px;">
-        <div data-role="stepper" data-steps="3" data-step="1" data-view="diamond" data-cls-step="rounded"
-            data-cls-complete="bg-green" data-cls-current="bg-orange">
+        <div data-role="stepper" data-steps="3" data-step="1" data-view="diamond" data-cls-step="rounded" data-cls-complete="bg-green" data-cls-current="bg-blue">
         </div>
     </div>
     <div class="entete" *ngIf="reservation">
-        <div class="titre2">
-            <b *ngIf="reservation.hebergement.prestataire" style="">
-                {{reservation.hebergement.prestataire.nom}} -
-            </b>
-            {{reservation.hebergement.titre}}
-            <span class="sejour__notation orange"
-                [innerHTML]="notationToStars(reservation.hebergement.notation)"></span>
 
+        <div class="titre2">
+            <ng-container *ngIf="reservation.hebergement">
+                <b *ngIf="reservation.hebergement.prestataire" style="">
+                    {{reservation.hebergement.prestataire.nom}} -
+                </b> {{reservation.hebergement.titre}}
+                <span class="sejour__notation fg-bleu" [innerHTML]="notationToStars(reservation.hebergement.notation)"></span>
+            </ng-container>
+            <ng-container *ngIf="reservation.transport">
+                {{reservation.transport.depart.agence.nom}} :
+                <b>
+                    {{reservation.transport.depart.modele}}
+                </b>
+            </ng-container>
+            <ng-container *ngIf="reservation.divertissement">
+                {{reservation.divertissement.titre}}
+            </ng-container>
+            <ng-container *ngIf="reservation.sejour">
+                {{reservation.sejour.titre}}
+            </ng-container>
+            <ng-container *ngIf="reservation.locationVoiture">
+                Location de voiture : {{reservation.locationVoiture.voiture.modele}}
+            </ng-container>
         </div>
         <div class="sous-titre text-leader2">
-            {{reservation.hebergement.description}}
+            <ng-container *ngIf="reservation.hebergement">
+                {{reservation.hebergement.description}}
+            </ng-container>
+            <ng-container *ngIf="reservation.transport">
+                {{description(reservation.transport.depart.trajet)}}
+            </ng-container>
+            <ng-container *ngIf="reservation.divertissement">
+                {{reservation.divertissement.description}}
+                <div>
+                    Le
+                    <b>{{reservation.divertissement.date | date: 'yyyy-MM-dd'}} </b>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="reservation.sejour">
+                {{reservation.sejour.description}}
+            </ng-container>
+
+            <ng-container *ngIf="reservation.locationVoiture">
+                {{reservation.locationVoiture.type}}
+                <span *ngIf="reservation.locationVoiture.type === 'interurbain'">
+                    : {{reservation.locationVoiture.depart}} - {{reservation.locationVoiture.arrivee}}
+                </span>
+                <span *ngIf="reservation.locationVoiture.type === 'location'">
+                    : {{reservation.locationVoiture.ville}}
+                </span>
+            </ng-container>
         </div>
 
         <div class="sejour_duree">
@@ -47,14 +86,12 @@
                 <div class="row" style="margin-top: 20px;">
                     <div class="cell-lg-3">
                         <div>
-                            <input #calendarpickerlocale formControlName="date" data-role="calendarpicker"
-                                data-prepend="Arrivée" data-on-change="muanza()">
+                            <input #calendarpickerlocale formControlName="date" data-role="calendarpicker" data-prepend="Arrivée" data-on-change="muanza()">
                         </div>
                     </div>
                     <div class="cell-lg-3">
                         <div>
-                            <input #calendarpickerlocale2 formControlName="dateFin" data-role="calendarpicker"
-                                data-prepend="Départ" data-on-change="muanza()">
+                            <input #calendarpickerlocale2 formControlName="dateFin" data-role="calendarpicker" data-prepend="Départ" data-on-change="muanza()">
                         </div>
                     </div>
                     <div class="cell-lg-2">
@@ -64,7 +101,7 @@
                 </div>
             </form>
             <div style="margin-top: 20px">
-                <button [disabled]="form.invalid" (click)="onFormSubmit()" class="button warning" style="background-color: rgb(255, 115,0); color: #fff;">
+                <button [disabled]="form.invalid" (click)="onFormSubmit()" class="button warning" style="background-color: rgb(48, 164, 221); color: #fff;">
                     Confirmer le changement de dates
                 </button>
             </div>

@@ -5,6 +5,7 @@ import { Reservation } from 'src/app/models/reservation.model';
 import { Utilisateur } from 'src/app/models/utilisateur.model';
 import { Paiement } from 'src/app/models/paiement.model';
 import * as firebase from 'firebase';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-paiement-edit',
@@ -28,6 +29,7 @@ export class PaiementEditComponent implements OnInit {
   };
   TOTAL = 0;
   utilisateur: Utilisateur;
+  utilisateurSubscription: Subscription;
   paiement: Paiement;
   constructor(
     private authService: AuthentificationService,
@@ -35,31 +37,101 @@ export class PaiementEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.utilisateur = this.authService.utilisateur;
-    if (this.utilisateur) {
-      const panierString = localStorage.getItem('panier-trap');
-      if (panierString) {
-        this.reservations = JSON.parse(panierString);
-        this.reservations.forEach((reservation: Reservation) => {
-          this.TOTAL += reservation.cout;
-          if (this.utilisateur) {
-            reservation.utilisateur = this.utilisateur;
-          }
-        });
-        this.paiement = new Paiement();
-        this.paiement.reservations = this.reservations;
-        this.paiement.total = this.TOTAL;
-        this.paiement.utilisateur = this.utilisateur;
-
+    this.utilisateurSubscription = this.authService.utilisateurSubject.subscribe((utilisateur: Utilisateur) => {
+      this.utilisateur = utilisateur;
+      console.log('this.utilisateur');
+      console.log(this.utilisateur);
+      if (this.utilisateur) {
+        const panierString = localStorage.getItem('panier-trap');
+        if (panierString) {
+          this.reservations = JSON.parse(panierString);
+          this.reservations.forEach((reservation: Reservation) => {
+            this.TOTAL += reservation.cout;
+            if (this.utilisateur) {
+              reservation.utilisateur = this.utilisateur;
+            }
+          });
+          this.paiement = new Paiement();
+          this.paiement.reservations = this.reservations;
+          this.paiement.total = this.TOTAL;
+          this.paiement.utilisateur = this.utilisateur;
+        }
+      } else {
+        this.router.navigate(['inscription']);
       }
-    } else {
-      this.router.navigate(['inscription']);
-    }
+    });
+    this.authService.emit();
   }
 
   envoiOrange() {
     console.log('envoiOrange');
     this.getAPIKeyOrange();
+    this.envoiMail().then(() => {
+      console.log('Fin denvoi du mail');
+      this.notifierParMail().then(() => {
+        console.log('Fin denvoi du mail à trap');
+      });
+    });
+  }
+
+  envoiMail() {
+    console.log('envoiMail');
+    console.log(this.utilisateur);
+    console.log(this.utilisateur.login);
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+      xhr.addEventListener('readystatechange', () => {
+        if (xhr.readyState === 4) {
+          console.log('mail envoyé à utilisateur');
+          console.log(xhr.responseText);
+          resolve(xhr.responseText);
+        }
+      });
+      const lien = '/trapyourtripback/envoi_email.php?';
+      const objet = 'Votre réservation';
+      let email = this.utilisateur.login;
+      if (email) {
+        if (email.indexOf('@') !== -1) {
+        } else {
+          email = this.utilisateur.email;
+        }
+      } else {
+        email = this.utilisateur.email;
+      }
+
+      if (email) {
+        console.log('email finale');
+        console.log(email);
+        xhr.open('GET', lien + 'email=' + email + '&objet=' + objet + '&order_id=' + this.paiement.id);
+        xhr.send();
+      } else {
+        alert('Aucun email trouvé !');
+      }
+    });
+  }
+
+  notifierParMail() {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+      xhr.addEventListener('readystatechange', () => {
+        if (xhr.readyState === 4) {
+          console.log('mail envoyé à trap');
+          console.log(xhr.responseText);
+          resolve(xhr.responseText);
+        }
+      });
+      const lien = '/trapyourtripback/envoi_email_reservation.php?';
+      let displayName = this.utilisateur.displayName;
+      if (displayName) {
+
+      } else {
+        displayName = this.utilisateur.prenom + ' ' + this.utilisateur.nom;
+      }
+      xhr.open('GET', lien + 'nom=' + displayName + '&idreservation=' + this.reservations[0].id);
+      xhr.send();
+    });
   }
 
   paiementOrange() {
@@ -70,10 +142,13 @@ export class PaiementEditComponent implements OnInit {
     xhr.addEventListener('readystatechange', () => {
       if (xhr.readyState === 4) {
         console.log(xhr.responseText);
+        console.log('Résultat du paiement Orange');
         this.reponseOrange = JSON.parse((xhr.responseText));
         console.log(this.reponseOrange);
-
-        window.location.href = this.reponseOrange.payment_url;
+        window.open(this.reponseOrange.payment_url);
+        this.effectuerLePaiement().then(() => {
+          console.log('Paiement effectué');
+        });
       }
     });
     const lien = '/trapyourtripback/paiement.php?';
@@ -84,9 +159,6 @@ export class PaiementEditComponent implements OnInit {
   }
 
   getAPIKeyOrange() {
-    this.effectuerLePaiement().then(() => {
-      alert('paiement effectué !!');
-    });
     console.log('getAPIKeyOrange');
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
@@ -107,16 +179,21 @@ export class PaiementEditComponent implements OnInit {
 
   async effectuerLePaiement() {
     this.paiement.mode = 'OM';
+    this.paiement.orangemoney = this.reponseOrange;
     const db = firebase.firestore();
     await db.collection('paiement-trap').doc(this.paiement.id).set(JSON.parse(JSON.stringify(this.paiement)));
     if (this.paiement.reservations && this.paiement.reservations.length > 0) {
+      // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.paiement.reservations.length; i++) {
         const reservation = this.paiement.reservations[i];
         reservation.statut = 'PAYEE';
         await db.collection('reservation-trap').doc(reservation.id).set(JSON.parse(JSON.stringify(reservation)));
       }
     }
+  }
 
+  toDate(str) {
+    return new Date(str);
   }
 
 }

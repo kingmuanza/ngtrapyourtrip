@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { Trajet } from 'src/app/models/trajet.model';
 import { PanierService } from 'src/app/services/panier.service';
+import { Subscription } from 'rxjs';
 
 declare const metro: any;
 
@@ -18,6 +19,7 @@ export class ReservationRecapComponent implements OnInit {
   reservation: Reservation;
   days = 0;
   form: FormGroup;
+  panierSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,7 +67,7 @@ export class ReservationRecapComponent implements OnInit {
       panier = JSON.parse(panierString);
     }
     const newPanier = [];
-    if (panier.length > 0 ) {
+    if (panier.length > 0) {
       panier.forEach((reservation: Reservation) => {
         if (reservation.id === this.reservation.id) {
           newPanier.push(this.reservation);
@@ -91,7 +93,7 @@ export class ReservationRecapComponent implements OnInit {
     });
   }
 
-  getReservation(id) {
+  getReservation(id: string) {
     const activity = metro().activity.open({
       type: 'square',
       overlayColor: '#fff',
@@ -144,23 +146,37 @@ export class ReservationRecapComponent implements OnInit {
     console.log('voici alors le panier');
     const panierString = localStorage.getItem('panier-trap');
     let panier = [];
+
     if (panierString) {
       panier = JSON.parse(panierString);
     }
     const newPanier = [];
-    if (panier.length > 0 ) {
+    let existe = false;
+
+    if (panier.length > 0) {
       panier.forEach((reservation: Reservation) => {
         if (reservation.id === this.reservation.id) {
           newPanier.push(this.reservation);
+          existe = true;
         } else {
           newPanier.push(reservation);
         }
       });
+      if (!existe) {
+        newPanier.push(this.reservation);
+      }
     } else {
       newPanier.push(this.reservation);
     }
+
+    console.log('newPanier');
+    console.log(newPanier);
+
     localStorage.setItem('panier-trap', JSON.stringify(newPanier));
-    this.router.navigate(['panier']);
+
+    setTimeout(() => {
+      this.router.navigate(['panier']);
+    }, 500);
   }
 
   description(trajet: Trajet) {

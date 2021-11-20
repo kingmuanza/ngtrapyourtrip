@@ -15,6 +15,8 @@ export class ReservationListComponent implements OnInit {
   utilisateur: Utilisateur;
   utilisateurSubscription: Subscription;
   reservations = new Array<Reservation>();
+  titre: string;
+  description: string;
   constructor(
 
     private authService: AuthentificationService,
@@ -59,7 +61,47 @@ export class ReservationListComponent implements OnInit {
       console.log('this.reservations');
       console.log(this.reservations);
     });
+  }
 
+  setTitre(reservation: Reservation) {
+    this.titre = '';
+    if (reservation.hebergement) {
+      return reservation.hebergement.titre;
+    }
+    if (reservation.sejour) {
+      return reservation.sejour.titre;
+    }
+    if (reservation.divertissement) {
+      return reservation.divertissement.titre;
+    }
+    if (reservation.transport) {
+      return reservation.transport.depart.agence.nom;
+    }
+  }
+
+  setDescription(reservation: Reservation) {
+    this.description = '';
+    if (reservation.hebergement) {
+      return reservation.hebergement.description;
+    }
+    if (reservation.sejour) {
+      return reservation.sejour.description;
+    }
+    if (reservation.divertissement) {
+      return reservation.divertissement.description;
+    }
+    if (reservation.transport) {
+      const trajet = reservation.transport.depart.trajet;
+      if (trajet) {
+        if (trajet.villeArrivee === trajet.villeDepart) {
+          return 'Location de voiture : ' + trajet.villeArrivee;
+        } else {
+          return trajet.villeDepart + ' - ' + trajet.villeArrivee;
+        }
+      } else {
+        return '';
+      }
+    }
   }
 
 }

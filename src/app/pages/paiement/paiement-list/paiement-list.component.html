@@ -26,7 +26,7 @@
                     <h2 class="text-right">
                         Statut :
                         <span class="fg-red">
-                            Inconnu
+                            {{paiement.orangemoney ? paiement.orangemoney.status : 'Aucun'}}
                         </span>
                     </h2>
                 </div>
@@ -98,8 +98,7 @@
                         <button (click)="voir(reservation)" class="button success">
                             Voir
                         </button>
-                        <button (click)="modifier(reservation)" class="button warning"
-                            style="background-color: rgb(48, 164, 221);">
+                        <button (click)="modifier(reservation)" class="button warning" style="background-color: rgb(48, 164, 221);">
                             Modifier
                         </button>
                         <button (click)="supprimer(reservation.id)" class="button alert danger">
@@ -119,7 +118,7 @@
             </tfoot>
         </table>
     </div>
-    <div class="contenu2 showOnMObile"  *ngFor="let paiement of paiements" style="width: 100vw; overflow-x: hidden;">
+    <div class="contenu2 showOnMObile" *ngFor="let paiement of paiements" style="width: 100vw; overflow-x: hidden;">
         <div style="border-bottom: 1px solid #bbb; margin-bottom: 30px;">
             <div class="row">
                 <div class="cell-lg-8">
@@ -197,8 +196,7 @@
                             <button (click)="voir(reservation)" class="button success">
                                 Voir
                             </button>
-                            <button (click)="modifier(reservation)" class="button warning"
-                                style="background-color: rgb(48, 164, 221);">
+                            <button (click)="modifier(reservation)" class="button warning" style="background-color: rgb(48, 164, 221);">
                                 Modifier
                             </button>
                             <button (click)="supprimer(reservation.id)" class="button alert danger">
@@ -223,8 +221,7 @@
                 </button>
             </div>
             <div>
-                <button (click)="suivant()" class="button warning"
-                    style="background-color: rgb(48, 164, 221); width: 100%;">
+                <button (click)="suivant()" class="button warning" style="background-color: rgb(48, 164, 221); width: 100%;">
                     <ng-container *ngIf="isUser">
                         Suivant
                     </ng-container>
@@ -236,4 +233,5 @@
             </div>
         </div>
     </div>
+    <div style="height: 100px;"></div>
 </div>

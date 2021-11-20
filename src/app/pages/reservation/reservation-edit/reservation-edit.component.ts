@@ -3,6 +3,7 @@ import { Reservation } from 'src/app/models/reservation.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Trajet } from 'src/app/models/trajet.model';
 
 declare const metro: any;
 
@@ -67,8 +68,6 @@ export class ReservationEditComponent implements OnInit, AfterViewInit {
     console.log('this.calendarpickerlocale.nativeElement.value');
     console.log(this.calendarpickerlocale.nativeElement.value);
 
-    const adultes = value.adultes;
-    const enfants = value.enfants;
     const date = this.calendarpickerlocale.nativeElement.value;
     const dateFin = this.calendarpickerlocale2.nativeElement.value;
 
@@ -87,7 +86,10 @@ export class ReservationEditComponent implements OnInit, AfterViewInit {
 
         console.log('reservation');
         console.log(this.reservation);
-        this.reservation.cout = this.reservation.hebergement.nuitee * days;
+
+        if (this.reservation.hebergement) {
+          this.reservation.cout = this.reservation.hebergement.nuitee * days;
+        }
 
         const activity = metro().activity.open({
           type: 'square',
@@ -193,5 +195,18 @@ export class ReservationEditComponent implements OnInit, AfterViewInit {
   revenir() {
     this.router.navigate(['offres', 'reservation', 'view', this.reservation.id]);
   }
+
+  description(trajet: Trajet) {
+    if (trajet) {
+      if (trajet.villeArrivee === trajet.villeDepart) {
+        return 'Location de voiture : ' + trajet.villeArrivee;
+      } else {
+        return trajet.villeDepart + ' - ' + trajet.villeArrivee;
+      }
+    } else {
+      return '';
+    }
+  }
+
 
 }

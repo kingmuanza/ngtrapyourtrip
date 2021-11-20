@@ -6,8 +6,7 @@
                     Paiement
                 </div>
                 <div class="sous-titre text-leader2">
-                    Effectuez le paiement ici.
-                    Choisissez le mode de paiement qui vous convient
+                    Effectuez le paiement ici. Choisissez le mode de paiement qui vous convient
                 </div>
             </div>
         </div>
@@ -43,13 +42,32 @@
                                     {{reservation.divertissement.titre}}
                                 </span>
                                 <span *ngIf="reservation.transport">
-                                    <ng-container *ngIf="reservation.transport.depart && reservation.transport.depart.agence">
+                                    <ng-container
+                                        *ngIf="reservation.transport.depart && reservation.transport.depart.agence">
                                         {{reservation.transport.depart.agence.nom}} :
                                         <b>
                                             {{reservation.transport.depart.modele}}
                                         </b>
                                     </ng-container>
                                 </span>
+                                <div *ngIf="reservation.locationVoiture">
+                                    Location de voiture : {{reservation.locationVoiture.voiture.modele}}
+                                    <span>
+                                        {{reservation.locationVoiture.type}}
+                                    </span>
+                                    <span>
+                                        <span *ngIf="reservation.locationVoiture.type === 'interurbain'">
+                                            {{reservation.locationVoiture.depart}} -
+                                            {{reservation.locationVoiture.arrivee}}
+                                        </span>
+                                    <span *ngIf="reservation.locationVoiture.type === 'location'">
+                                            : {{reservation.locationVoiture.ville}}
+                                        </span>
+                                    </span>
+                                    <div *ngIf="reservation.locationVoiture">
+                                        Du {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}} à {{toDate(reservation.dateDebut) | date: 'HH:mm'}} au {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}} à {{toDate(reservation.dateFin) | date: 'HH:mm'}}
+                                    </div>
+                                </div>
                             </td>
                             <td style="text-align: right; background-color: #fafafa;">
                                 <b>

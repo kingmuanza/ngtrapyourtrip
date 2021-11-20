@@ -29,12 +29,12 @@
                 <tbody>
                     <tr *ngFor="let reservation of reservations">
                         <td style="line-height: 1.15;">
-                            <b *ngIf="reservation.hebergement">
-                                {{reservation.hebergement.titre}}
+                            <b>
+                                {{setTitre(reservation)}}
                             </b>
                             <div>
                                 <small>
-                                    {{reservation.hebergement.description}}
+                                    {{setDescription(reservation)}}
                                 </small>
                             </div>
                         </td>

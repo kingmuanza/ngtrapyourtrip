@@ -122,7 +122,7 @@ export class PaiementListComponent implements OnInit {
       return '';
     }
   }
-  
+
   toDate(str) {
     return new Date(str);
   }

@@ -32,7 +32,7 @@
                 </li>
                 <li>
                     <a routerLink="/offres/divertissement" routerLinkActive="active">
-                        Divertissement
+                        Divertissements
                     </a>
                 </li>
             </ul>
@@ -74,7 +74,7 @@
 
                 <span class="nom-user">
                     <i *ngIf="mobile" class="mif-user" style="margin-right: 10px;"></i>
-                    <ng-container *ngIf="utilisateur.nom">
+                    <ng-container *ngIf="utilisateur.nom && !utilisateur.displayName">
                         {{utilisateur ? utilisateur.nom :'Mon'}}
                         {{utilisateur ? utilisateur.prenom :'compte'}}
                     </ng-container>

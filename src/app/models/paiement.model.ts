@@ -12,6 +12,7 @@ export class Paiement {
     mode: string;
     statut: any;
     utilisateur: Utilisateur;
+    orangemoney: any;
 
     constructor() {
         this.id = this.generateID().split('-').join('0');

@@ -1,5 +1,5 @@
 <div class="page-transport">
-    <div class="entete" style="">
+    <div class="entete">
 
         <div class="entete__background interurbain">
         </div>
@@ -94,8 +94,8 @@
                     </div>
                     <div class="cell-lg-1 bordure-orange-fin">
                         <div style="position: relative;">
-                            <select #heureDebut formControlName="heureDebut">
-                                <option value="oui">--:--</option>
+                            <select formControlName="heureDebut">
+                                <option value="00:00">--:--</option>
                                 <option *ngFor="let h of heures" [ngValue]="h">{{h}}</option>
                             </select>
                         </div>
@@ -111,7 +111,7 @@
                     <div class="cell-lg-1 bordure-orange-fin">
                         <div style="text-align: center;">
                             <select formControlName="heureFin">
-                                <option value="oui">--:--</option>
+                                <option value="00:00">--:--</option>
                                 <option *ngFor="let h of heures" [ngValue]="h">{{h}}</option>
                             </select>
                         </div>
@@ -200,7 +200,7 @@
         </div>
     </div>
     <div class="dialog-actions">
-        <button class="button js-dialog-close">Non, merci</button>
+        <button (click)="onFormSubmit()" class="button js-dialog-close">Non, merci</button>
         <button (click)="saveWithRetour()" class="button warning js-dialog-close" style="background-color: rgb(48, 164, 221);">
             Enregistrer
         </button>

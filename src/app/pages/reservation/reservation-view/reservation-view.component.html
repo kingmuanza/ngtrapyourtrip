@@ -1,18 +1,15 @@
 <div class="page" style="min-height: 100vh; padding-top: 10px;">
     <div style="margin-top: 0px; margin-bottom: 20px;">
-        <div data-role="stepper" data-steps="3" data-step="1" data-view="diamond" data-cls-step="rounded"
-            data-cls-complete="bg-green" data-cls-current="bg-blue">
+        <div data-role="stepper" data-steps="3" data-step="1" data-view="diamond" data-cls-step="rounded" data-cls-complete="bg-green" data-cls-current="bg-blue">
         </div>
     </div>
     <div class="entete" *ngIf="reservation">
         <div class="titre2">
             <ng-container *ngIf="reservation.hebergement">
-                <b *ngIf="reservation.hebergement.prestataire" style="">
+                <b *ngIf="reservation.hebergement.prestataire">
                     {{reservation.hebergement.prestataire.nom}} -
-                </b>
-                {{reservation.hebergement.titre}}
-                <span class="sejour__notation fg-bleu"
-                    [innerHTML]="notationToStars(reservation.hebergement.notation)"></span>
+                </b> {{reservation.hebergement.titre}}
+                <span class="sejour__notation fg-bleu" [innerHTML]="notationToStars(reservation.hebergement.notation)"></span>
             </ng-container>
             <ng-container *ngIf="reservation.transport">
                 {{reservation.transport.depart.agence.nom}} :
@@ -27,8 +24,7 @@
                 {{reservation.sejour.titre}}
             </ng-container>
             <ng-container *ngIf="reservation.locationVoiture">
-                Location de voiture : 
-                {{reservation.locationVoiture.voiture.modele}}
+                Location de voiture : {{reservation.locationVoiture.voiture.modele}}
             </ng-container>
         </div>
         <div class="sous-titre text-leader2">
@@ -37,8 +33,7 @@
             </ng-container>
             <ng-container *ngIf="reservation.transport">
                 {{description(reservation.transport.depart.trajet)}}
-                <span *ngIf="reservation.transport.depart.vip" class="allerretour"
-                    style="float: right; font-weight: bold;">
+                <span *ngIf="reservation.transport.depart.vip" class="allerretour" style="float: right; font-weight: bold;">
                     VIP
                 </span>
             </ng-container>
@@ -54,6 +49,9 @@
             </ng-container>
             <ng-container *ngIf="reservation.locationVoiture">
                 {{reservation.locationVoiture.type}}
+                <span *ngIf="reservation.locationVoiture.type === 'interurbain'">
+                    : {{reservation.locationVoiture.depart}} - {{reservation.locationVoiture.arrivee}}
+                </span>
             </ng-container>
         </div>
 
@@ -95,29 +93,23 @@
                 </div>
                 <div class="cell-lg-3 cell-6">
                     <ng-container *ngIf="reservation.transport">
-                        <ng-container
-                            *ngIf="reservation.transport.depart.trajet.villeDepart !== reservation.transport.depart.trajet.villeArrivee">
-                            {{reservation.personnes}}
-                            {{reservation.personnes > 1 ? 'Adultes': 'Adulte'}}
+                        <ng-container *ngIf="reservation.transport.depart.trajet.villeDepart !== reservation.transport.depart.trajet.villeArrivee">
+                            {{reservation.personnes}} {{reservation.personnes > 1 ? 'Adultes': 'Adulte'}}
                         </ng-container>
-                        <ng-container
-                            *ngIf="reservation.transport.depart.trajet.villeDepart === reservation.transport.depart.trajet.villeArrivee">
+                        <ng-container *ngIf="reservation.transport.depart.trajet.villeDepart === reservation.transport.depart.trajet.villeArrivee">
                             {{reservation.personnes}} jours
                         </ng-container>
                     </ng-container>
                     <ng-container *ngIf="!(reservation.transport)">
-                        {{reservation.personnes}}
-                        {{reservation.personnes > 1 ? 'Adultes': 'Adulte'}}
+                        {{reservation.personnes}} {{reservation.personnes > 1 ? 'Adultes': 'Adulte'}}
                     </ng-container>
                 </div>
                 <div class="cell-lg-3 cell-6">
                     <ng-container *ngIf="reservation.transport">
-                        <ng-container
-                            *ngIf="reservation.transport.depart.trajet.villeDepart !== reservation.transport.depart.trajet.villeArrivee">
+                        <ng-container *ngIf="reservation.transport.depart.trajet.villeDepart !== reservation.transport.depart.trajet.villeArrivee">
                             {{reservation.enfants ? reservation.enfants : 0}} Enfants
                         </ng-container>
-                        <ng-container
-                            *ngIf="reservation.transport.depart.trajet.villeDepart === reservation.transport.depart.trajet.villeArrivee">
+                        <ng-container *ngIf="reservation.transport.depart.trajet.villeDepart === reservation.transport.depart.trajet.villeArrivee">
 
                         </ng-container>
                     </ng-container>
@@ -156,9 +148,8 @@
                 </div>
             </div>
             <div class="cell-lg-2">
-                <div style="padding-top: 5px;">
-                    <button (click)="edit(reservation)" class="button outline warning"
-                        style="border-color:  rgb(48, 164, 221); color:  rgb(48, 164, 221);">
+                <div style="padding-top: 5px;" *ngIf="reservation.hebergement">
+                    <button (click)="edit(reservation)" class="button outline warning" style="border-color:  rgb(48, 164, 221); color:  rgb(48, 164, 221);">
                         Changer les dates
                     </button>
                 </div>
@@ -178,9 +169,7 @@
                 </div>
                 <div>
                     <ng-container>
-                        {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
-                        à
-                        {{toDate(reservation.dateDebut) | date: 'HH:mm'}}
+                        {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}} à {{toDate(reservation.dateDebut) | date: 'HH:mm'}}
                     </ng-container>
                 </div>
             </div>
@@ -192,16 +181,13 @@
                 </div>
                 <div>
                     <ng-container>
-                        {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
-                        à
-                        {{toDate(reservation.dateFin) | date: 'HH:mm'}}
+                        {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}} à {{toDate(reservation.dateFin) | date: 'HH:mm'}}
                     </ng-container>
                 </div>
             </div>
             <div class="cell-lg-2">
                 <div style="padding-top: 5px;">
-                    <button (click)="edit(reservation)" class="button outline warning"
-                        style="border-color:  rgb(48, 164, 221); color:  rgb(48, 164, 221);">
+                    <button *ngIf="reservation.hebergement" (click)="edit(reservation)" class="button outline warning" style="border-color:  rgb(48, 164, 221); color:  rgb(48, 164, 221);">
                         Changer les dates
                     </button>
                 </div>
@@ -242,8 +228,7 @@
             </div>
             <div class="cell-lg-2">
                 <div style="padding-top: 5px;">
-                    <button (click)="edit(reservation)" class="button outline warning"
-                        style="border-color:  rgb(48, 164, 221); color:  rgb(48, 164, 221);">
+                    <button *ngIf="reservation.hebergement" (click)="edit(reservation)" class="button outline warning" style="border-color:  rgb(48, 164, 221); color:  rgb(48, 164, 221);">
                         Changer les dates
                     </button>
                 </div>
@@ -326,8 +311,7 @@
             </div>
         </div>
         <div style="margin-top: 40px">
-            <button (click)="infos(reservation)" class="button warning"
-                style="background-color:  rgb(48, 164, 221); color: #fff;">
+            <button (click)="infos(reservation)" class="button warning" style="background-color:  rgb(48, 164, 221); color: #fff;">
                 Etape suivante
             </button>
         </div>
