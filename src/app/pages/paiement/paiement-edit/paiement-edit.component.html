@@ -89,8 +89,14 @@
             <div class="cell-lg-5">
                 <div class="row">
                     <div class="cell-lg-6">
-                        <div class="logo om" (click)="envoiOrange()">
-                            <img src="../../../../assets/img/orange.png" style="width: 100%;">
+                        <div>
+                            <form #form action="http://trapyourtrip/cinetpay/index.php" method="post">
+                                <input type="hidden" name="montant" value="1578000">
+                                <button type="submit" (click)="form.submit()">
+                                    Payer
+                                    <img src="../../../../assets/img/orange.png" style="width: 100%;">
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
