@@ -249,7 +249,12 @@
             </div>
             <div class="cell-lg-4 my-text-right">
                 <div>
-                    <b>
+
+                    <b *ngIf="reservation.transport.retour">
+                        {{reservation.personnes}} * {{reservation.transport.depart.prix * 2 |
+                        currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                    </b>
+                    <b *ngIf="!reservation.transport.retour">
                         {{reservation.personnes}} * {{reservation.transport.depart.prix |
                         currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
                     </b>
@@ -273,6 +278,9 @@
                     <small>Les informations suivantes sont strictement confidentielles et ne seront ni utilisées ni
                         vendues</small>
                 </div>
+                <div class="fg-bleu">
+                    <b>Tous les champs sont obligatoires</b>
+                </div>
                 <div class="row" style="margin-top: 20px;">
                     <div class="cell-lg-6">
                         <div>
@@ -284,14 +292,19 @@
                             <input formControlName="prenom" data-role="input" data-prepend="Prenoms">
                         </div>
                     </div>
-                    <div class="cell-lg-4">
+                    <div class="cell-lg-3">
                         <div>
                             <input formControlName="indicatif" data-role="input" data-prepend="Indicatif">
                         </div>
                     </div>
-                    <div class="cell-lg-8">
+                    <div class="cell-lg-3">
                         <div>
                             <input type="number" formControlName="tel" data-role="input" data-prepend="Tel">
+                        </div>
+                    </div>
+                    <div class="cell-lg-6">
+                        <div>
+                            <input type="email" formControlName="email" data-role="input" data-prepend="Email">
                         </div>
                     </div>
                     <div class="cell-lg-6">

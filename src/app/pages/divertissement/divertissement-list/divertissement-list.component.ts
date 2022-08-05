@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { Divertissement } from 'src/app/models/divertissement.model';
+import { Ville } from 'src/app/models/ville.model';
 declare const metro: any;
 
 @Component({
@@ -20,6 +21,7 @@ export class DivertissementListComponent implements OnInit {
   resultats = new Array<Divertissement>();
   recherche = '';
   ordre = 'croissant';
+  villes = new Array<Ville>();
 
   form: FormGroup;
 
@@ -30,7 +32,21 @@ export class DivertissementListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSejours();
+    this.getVilles();
     this.initForm();
+  }
+
+  getVilles() {
+    this.villes = new Array<Ville>();
+    const db = firebase.firestore();
+    db.collection('ville-trap').get().then((resultats) => {
+      console.log('TERMINEEE !!!');
+      resultats.forEach((resultat) => {
+        const ville = resultat.data() as Ville;
+        this.villes.push(ville);
+      });
+    }).catch((e) => {
+    });
   }
 
   initForm() {
@@ -38,12 +54,12 @@ export class DivertissementListComponent implements OnInit {
       rechercher: ['', Validators.required],
       dateDebut: ['', Validators.required],
       dateFin: ['', Validators.required],
-      ville: ['Yaoundé', Validators.required],
+      ville: ['', Validators.required],
     });
   }
 
   onFormSubmit() {
-    const ville: string = this.ville.nativeElement.value;
+    const ville: string = this.form.value.ville;
     const texte = this.form.value.rechercher;
     const dateDebut = this.calendarpickerlocale.nativeElement.value;
     const dateFin = this.calendarpickerlocale2.nativeElement.value;

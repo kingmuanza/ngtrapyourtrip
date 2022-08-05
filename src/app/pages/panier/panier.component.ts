@@ -5,6 +5,11 @@ import { Router } from '@angular/router';
 import { PanierService } from 'src/app/services/panier.service';
 import { Subscription } from 'rxjs';
 import { Trajet } from 'src/app/models/trajet.model';
+import { NgForm } from '@angular/forms';
+import { Paiement } from 'src/app/models/paiement.model';
+import * as firebase from 'firebase';
+import { HttpClient } from '@angular/common/http';
+declare const metro: any;
 
 @Component({
   selector: 'app-panier',
@@ -17,10 +22,15 @@ export class PanierComponent implements OnInit {
   panierSubscription: Subscription;
   TOTAL = 0;
   isUser = false;
+  paiement = new Paiement();
+  responsables = new Array<any>();
+  reservationsGroupes = {};
+
   constructor(
     private authService: AuthentificationService,
     private router: Router,
-    private panierService: PanierService
+    private panierService: PanierService,
+    private http: HttpClient,
   ) { }
 
   ngOnInit(): void {
@@ -31,11 +41,28 @@ export class PanierComponent implements OnInit {
     }
     this.panierSubscription = this.panierService.panierSubject.subscribe((reservations) => {
       this.reservations = reservations;
-      this.reservations.forEach((reservation: Reservation) => {
-        this.TOTAL += reservation.cout;
-      });
+      this.update();
     });
     this.panierService.getPanier();
+  }
+
+  update() {
+    this.TOTAL = 0;
+    this.reservations.forEach((reservation: Reservation) => {
+      this.TOTAL += reservation.cout;
+      if (reservation.responsable) {
+        if (reservation.responsable.email) {
+          if (this.reservationsGroupes[reservation.responsable.email]) {
+            this.reservationsGroupes[reservation.responsable.email].reservations.push(reservation);
+          } else {
+            this.reservationsGroupes[reservation.responsable.email] = {
+              noms: reservation.responsable.nom + ' ' + reservation.responsable.prenom,
+              reservations: [reservation]
+            };
+          }
+        }
+      }
+    });
   }
 
   suivant() {
@@ -89,6 +116,7 @@ export class PanierComponent implements OnInit {
       localStorage.setItem('panier-trap', JSON.stringify(reservations));
       this.panierService.reservations = reservations;
       this.panierService.emit();
+      this.update();
     }
   }
 
@@ -118,6 +146,78 @@ export class PanierComponent implements OnInit {
   toDate(str) {
     return new Date(str);
   }
+
+  savePaiement(paiement: Paiement): Promise<Paiement> {
+    const db = firebase.firestore();
+    return new Promise((resolve, reject) => {
+      db.collection('paiement-trap').doc(paiement.id).set(JSON.parse(JSON.stringify(paiement))).then(() => {
+        resolve(paiement);
+      }).catch((e) => {
+      });
+    });
+  }
+
+  async payer(form) {
+    const activity = metro().activity.open({
+      type: 'square',
+      overlayColor: '#fff',
+      overlayAlpha: 0.8
+    });
+    this.paiement.reservations = this.reservations;
+    this.paiement.total = this.TOTAL;
+    this.paiement.mode = 'CINETPAY';
+    this.paiement.date = new Date();
+    this.paiement.utilisateur = this.authService.utilisateur;
+    this.paiement.statut = 1;
+    console.log(' this.paiement');
+    console.log(this.paiement);
+    setTimeout(() => {
+      console.log(' setTimeout metro().activity.close(activity)');
+      if (activity && metro().activity) {
+        metro().activity.close(activity);
+      }
+    }, 10000);
+    await this.savePaiement(this.paiement);
+    console.log('paiement sauvegardé');
+    console.log(this.reservationsGroupes);
+    const keys = Object.keys(this.reservationsGroupes);
+    console.log('keys');
+    console.log(keys);
+    if (keys.length > 0) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        const responsable = {
+          noms: this.reservationsGroupes[key].noms,
+          email: key,
+        };
+        const response = await this.envoyerMailConfirmation(responsable);
+      }
+    }
+    metro().activity.close(activity);
+    form.submit();
+  }
+
+  envoyerMailConfirmation(responsable) {
+    return new Promise((resolve, reject) => {
+      console.log('envoyerMailConfirmation');
+      const noms = responsable.noms;
+      this.http.get('https://trapyourtrip.com/trapyourtripback/sendmail.php?email=' + responsable.email + '&noms=' + noms)
+      /* this.http.get('trapyourtripback/sendmail.php?email=' + responsable.email + '&noms=' + noms) */
+        .subscribe((response) => {
+          console.log('response');
+          console.log(response);
+          resolve(response);
+        }, (error) => {
+          console.log('error');
+          console.log(error);
+          reject(error);
+        });
+    });
+
+  }
+
+
 
 
 }

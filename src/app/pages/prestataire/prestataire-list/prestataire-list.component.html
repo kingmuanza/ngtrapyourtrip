@@ -41,8 +41,16 @@
                         </div>
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin">
-                        <div class="">
+                        <div *ngIf="villes.length === 0">
                             <input #ville formControlName="ville" data-role="input" placeholder="Ville" data-autocomplete="Douala, Yaoundé, Kribi, Limbé, Garoua, Maroua">
+                        </div>
+                        <div *ngIf="villes.length > 0">
+                            <select #ville formControlName="ville" data-prepend="Ville" data-role="select">
+                                <option value="">Toutes les villes</option>
+                                <option *ngFor="let v of villes" [value]="v.nom">
+                                    {{v.nom}}
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="cell-lg-3 cell-6 bordure-orange-fin">

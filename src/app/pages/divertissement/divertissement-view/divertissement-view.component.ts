@@ -61,6 +61,7 @@ export class DivertissementViewComponent implements OnInit {
       personnes: [1, Validators.required]
     });
 
+    // tslint:disable-next-line:no-string-literal
     this.form.controls['date'].valueChanges.subscribe((value) => {
       console.log('value');
       console.log(value);

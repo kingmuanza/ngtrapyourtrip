@@ -15,13 +15,21 @@ export class LoisirViewComponent implements OnInit {
 
   @ViewChild('calendarpickerlocale', { static: false }) calendarpickerlocale;
 
+  heures = [];
   divertissement: Divertissement;
   form: FormGroup;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder
-  ) { }
+  ) {
+    for (let i = 1; i < 10; i++) {
+      this.heures.push('0' + i + ':00');
+    }
+    for (let i = 10; i < 24; i++) {
+      this.heures.push(i + ':00');
+    }
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((paramMap) => {
@@ -52,6 +60,7 @@ export class LoisirViewComponent implements OnInit {
       personnes: [1, Validators.required]
     });
 
+    // tslint:disable-next-line:no-string-literal
     this.form.controls['date'].valueChanges.subscribe((value) => {
       console.log('value');
       console.log(value);
@@ -66,48 +75,46 @@ export class LoisirViewComponent implements OnInit {
 
     const personnes = value.personnes;
 
-    if (true) {
-      const reservation = new Reservation();
-      this.divertissement.date = new Date(date + ' ' + value.heure);
-      reservation.divertissement = this.divertissement;
-      reservation.personnes = personnes;
-      reservation.dateDebut = new Date(date);
-      reservation.cout = this.divertissement.prix * personnes;
+    if (date && value.heure) {
+      if (new Date(date).getTime() > new Date().getTime()) {
+        const reservation = new Reservation();
+        this.divertissement.date = new Date(date + 'T' + value.heure + ':00');
+        reservation.divertissement = this.divertissement;
+        reservation.personnes = personnes;
+        reservation.dateDebut = new Date(date);
+        reservation.cout = this.divertissement.prix * personnes;
 
-      console.log('reservation');
-      console.log(reservation);
+        console.log('reservation');
+        console.log(reservation);
 
-      const activity = metro().activity.open({
-        type: 'square',
-        overlayColor: '#fff',
-        overlayAlpha: 0.8
-      });
+        const activity = metro().activity.open({
+          type: 'square',
+          overlayColor: '#fff',
+          overlayAlpha: 0.8
+        });
 
-      const panierString = localStorage.getItem('panier-trap');
-      let panier = [];
-      if (panierString) {
-        panier = JSON.parse(panierString);
+        const panierString = localStorage.getItem('panier-trap');
+        let panier = [];
+        if (panierString) {
+          panier = JSON.parse(panierString);
+        }
+        panier.push(reservation);
+        localStorage.setItem('panier-trap', JSON.stringify(panier));
+
+        const db = firebase.firestore();
+        db.collection('reservation-trap').doc(reservation.id).set(JSON.parse(JSON.stringify(reservation))).then((resultats) => {
+          console.log('TERMINEEE !!!');
+          metro().activity.close(activity);
+          this.router.navigate(['offres', 'reservation', 'view', reservation.id]);
+        }).catch((e) => {
+          metro().activity.close(activity);
+        });
+
+      } else {
+        alert('La date doit être spérieure à celle d\'aujourd\'hui');
       }
-      panier.push(reservation);
-      localStorage.setItem('panier-trap', JSON.stringify(panier));
-
-      const db = firebase.firestore();
-      db.collection('reservation-trap').doc(reservation.id).set(JSON.parse(JSON.stringify(reservation))).then((resultats) => {
-        console.log('TERMINEEE !!!');
-        metro().activity.close(activity);
-        this.router.navigate(['offres', 'reservation', 'view', reservation.id]);
-      }).catch((e) => {
-        metro().activity.close(activity);
-      });
-
     } else {
-      const notify = metro().notify;
-      notify.create('La date d\'arrivée est supérieure à la date de départ', null, {
-        cls: 'alert',
-        distance: '50vh',
-        duration: 1000,
-        timeout: 4000
-      });
+      alert('Veuillez renseigner la date et l\'heure');
     }
 
   }

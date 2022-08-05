@@ -3,6 +3,7 @@ import { Utilisateur } from 'src/app/models/utilisateur.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
+import { Ville } from 'src/app/models/ville.model';
 declare const metro: any;
 
 @Component({
@@ -29,6 +30,7 @@ export class PrestataireListComponent implements OnInit {
   screenHeight: number;
   screenWidth: number;
   mobile = true;
+  villes = new Array<Ville>();
 
   constructor(
     private router: Router,
@@ -39,7 +41,21 @@ export class PrestataireListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPrestataires();
+    this.getVilles();
     this.initForm();
+  }
+
+  getVilles() {
+    this.villes = new Array<Ville>();
+    const db = firebase.firestore();
+    db.collection('ville-trap').get().then((resultats) => {
+      console.log('TERMINEEE !!!');
+      resultats.forEach((resultat) => {
+        const ville = resultat.data() as Ville;
+        this.villes.push(ville);
+      });
+    }).catch((e) => {
+    });
   }
 
   toggleFilter() {

@@ -33,6 +33,7 @@ export class ReservationInfosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    localStorage.removeItem('connexion-url');
     this.utilisateurSubscription = this.authService.utilisateurSubject.subscribe((utilisateur: Utilisateur) => {
       this.utilisateur = utilisateur;
       this.initForm();
@@ -58,9 +59,10 @@ export class ReservationInfosComponent implements OnInit {
 
   initForm() {
     this.form = this.formBuilder.group({
-      nom: [this.utilisateur ? this.responsable ? this.responsable.prenom : this.utilisateur.nom : '', Validators.required],
+      nom: [this.utilisateur ? this.responsable ? this.responsable.nom : this.utilisateur.nom : '', Validators.required],
       prenom: [this.responsable ? this.responsable.prenom : '', Validators.required],
       tel: [this.responsable ? this.responsable.tel : '', Validators.required],
+      email: [this.responsable ? this.responsable.email : '', Validators.required],
       numero: [this.responsable ? this.responsable.numero : '', Validators.required],
       typepiece: [this.responsable ? this.responsable.typepiece : 'cni', Validators.required],
       indicatif: [this.responsable ? this.responsable.indicatif : '+237', Validators.required]
@@ -96,19 +98,24 @@ export class ReservationInfosComponent implements OnInit {
     });
     localStorage.setItem('panier-trap', JSON.stringify(newPanier));
 
-    const db = firebase.firestore();
-    db.collection('responsables-trap')
-      .doc(this.utilisateur.uid)
-      .set(JSON.parse(JSON.stringify(this.reservation.responsable))).then(() => {
-        db.collection('reservation-trap').doc(this.reservation.id).set(JSON.parse(JSON.stringify(this.reservation))).then(() => {
-          console.log('TERMINEEE !!!');
-          metro().activity.close(activity);
-          this.router.navigate(['offres', 'reservation', 'recap', this.reservation.id]);
+    if (this.utilisateur) {
+      const db = firebase.firestore();
+      this.reservation.utilisateur = this.utilisateur;
+      db.collection('responsables-trap')
+        .doc(this.utilisateur.uid)
+        .set(JSON.parse(JSON.stringify(this.reservation.responsable))).then(() => {
+          db.collection('reservation-trap').doc(this.reservation.id).set(JSON.parse(JSON.stringify(this.reservation))).then(() => {
+            console.log('TERMINEEE !!!');
+            metro().activity.close(activity);
+            this.router.navigate(['offres', 'reservation', 'recap', this.reservation.id]);
+          }).catch((e) => {
+            metro().activity.close(activity);
+          });
         }).catch((e) => {
-          metro().activity.close(activity);
         });
-      }).catch((e) => {
-      });
+    } else {
+      this.router.navigate(['connexion']);
+    }
 
   }
 

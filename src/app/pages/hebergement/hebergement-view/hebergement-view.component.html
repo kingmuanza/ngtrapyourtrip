@@ -22,8 +22,7 @@
                     <div class="titre" style="margin-top: -20px; padding-top: 0px; line-height: 1.15;">
                         <b *ngIf="hebergement.prestataire" style="">
                             {{hebergement.prestataire.nom}} -
-                        </b>
-                        {{hebergement.titre}}
+                        </b> {{hebergement.titre}}
                     </div>
 
                     <div class="row hideOnMObile" style="margin-top: 10px;">
@@ -35,7 +34,7 @@
 
                                         </i>
                                     </span>
-                                    <span class="libelle">
+                                <span class="libelle">
                                         Baignoire
                                     </span>
                                 </span>
@@ -45,7 +44,7 @@
 
                                         </i>
                                     </span>
-                                    <span class="libelle">
+                                <span class="libelle">
                                         WiFi
                                     </span>
                                 </span>
@@ -55,7 +54,7 @@
 
                                         </i>
                                     </span>
-                                    <span class="libelle">
+                                <span class="libelle">
                                         Climatisation
                                     </span>
                                 </span>
@@ -65,7 +64,7 @@
 
                                         </i>
                                     </span>
-                                    <span class="libelle">
+                                <span class="libelle">
                                         Espace bureau
                                     </span>
                                 </span>
@@ -75,7 +74,7 @@
 
                                         </i>
                                     </span>
-                                    <span class="libelle">
+                                <span class="libelle">
                                         Lave linge
                                     </span>
                                 </span>
@@ -85,7 +84,7 @@
 
                                         </i>
                                     </span>
-                                    <span class="libelle">
+                                <span class="libelle">
                                         Télévision
                                     </span>
                                 </span>
@@ -95,7 +94,7 @@
 
                                         </i>
                                     </span>
-                                    <span class="libelle">
+                                <span class="libelle">
                                         Insonorisation
                                     </span>
                                 </span>
@@ -105,7 +104,7 @@
 
                                         </i>
                                     </span>
-                                    <span class="libelle">
+                                <span class="libelle">
                                         Bouilloire
                                     </span>
                                 </span>
@@ -115,7 +114,7 @@
 
                                         </i>
                                     </span>
-                                    <span class="libelle">
+                                <span class="libelle">
                                         Machine à café
                                     </span>
                                 </span>
@@ -125,7 +124,7 @@
 
                                         </i>
                                     </span>
-                                    <span class="libelle">
+                                <span class="libelle">
                                         Mini bar
                                     </span>
                                 </span>
@@ -135,8 +134,8 @@
 
                                         </i>
                                         <span style="color: orangered;">²</span>
-                                    </span>
-                                    <span class="libelle">
+                                </span>
+                                <span class="libelle">
                                         Lit double
                                     </span>
                                 </span>
@@ -146,29 +145,27 @@
 
                                         </i>
                                     </span>
-                                    <span class="libelle">
+                                <span class="libelle">
                                         Lit simple
                                     </span>
                                 </span>
-                                <span title="Spa et centre de bien être" *ngIf="hebergement.options.spa"
-                                    class="detail2">
+                                <span title="Spa et centre de bien être" *ngIf="hebergement.options.spa" class="detail2">
                                     <span class="icone">
                                         <i class="fas fa-hot-tub fg-bleu">
 
                                         </i>
                                     </span>
-                                    <span class="libelle">
+                                <span class="libelle">
                                         Spa et centre de bien être
                                     </span>
                                 </span>
-                                <span title="Centre de remise en forme" *ngIf="hebergement.options.forme"
-                                    class="detail2">
+                                <span title="Centre de remise en forme" *ngIf="hebergement.options.forme" class="detail2">
                                     <span class="icone">
                                         <i class="fas fa-dumbbell fg-bleu">
 
                                         </i>
                                     </span>
-                                    <span class="libelle">
+                                <span class="libelle">
                                         Centre de remise en forme
                                     </span>
                                 </span>
@@ -178,7 +175,7 @@
 
                                         </i>
                                     </span>
-                                    <span class="libelle">
+                                <span class="libelle">
                                         Navette aéroport
                                     </span>
                                 </span>
@@ -190,8 +187,7 @@
                     <div style="height: 10px;">
 
                     </div>
-                    <div class="sejour__notation" style="color: rgb(48, 164, 221);;"
-                        [innerHTML]="notationToStars(hebergement.notation)"></div>
+                    <div class="sejour__notation" style="color: rgb(48, 164, 221);;" [innerHTML]="notationToStars(hebergement.notation)"></div>
                     <div [ngClass]="{'text-right': !mobile}" class="" style="margin-top: -5px; color: #444">
                         <span style="font-size: 1.2em;">
                             {{hebergement.nuitee | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
@@ -204,8 +200,7 @@
                     </div>
                     <app-admin>
                         <div class="administration text-right">
-                            <button class="button primary" style="background-color: rgb(48, 164, 221);"
-                                (click)="modifier(hebergement)">
+                            <button class="button primary" style="background-color: rgb(48, 164, 221);" (click)="modifier(hebergement)">
                                 Modifier
                             </button>
                             <button class="button alert" style="margin-left: 10px;" (click)="supprimer(hebergement)">
@@ -222,12 +217,10 @@
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                 <div class="row no-gap shadow-3">
                     <div class="cell-lg-3 bordure-orange-debut">
-                        <input #calendarpickerlocale formControlName="date" data-role="calendarpicker"
-                            data-prepend="Arrivée">
+                        <input #calendarpickerlocale formControlName="date" data-role="calendarpicker" data-prepend="Arrivée">
                     </div>
                     <div class="cell-lg-3 bordure-orange-fin">
-                        <input #calendarpickerlocale2 formControlName="dateFin" data-role="calendarpicker"
-                            data-prepend="Départ">
+                        <input #calendarpickerlocale2 formControlName="dateFin" data-role="calendarpicker" data-prepend="Départ">
                     </div>
 
                     <div class="cell-lg-2 bordure-orange-fin">
@@ -237,7 +230,7 @@
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin">
                         <div>
-                            <input formControlName="enfants" data-role="input" type="number" data-prepend="Enfants">
+                            <input min="0" max="5" formControlName="enfants" data-role="input" type="number" data-prepend="Enfants">
                         </div>
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin">
@@ -246,8 +239,7 @@
                         </button>
                     </div>
                     <div class="showOnMObile mobile-recherche-fermer cell-lg-2">
-                        <a (click)="showFormReservation()" class="button dark"
-                            style="color: #fff;  width: 100%;">Fermer</a>
+                        <a (click)="showFormReservation()" class="button dark" style="color: #fff;  width: 100%;">Fermer</a>
                     </div>
                 </div>
             </form>
@@ -257,8 +249,7 @@
                 <div class="trap-image-big">
                     <ng-container *ngFor="let image of hebergement.images; let i = index">
 
-                        <div *ngIf="i === indexImages" class="trap-image-big animer"
-                            [ngStyle]="{'background-image': 'url(' + hebergement.images[i] +')'}">
+                        <div *ngIf="i === indexImages" class="trap-image-big animer" [ngStyle]="{'background-image': 'url(' + hebergement.images[i] +')'}">
 
                         </div>
 
@@ -266,9 +257,7 @@
                 </div>
                 <div class="row" style="margin-top: 5px;">
                     <div (click)="choisir(i)" class="cell-lg-1 cell-3" *ngFor="let image of hebergement.images; let i = index">
-                        <div [ngClass]="{'actuelle': i === indexImages}"
-                            style="height: 60px; cursor: pointer; background-size: cover; background-position: center center;"
-                            [ngStyle]="{'background-image': 'url(' + image +')'}">
+                        <div [ngClass]="{'actuelle': i === indexImages}" style="height: 60px; cursor: pointer; background-size: cover; background-position: center center;" [ngStyle]="{'background-image': 'url(' + image +')'}">
 
                         </div>
                     </div>
@@ -284,7 +273,7 @@
 
                             </i>
                         </span>
-                        <span class="libelle">
+                    <span class="libelle">
                             Baignoire
                         </span>
                     </span>
@@ -294,7 +283,7 @@
 
                             </i>
                         </span>
-                        <span class="libelle">
+                    <span class="libelle">
                             WiFi
                         </span>
                     </span>
@@ -304,7 +293,7 @@
 
                             </i>
                         </span>
-                        <span class="libelle">
+                    <span class="libelle">
                             Climatisation
                         </span>
                     </span>
@@ -314,7 +303,7 @@
 
                             </i>
                         </span>
-                        <span class="libelle">
+                    <span class="libelle">
                             Espace bureau
                         </span>
                     </span>
@@ -324,7 +313,7 @@
 
                             </i>
                         </span>
-                        <span class="libelle">
+                    <span class="libelle">
                             Lave linge
                         </span>
                     </span>
@@ -334,7 +323,7 @@
 
                             </i>
                         </span>
-                        <span class="libelle">
+                    <span class="libelle">
                             Télévision
                         </span>
                     </span>
@@ -344,7 +333,7 @@
 
                             </i>
                         </span>
-                        <span class="libelle">
+                    <span class="libelle">
                             Insonorisation
                         </span>
                     </span>
@@ -354,7 +343,7 @@
 
                             </i>
                         </span>
-                        <span class="libelle">
+                    <span class="libelle">
                             Bouilloire
                         </span>
                     </span>
@@ -364,7 +353,7 @@
 
                             </i>
                         </span>
-                        <span class="libelle">
+                    <span class="libelle">
                             Machine à café
                         </span>
                     </span>
@@ -374,7 +363,7 @@
 
                             </i>
                         </span>
-                        <span class="libelle">
+                    <span class="libelle">
                             Mini bar
                         </span>
                     </span>
@@ -384,8 +373,8 @@
 
                             </i>
                             <span style="color: orangered;">²</span>
-                        </span>
-                        <span class="libelle">
+                    </span>
+                    <span class="libelle">
                             Lit double
                         </span>
                     </span>
@@ -395,7 +384,7 @@
 
                             </i>
                         </span>
-                        <span class="libelle">
+                    <span class="libelle">
                             Lit simple
                         </span>
                     </span>
@@ -405,7 +394,7 @@
 
                             </i>
                         </span>
-                        <span class="libelle">
+                    <span class="libelle">
                             Spa et centre de bien être
                         </span>
                     </span>
@@ -415,7 +404,7 @@
 
                             </i>
                         </span>
-                        <span class="libelle">
+                    <span class="libelle">
                             Centre de remise en forme
                         </span>
                     </span>
@@ -425,7 +414,7 @@
 
                             </i>
                         </span>
-                        <span class="libelle">
+                    <span class="libelle">
                             Navette aéroport
                         </span>
                     </span>

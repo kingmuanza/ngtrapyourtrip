@@ -6,6 +6,7 @@ import { Utilisateur } from 'src/app/models/utilisateur.model';
 import { Paiement } from 'src/app/models/paiement.model';
 import * as firebase from 'firebase';
 import { Subscription } from 'rxjs';
+import { CinetService } from 'src/app/services/cinet.service';
 
 @Component({
   selector: 'app-paiement-edit',
@@ -31,9 +32,11 @@ export class PaiementEditComponent implements OnInit {
   utilisateur: Utilisateur;
   utilisateurSubscription: Subscription;
   paiement: Paiement;
+
   constructor(
     private authService: AuthentificationService,
-    private router: Router
+    private router: Router,
+    private cinetservice: CinetService,
   ) { }
 
   ngOnInit(): void {
@@ -132,6 +135,10 @@ export class PaiementEditComponent implements OnInit {
       xhr.open('GET', lien + 'nom=' + displayName + '&idreservation=' + this.reservations[0].id);
       xhr.send();
     });
+  }
+
+  paiementCinet() {
+    this.cinetservice.seamless(1000);
   }
 
   paiementOrange() {

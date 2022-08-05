@@ -12,8 +12,7 @@
             <div class="cell-lg-3 text-right">
                 <app-admin>
                     <div class="administration">
-                        <button class="button primary" style="background-color: rgb(48, 164, 221);"
-                            (click)="modifier(divertissement)">
+                        <button class="button primary" style="background-color: rgb(48, 164, 221);" (click)="modifier(divertissement)">
                             Modifier
                         </button>
                         <button class="button alert" style="margin-left: 10px;" (click)="supprimer(divertissement)">
@@ -32,7 +31,12 @@
                     <input #calendarpickerlocale formControlName="date" data-role="calendarpicker" data-prepend="Date">
                 </div>
                 <div class="cell-lg-3 bordure-bleu-fin">
-                    <input formControlName="heure" type="time" data-role="input" data-prepend="Heure">
+                    <select formControlName="heure" data-role="select" data-prepend="Heure">
+                        
+                        <option [ngValue]="heure" *ngFor="let heure of heures">
+                            {{heure}}
+                        </option>
+                    </select>
                 </div>
                 <div class="cell-lg-2 bordure-bleu-fin">
                     <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">

@@ -18,13 +18,13 @@
                             </li>
                             <li class="page-item">
                                 <a class="page-link">
-                                    {{voiture ? voiture.modele : 'Veuillez patienter'}}
+                                    {{voiture ? voiture.categorie : 'Veuillez patienter'}}
                                 </a>
                             </li>
                         </ul>
                     </div>
                     <div class="titre">
-                        Location : {{voiture ? voiture.modele : 'Veuillez patienter'}}
+                        Location : {{voiture ? voiture.categorie : 'Veuillez patienter'}}
                     </div>
                     <div style="margin-top: 0px;">
                         <span class="">
@@ -46,13 +46,29 @@
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                 <div class="row no-gap shadow-3">
                     <div class="cell-lg-3 bordure-orange-debut">
-                        <div>
-                            <input #depart data-role="input" data-prepend="Ville de départ" data-clear-button="false" data-autocomplete="Douala, Yaoundé, Kribi, Limbé">
+                        <div *ngIf="villes.length > 0">
+                            <select formControlName="depart" data-prepend="Ville de départ" data-role="select">
+                                <option value="">Toutes les villes</option>
+                                <option *ngFor="let v of villes" [value]="v.nom">
+                                    {{v.nom}}
+                                </option>
+                            </select>
+                        </div>
+                        <div *ngIf="villes.length === 0">
+                            <input data-role="input">
                         </div>
                     </div>
                     <div class="cell-lg-3 bordure-orange-fin">
-                        <div>
-                            <input #arrivee data-role="input" data-clear-button="false" data-prepend="Ville d'arrivée" data-autocomplete="Douala, Yaoundé, Kribi, Limbé">
+                        <div *ngIf="villes.length > 0">
+                            <select formControlName="arrivee" data-prepend="Ville d'arrivée" data-role="select">
+                                <option value="">Toutes les villes</option>
+                                <option *ngFor="let v of villes" [value]="v.nom">
+                                    {{v.nom}}
+                                </option>
+                            </select>
+                        </div>
+                        <div *ngIf="villes.length === 0">
+                            <input data-role="input">
                         </div>
                     </div>
                     <div class="cell-lg-3 bordure-orange-milieu">
@@ -62,12 +78,12 @@
                     </div>
                     <div class="cell-lg-1 bordure-orange-fin">
                         <div>
-                            <select formControlName="heure">
+                            <select #heure formControlName="heure">
                                 <option value="oui">--:--</option>
                                 <option *ngFor="let h of heures" [ngValue]="h">{{h}}</option>
                             </select>
                         </div>
-                        <div class="icone-heure" (click)="selectionnerHeureDebut()">
+                        <div class="icone-heure" (click)="selectionnerHeure()">
                             <span class="mif-alarm"></span>
                         </div>
                     </div>
@@ -83,8 +99,14 @@
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                 <div class="row no-gap shadow-3">
                     <div class="cell-lg-3 bordure-orange-debut">
-                        <div>
-                            <input #ville data-clear-button="false" data-role="input" data-prepend="Ville" data-autocomplete="Douala, Yaoundé, Kribi, Limbé">
+
+                        <div *ngIf="villes.length > 0">
+                            <select formControlName="ville" data-prepend="Ville d'arrivée" data-role="select">
+                                <option value="">Toutes les villes</option>
+                                <option *ngFor="let v of villes" [value]="v.nom">
+                                    {{v.nom}}
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="cell-lg-3 bordure-orange-milieu">

@@ -6,6 +6,7 @@ import { Trajet } from 'src/app/models/trajet.model';
 import { Subject } from 'rxjs';
 import { DATATABLES_OPTIONS_LANGUAGE } from 'src/app/data/datatable.options';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Ville } from 'src/app/models/ville.model';
 declare const metro: any;
 
 @Component({
@@ -25,6 +26,10 @@ export class TransportListComponent implements OnInit {
   ordre = 'croissant';
   form: FormGroup;
   form2: FormGroup;
+  villes = new Array<Ville>();
+
+  depart: string;
+  arrivee: string;
 
   dtOptions = {
     language: DATATABLES_OPTIONS_LANGUAGE
@@ -41,6 +46,7 @@ export class TransportListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getVilles();
     this.getTransports();
 
     this.dtTrigger = new Subject();
@@ -49,6 +55,19 @@ export class TransportListComponent implements OnInit {
       this.dtTrigger.next();
     });
     this.initForm();
+  }
+
+  getVilles() {
+    this.villes = new Array<Ville>();
+    const db = firebase.firestore();
+    db.collection('ville-trap').get().then((resultats) => {
+      console.log('TERMINEEE !!!');
+      resultats.forEach((resultat) => {
+        const ville = resultat.data() as Ville;
+        this.villes.push(ville);
+      });
+    }).catch((e) => {
+    });
   }
 
   handleChange(ev) {
@@ -68,22 +87,17 @@ export class TransportListComponent implements OnInit {
 
   onFormSubmit() {
     const value = this.form.value;
-    console.log('value');
-    console.log(value);
-    console.log(this.departInput.nativeElement);
-    console.log(this.departInput.nativeElement.value);
-    console.log(this.arriveeInput.nativeElement);
-    console.log(this.arriveeInput.nativeElement.value);
+    console.log('this.depart');
+    console.log(this.depart);
+    console.log('this.arrivee');
+    console.log(this.arrivee);
 
-    const depart = this.departInput.nativeElement.value;
-    const arrivee = this.arriveeInput.nativeElement.value;
-
-    if (depart && arrivee) {
+    if (this.depart && this.arrivee) {
       this.dtTrigger = new Subject();
       this.getTrajets().then((trajets) => {
         if (trajets && trajets.length > 0) {
           console.log('les trjats ont été récupéres');
-          this.trajets = this.trierResultatsInterUrbain(depart, arrivee, trajets);
+          this.trajets = this.trierResultatsInterUrbain(this.depart, this.arrivee, trajets);
           this.dtTrigger.next();
           this.resultatsVisible = true;
           if (this.trajets && this.trajets.length > 0) {

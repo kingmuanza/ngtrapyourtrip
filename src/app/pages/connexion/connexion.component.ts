@@ -14,6 +14,8 @@ declare const metro: any;
 })
 export class ConnexionComponent implements OnInit {
 
+  errormessage = '';
+
   form: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
@@ -45,28 +47,27 @@ export class ConnexionComponent implements OnInit {
       overlayColor: '#fff',
       overlayAlpha: 0.8
     });
-
+    this.errormessage = '';
     this.authService.connexion(login, passe).then((utilisateur) => {
       metro().activity.close(activity);
       const panierString = localStorage.getItem('panier-trap');
       localStorage.setItem('trap-your-utilisateur', JSON.stringify(utilisateur));
-      if (panierString) {
-        const reservations = JSON.parse(panierString);
-        if (reservations.length > 0) {
-          this.router.navigate(['dashboard', 'paiement', 'edit']);
-        } else {
-          this.router.navigate(['dashboard']);
-        }
-      }
+      this.redirection();
     }).catch((e) => {
       metro().activity.close(activity);
       const notify = metro().notify;
-      notify.create('Login ou mot de passe incorrect', null, {
-        cls: 'alert',
-        keepOpen: false
-      });
+      this.errormessage = 'Login ou mot de passe incorrect';
     });
 
+  }
+
+  redirection() {
+    const connexionString = localStorage.getItem('connexion-url');
+    if (connexionString) {
+      this.router.navigate(['offres', 'reservation', 'infos', connexionString]);
+    } else {
+      this.router.navigate(['accueil']);
+    }
   }
 
   connexionGoogle() {
@@ -80,7 +81,7 @@ export class ConnexionComponent implements OnInit {
         console.log(user);
         localStorage.setItem('trap-your-utilisateur', JSON.stringify(user));
         this.authService.connexionExterne(user);
-        this.router.navigate(['accueil']);
+        this.redirection();
         // ...
       }).catch((error) => {
         const errorCode = error.code;
@@ -103,7 +104,7 @@ export class ConnexionComponent implements OnInit {
         console.log(user);
         localStorage.setItem('trap-your-utilisateur', JSON.stringify(user));
         this.authService.connexionExterne(user);
-        this.router.navigate(['accueil']);
+        this.redirection();
         // ...
       }).catch((error) => {
         const errorCode = error.code;

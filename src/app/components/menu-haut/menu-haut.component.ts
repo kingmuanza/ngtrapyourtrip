@@ -30,7 +30,7 @@ export class MenuHautComponent implements OnInit, AfterViewInit {
   connecteEnTantQueAdministrateur = false;
   adminSubscription: Subscription;
   admin: Administrateur;
-  primarycolor: boolean;
+  primarycolor = true;
 
   screenHeight: number;
   screenWidth: number;
@@ -53,7 +53,7 @@ export class MenuHautComponent implements OnInit, AfterViewInit {
     const verticalOffset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     // console.log('On est en train de scroller');
     // console.log(verticalOffset);
-    if (verticalOffset === 0) {
+    if (verticalOffset < 10) {
       this.primarycolor = true;
     } else {
       this.primarycolor = false;

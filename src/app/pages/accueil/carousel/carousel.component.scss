@@ -1,32 +1,39 @@
 $bg-primaire: rgb(48, 164, 221);
-
 .image-arriere {
     height: 400px;
-
     @media screen and (max-width: 599px) {
         height: 50vmin;
     }
-
     background-size: cover;
     background-position: center center;
     border-radius: 10px;
     overflow: hidden;
     position: relative;
+    z-index: 999;
+}
+
+.filtre {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.15));
+    height: 400px;
+    margin-top: -400px;
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    border-radius: 10px;
+    @media screen and (max-width: 599px) {
+        display: none;
+    }
 }
 
 .cadre {
-
     position: relative;
     z-index: 1000;
-    // background: linear-gradient(to right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.15));
     min-height: 400px;
     margin-top: -400px;
-
     border-radius: 10px;
     padding-left: 5vw;
     padding-right: 0vw;
     padding-top: 100px;
-
     @media screen and (max-width: 599px) {
         height: 50vmin;
         margin-top: -50vmin;
@@ -34,15 +41,12 @@ $bg-primaire: rgb(48, 164, 221);
         padding-left: 2.5vw;
         padding-right: 2.5vw;
     }
-
     .recherche {
         width: 100%;
-
         @media screen and (max-width: 599px) {
             width: 100%;
         }
     }
-
     .icone-recherche {
         font-size: 280px;
         color: #fff;
@@ -51,29 +55,25 @@ $bg-primaire: rgb(48, 164, 221);
         height: 400px;
         overflow-y: hidden;
     }
-
     .carousel-titre {
         font-size: 2.5em;
-        font-weight: bold;
+        // font-weight: bold;
         width: 100%;
         line-height: 1;
         color: white;
-        font-family: 'Raleway';
-
+        font-family: 'Poppins';
         @media screen and (max-width: 599px) {
             font-size: 1.3em;
             width: 100%;
             color: #303030;
         }
     }
-
     .complement {
         color: #f0f0f0;
         padding-top: 1vh;
         padding-bottom: 2vh;
         font-size: 18px;
-        font-family: 'Epilogue';
-
+        font-family: 'Poppins';
         @media screen and (max-width: 599px) {
             font-size: 11px;
             color: #303030;
@@ -90,21 +90,18 @@ $bg-primaire: rgb(48, 164, 221);
     outline: none;
     border: none;
     opacity: 0.95;
-
     &+.resultats {
         transform-origin: top left;
         transform: scaleY(0);
         transition: transform 500ms;
         transition-delay: 200ms;
     }
-
     &:focus {
         border: 0px solid rgb(48, 164, 221);
         padding-top: 3px;
         padding-bottom: 3px;
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
-
         &+.resultats {
             transform-origin: top left;
             transform: scaleY(1);
@@ -119,50 +116,38 @@ $bg-primaire: rgb(48, 164, 221);
     padding-bottom: 10px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-
     @media screen and (max-width: 599px) {
         height: 280px;
         // overflow: hidden;
         // background-color: red;
     }
-
     .resultat {
         padding-left: 20px;
         padding-right: 20px;
         padding-top: 10px;
-
-
         @media screen and (max-width: 599px) {
             padding-left: 20px;
             padding-right: 20px;
             padding-top: 4px;
         }
-
         .photo {
             display: inline-block;
             height: 45px;
             overflow: hidden;
-
-
             @media screen and (max-width: 599px) {
                 height: 29px;
             }
-
-
             img {
                 height: 45px;
                 width: 45px;
                 border-radius: 7px;
-
                 @media screen and (max-width: 599px) {
                     height: 29px;
                     width: 29px;
                     border-radius: 3px;
                 }
-
             }
         }
-
         .details {
             display: inline-block;
             height: 45px;
@@ -170,26 +155,21 @@ $bg-primaire: rgb(48, 164, 221);
             padding-left: 20px;
             padding-top: 0px;
             line-height: 1.4;
-
             @media screen and (max-width: 599px) {
                 height: 25px;
             }
-
             .nom {
                 font-size: 30px;
                 font-family: 'Raleway';
-
                 @media screen and (max-width: 599px) {
                     font-size: 15px;
                     font-family: 'Raleway';
                 }
             }
-
             .description {
                 color: #777;
             }
         }
-
         &:hover {
             cursor: pointer;
             background-color: rgba(220, 220, 220, 1);

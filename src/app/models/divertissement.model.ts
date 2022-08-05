@@ -12,6 +12,7 @@ export class Divertissement extends Modele {
     notation: number;
     tags: string;
     date: Date;
+    dateFin: Date;
     images: Array<string>;
     restaurant: boolean;
     modification: Modification;

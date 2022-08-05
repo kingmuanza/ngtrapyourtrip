@@ -1,5 +1,4 @@
 $bg-primaire: rgb(48, 164, 221);
-
 .offres {
     padding-top: 3vmin;
     padding-bottom: 3vmin;
@@ -7,41 +6,32 @@ $bg-primaire: rgb(48, 164, 221);
         width: 100%;
         overflow-x: scroll;
     }
-
-
     .muanza-mobile-rub {
         @media screen and (max-width: 599px) {
             width: 180vw;
         }
-    
     }
-
-
     .offre {
         border: 1.5px solid #333;
         border-radius: 10px;
         height: 64px;
-        padding: 16px;
+        padding: 20px;
         padding-top: 12px;
         padding-bottom: 12px;
         font-size: 1.2em;
         cursor: pointer;
-
         &:hover {
             background-color: #404040;
             color: $bg-primaire;
         }
-
         .libelle {
-            font-weight: bold;
+            font-family: 'Poppins';
+            // font-weight: bold;
         }
-
         .icone {
             float: right;
         }
-
         @media screen and (max-width: 599px) {
-
             border: 1px solid #333;
             border-radius: 10px;
             height: 50px;
@@ -50,18 +40,17 @@ $bg-primaire: rgb(48, 164, 221);
             padding-right: 20px;
             font-size: 1.0em;
             cursor: pointer;
-
             .libelle {
-                display:inline-block;
+                display: inline-block;
                 // width: 80px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                font-family: 'Poppins';
             }
         }
     }
 }
-
 
 .muanza-mobile-filtre {
     @media screen and (max-width: 599px) {
@@ -70,5 +59,4 @@ $bg-primaire: rgb(48, 164, 221);
         width: 100vw;
         background-color: rgba(red, 0.5);
     }
-
 }

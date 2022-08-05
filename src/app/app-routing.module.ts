@@ -54,9 +54,13 @@ import { CharteComponent } from './pages/charte/charte.component';
 import { TransportChoixComponent } from './pages/transport/transport-choix/transport-choix.component';
 import { TransportLocationListComponent } from './pages/transport/transport-location-list/transport-location-list.component';
 import { TransportLocationViewComponent } from './pages/transport/transport-location-view/transport-location-view.component';
+import { CancelComponent } from './pages/paiement/cancel/cancel.component';
+import { ReturnComponent } from './pages/paiement/return/return.component';
 
 const routes: Routes = [
   { path: 'accueil', component: AccueilComponent },
+  { path: 'cancel/:id', component: CancelComponent },
+  { path: 'return/:id', component: ReturnComponent },
 
   { path: 'rechercher', component: RechercherComponent },
   { path: 'dashboard', component: DashboardComponent },

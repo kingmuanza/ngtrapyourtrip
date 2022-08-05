@@ -1,10 +1,10 @@
 <div class="inscription-page">
     <div style="margin-bottom: 40px;">
-    <div class="row">
-        <div class="cell-lg-2">
-            <img src="../../../assets/img/Trap Your Trip Logo 2.png" style="width: 100%; display: none;">
+        <div class="row">
+            <div class="cell-lg-2">
+                <img src="../../../assets/img/Trap Your Trip Logo 2.png" style="width: 100%; display: none;">
+            </div>
         </div>
-    </div>
     </div>
     <div class="row">
         <div class="cell-lg-6">
@@ -13,8 +13,7 @@
                     Connectez-vous !
                 </div>
                 <div>
-                    Veuillez remplir ce formulaire !
-                    Si vous n'avez pas encore de compte
+                    Veuillez remplir ce formulaire ! Si vous n'avez pas encore de compte
                     <a routerLink="/inscription">Cliquez-ici</a>
                 </div>
                 <div class="text-leader2" style="margin-bottom: 20px;">
@@ -26,8 +25,10 @@
                             <input formControlName="login" data-role="input" data-prepend="Email">
                         </div>
                         <div class="cell-lg-12">
-                            <input formControlName="passe" type="password" data-role="input"
-                                data-prepend="Mot de passe">
+                            <input formControlName="passe" type="password" data-role="input" data-prepend="Mot de passe">
+                        </div>
+                        <div *ngIf="errormessage" class="fg-red" style="padding-top: 5px; padding-bottom: 5px;">
+                            {{errormessage}}
                         </div>
                         <div class="cell-lg-12">
                             <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
@@ -53,8 +54,7 @@
                     <div class="cell-12">
                         <span class="mif-google " style="margin-right: 40px;">
 
-                        </span>
-                        Continuer avec Google
+                        </span> Continuer avec Google
                     </div>
                 </div>
             </div>
@@ -63,8 +63,7 @@
                     <div class="cell-12">
                         <span class="mif-facebook" style="margin-right: 40px;">
 
-                        </span>
-                        Continuer avec Facebook
+                        </span> Continuer avec Facebook
                     </div>
                 </div>
             </div>

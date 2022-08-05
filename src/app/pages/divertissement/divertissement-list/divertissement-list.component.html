@@ -36,8 +36,17 @@
                     <input formControlName="rechercher" placeholder="Rechercher" data-role="input">
                 </div>
                 <div class="cell-lg-2 bordure-orange-fin">
-                    <input #ville data-prepend="Ville" formControlName="ville" data-role="input" data-clear-button="false" data-autocomplete="Douala, Yaoundé, Kribi, Limbé, Garoua, Maroua">
-
+                    <div *ngIf="villes.length === 0">
+                        <input #ville data-prepend="Ville" formControlName="ville" data-role="input" data-clear-button="false" data-autocomplete="Douala, Yaoundé, Kribi, Limbé, Garoua, Maroua">
+                    </div>
+                    <div *ngIf="villes.length > 0">
+                        <select formControlName="ville" data-prepend="Ville" data-role="select">
+                            <option value="">Toutes les villes</option>
+                            <option *ngFor="let v of villes" [value]="v.nom">
+                                {{v.nom}}
+                            </option>
+                        </select>
+                    </div>
                 </div>
                 <div class="cell-lg-3 bordure-orange-fin" style="">
                     <input #calendarpickerlocale formControlName="dateDebut" data-role="calendarpicker" data-prepend="A partir du ">

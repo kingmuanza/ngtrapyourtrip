@@ -52,6 +52,9 @@
                 <span *ngIf="reservation.locationVoiture.type === 'interurbain'">
                     : {{reservation.locationVoiture.depart}} - {{reservation.locationVoiture.arrivee}}
                 </span>
+                <span *ngIf="reservation.locationVoiture.type === 'location'">
+                    : {{reservation.locationVoiture.ville}}
+                </span>
             </ng-container>
         </div>
 
@@ -295,7 +298,11 @@
             </div>
             <div class="cell-lg-4 muanza-text-right">
                 <div>
-                    <b>
+                    <b *ngIf="reservation.transport.retour">
+                        {{reservation.personnes}} * {{reservation.transport.depart.prix * 2 |
+                        currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                    </b>
+                    <b *ngIf="!reservation.transport.retour">
                         {{reservation.personnes}} * {{reservation.transport.depart.prix |
                         currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
                     </b>
@@ -319,5 +326,23 @@
     </div>
     <div class="contenu">
 
+    </div>
+</div>
+
+<div *ngIf="showconnexionObligatoire" class="connexion-obligatoire">
+    <div class="connexion-obligatoire-logo">
+        <img class="image-logo" src="../../../assets/img/Trap Your Trip Logo 2.png">
+    </div>
+    <div class="connexion-obligatoire-timer">
+        0{{seconds}}:00
+    </div>
+    <div class="connexion-obligatoire-titre">
+        Veuillez-vous connecter !
+    </div>
+    <div class="connexion-obligatoire-contenu">
+        Vous devez vous connecter pour effectuer une réservation. Vous serez redirigé momentanément vers la page de connexion
+    </div>
+    <div class="connexion-obligatoire-compris">
+        <button (click)="okJaiCompris(reservation)" class="button fg-white bg-blue">Ok ! J'ai compris</button>
     </div>
 </div>

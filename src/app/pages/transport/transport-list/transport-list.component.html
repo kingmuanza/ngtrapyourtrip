@@ -1,8 +1,7 @@
 <div class="page-transport">
     <div class="entete" style="">
 
-        <div class="entete__background"
-            [ngClass]="{'interurbain': type==='interurbain', 'location': type==='location'}">
+        <div class="entete__background" [ngClass]="{'interurbain': type==='interurbain', 'location': type==='location'}">
         </div>
         <div class="entete__contenu" [ngClass]="{'interurbain': type==='interurbain', 'location': type==='location'}">
             <div class="row no-gap">
@@ -58,36 +57,48 @@
 
     <div class="contenu">
         <div *ngIf=" type==='interurbain' " class="formulaire-recherche">
-            <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-                <div class="row no-gap shadow-3">
-                    <div class="cell-lg-5 bordure-orange-debut">
-                        <div>
-                            <input #depart formControlName="depart" data-role="input"
-                                data-prepend="Ville de départ" data-autocomplete="Douala, Yaoundé, Kribi, Limbé">
-                        </div>
+
+            <div class="row no-gap shadow-3">
+                <div class="cell-lg-5 bordure-orange-debut">
+                    <div *ngIf="villes.length > 0">
+                        <select [(ngModel)]="depart" data-prepend="Ville de départ" data-role="select">
+                                <option *ngFor="let v of villes" [value]="v.nom">
+                                    {{v.nom}}
+                                </option>
+                            </select>
                     </div>
-                    <div class="cell-lg-5 bordure-orange-fin">
-                        <div>
-                            <input #arrivee formControlName="arrivee" data-role="input"
-                                data-prepend="Ville d'arrivée" data-autocomplete="Douala, Yaoundé, Kribi, Limbé">
-                        </div>
-                    </div>
-                    <div class="cell-lg-2 bordure-orange-fin bg-dark">
-                        <button class="button warning"
-                            style="width: 100%; background-color: rgb(48, 164, 221);">
-                            Rechercher
-                        </button>
+                    <div *ngIf="villes.length === 0">
+                        <input data-role="input">
                     </div>
                 </div>
-            </form>
+                <div class="cell-lg-5 bordure-orange-fin">
+                    <div>
+                        <div *ngIf="villes.length > 0">
+                            <select [(ngModel)]="arrivee" data-prepend="Ville d'arrivée" data-role="select">
+                                    <option *ngFor="let v of villes" [value]="v.nom">
+                                        {{v.nom}}
+                                    </option>
+                                </select>
+                        </div>
+                        <div *ngIf="villes.length === 0">
+                            <input data-role="input">
+                        </div>
+                    </div>
+                </div>
+                <div class="cell-lg-2 bordure-orange-fin bg-dark">
+                    <button (click)="onFormSubmit()" class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
+                            Rechercher
+                        </button>
+                </div>
+            </div>
+
         </div>
         <div *ngIf=" type==='location' " class="formulaire-recherche">
             <form [formGroup]="form2" (ngSubmit)="onFormSubmit2()">
                 <div class="row no-gap shadow-3">
                     <div class="cell-lg-10 bordure-orange-debut">
                         <div>
-                            <input data-role="input" formControlName="ville"
-                                data-prepend="Ville de location du véhicule">
+                            <input data-role="input" formControlName="ville" data-prepend="Ville de location du véhicule">
                         </div>
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin" style="background-color:  rgb(48, 164, 221);">

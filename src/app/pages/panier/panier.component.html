@@ -1,7 +1,7 @@
 <div class="page-sejour" style="min-height: 50vh;">
     <div class="entete2" style="">
         <div class="row">
-            <div class="cell-lg-5">
+            <div class="cell-lg-7">
                 <div class="titre">
                     Mon panier
                 </div>
@@ -9,109 +9,118 @@
                     Vos réservations ici
                 </div>
             </div>
+            <div class="cell-lg-5 hideOnMObile" style=" font-size: 4.0em; text-align: right; ">
+                <span style="opacity: 0.7; transform: scaleX(-1); " class="mif-cart fg-white "></span>
+            </div>
         </div>
     </div>
-    <div class="contenu2 hideOnMObile">
-        <table style="margin-top: -3vh; padding-top: 0;" class="table table-border cell-border">
+    <div class="contenu2 hideOnMObile ">
+        <table style="margin-top: -3vh; padding-top: 0; " class="table table-border cell-border ">
             <thead>
                 <tr>
-                    <th class="hideOnMObile">Date</th>
+                    <th class="hideOnMObile ">Date</th>
                     <th>Date début</th>
                     <th>Prestation</th>
                     <th>Description</th>
-                    <th style="background-color: #fafafa;">Coût</th>
+                    <th style="background-color: #fafafa; ">Coût</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let reservation of reservations">
-                    <td class="hideOnMObile">{{reservation.date | date: 'yyyy-MM-dd HH:mm'}}</td>
+                <tr *ngFor="let reservation of reservations ">
+                    <td class="hideOnMObile ">{{reservation.date | date: 'yyyy-MM-dd HH:mm'}}</td>
                     <td>{{reservation.dateDebut | date: 'yyyy-MM-dd'}}</td>
                     <td>
-                        <span *ngIf="reservation.sejour">
+                        <span *ngIf="reservation.sejour ">
                             {{reservation.sejour.titre}}
                         </span>
-                        <span *ngIf="reservation.hebergement">
+                        <span *ngIf="reservation.hebergement ">
                             {{reservation.hebergement.titre}}
                         </span>
-                        <span *ngIf="reservation.divertissement">
+                        <span *ngIf="reservation.divertissement ">
                             {{reservation.divertissement.titre}}
                         </span>
-                        <span *ngIf="reservation.transport">
+                        <span *ngIf="reservation.transport ">
                             {{reservation.transport.depart.agence.nom}}
                         </span>
-                        <span *ngIf="reservation.locationVoiture">
+                        <span *ngIf="reservation.locationVoiture ">
                             Location de voiture :
                             {{reservation.locationVoiture.voiture.modele}}
                         </span>
                     </td>
                     <td>
-                        <span *ngIf="reservation.sejour">
+                        <span *ngIf="reservation.sejour ">
                             {{reservation.sejour.description}}
                         </span>
-                        <span *ngIf="reservation.hebergement">
+                        <span *ngIf="reservation.hebergement ">
                             {{reservation.hebergement.description}}
                         </span>
-                        <span *ngIf="reservation.divertissement">
+                        <span *ngIf="reservation.divertissement ">
                             {{reservation.divertissement.description}}
                         </span>
-                        <span *ngIf="reservation.transport">
+                        <span *ngIf="reservation.transport ">
                             {{description(reservation.transport.depart.trajet)}}
                         </span>
-                        <div *ngIf="reservation.locationVoiture">
+                        <div *ngIf="reservation.locationVoiture ">
                             {{reservation.locationVoiture.type}}
-                            <span *ngIf="reservation.locationVoiture.type === 'interurbain'">
+                            <span *ngIf="reservation.locationVoiture.type==='interurbain' ">
                                 : {{reservation.locationVoiture.depart}} - {{reservation.locationVoiture.arrivee}}
                             </span>
-                            <span *ngIf="reservation.locationVoiture.type === 'location'">
+                            <span *ngIf="reservation.locationVoiture.type==='location' ">
                                 : {{reservation.locationVoiture.ville}}
                             </span>
-                            <div *ngIf="reservation.locationVoiture">
+                            <div *ngIf="reservation.locationVoiture ">
                                 Du {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}} à {{toDate(reservation.dateDebut) | date: 'HH:mm'}} au {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}} à {{toDate(reservation.dateFin) | date: 'HH:mm'}}
                             </div>
                         </div>
                     </td>
-                    <td style="text-align: right; background-color: #fafafa;">
+                    <td style="text-align: right; background-color: #fafafa; ">
                         <b>
                             {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
                         </b>
                     </td>
-                    <td class="white-space" style="">
-                        <button (click)="voir(reservation)" class="button success">
-                            Voir
-                        </button>
-                        <button (click)="modifier(reservation)" class="button warning" style="background-color: rgb(48, 164, 221);">
-                            Modifier
-                        </button>
-                        <button (click)="supprimer(reservation.id)" class="button alert danger">
-                            Supprimer
+                    <td class="white-space " style=" ">
+                        <button (click)="voir(reservation) " class="button ">
+                            <span class="mif-eye "></span>
+                        </button> &nbsp;
+                        <button (click)="modifier(reservation) " class="button ">
+                            <span class="mif-pencil "></span>
+                        </button> &nbsp;
+                        <button (click)="supprimer(reservation.id) " class="button alert danger ">
+                            <span class="mif-bin "></span>
                         </button>
                     </td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <th style="font-size: 1.2em;" colspan="4">Total</th>
-                    <th style="font-size: 1.2em; text-align: right;background-color: #fafafa;">
+                    <th style="font-size: 1.2em; " colspan="4 ">Total</th>
+                    <th style="font-size: 1.2em; text-align: right;background-color: #fafafa; ">
                         {{TOTAL | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
                     </th>
                     <th></th>
                 </tr>
             </tfoot>
         </table>
-        <div *ngIf="reservations && reservations.length > 0" style="margin-top: 20px;">
-            <button (click)="supprimerTout()" class="button alert danger">
-                Annuler toutes les réservations
-            </button>
-            <button (click)="suivant()" class="button warning" style="background-color: rgb(48, 164, 221); float: right;">
-                <ng-container *ngIf="isUser">
-                    Suivant
-                </ng-container>
-                <ng-container *ngIf="!isUser">
-                    Passer au paiement
-                </ng-container>
-
-            </button>
+        <div *ngIf="reservations && reservations.length> 0" style="margin-top: 20px;">
+            <div>
+                <form #form action="https://trapyourtrip.com/cinetpay/index.php" method="post">
+                    <!-- <form #form action="cinetpay/index.php" method="post"> -->
+                    <a (click)="supprimerTout()" class="button alert danger" style="color: white;">
+                        Annuler toutes les réservations
+                    </a>
+                    <input type="hidden" name="montant" [value]="TOTAL">
+                    <input type="hidden" name="id" [value]="paiement.id">
+                    <button *ngIf="isUser" type="submit" (click)="payer(form)" class="button warning" style="background-color: rgb(48, 164, 221); float: right;">
+                        <ng-container *ngIf="isUser">
+                            Passer au paiement
+                        </ng-container>
+                    </button>
+                    <button *ngIf="!isUser" class="button warning" style="background-color: rgb(48, 164, 221); float: right;" (click)="suivant()">
+                        Suivant
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
     <div class="contenu2 showOnMObile" style="width: 100vw; overflow-x: hidden;">
@@ -194,22 +203,24 @@
                 </tr>
             </tfoot>
         </table>
-        <div style="margin-top: 20px;" *ngIf="reservations && reservations.length > 0">
+        <div *ngIf="reservations && reservations.length> 0" style="margin-top: 20px;">
             <div>
-                <button (click)="supprimerTout()" class="button alert danger" style="width: 100%;">
-                    Annuler toutes les réservations
-                </button>
-            </div>
-            <div>
-                <button (click)="suivant()" class="button warning" style="background-color: rgb(48, 164, 221); width: 100%;">
-                    <ng-container *ngIf="isUser">
+                <form #form action="https://trapyourtrip.com/cinetpay/index.php" method="post">
+                    <!--  <form #form action="cinetpay/index.php" method="post"> -->
+                    <a (click)="supprimerTout()" class="button alert danger" style="color: white;">
+                        Annuler toutes les réservations
+                    </a>
+                    <input type="hidden" name="montant" [value]="TOTAL">
+                    <input type="hidden" name="id" [value]="paiement.id">
+                    <button *ngIf="isUser" type="submit" (click)="payer(form)" class="button warning" style="background-color: rgb(48, 164, 221); float: right;">
+                        <ng-container *ngIf="isUser">
+                            Passer au paiement
+                        </ng-container>
+                    </button>
+                    <button *ngIf="!isUser" class="button warning" style="background-color: rgb(48, 164, 221); float: right;" (click)="suivant()">
                         Suivant
-                    </ng-container>
-                    <ng-container *ngIf="!isUser">
-                        Passer au paiement
-                    </ng-container>
-
-                </button>
+                    </button>
+                </form>
             </div>
         </div>
     </div>

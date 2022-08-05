@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { LocationVoiture } from 'src/app/models/location.voiture.model';
 import { Reservation } from 'src/app/models/reservation.model';
+import { Ville } from 'src/app/models/ville.model';
 import { Voiture } from 'src/app/models/voiture.model';
 import { VoitureService } from 'src/app/services/voiture.service';
 declare const metro: any;
@@ -25,14 +26,19 @@ export class TransportLocationViewComponent implements OnInit {
   @ViewChild('calendarpickerlocale2', { static: false }) date2;
 
   @ViewChild('heureDebut', { static: false }) heureDebut;
+  @ViewChild('heure', { static: false }) heure;
 
   voiture: Voiture;
   voitures = [];
   form: FormGroup;
   type = 'interurbain';
 
+  depart: string;
+  arrivee: string;
+
   heures = [];
   retourHeure = '';
+  villes = new Array<Ville>();
 
   constructor(
     private router: Router,
@@ -50,6 +56,7 @@ export class TransportLocationViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.getVilles();
     this.route.paramMap.subscribe((paramMap) => {
       const id = paramMap.get('id');
       console.log(id);
@@ -64,9 +71,24 @@ export class TransportLocationViewComponent implements OnInit {
     });
   }
 
+  getVilles() {
+    this.villes = new Array<Ville>();
+    const db = firebase.firestore();
+    db.collection('ville-trap').get().then((resultats) => {
+      console.log('TERMINEEE !!!');
+      resultats.forEach((resultat) => {
+        const ville = resultat.data() as Ville;
+        this.villes.push(ville);
+      });
+    }).catch((e) => {
+    });
+  }
+
   initForm() {
     this.form = this.formBuilder.group({
       ville: ['', []],
+      depart: ['', []],
+      arrivee: ['', []],
       heureDebut: ['00:00', []],
       heureFin: ['00:00', []],
       heure: ['00:00', []],
@@ -84,8 +106,8 @@ export class TransportLocationViewComponent implements OnInit {
     const allerretour = value.allerretour;
 
     if (this.type === 'interurbain') {
-      const depart = this.departInput.nativeElement.value;
-      const arrivee = this.arriveeInput.nativeElement.value;
+      const depart = value.depart;
+      const arrivee = value.arrivee;
       const date = this.date.nativeElement.value;
       const heure = value.heure;
 
@@ -131,7 +153,7 @@ export class TransportLocationViewComponent implements OnInit {
     }
 
     if (this.type === 'location') {
-      const ville = this.villeInput.nativeElement.value;
+      const ville = value.ville;
       const debut = this.debut.nativeElement.value;
       const fin = this.fin.nativeElement.value;
       console.log('ville');
@@ -229,6 +251,12 @@ export class TransportLocationViewComponent implements OnInit {
     console.log(this.heureDebut.nativeElement);
     console.log(this.heureDebut.nativeElement.click());
     this.heureDebut.nativeElement.click();
+  }
+
+  selectionnerHeure() {
+    console.log('this.heure.nativeElement');
+    console.log(this.heure.nativeElement);
+    this.heure.nativeElement.click();
   }
 
   saveWithRetour() {

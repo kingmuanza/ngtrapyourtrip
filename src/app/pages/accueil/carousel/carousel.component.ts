@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 import { Utilisateur } from 'src/app/models/utilisateur.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Divertissement } from 'src/app/models/divertissement.model';
+import { Ville } from 'src/app/models/ville.model';
 
 @Component({
   selector: 'app-carousel',
@@ -24,8 +25,8 @@ export class CarouselComponent implements OnInit {
   form: FormGroup;
   nature = '';
 
-  villes = new Array<string>();
-  villesResultats = new Array<string>();
+  villes = new Array<Ville>();
+  villesResultats = new Array<Ville>();
 
   screenHeight: number;
   screenWidth: number;
@@ -40,8 +41,7 @@ export class CarouselComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getPrestataires();
-    this.getDivertissements();
+    this.getVilles();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -55,6 +55,19 @@ export class CarouselComponent implements OnInit {
     } else {
       this.nombreVilles = 6;
     }
+  }
+
+  getVilles() {
+    this.villes = new Array<Ville>();
+    const db = firebase.firestore();
+    db.collection('ville-trap').get().then((resultats) => {
+      console.log('TERMINEEE !!!');
+      resultats.forEach((resultat) => {
+        const ville = resultat.data() as Ville;
+        this.villes.push(ville);
+      });
+    }).catch((e) => {
+    });
   }
 
   changerOrdre(ordre) {
@@ -80,62 +93,6 @@ export class CarouselComponent implements OnInit {
     }
   }
 
-  getPrestataires() {
-    this.utilisateurs = new Array<Utilisateur>();
-    const db = firebase.firestore();
-    return new Promise((resolve, reject) => {
-      db.collection('utilisateurs-trap').get().then((resultats) => {
-        resultats.forEach((resultat) => {
-          const utilisateur = resultat.data() as Utilisateur;
-          const ville = utilisateur.ville;
-          if (ville) {
-            if (this.villes.indexOf(ville.toLocaleLowerCase().trim()) === -1) {
-              this.villes.push(ville.toLocaleLowerCase().trim());
-            }
-            if (utilisateur.prestataire) {
-              this.utilisateurs.push(utilisateur);
-              this.resultats.push(utilisateur);
-            }
-          }
-        });
-        console.log('TERMINEEE !!!');
-        console.log(this.utilisateurs);
-        this.ordonner(this.ordre);
-        resolve(this.utilisateurs);
-      }).catch((e) => {
-        reject(e);
-      });
-    });
-  }
-
-  getDivertissements() {
-    this.divertissements = new Array<Divertissement>();
-    const db = firebase.firestore();
-    return new Promise((resolve, reject) => {
-      db.collection('divertissements-trap').get().then((resultats) => {
-        resultats.forEach((resultat) => {
-          const divertissement = resultat.data() as Divertissement;
-          const ville = divertissement.ville;
-          if (this.villes.indexOf(ville.toLocaleLowerCase().trim()) === -1) {
-            this.villes.push(ville.toLocaleLowerCase().trim());
-          }
-          this.divertissements.push(divertissement);
-          this.resultats2.push(divertissement);
-
-        });
-        console.log('diversthjh !!!');
-        console.log(this.divertissements);
-        if (this.screenWidth > 599) {
-        } else {
-          this.rechercher('');
-        }
-        resolve(this.divertissements);
-      }).catch((e) => {
-        reject(e);
-      });
-    });
-  }
-
   rechercher(mot: string) {
     console.log('mot');
     console.log(mot);
@@ -145,7 +102,7 @@ export class CarouselComponent implements OnInit {
     console.log(this.villes);
     this.villesResultats = this.villes.concat([]);
     this.villesResultats = this.villes.filter((ville) => {
-      return ville.toLocaleLowerCase().indexOf(mot.toLocaleLowerCase()) !== -1;
+      return ville.nom.toLocaleLowerCase().indexOf(mot.toLocaleLowerCase()) !== -1;
     });
   }
 

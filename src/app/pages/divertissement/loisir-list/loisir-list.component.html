@@ -35,7 +35,17 @@
                     <input formControlName="rechercher" placeholder="Rechercher" data-role="input">
                 </div>
                 <div class="cell-lg-5 bordure-orange-fin">
-                    <input #ville data-prepend="Ville" formControlName="ville" data-role="input" data-autocomplete="Douala, Yaoundé, Kribi, Limbé, Garoua, Maroua">
+                    <div *ngIf="villes.length === 0">
+                        <input data-role="input">
+                    </div>
+                    <div *ngIf="villes.length > 0">
+                        <select formControlName="ville" data-prepend="Ville" data-role="select">
+                            <option value="">Toutes les villes</option>
+                            <option *ngFor="let v of villes" [value]="v.nom">
+                                {{v.nom}}
+                            </option>
+                        </select>
+                    </div>
                 </div>
                 <div class="cell-lg-2 bordure-orange-fin">
                     <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">

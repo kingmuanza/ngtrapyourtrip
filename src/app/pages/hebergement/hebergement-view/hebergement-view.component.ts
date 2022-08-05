@@ -86,11 +86,6 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
       adultes: [1, Validators.required],
       enfants: [0, Validators.required],
     });
-
-    this.form.controls['date'].valueChanges.subscribe((value) => {
-      console.log('value');
-      console.log(value);
-    });
   }
 
   changementDimages() {
@@ -139,68 +134,65 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
     const date = this.calendarpickerlocale.nativeElement.value;
     const dateFin = this.calendarpickerlocale2.nativeElement.value;
 
-    if (date && date.length > 2 && dateFin && dateFin.length > 2) {
+    if (date && dateFin) {
       const diff = new Date(dateFin).getTime() - new Date(date).getTime();
       console.log('difefrence');
       console.log(diff);
 
-      if (new Date(date).getTime() < new Date(dateFin).getTime()) {
+      if (new Date().getTime() < new Date(date).getTime()) {
+        if (new Date(date).getTime() < new Date(dateFin).getTime()) {
 
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        console.log('Nombre de jours');
-        console.log(days);
-        const reservation = new Reservation();
-        reservation.hebergement = this.hebergement;
-        reservation.personnes = adultes;
-        reservation.enfants = enfants;
-        reservation.dateDebut = new Date(date);
-        reservation.dateFin = new Date(dateFin);
-        reservation.cout = this.hebergement.nuitee * days;
+          if (Number(enfants) > 5 || 0 > Number(enfants)) {
+            alert('le nombre d\'enfants doit être inférieur à 5');
+            return;
+          }
 
-        console.log('reservation');
-        console.log(reservation);
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          console.log('Nombre de jours');
+          console.log(days);
+          const reservation = new Reservation();
+          reservation.hebergement = this.hebergement;
+          reservation.personnes = adultes;
+          reservation.enfants = enfants;
+          reservation.dateDebut = new Date(date);
+          reservation.dateFin = new Date(dateFin);
+          reservation.cout = this.hebergement.nuitee * days;
 
-        const activity = metro().activity.open({
-          type: 'square',
-          overlayColor: '#fff',
-          overlayAlpha: 0.8
-        });
+          console.log('reservation');
+          console.log(reservation);
 
-        const panierString = localStorage.getItem('panier-trap');
-        let panier = [];
-        if (panierString) {
-          panier = JSON.parse(panierString);
+          const activity = metro().activity.open({
+            type: 'square',
+            overlayColor: '#fff',
+            overlayAlpha: 0.8
+          });
+
+          const panierString = localStorage.getItem('panier-trap');
+          let panier = [];
+          if (panierString) {
+            panier = JSON.parse(panierString);
+          }
+          panier.push(reservation);
+          localStorage.setItem('panier-trap', JSON.stringify(panier));
+
+          const db = firebase.firestore();
+          db.collection('reservation-trap').doc(reservation.id).set(JSON.parse(JSON.stringify(reservation))).then((resultats) => {
+            console.log('TERMINEEE !!!');
+            metro().activity.close(activity);
+            this.router.navigate(['offres', 'reservation', 'view', reservation.id]);
+          }).catch((e) => {
+            metro().activity.close(activity);
+          });
+
+        } else {
+          alert('La date d\'arrivée est supérieure à la date de départ');
         }
-        panier.push(reservation);
-        localStorage.setItem('panier-trap', JSON.stringify(panier));
-
-        const db = firebase.firestore();
-        db.collection('reservation-trap').doc(reservation.id).set(JSON.parse(JSON.stringify(reservation))).then((resultats) => {
-          console.log('TERMINEEE !!!');
-          metro().activity.close(activity);
-          this.router.navigate(['offres', 'reservation', 'view', reservation.id]);
-        }).catch((e) => {
-          metro().activity.close(activity);
-        });
-
       } else {
-        const notify = metro().notify;
-        notify.create('La date d\'arrivée est supérieure à la date de départ', null, {
-          cls: 'alert',
-          distance: '50vh',
-          duration: 1000,
-          timeout: 4000
-        });
+        alert('La date d\'arrivée doit être spérieure à celle d\'aujourd\'hui');
       }
 
     } else {
-      const notify = metro().notify;
-      notify.create('Veuillez renseigner la date', null, {
-        cls: 'alert',
-        distance: '50vh',
-        timeout: 4000,
-        duration: 1000
-      });
+      alert('Veuillez renseigner la date');
     }
 
   }

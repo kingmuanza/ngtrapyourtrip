@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>CinetPay :: Effectuer un paiement</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="/js/pace.min.js"></script>
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="/css/pace.css">
+    <script>
+        window.ciTen = 'ok';
+        Pace.on("done", function() {
+            $(".pagecontent").show();
+        });
+        var initDestroyTimeOutPace = function() {
+            var refreshIntervalId = setInterval(function() {
+                var progress;
+
+                if (typeof $('.pace-progress').attr('data-progress-text') !== 'undefined') {
+                    progress = Number($('.pace-progress').attr('data-progress-text').replace("%", ''));
+                }
+
+                if (progress >= 30) {
+                    clearInterval(refreshIntervalId);
+                    Pace.stop();
+                }
+            }, 50);
+        };
+        initDestroyTimeOutPace();
+    </script>
+    <link href="/bootstrap/css/font-awesome.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="/css/intlTelInput.new.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="/css/formValidation.min.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="/bootstrap/css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+    <link href="/css/cinetpay.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="/css/sweetalert.css" media="screen" rel="stylesheet" type="text/css">
+    <script src="//d2wy8f7a9ursnm.cloudfront.net/v7/bugsnag.min.js"></script>
+    <script>
+        Bugsnag.start({
+            apiKey: '677dc15a03ef27e29bfdf4f0cf0bc06d',
+            appVersion: '2.1.0',
+            logger: null
+        })
+    </script>
+    <!--[if lt IE 9]> <script type="text/javascript" src="/bootstrap/js/html5shiv.js"></script><![endif]-->
+    <!--[if lt IE 9]> <script type="text/javascript" src="/bootstrap/js/respond.min.js"></script><![endif]-->
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/intlTelInput.new.1.js"></script>
+    <script type="text/javascript" src="/js/formValidation.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.formvalidation.min.js"></script>
+    <script type="text/javascript" src="/js/formValidation.fr.js"></script>
+    <script type="text/javascript" src="/js/cinetpay.js"></script>
+    <script type="text/javascript" src="/js/sweetalert.min.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168901417-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-168901417-1');
+    </script>
+</head>
+
+<body>
+    <noscript>
+        <style>
+            .pagecontent {
+                display: none;
+            }
+        </style>
+        <div class="container">
+            <div class="row">
+                &nbsp;
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+    
+                        </div>
+                        <div class="panel-body">
+                            <h4>
+                                <span>
+                                    <img src="/img/logo_cinetpay_min.png"
+                                         width="104" class="img-rounded img-responsive " align="absmiddle"/>
+                                </span>
+                                <span class="text-center">
+                                    Vous devez activer javascript pour acceder à cette page
+                                </span>
+                            </h4>
+                        </div>
+                        <div class="panel-footer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </noscript>
+    <div class="container pagecontent">
+        <div class="container">
+            <div class="row">
+                &nbsp;
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+
+                        </div>
+                        <div class="panel-body">
+                            <h4>
+                                <span>
+                                    <img src="/img/logo_cinetpay_min.png"
+                                         class="img-rounded img-responsive " align="absmiddle"/>
+                                </span> Vous n'&ecirc;tes pas autoris&eacute; &agrave; acc&eacute;der &agrave; ce service. : Donn&eacute;e manquantes </h4>
+                        </div>
+                        <div class="panel-footer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        /**
+         * With Love by Fawaz on 13 avril 2018.
+         */
+        window.reg_om_operator = /^[0]{1}[7,8,9]{1}\d{8}$/i;
+        window.reg_momo_operator = /^[0]{1}[4,5,6]{1}\d{8}$/i;
+        window.reg_flooz_operator = /^[0]{1}[0,1,2,3]{1}\d{8}$/i;
+
+        window.reg_old_om_operator = /^[0,4,5,6,7,8,9]{1}[7,8,9]{1}\d{6}$/i;
+        window.reg_old_momo_operator = /^[0,4,5,6,7,8,9]{1}[4,5,6]{1}\d{6}$/i;
+        window.reg_old_flooz_operator = /^[0,4,5,6,7,8,9]{1}[0,1,2,3]{1}\d{6}$/i;
+
+        window.reg_flooz_tg_operator = /^[7,9]{1}[6,7,8,9]{1}\d{6}$/i;
+
+        function addCustomValidator() {
+            FormValidation.Validator.otpValidator = {
+                validate: function(validator, $field, options) {
+                    var value = $field.val();
+                    var chx = document.getElementsByTagName('input');
+                    var elementChecked = null;
+                    for (var i = 0; i < chx.length; i++) {
+                        if (chx[i].type == 'radio' && chx[i].name == 'payment_method' && chx[i].checked) {
+                            elementChecked = chx[i];
+                        }
+                    }
+                    if (elementChecked == null) {
+                        return {
+                            valid: false,
+                            message: 'Vous devez selectionner votre moyen de paiement'
+                        };
+                    }
+
+                    if (elementChecked.value == 'OM' && value.length != 4) {
+                        return {
+                            valid: false,
+                            message: 'Vous devez saisir un code d\'autorisation de 4 chiffres'
+                        };
+                    }
+
+                    if (elementChecked.value == 'MTN' && value.length != 5) {
+                        return {
+                            valid: false,
+                            message: 'Vous devez saisir un code d\'autorisation de 4 chiffres'
+                        };
+                    }
+                    return true;
+                }
+            };
+            FormValidation.Validator.phoneValidator = {
+                validate: function(validator, $field, options) {
+                    var value = $field.val();
+                    value = value.replace(/\s/g, '');
+                    //value = value.replaceAll('.', '');
+                    //value = value.replaceAll('/', '');
+                    //value = value.replaceAll('-', '');
+                    var chx = document.getElementsByTagName('input');
+                    var elementChecked = null;
+                    for (var i = 0; i < chx.length; i++) {
+                        if (chx[i].type == 'radio' && chx[i].name == 'payment_method' && chx[i].checked) {
+                            elementChecked = chx[i];
+                        }
+                    }
+                    if (elementChecked == null) {
+                        return {
+                            valid: false,
+                            message: 'Vous devez selectionner votre moyen de paiement'
+                        };
+                    }
+
+                    if (!testNumberOperatorPattern(value, elementChecked.value, 'ci')) {
+                        if (elementChecked.value == 'OM') {
+                            return {
+                                valid: false,
+                                message: 'le numéro mobile saisi n\'est pas un numéro ORANGE'
+                            };
+                        } else if (elementChecked.value == 'MOMO') {
+                            return {
+                                valid: false,
+                                message: 'le numéro mobile saisi n\'est pas un numéro MTN'
+                            };
+                        } else if (elementChecked.value == 'FLOOZ') {
+                            return {
+                                valid: false,
+                                message: 'le numéro mobile saisi n\'est pas un numéro MOOV'
+                            };
+                        }
+                    }
+
+                    return true;
+                }
+            };
+        }
+
+        // Check Cancel Button
+        function checkAndCancel() {
+            var cancelUrl = $('input[name=cancelPayment]').val();
+            if (cancelUrl == '') {
+                $('#cancelPayment').html(' ');
+            }
+        }
+
+        //Select Payment method
+        function selectPaymentMethod(prod) {
+            var moyen_paiement;
+            var mtnToken;
+            var $form = $('#form_paiement');
+            var $otpInput = $('#code_otp');
+            if (prod == 'T') mtnToken = '*188*20#';
+            else mtnToken = '*133*10#';
+            $(document).on('click', 'input:radio[id^="q_op_"]', function() {
+                moyen_paiement = $(this).attr('id');
+
+                $('#cel_phone_num').show();
+                if (moyen_paiement == "q_op_om") {
+                    $('#cotp_div').html('<label for="code_otp">Code <abbr' +
+                            ' title="Le code d\'autorisation s\'obtient en suivant les indications ci-dessous">d\'autorisation</abbr></label>' +
+                            '<input type="password" id="code_otp" name="code_otp" maxlength="4" data-minlength="4"' +
+                            ' class="form-control" placeholder="Veuillez saisir le code d\'autorisation de 4 chiffres re&ccedil;u par SMS">' +
+                            '<span class="help-block well" id="aide">' +
+                            '<i><font color="blue">Pour obtenir votre code d\'autorisation Orange Money, merci de taper <font color="black"><b>#144#</b></font>, Choisir l\'option <font color="black"><b>8</b></font> puis l\'option <font color="black"><b>2</b></font>, Entrer votre code secret et Valider.</font></i></span><hr>')
+                        .show();
+                } else if (moyen_paiement == "q_op_omgn") {
+                    $('#cotp_div').html('<label for="code_otp">Code <abbr' +
+                            ' title="Le code d\'autorisation s\'obtient en suivant les indications ci-dessous">d\'autorisation</abbr></label>' +
+                            '<input type="password" id="code_otp" name="code_otp" maxlength="6" data-minlength="4"' +
+                            ' class="form-control" placeholder="Veuillez saisir le code d\'autorisation de 4 chiffres re&ccedil;u par SMS">' +
+                            '<span class="help-block well" id="aide">' +
+                            '<i><font color="blue">Pour obtenir votre code d\'autorisation Orange Money, merci de composer <font color="black"><b>#144#</b></font>, Choisir l\'option <font color="black"><b>4</b></font> puis l\'option <font color="black"><b>2</b></font>, et suivre les instructions.</font></i></span><hr>')
+                        .show();
+                } else if (moyen_paiement == "q_op_omml") {
+                    $('#cotp_div').html('<label for="code_otp">Code <abbr' +
+                            ' title="Le code de paiement s\'obtient en suivant les indications ci-dessous">de paiement</abbr></label>' +
+                            '<input type="password" id="code_otp" name="code_otp" maxlength="6" data-minlength="6"' +
+                            ' class="form-control" placeholder="Veuillez saisir le code de paiement de 6 chiffres re&ccedil;u par SMS">' +
+                            '<span class="help-block well" id="aide">' +
+                            '<i><font color="blue">Pour obtenir votre code de paiement, composer sur votre t&eacute;l&eacute;phone ORANGE la syntaxe suivante:<font color="black"><b>#144#77#</b></font> puis lancez l\'appel</font></i></span><hr>')
+                        .show();
+                } else if (moyen_paiement == "q_op_omcm") {
+                    /*$('#cotp_div').html('<label for="code_otp">Code <abbr' +
+                        ' title="Le code de paiement s\'obtient en suivant les indications ci-dessous">de paiement</abbr></label>' +
+                        '<input type="password" id="code_otp" name="code_otp" maxlength="6" data-minlength="6"' +
+                        ' class="form-control" placeholder="Veuillez saisir le code de paiement de 6 chiffres re&ccedil;u par SMS">' +
+                        '<span class="help-block well" id="aide">' +
+                        '<i><font color="blue">Pour obtenir votre code de paiement, composer sur votre t&eacute;l&eacute;phone ORANGE la syntaxe suivante:<font color="black"><b>#150*4*4#</b></font> puis lancez l\'appel</font></i></span><hr>')
+                        .show();*/
+                } else if (moyen_paiement == "q_op_omsn") {
+                    $('#cotp_div').html('<label for="code_otp">Code <abbr' +
+                            ' title="Le code de paiement s\'obtient en suivant les indications ci-dessous">de paiement</abbr></label>' +
+                            '<input type="password" id="code_otp" name="code_otp" maxlength="6" data-minlength="6"' +
+                            ' class="form-control" placeholder="Veuillez saisir le code de paiement de 6 chiffres re&ccedil;u par SMS">' +
+                            '<span class="help-block well" id="aide">' +
+                            '<i><font color="blue">Pour obtenir votre code de paiement, composer sur votre t&eacute;l&eacute;phone ORANGE la syntaxe suivante:<font color="black"><b>#144#391#</b></font> puis lancez l\'appel</font></i></span><hr>')
+                        .show();
+                } else if (moyen_paiement == "q_op_ombf") {
+                    $('#cotp_div').html('<label for="code_otp">Code <abbr' +
+                            ' title="Le code de paiement s\'obtient en suivant les indications ci-dessous">de paiement</abbr></label>' +
+                            '<input type="password" id="code_otp" name="code_otp" maxlength="6" minlength="4"' +
+                            ' class="form-control" placeholder="Veuillez saisir le code de paiement re&ccedil;u par SMS">' +
+                            '<span class="help-block well" id="aide">' +
+                            '<i><font color="blue">Pour obtenir votre code de paiement, composer sur votre t&eacute;l&eacute;phone ORANGE la syntaxe suivante:<font color="black"><b>*144*4*6*' + amountCp + '#</b></font> puis lancez l\'appel</font></i></span><hr>')
+                        .show();
+                } else if (moyen_paiement == "q_op_momo") {
+                    $('#cotp_div').html('<label style="display: none;" for="code_otp">Code <abbr' +
+                            ' title="Le code Token s\'obtient en suivant les indications ci-dessous">de paiement</abbr></label>' +
+                            '<input  style="display: none;" type="password" value="12345" id="code_otp" name="code_otp" maxlength="5" data-minlength="5"' +
+                            ' class="form-control" placeholder="Veuillez saisir le code d\'autorisation de 5 chiffres re&ccedil;u par SMS">')
+                        .show();
+                    /*
+                        if (prod == 'ANSUT') {
+                            $('#cotp_div').html('<label style="display: none;" for="code_otp">Code <abbr' +
+                                ' title="Le code Token s\'obtient en suivant les indications ci-dessous">de paiement</abbr></label>' +
+                                '<input  style="display: none;" type="password" value="12345" id="code_otp" name="code_otp" maxlength="5" data-minlength="5"' +
+                                ' class="form-control" placeholder="Veuillez saisir le code d\'autorisation de 5 chiffres re&ccedil;u par SMS">' +
+                                '<span class="well help-block" id="aide">' +
+                                '<i><font color="blue">Pour obtenir votre code d\'autorisation, composer sur votre t&eacute;l&eacute;phone MTN la syntaxe suivante: <font color="black"><b>' + mtnToken + '</b></font> puis lancez l\'appel</font></i></span><hr>')
+                                .show();
+                        } else {
+                            $('#cotp_div').html('<label for="code_otp">Code <abbr' +
+                                ' title="Le code Token s\'obtient en suivant les indications ci-dessous">d\'autorisation</abbr></label>' +
+                                '<input type="password" id="code_otp" name="code_otp" maxlength="5" data-minlength="5"' +
+                                ' class="form-control" placeholder="Veuillez saisir le code d\'autorisation de 5 chiffres re&ccedil;u par SMS">' +
+                                '<span class="well help-block" id="aide">' +
+                                '<i><font color="blue">Pour obtenir votre code d\'autorisation, composer sur votre t&eacute;l&eacute;phone MTN la syntaxe suivante: <font color="black"><b>' + mtnToken + '</b></font> puis lancez l\'appel</font></i></span><hr>')
+                                .show();
+                        }
+                    */
+                } else if (moyen_paiement == "q_op_atlvisa") {
+                    document.getElementById("card-brand-type").src = "/img/Visa_2014_logo_detail.svg.png";
+                    $('#atlvisamodal').modal('show');
+                } else if (moyen_paiement == "q_op_atlmastercard") {
+                    $('#atlvisamodal').modal('show');
+                    document.getElementById("card-brand-type").src = "/img/400px-Mastercard-logo.svg.png";
+                } else if (moyen_paiement == "q_op_flooz" || moyen_paiement == "q_op_flooztg" || moyen_paiement == "q_op_cp" || moyen_paiement == "q_op_mtncm" || moyen_paiement == "q_op_yupci" || moyen_paiement == "q_op_freesn" || moyen_paiement == "q_op_moovbf" || moyen_paiement == "q_op_omcd" || moyen_paiement == "q_op_mpesacd" || moyen_paiement == "q_op_tmoneytg" || moyen_paiement == "q_op_mtnbj" || moyen_paiement == "q_op_mtngn" || moyen_paiement == "q_op_expressosn" || moyen_paiement == "q_op_expressunioncm" || moyen_paiement == "q_op_airtelcd") {
+                    $('#cotp_div').html('').hide();
+                } else {
+                    $('#cel_phone_num').hide();
+                    $('#cotp_div').html('').hide();
+                }
+            });
+            /*
+             $("img.img.img-rounded").on("click", function () {
+             console.log(this);
+             alert('test');
+             var selector = "#" + $(this).attr('attr');
+             if ($(selector).is(':checked')) {
+             console.log('Already Checked');
+             } else {
+             $(selector).click();
+             console.log('Not Already Checked');
+             }
+             });
+             */
+        }
+
+        //Payment
+        function PaymentAssets() {
+            var $paymentForm = $('#form_paiement');
+            $paymentForm.formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'fa fa-check',
+                    invalid: 'fa fa-exclamation-triangle',
+                    validating: 'fa fa-spinner fa-spin'
+                },
+                fields: {
+                    code_otp: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Vous devez obligatoirement fournir votre code secret'
+                            },
+                            otpValidator: {
+                                message: 'Le code d\'autorisation n\'est pas au bon format'
+                            }
+                        }
+                    },
+                    phone_num: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Vous devez obligatoirement fournir votre numéro de téléphone'
+                            },
+                            callback: {
+                                message: 'Le numéro de téléphone n\'est pas valide',
+                                callback: function(value, validator, $field) {
+                                    if (!$field.intlTelInput('isValidNumber')) {
+                                        var txt;
+                                        if ($field.intlTelInput("getValidationError") == 0) {
+                                            txt = $field.intlTelInput("getNumber");
+                                            return testNumberPattern(txt);
+                                        } else {
+                                            txt = $field.intlTelInput("getNumber");
+                                            return testNumberPattern(txt);
+                                        }
+                                    } else {
+                                        return true;
+                                    }
+                                }
+                            },
+                            phoneValidator: {
+                                message: 'Le numéro de téléphone n\'est pas au bon format'
+                            }
+
+                        }
+                    }
+                }
+            });
+            $paymentForm.on('success.form.fv', function(e) {
+                e.preventDefault();
+                $('button.close').click();
+                var $button = $('form#form_paiement > div.form-group > div.col-xs-12 > button[type=submit].btn');
+                var $otp = $('input[name=code_otp]');
+                $("#phone_num_full").val($("#phone_num").intlTelInput("getNumber"));
+                var temp = $("#phone_num").intlTelInput("getSelectedCountryData");
+                $("#countryInscription").val(temp['iso2']);
+                var $resultDiv = $('#resultPayment');
+                var $form = $(e.target);
+                var csrfToken = $('input[name=csrf_token]').val();
+                $.ajax({
+                    url: '/async/paiement?time=' + (new Date()).getTime() + '&csrf_token=' + csrfToken,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: $form.serialize()
+                }).done(function(data) {
+                    switch (data.code) {
+                        case 0:
+                            if (data.cinetpay_code_status == 803) {
+                                window.location = '/security?csrf_token=' + csrfToken;
+                            } else if (data.cinetpay_code_status == 619) {
+                                formatResult(data.message, 'danger', $resultDiv);
+                            } else {
+                                window.location = '/' + data.cinetpay_redirection + '?csrf_token=' + csrfToken;
+                                //formatResult(data.message, 'danger', $resultDiv);
+                            }
+                            break;
+                        case 1:
+                            formatResult('Desol&eacute;, le num&eacute;ro mobile n\'est pas au bon format !', 'danger', $resultDiv);
+                            break;
+                        case 2:
+                            formatResult('Desol&eacute;, le code d\'autorisation n\'est pas au bon format !', 'danger', $resultDiv);
+                            break;
+                        case 308:
+                            formatResult('La plateforme de paiement est momentanement indisponible. <BR />Veuillez ressayez encore dans cinq (5) minutes svp !', 'danger', $resultDiv);
+                            break;
+                        case 900:
+                            formatResult('Desol&eacute;, Veuillez selectionner un moyen de paiement avant de continuer svp !', 'danger', $resultDiv);
+                            break;
+                        case 1000:
+                            window.location = '/notifypay?csrf_token=' + csrfToken;
+                            break;
+                        case 2000:
+                            window.location = '/paiement-carte?csrf_token=' + csrfToken;
+                            break;
+                        case 1100:
+                            formatResult(data.message, 'danger', $resultDiv);
+                            break;
+                        default:
+                            formatResult('Desol&eacute;, une erreur est survenue lors du paiement. <BR />Veuillez annuler votre paiement et ressayez plutard !', 'danger', $resultDiv);
+                            break;
+                    }
+                }).always(function() {
+                    $button.removeClass('disabled');
+                    $otp.val('');
+                    $button.attr('disabled', false);
+                });
+            });
+        }
+
+        function PaymentOtpAssets() {
+            var $paymentFormOtp = $('#form_otp_validation');
+            $paymentFormOtp.formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'fa fa-check',
+                    invalid: 'fa fa-exclamation-triangle',
+                    validating: 'fa fa-spinner fa-spin'
+                },
+                fields: {
+                    phone_num_otp: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Vous devez obligatoirement fournir le code OTP'
+                            },
+                            otpValidator: {
+                                message: 'Le code d\'autorisation n\'est pas au bon format'
+                            }
+                        }
+                    }
+                }
+            });
+            $paymentFormOtp.on('success.form.fv', function(e) {
+                e.preventDefault();
+                $('button.close').click();
+                var $button = $('form#form_otp_validation > div.form-group > div.col-xs-12 > button[type=submit].btn');
+                var $otp = $('input[name=code_otp]');
+                var $resultDiv = $('.resultPaymentGlobal');
+                var $form = $(e.target);
+                var csrfToken = $('input[name=csrf_token]').val();
+                $.ajax({
+                    url: '/async/otpverification?time=' + (new Date()).getTime() + '&csrf_token=' + csrfToken,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: $form.serialize()
+                }).done(function(data) {
+                    if (data.code == 200) {
+                        window.location = '/pay?csrf_token=' + csrfToken;
+                        swal({
+                            type: "success",
+                            title: "Numéro vérifié avec succès",
+                            text: "Vous pouvez à present effectuer le paiement"
+                        });
+                    } else {
+                        formatResult(data.message, 'danger', $resultDiv);
+                    }
+                }).always(function() {
+                    $button.removeClass('disabled');
+                    $otp.val('');
+                    $button.attr('disabled', false);
+                });
+            });
+        }
+
+        function preparePaymentForm($form, data) {
+            var countryData = window.intlTelInputGlobals.getCountryData(),
+                telInput = $("input[name=phone_num]"),
+                addressDropdown = $("#address-country");
+
+            telInput.intlTelInput("destroy");
+            addressDropdown.text();
+            try {
+                telInput.intlTelInput({
+                    utilsScript: '/js/utils.new.js',
+                    autoPlaceholder: true,
+                    onlyCountries: data.validCountry,
+                    initialCountry: data.country,
+                    separateDialCode: true,
+                    formatOnInit: false,
+                    allowDropdown: false
+                });
+                $.each(data.validCountry, function(i, countryProper) {
+                    $.each(countryData, function(i, country) {
+                        if (countryProper == country.iso2) {
+                            addressDropdown.append($("<option></option>").attr("value", country.iso2).text(country.name));
+                        }
+                    });
+                });
+            } catch (e) {
+                telInput.intlTelInput({
+                    utilsScript: '/js/utils.new.js',
+                    autoPlaceholder: true,
+                    initialCountry: 'ci',
+                    separateDialCode: true,
+                    formatOnInit: false,
+                    allowDropdown: false,
+                    onlyCountries: ["ci"]
+                });
+                addressDropdown.append($("<option></option>").attr("value", 'CI').text('Côte d\'Ivoire'));
+            }
+            addressDropdown.append($("<option></option>").attr("value", 'OTHER').text('Autres Pays'));
+            addressDropdown.append($("<option></option>").attr("value", 'INTERNATIONAL').text('International'));
+
+            var initialCountry = telInput.intlTelInput("getSelectedCountryData").iso2;
+            addressDropdown.val(initialCountry);
+            telInput.on("countrychange", function(e) {
+                countryData = telInput.intlTelInput("getSelectedCountryData");
+                try {
+                    addressDropdown.val(countryData.iso2);
+                } catch (e) {}
+                reloadMethodAvailableByCountry($form, countryData.iso2)
+            });
+            addressDropdown.change(function() {
+                try {
+                    telInput.intlTelInput("setCountry", $(this).val());
+                    reloadMethodAvailableByCountry($form, $(this).val());
+                } catch (e) {
+                    $('#cel_phone_num').hide();
+                    $('#cotp_div').html('').hide();
+                    reloadMethodAvailableByCountry($form, $(this).val())
+                }
+                //reloadMethodAvailableByCountry($form, telInput.intlTelInput("getSelectedCountryData").iso2)
+            });
+        }
+
+        function reloadMethodAvailableByCountry($form, iso2) {
+            var $paymentAvailable = $('#paymentAvailable');
+            $form.formValidation('revalidateField', 'phone_num');
+            getPaymentMethodAvailableByCountry(iso2, $paymentAvailable);
+        }
+
+        function formatResult(input, level, $selector) {
+            var value = '<div class="alert alert-' + level + ' alert-dismissible animated hinge shake" role="alert">' +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span' +
+                'aria-hidden="true">×</span></button>' +
+                '<p>' + input +
+                '</p>' +
+                '</div>';
+            $selector.html(value);
+        }
+
+        function getPaymentMethodAvailableByCountry(input, $selector) {
+            var $form = $('#form_paiement');
+            var csrfToken = $('input[name=csrf_token]').val();
+            $.ajax({
+                url: '/async/getavailablemethods?time=' + (new Date()).getTime() + '&csrf_token=' + csrfToken,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    input: input
+                }
+            }).done(function(data) {
+                if (data.success == true) {
+                    /*
+                    var selector = $('html').attr('data-useragent');
+                    var match = selector.search('Trident');
+                    if (match < 0) {
+                        $selector.html(
+                            '<h5 style="color: blue">Selectionner votre moyen de paiement en cliquant sur son logo</h5>' + data.message
+                        );
+                    } else {
+                        $selector.html(
+                            '<h5 style="color: blue">Selectionner votre moyen de paiement en cliquant sur la case au dessus de son logo</h5>' + data.message
+                        );
+                    }
+                    */
+                    $selector.html(
+                        '<h5 style="color: blue" id="pageindicator">Cliquer sur l\'opérateur de votre choix pour effectuer le paiement</h5>' + data.message
+                    );
+                    var phoneNum = ($('input[name=phone_num]').val()).replace(/\s/g, '');
+                    if (phoneNum != '') {
+                        var prefix_operator = getOperatorbyPhoneNumber(phoneNum);
+                        if (prefix_operator !== false) {
+                            var operator_id_selector = '#q_op_' + prefix_operator;
+                            $(operator_id_selector).click();
+                            //Disable Logo Operator
+                            disableOperatorLogo(phoneNum);
+                        }
+                    }
+                    $('input[name=payment_method]').change(function() {
+                        $form.formValidation('resetField', 'phone_num', false);
+                        if ($('input[name=phone_num]').val() != '') {
+                            $form.formValidation('validateField', 'phone_num');
+                        }
+                    });
+                } else {
+                    $selector.html('<h5 style="color: darkred">Aucun moyen de paiement disponible dans ce pays pour votre marchand pour le moment</h5>');
+
+                }
+            });
+        }
+
+        function checkCancelButton(cancel_uri, event) {
+            // Prevent form submission
+            event.preventDefault();
+            // Use Ajax to submit form data
+            $.post("/async/cancel", $(this).serialize(), function(data) {
+                switch (data.code) {
+                    case 0:
+                        //Request OK
+                        window.location = cancel_uri;
+                        break;
+                    case 308:
+                        $('#msg-succes').append('<div class="alert alert-danger">' + data.message + '</div>');
+                        $('#myAlertModal').modal('show');
+                        break;
+                    default:
+                        $('#msg-succes').append('<div class="alert alert-danger">Desol&eacute;, une erreur est survenue lors du paiement. <BR />Veuillez annuler votre paiement et ressayez plutard !</div>');
+                        $('#myAlertModal').modal('show');
+                        break;
+                }
+            }, 'json');
+        }
+
+        function getAjaxError() {
+            /*
+            $.ajaxSetup({
+                error: function (jqXHR, exception) {
+                    if (jqXHR.responseText) {
+                        var errorMessage = jqXHR.responseText.replace(/<.*?>/g, '');
+                        errorMessage = errorMessage.replace(/\s\s+/g, ' ');
+                        sweetAlert("Oops...", errorMessage, "error");
+                    } else {
+                        if (jqXHR.status === 0) {
+                            sweetAlert("Oops...", "Non connecté, Verifiez votre connexion internet.", "error");
+                        } else if (jqXHR.status == 404) {
+                            sweetAlert("Oops...", "La page demandée n'est pas disponible. [404].", "error");
+                        } else if (jqXHR.status == 500) {
+                            sweetAlert("Oops...", "Une erreur interne est survenue [500].", "error");
+                        } else if (exception === 'parsererror') {
+                            sweetAlert("Oops...", "Impossible de decoder le JSON retourné.", "error");
+                        } else if (exception === 'timeout') {
+                            sweetAlert("Oops...", "Le temps impartie s\'est ecoulé.", "error");
+                        } else if (exception === 'abort') {
+                            sweetAlert("Oops...", "Vous avez annulé la requète ajax.", "error");
+                        } else {
+                            sweetAlert("Oops...", "Une erreur inconnue est survenue.", "error");
+                        }
+                    }
+                }
+            });
+            */
+        }
+
+        function testNumberPattern(txt) {
+            var prefixe = txt.slice(0, 4);
+            var suffixe = txt.slice(4);
+            if (prefixe == '+225') {
+                var testOm = window.reg_om_operator.test(suffixe) || window.reg_old_om_operator.test(suffixe);
+                var testMtn = window.reg_momo_operator.test(suffixe) || window.reg_old_momo_operator.test(suffixe);
+                var testFlooz = window.reg_flooz_operator.test(suffixe) || window.reg_old_flooz_operator.test(suffixe);
+                return (testOm || testMtn || testFlooz);
+            } else if (prefixe == '+228') {
+                return window.reg_flooz_tg_operator.test(suffixe);
+            } else {
+                return false
+            }
+        }
+
+        function testNumberOperatorPattern(number, operator, country) {
+            if (country == 'ci') {
+                switch (operator) {
+                    case 'OM':
+                        return window.reg_om_operator.test(number) || window.reg_old_om_operator.test(number);
+                        break;
+                    case 'MOMO':
+                        return window.reg_momo_operator.test(number) || window.reg_old_momo_operator.test(number);
+                        break;
+                    case 'FLOOZ':
+                        return window.reg_flooz_operator.test(number) || window.reg_old_flooz_operator.test(number);
+                        break;
+                    default:
+                        return true;
+                        break;
+                }
+            } else if (country == 'tg') {
+                if (operator == 'FLOOZTG') {
+                    return window.reg_flooz_tg_operator.test(number);
+                }
+            }
+            if (prefixe == '+225') {
+                var testOm = window.reg_om_operator.test(number) || window.reg_old_om_operator.test(number);
+                var testMtn = window.reg_momo_operator.test(number) || window.reg_old_momo_operator.test(number);
+                var testFlooz = window.reg_flooz_operator.test(number) || window.reg_old_flooz_operator.test(number);
+                return (testOm || testMtn || testFlooz);
+            } else if (prefixe == '+228') {
+                return window.reg_flooz_tg_operator.test(number);
+            } else {
+                return false;
+            }
+        }
+
+        function getOperatorbyPhoneNumber(phone) {
+            var om_operator = window.reg_om_operator.test(phone) || window.reg_old_om_operator.test(phone);
+            var momo_operator = window.reg_momo_operator.test(phone) || window.reg_old_momo_operator.test(phone);
+            var flooz_operator = window.reg_flooz_operator.test(phone) || window.reg_old_flooz_operator.test(phone);
+            var flooz_tg_operator = window.reg_flooz_tg_operator.test(phone);
+            if (om_operator) {
+                return 'om';
+            } else if (flooz_operator) {
+                return 'flooz';
+            } else if (momo_operator) {
+                return 'momo';
+            } else if (flooz_tg_operator) {
+                return 'flooztg';
+            } else {
+                return false;
+            }
+        }
+
+        function checkPhoneToOperator(phone, operator) {
+            var om_operator = window.reg_om_operator.test(phone) || window.reg_old_om_operator.test(phone);
+            var momo_operator = window.reg_momo_operator.test(phone) || window.reg_old_momo_operator.test(phone);
+            var flooz_operator = window.reg_flooz_operator.test(phone) || window.reg_old_flooz_operator.test(phone);
+            var flooz_tg_operator = window.reg_flooz_tg_operator.test(phone);
+            if (operator == 'om') {
+                return om_operator;
+            }
+            if (operator == 'flooz') {
+                return flooz_operator;
+            }
+            if (operator == 'momo') {
+                return momo_operator;
+            }
+
+            if (operator == 'flooztg') {
+                return flooz_tg_operator;
+            }
+            return false;
+        }
+
+        function disableOperatorLogo(phone) {
+            //Disable Logo Operator
+            var disableOM = checkPhoneToOperator(phone, 'om');
+            var selectorOM = '#payment_method_om';
+            if (!disableOM) {
+                $(selectorOM).css("display", "none");
+            }
+            var disablemomo = checkPhoneToOperator(phone, 'momo');
+            var selectormomo = '#payment_method_momo';
+            if (!disablemomo) {
+                $(selectormomo).css("display", "none");
+            }
+            var disableflooz = checkPhoneToOperator(phone, 'flooz');
+            var selectorflooz = '#payment_method_flooz';
+            if (!disableflooz) {
+                $(selectorflooz).css("display", "none");
+            }
+            $("#pageindicator").css("display", "none");
+        }
+
+        function processATLVISA(token) {
+            var $resultDiv = $('.resultPaymentGlobal');
+            var $button = $('form#form_paiement > div.form-group > div.col-xs-12 > button[type=submit].btn');
+            var $otp = $('input[name=code_otp]');
+            $.ajax({
+                url: '/async/paiementvisa?' + (new Date()).getTime(),
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    token: token
+                }
+            }).done(function(data) {
+                switch (data.code) {
+                    case 0:
+                        if (data.cinetpay_code_status == '00' || data.cinetpay_code_status == 623) {
+                            window.location = '/statuspay';
+                        } else {
+                            formatResult(data.message, 'danger', $resultDiv);
+                        }
+                        break;
+                    case 1:
+                        formatResult('Desol&eacute;, le num&eacute;ro mobile n\'est pas au bon format !', 'danger', $resultDiv);
+                        break;
+                    case 2:
+                        formatResult('Desol&eacute;, le code d\'autorisation n\'est pas au bon format !', 'danger', $resultDiv);
+                        break;
+                    case 308:
+                        formatResult('La plateforme de paiement est momentanement indisponible. <BR />Veuillez ressayez encore dans cinq (5) minutes svp !', 'danger', $resultDiv);
+                        break;
+                    case 900:
+                        formatResult('Desol&eacute;, Veuillez selectionner un moyen de paiement avant de continuer svp !', 'danger', $resultDiv);
+                        break;
+                    case 1000:
+                        window.location = '/statuspay';
+                        break;
+                    case 1100:
+                        formatResult(data.message, 'danger', $resultDiv);
+                        break;
+                    default:
+                        formatResult('Desol&eacute;, une erreur est survenue lors du paiement. <BR />Veuillez annuler votre paiement et ressayez plutard !', 'danger', $resultDiv);
+                        break;
+                }
+            }).always(function() {
+                $button.removeClass('disabled');
+                $otp.val('');
+                $button.attr('disabled', false);
+                document.getElementById("pay-btn").removeAttribute("disabled");
+                document.getElementById("pay-btn").innerHTML = '<i class="fa fa-lock"></i> Payer de façon sûr';
+            });
+        }
+    </script>
+</body>
+
+</html>

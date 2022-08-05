@@ -89,6 +89,9 @@ import { CharteComponent } from './pages/charte/charte.component';
 import { TransportChoixComponent } from './pages/transport/transport-choix/transport-choix.component';
 import { TransportLocationListComponent } from './pages/transport/transport-location-list/transport-location-list.component';
 import { TransportLocationViewComponent } from './pages/transport/transport-location-view/transport-location-view.component';
+import { CancelComponent } from './pages/paiement/cancel/cancel.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ReturnComponent } from './pages/paiement/return/return.component';
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -175,7 +178,9 @@ registerLocaleData(localeFr, 'fr-FR');
     CharteComponent,
     TransportChoixComponent,
     TransportLocationListComponent,
-    TransportLocationViewComponent
+    TransportLocationViewComponent,
+    CancelComponent,
+    ReturnComponent
   ],
   imports: [
     BrowserModule,
@@ -184,6 +189,7 @@ registerLocaleData(localeFr, 'fr-FR');
     ReactiveFormsModule,
     DataTablesModule,
     ChartsModule,
+    HttpClientModule,
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

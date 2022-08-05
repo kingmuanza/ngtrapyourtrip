@@ -38,8 +38,16 @@
             <div *ngIf="recherchesShowed" class="mobile-recherche" style="margin-top: -30px; margin-bottom: 10px;">
                 <div class="row no-gap shadow-1">
                     <div class="cell-lg-5 bordure-orange-debut">
-                        <div>
-                            <input (change)="rechercheFilter()" #ville style="padding-left: 10px;" data-prepend="Ville" data-role="input" data-autocomplete="Douala, Yaoundé, Kribi, Limbé, Garoua, Maroua">
+                        <div *ngIf="villes.length > 0">
+                            <select (change)="rechercheFilter()" #ville data-prepend="Ville" data-role="select">
+                                <option value="">Toutes les villes</option>
+                                <option *ngFor="let v of villes" [value]="v.nom">
+                                    {{v.nom}}
+                                </option>
+                            </select>
+                        </div>
+                        <div *ngIf="villes.length === 0">
+                            <input data-role="input">
                         </div>
                     </div>
                     <div class="cell-lg-4 bordure-orange-fin">

@@ -3,6 +3,9 @@ import * as firebase from 'firebase';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Reservation } from 'src/app/models/reservation.model';
 import { Trajet } from 'src/app/models/trajet.model';
+import { AuthentificationService } from 'src/app/services/authentification.service';
+import { Subscription } from 'rxjs';
+import { Utilisateur } from 'src/app/models/utilisateur.model';
 
 declare const metro: any;
 
@@ -15,12 +18,23 @@ export class ReservationViewComponent implements OnInit {
 
   reservation: Reservation;
   days = 0;
+  utilisateur: Utilisateur;
+  utilisateurSubscription: Subscription;
+  showconnexionObligatoire = false;
+  interval;
+  seconds = 5;
+
   constructor(
+    private authService: AuthentificationService,
     private route: ActivatedRoute,
     private router: Router,
   ) { }
 
   ngOnInit(): void {
+    this.utilisateurSubscription = this.authService.utilisateurSubject.subscribe((utilisateur: Utilisateur) => {
+      this.utilisateur = utilisateur;
+    });
+    this.authService.emit();
     this.route.paramMap.subscribe((paramMap) => {
       const id = paramMap.get('id');
       this.getReservation(id);
@@ -77,7 +91,25 @@ export class ReservationViewComponent implements OnInit {
   }
 
   infos(reservation: Reservation) {
-    this.router.navigate(['offres', 'reservation', 'infos', reservation.id]);
+    if (this.utilisateur) {
+      this.router.navigate(['offres', 'reservation', 'infos', reservation.id]);
+    } else {
+      this.showconnexionObligatoire = true;
+      this.interval = setInterval(() => {
+        this.seconds--;
+      }, 1000);
+      setTimeout(() => {
+        clearInterval(this.interval);
+        localStorage.setItem('connexion-url', reservation.id);
+        this.router.navigate(['connexion']);
+      }, 5000);
+    }
+  }
+
+  okJaiCompris(reservation: Reservation) {
+    clearInterval(this.interval);
+    localStorage.setItem('connexion-url', reservation.id);
+    this.router.navigate(['connexion']);
   }
 
   description(trajet: Trajet) {

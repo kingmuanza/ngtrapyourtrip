@@ -20,9 +20,17 @@ export class DisplayDivertissementComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const date = new Date(this.divertissement?.date);
-    if (date.getTime() < new Date().getTime()) {
-      this.passee = true;
+
+    if (this.divertissement?.dateFin) {
+      const dateFin = new Date(this.divertissement?.dateFin);
+      if (dateFin.getTime() < new Date().getTime()) {
+        this.passee = true;
+      }
+    } else {
+      const date = new Date(this.divertissement?.date);
+      if (date.getTime() < new Date().getTime()) {
+        this.passee = true;
+      }
     }
   }
 

@@ -30,6 +30,7 @@ export class Reservation extends Modele {
         nom: string,
         prenom: string,
         tel: string,
+        email: string,
         numero: string,
         indicatif: string,
         typepiece: string

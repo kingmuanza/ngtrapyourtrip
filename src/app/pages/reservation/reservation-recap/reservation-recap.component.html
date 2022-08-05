@@ -136,6 +136,7 @@
                 </div>
             </div>
         </div>
+
         <div *ngIf="reservation.locationVoiture" class="row" style="margin-top: 20px;">
             <div class="cell-lg-3 cell-6">
                 <div>
@@ -249,7 +250,12 @@
             </div>
             <div class="cell-lg-4 my-text-right">
                 <div>
-                    <b>
+
+                    <b *ngIf="reservation.transport.retour">
+                        {{reservation.personnes}} * {{reservation.transport.depart.prix * 2 |
+                        currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                    </b>
+                    <b *ngIf="!reservation.transport.retour">
                         {{reservation.personnes}} * {{reservation.transport.depart.prix |
                         currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
                     </b>
@@ -264,6 +270,7 @@
                 </h3>
             </div>
         </div>
+
         <div class="shadow-1" style="padding:20px; padding-top: 15px; margin-top: 20px">
             <div>
                 <h3 style="margin:0; padding:0;">
@@ -275,15 +282,15 @@
                 </div>
                 <div class="row" style="margin-top: 20px;">
                     <div class="cell-lg-3 cell-6">
-                        <b>Noms</b>
+                        <b>Noms et prénoms</b>
                         <div>
-                            {{reservation.responsable.nom}}
+                            {{reservation.responsable.nom}} {{reservation.responsable.prenom}}
                         </div>
                     </div>
                     <div class="cell-lg-3 cell-6">
-                        <b>Prénoms</b>
+                        <b>Email</b>
                         <div>
-                            {{reservation.responsable.prenom}}
+                            {{reservation.responsable.email}}
                         </div>
                     </div>
                     <div class="cell-lg-2">

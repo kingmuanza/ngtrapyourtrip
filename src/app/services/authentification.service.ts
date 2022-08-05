@@ -58,6 +58,8 @@ export class AuthentificationService {
         }).catch((e) => {
           reject(e);
         });
+      }).catch((e) => {
+        reject(e);
       });
     });
   }

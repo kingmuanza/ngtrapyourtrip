@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { Sejour } from 'src/app/models/sejour.model';
+import { Ville } from 'src/app/models/ville.model';
 declare const metro: any;
 
 @Component({
@@ -30,6 +31,8 @@ export class SejourListComponent implements OnInit {
   screenWidth: number;
   mobile = true;
 
+  villes = new Array<Ville>();
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder
@@ -40,7 +43,9 @@ export class SejourListComponent implements OnInit {
   ngOnInit(): void {
     this.getSejours();
     this.initForm();
+    this.getVilles();
   }
+
   initForm() {
     this.form = this.formBuilder.group({
       mot: ['', []],
@@ -143,6 +148,19 @@ export class SejourListComponent implements OnInit {
 
   ouvrir(id) {
     this.router.navigate(['sejour', 'view', id]);
+  }
+
+  getVilles() {
+    this.villes = new Array<Ville>();
+    const db = firebase.firestore();
+    db.collection('ville-trap').get().then((resultats) => {
+      console.log('TERMINEEE !!!');
+      resultats.forEach((resultat) => {
+        const ville = resultat.data() as Ville;
+        this.villes.push(ville);
+      });
+    }).catch((e) => {
+    });
   }
 
   getSejours() {

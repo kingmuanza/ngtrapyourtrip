@@ -5,8 +5,11 @@ import { Subscription } from 'rxjs';
 import { Paiement } from 'src/app/models/paiement.model';
 import { Reservation } from 'src/app/models/reservation.model';
 import { Trajet } from 'src/app/models/trajet.model';
+import { Utilisateur } from 'src/app/models/utilisateur.model';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { PanierService } from 'src/app/services/panier.service';
+import { PaiementEditComponent } from '../paiement-edit/paiement-edit.component';
+declare const metro: any;
 
 @Component({
   selector: 'app-paiement-list',
@@ -17,6 +20,8 @@ export class PaiementListComponent implements OnInit {
 
   reservations = [];
   panierSubscription: Subscription;
+  utilisateur: Utilisateur;
+  utilisateurSubscription: Subscription;
   TOTAL = 0;
   isUser = false;
   paiements = new Array<Paiement>();
@@ -32,18 +37,34 @@ export class PaiementListComponent implements OnInit {
     } else {
       this.isUser = false;
     }
-    this.getPaiements();
+    this.utilisateurSubscription = this.authService.utilisateurSubject.subscribe((utilisateur: Utilisateur) => {
+      this.getPaiements(utilisateur);
+    });
+    this.authService.emit();
   }
 
-  getPaiements() {
+  getPaiements(utilisateur: Utilisateur) {
+    const activity = metro().activity.open({
+      type: 'square',
+      overlayColor: '#fff',
+      overlayAlpha: 0.8
+    });
+
     console.log('getPaiements');
     const db = firebase.firestore();
-    db.collection('paiement-trap').get().then((resultats) => {
-      resultats.forEach((resultat) => {
-        const paiement = resultat.data() as Paiement;
-        this.paiements.push(paiement);
+    db.collection('paiement-trap')
+      .where('utilisateur.id', '==', utilisateur.id)
+      .get().then((resultats) => {
+        resultats.forEach((resultat) => {
+          const paiement = resultat.data() as Paiement;
+          this.paiements.push(paiement);
+        });
+        console.log('this.paiements');
+        console.log(this.paiements);
+        metro().activity.close(activity);
+      }).catch((e) => {
+        metro().activity.close(activity);
       });
-    });
   }
 
   suivant() {
@@ -125,6 +146,26 @@ export class PaiementListComponent implements OnInit {
 
   toDate(str) {
     return new Date(str);
+  }
+
+  async payer(form, paiement: Paiement) {
+    const activity = metro().activity.open({
+      type: 'square',
+      overlayColor: '#fff',
+      overlayAlpha: 0.8
+    });
+
+    console.log(' this.paiement');
+    console.log(paiement);
+    setTimeout(() => {
+      console.log(' setTimeout metro().activity.close(activity)');
+      if (activity && metro().activity) {
+        metro().activity.close(activity);
+      }
+    }, 10000);
+
+    metro().activity.close(activity);
+    form.submit();
   }
 
 }

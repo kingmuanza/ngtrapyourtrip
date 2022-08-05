@@ -56,7 +56,42 @@
         </div>
     </div>
     <div *ngIf="sejour" class="images-sejour">
-        <div class="row">
+        <div *ngIf="sejour.images.length === 1" class="row">
+            <div *ngFor="let image of sejour.images" class="cell-12">
+                <div class="trap-image moyenne" [ngStyle]="{'background-image': 'url(' + image +')'}">
+
+                </div>
+            </div>
+        </div>
+        <div *ngIf="sejour.images.length === 2" class="row">
+            <div *ngFor="let image of sejour.images" class="cell-lg-6 cell-6">
+                <div class="trap-image moyenne" [ngStyle]="{'background-image': 'url(' + image +')'}">
+
+                </div>
+            </div>
+        </div>
+        <div *ngIf="sejour.images.length === 3" class="row">
+            <div *ngFor="let image of sejour.images" class="cell-lg-4 cell-6">
+                <div class="trap-image moyenne" [ngStyle]="{'background-image': 'url(' + image +')'}">
+
+                </div>
+            </div>
+        </div>
+        <div *ngIf="sejour.images.length === 4" class="row">
+            <div *ngFor="let image of sejour.images" class="cell-lg-3 cell-6">
+                <div class="trap-image" [ngStyle]="{'background-image': 'url(' + image +')'}">
+
+                </div>
+            </div>
+        </div>
+        <div *ngIf="sejour.images.length === 5" class="row cells-5">
+            <div *ngFor="let image of sejour.images" class="cell-1 cell-5">
+                <div class="trap-image" [ngStyle]="{'background-image': 'url(' + image +')'}">
+
+                </div>
+            </div>
+        </div>
+        <div *ngIf="sejour.images.length === 6" class="row">
             <div *ngFor="let image of sejour.images" class="cell-lg-2 cell-6">
                 <div class="trap-image" [ngStyle]="{'background-image': 'url(' + image +')'}">
 

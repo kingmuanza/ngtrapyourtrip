@@ -8,16 +8,22 @@
                 <div class="sous-titre text-leader2">
                     {{divertissement.description}}
                 </div>
-                <div>
+                <div style="height: 20px;">
+
+                </div>
+
+                <div class="sous-titre text-leader2" *ngIf="divertissement.date && !divertissement.dateFin">
                     Le
                     <b>{{divertissement.date | date: 'yyyy-MM-dd'}} </b>
+                </div>
+                <div class="sous-titre text-leader2" *ngIf="divertissement.date && divertissement.dateFin">
+                    Du <b>{{divertissement.date | date: 'yyyy-MM-dd' }}</b> au <b>{{divertissement.dateFin | date: 'yyyy-MM-dd' }}</b>
                 </div>
             </div>
             <div class="cell-lg-3 text-right">
                 <app-admin>
                     <div class="administration">
-                        <button class="button primary" style="background-color: rgb(48, 164, 221);"
-                            (click)="modifier(divertissement)">
+                        <button class="button primary" style="background-color: rgb(48, 164, 221);" (click)="modifier(divertissement)">
                             Modifier
                         </button>
                         <button class="button alert" style="margin-left: 10px;" (click)="supprimer(divertissement)">

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { Divertissement } from 'src/app/models/divertissement.model';
+import { Ville } from 'src/app/models/ville.model';
 declare const metro: any;
 
 @Component({
@@ -17,7 +18,7 @@ export class LoisirListComponent implements OnInit {
   resultats = new Array<Divertissement>();
   recherche = '';
   ordre = 'croissant';
-
+  villes = new Array<Ville>();
   form: FormGroup;
 
   constructor(
@@ -27,7 +28,21 @@ export class LoisirListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSejours();
+    this.getVilles();
     this.initForm();
+  }
+
+  getVilles() {
+    this.villes = new Array<Ville>();
+    const db = firebase.firestore();
+    db.collection('ville-trap').get().then((resultats) => {
+      console.log('TERMINEEE !!!');
+      resultats.forEach((resultat) => {
+        const ville = resultat.data() as Ville;
+        this.villes.push(ville);
+      });
+    }).catch((e) => {
+    });
   }
 
   initForm() {
@@ -43,7 +58,7 @@ export class LoisirListComponent implements OnInit {
   }
 
   onFormSubmit() {
-    const ville: string = this.ville.nativeElement.value;
+    const ville: string = this.form.value.ville;
     const texte = this.form.value.rechercher;
     console.log(ville);
     console.log(texte);
