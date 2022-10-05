@@ -10,7 +10,7 @@
 }
 
 .trap-image {
-    height: 50vh;
+    height: 40vh;
     background-size: cover;
     background-position: center center;
 }
@@ -43,12 +43,10 @@
     border-radius: 10px;
 }
 
-
 .bordure-bleu {
     &-debut {
         border: 2px solid rgb(48, 164, 221);
     }
-
     &-fin {
         border: 2px solid rgb(48, 164, 221);
         border-left: 0px solid #eee;
@@ -57,4 +55,42 @@
 
 .administration {
     margin-top: 20px;
+}
+
+.contenu-titre {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    line-height: 1.15;
+    margin-top: 0;
+    font-weight: bold;
+    font-size: 1.2em;
+    border-bottom: 1px solid #aaa;
+}
+
+.contenu-images {
+    padding-top: 5vh;
+    background-color: #eee;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    padding-bottom: 5vh;
+    width: 100vw;
+    overflow-x: hidden;
+    @media screen and (max-width: 599px) {
+        margin-top: 55px;
+        padding-left: 2.5vw;
+        padding-right: 2.5vw;
+        padding-bottom: 5vh;
+    }
+}
+
+.page {
+    min-height: 100vh;
+}
+
+.trap-description {
+    padding: 20px;
+    background-color: #eee;
+    margin-bottom: 20px;
+    line-height: 1.15;
+    height: 120px;
 }

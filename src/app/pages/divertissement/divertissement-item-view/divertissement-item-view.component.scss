@@ -1,0 +1,29 @@
+.trap-image {
+    height: 50vh;
+    background-size: cover;
+    background-position: center center;
+}
+
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+.animer {
+    animation-name: progress-bar;
+    animation-duration: 500ms;
+}
+
+.trap-image-big {
+    height: 62vmin;
+    background-size: cover;
+    background-position: center center;
+}

@@ -36,7 +36,7 @@
             </span>
             <span title="lit double fg-white" *ngIf="hebergement.options.litdouble" class="detail">
                 <span class="fas fa-bed fg-white"></span>
-                <span style="color: white;"> ²</span>
+            <span style="color: white;"> ²</span>
             </span>
             <span title="lit simple" *ngIf="hebergement.options.litsimple" class="detail">
                 <span class="fas fa-bed fg-white"></span>
@@ -53,13 +53,14 @@
         </div>
     </div>
     <div class="sejour__description">
-        <span class="petit-titre">
-            {{hebergement.titre}} 
-            <b *ngIf="hebergement.prestataire">
-                -
-                {{hebergement.prestataire.nom}} 
-            </b>
-        </span>
+        <div class="petit-titre">
+            {{hebergement.titre}}
+            <div *ngIf="hebergement.prestataire">
+                <b>
+                    {{hebergement.prestataire.nom}}
+                </b>
+            </div>
+        </div>
         <div class="sejour__notation orange" [innerHTML]="notationToStars(hebergement.notation)"></div>
         <div class="sejour__prix">
             {{hebergement.nuitee | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}

@@ -19,4 +19,14 @@ export class FooterComponent implements OnInit {
     this.router.navigate(['admin', 'connexion']);
   }
 
+  goToFacebook() {
+    const lien = 'https://web.facebook.com/profile.php?id=100083935126275';
+    window.open(lien);
+  }
+
+  goToInstagram() {
+    const lien = 'https://www.instagram.com/trapyourtrip/';
+    window.open(lien);
+  }
+
 }

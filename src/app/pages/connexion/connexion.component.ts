@@ -29,7 +29,7 @@ export class ConnexionComponent implements OnInit {
 
   initForm() {
     this.form = this.formBuilder.group({
-      login: ['kangudie@gmail.com', [Validators.required]],
+      login: ['', [Validators.required]],
       passe: ['', [Validators.required]]
     });
   }

@@ -1,0 +1,73 @@
+<div>
+    <div class="page" *ngIf="divertissementItem">
+        <div class="entete">
+            <div class="row">
+                <div class="cell-lg-9">
+                    <div class="titre">
+                        {{divertissementItem.titre}}
+                    </div>
+                    <div>
+                        <b>
+                            {{divertissementItem.divertissement.titre}}
+                        </b>
+                    </div>
+                    <div>
+
+                        <b>{{divertissementItem.prix | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form [formGroup]="form">
+            <div class="row no-gap shadow-3">
+                <div class="cell-lg-5 bordure-orange-debut">
+                    <input #calendarpickerlocale data-role="calendarpicker" data-prepend="Arrivée">
+                </div>
+                <div class="cell-lg-2 bordure-orange-fin">
+                    <div>
+                        <select data-prepend="Heure" data-role="select" formControlName="heure">
+                            <option value="oui">--:--</option>
+                            <option *ngFor="let h of heures" [ngValue]="h">{{h}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="cell-lg-3 bordure-orange-debut">
+                    <input formControlName="personnes" data-role="input" type="number" data-prepend="Quantité">
+                </div>
+                <div class="cell-lg-2 bordure-orange-fin">
+                    <button (click)="onFormSubmit()" class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
+                        Réserver
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div class="contenu" style="padding-top: 5vh">
+            <div class="row">
+                <div class="cell-lg-5">
+                    <div [innerHTML]="divertissementItem.description" class="sous-titre text-leader2">
+                        {{divertissementItem.description}}
+                    </div>
+                </div>
+                <div *ngIf="divertissementItem.images[0]" class="cell-lg-7">
+                    <div class="trap-image-big">
+                        <ng-container *ngFor="let image of divertissementItem.images; let i = index">
+
+                            <div *ngIf="i === indexImages" class="trap-image-big animer" [ngStyle]="{'background-image': 'url(' + divertissementItem.images[i] +')'}">
+
+                            </div>
+
+                        </ng-container>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div (click)="choisir(i)" class="cell-lg-1 cell-3" *ngFor="let image of divertissementItem.images; let i = index">
+                            <div [ngClass]="{'actuelle': i === indexImages}" style="height: 60px; cursor: pointer; background-size: cover; background-position: center center;" [ngStyle]="{'background-image': 'url(' + image +')'}">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

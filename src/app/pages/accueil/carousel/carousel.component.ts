@@ -66,6 +66,7 @@ export class CarouselComponent implements OnInit {
         const ville = resultat.data() as Ville;
         this.villes.push(ville);
       });
+      this.villesResultats = this.villes.concat([]);
     }).catch((e) => {
     });
   }
@@ -79,9 +80,10 @@ export class CarouselComponent implements OnInit {
     console.log('click accepté');
   }
 
-  ouvrir(id) {
-    console.log(id);
-    this.router.navigate(['offres', 'villes', 'view', id]);
+  ouvrir(ville: any) {
+    console.log('id');
+    console.log(ville);
+    this.router.navigate(['offres', 'villes', 'view', ville.id]);
   }
 
   voir(divers: Divertissement) {

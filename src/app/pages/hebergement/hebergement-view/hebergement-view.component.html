@@ -24,8 +24,13 @@
                             {{hebergement.prestataire.nom}} -
                         </b> {{hebergement.titre}}
                     </div>
+                    <div>
+                        <button (click)="check()">
+                            {{ hebergement.prestataire.hotel }}
+                        </button>
+                    </div>
 
-                    <div class="row hideOnMObile" style="margin-top: 10px;">
+                    <div class="row hideOnMObile" style="margin-top: 10px; display: none;">
                         <div class="cell-lg-12">
                             <div *ngIf="hebergement.options" class="details minime">
                                 <span title="Baignoire" *ngIf="hebergement.options.baignoire" class="detail2">
@@ -423,12 +428,15 @@
         </div>
     </div>
 </div>
-<div style="min-height: 50vh; background-color: #eee; padding: 5vw; padding-top: 2.5vw; margin-top: 30px;">
+<div class="others">
     <div style="font-size: 1.8em; font-weight: bold; margin-bottom: 2vw;">
         Vous pourriez aussi aimer
     </div>
     <div class="row">
-        <div class="cell-lg-3" *ngFor="let hebergement of resultats; let i = index">
+        <div class="cell-lg-3" *ngFor="let hebergement of others; let i = index">
+            <app-display-hebergement *ngIf="i < 4" [hebergement]="hebergement"></app-display-hebergement>
+        </div>
+        <div class="cell-lg-3" *ngFor="let hebergement of hebergements; let i = index">
             <app-display-hebergement *ngIf="i < 4" [hebergement]="hebergement"></app-display-hebergement>
         </div>
     </div>

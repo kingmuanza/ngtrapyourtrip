@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { Hebergement } from 'src/app/models/hebergement.model';
+import { Utilisateur } from 'src/app/models/utilisateur.model';
 declare const metro: any;
 
 @Component({
@@ -11,24 +12,25 @@ declare const metro: any;
 })
 export class AccueilHebergementsComponent implements OnInit {
 
-  hebergements = new Array<Hebergement>();
-  resultats = new Array<Hebergement>();
+  hebergements = new Array<Utilisateur>();
+  resultats = new Array<Utilisateur>();
   recherche = '';
   ordre = 'croissant';
+  utilisateurs = new Array<Utilisateur>();
   constructor(
     private router: Router,
   ) { }
 
   ngOnInit(): void {
-    this.getSejours();
+    this.getPrestataires();
   }
 
   ouvrir(id) {
     this.router.navigate(['hebergement', 'view', id]);
   }
 
-  getSejours() {
-    this.hebergements = new Array<Hebergement>();
+  getPrestataires() {
+    this.utilisateurs = new Array<Utilisateur>();
     const activity = metro().activity.open({
       type: 'square',
       overlayColor: '#fff',
@@ -36,17 +38,19 @@ export class AccueilHebergementsComponent implements OnInit {
     });
     const db = firebase.firestore();
     return new Promise((resolve, reject) => {
-      db.collection('hebergements-trap').get().then((resultats) => {
+      db.collection('utilisateurs-trap').get().then((resultats) => {
         resultats.forEach((resultat) => {
-          const hebergement = resultat.data() as Hebergement;
-          this.hebergements.push(hebergement);
-          this.resultats.push(hebergement);
+          const utilisateur = resultat.data() as Utilisateur;
+          if (utilisateur.prestataire) {
+            this.utilisateurs.push(utilisateur);
+            this.resultats.push(utilisateur);
+          }
         });
         console.log('TERMINEEE !!!');
-        console.log(this.hebergements);
+        console.log(this.utilisateurs);
         metro().activity.close(activity);
-        this.ordonner(this.ordre);
-        resolve(this.hebergements);
+
+        resolve(this.utilisateurs);
       }).catch((e) => {
         metro().activity.close(activity);
         reject(e);
@@ -64,16 +68,4 @@ export class AccueilHebergementsComponent implements OnInit {
     }
   }
 
-  ordonner(ev) {
-    console.log(ev);
-    if (ev === 'croissant') {
-      this.resultats.sort((a, b) => {
-        return a.nuitee - b.nuitee > 0 ? 1 : -1;
-      });
-    } else {
-      this.resultats.sort((a, b) => {
-        return a.nuitee - b.nuitee > 0 ? -1 : 1;
-      });
-    }
-  }
 }

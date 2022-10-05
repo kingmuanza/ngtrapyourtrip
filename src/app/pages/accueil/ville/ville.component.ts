@@ -41,7 +41,7 @@ export class VilleComponent implements OnInit {
         resultats.forEach((resultat) => {
           const utilisateur = resultat.data() as Utilisateur;
           if (utilisateur.prestataire) {
-            if (utilisateur.ville && utilisateur.ville.toLocaleLowerCase().indexOf(id.toLocaleLowerCase()) !== -1) {
+            if (id.indexOf(utilisateur.ville) !== -1) {
               this.prestataires.push(utilisateur);
             }
           }
@@ -62,7 +62,9 @@ export class VilleComponent implements OnInit {
       db.collection('divertissements-trap').orderBy('date', 'desc').get().then((resultats) => {
         resultats.forEach((resultat) => {
           const divertissement = resultat.data() as Divertissement;
-          if (divertissement.ville && divertissement.ville.toLocaleLowerCase().indexOf(id.toLocaleLowerCase()) !== -1) {
+          console.log('divertissement');
+          console.log(divertissement);
+          if (divertissement.ville && id.toLocaleLowerCase().indexOf(divertissement.ville.toLocaleLowerCase()) !== -1) {
             this.divertissements.push(divertissement);
             if (divertissement.date) {
               this.evenements.push(divertissement);

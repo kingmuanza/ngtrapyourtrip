@@ -92,6 +92,11 @@ import { TransportLocationViewComponent } from './pages/transport/transport-loca
 import { CancelComponent } from './pages/paiement/cancel/cancel.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReturnComponent } from './pages/paiement/return/return.component';
+import { DisplayRestaurantComponent } from './components/display-restaurant/display-restaurant.component';
+import { DisplayVoitureComponent } from './components/display-voiture/display-voiture.component';
+import { DisplayDivertissementItemComponent } from './components/display-divertissement-item/display-divertissement-item.component';
+import { DivertissementItemViewComponent } from './pages/divertissement/divertissement-item-view/divertissement-item-view.component';
+import { DisplayReservationDescriptionComponent } from './components/display-reservation-description/display-reservation-description.component';
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -180,7 +185,12 @@ registerLocaleData(localeFr, 'fr-FR');
     TransportLocationListComponent,
     TransportLocationViewComponent,
     CancelComponent,
-    ReturnComponent
+    ReturnComponent,
+    DisplayRestaurantComponent,
+    DisplayVoitureComponent,
+    DisplayDivertissementItemComponent,
+    DivertissementItemViewComponent,
+    DisplayReservationDescriptionComponent
   ],
   imports: [
     BrowserModule,

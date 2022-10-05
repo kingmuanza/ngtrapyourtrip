@@ -125,21 +125,21 @@ export class HebergementListComponent implements OnInit {
 
     this.resultats = this.resultats.filter((hebergement) => {
       if (hebergement.options) {
-        const baignoire = value.parking ? hebergement.options.baignoire : true;
+        const baignoire = value.baignoire ? hebergement.options.baignoire : true;
         const wifi = value.wifi ? hebergement.options.wifi : true;
         const climatiseur = value.climatiseur ? hebergement.options.climatiseur : true;
-        const bureau = value.climatiseur ? hebergement.options.bureau : true;
-        const linge = value.climatiseur ? hebergement.options.linge : true;
-        const tele = value.plage ? hebergement.options.tele : true;
-        const insonore = value.plage ? hebergement.options.insonore : true;
-        const bouilloire = value.piscine ? hebergement.options.bouilloire : true;
-        const cafe = value.piscine ? hebergement.options.cafe : true;
-        const minibar = value.petitdej ? hebergement.options.minibar : true;
-        const litsimple = value.gardien ? hebergement.options.litsimple : true;
-        const litdouble = value.gardien ? hebergement.options.litdouble : true;
-        const spa = value.gardien ? hebergement.options.spa : true;
-        const forme = value.gardien ? hebergement.options.forme : true;
-        const navette = value.gardien ? hebergement.options.navette : true;
+        const bureau = value.bureau ? hebergement.options.bureau : true;
+        const linge = value.linge ? hebergement.options.linge : true;
+        const tele = value.tele ? hebergement.options.tele : true;
+        const insonore = value.insonore ? hebergement.options.insonore : true;
+        const bouilloire = value.bouilloire ? hebergement.options.bouilloire : true;
+        const cafe = value.cafe ? hebergement.options.cafe : true;
+        const minibar = value.minibar ? hebergement.options.minibar : true;
+        const litsimple = value.litsimple ? hebergement.options.litsimple : true;
+        const litdouble = value.litdouble ? hebergement.options.litdouble : true;
+        const spa = value.spa ? hebergement.options.spa : true;
+        const forme = value.forme ? hebergement.options.forme : true;
+        const navette = value.navette ? hebergement.options.navette : true;
 
         const nouveaux = navette && forme && spa && cafe && insonore && linge && bureau;
         return nouveaux && wifi && baignoire && tele && bouilloire && climatiseur && minibar && litsimple && litdouble;
@@ -274,6 +274,11 @@ export class HebergementListComponent implements OnInit {
         this.router.navigate(['offres', 'hebergement']);
       });
     }
+  }
+
+  ouvrirGoogleMap() {
+    const lien = 'http://maps.google.com/maps?q=' +  this.prestataire.latitude + ',' + this.prestataire.longitude;
+    window.open(lien);
   }
 
 }

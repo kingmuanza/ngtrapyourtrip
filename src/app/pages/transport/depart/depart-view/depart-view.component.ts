@@ -125,7 +125,7 @@ export class DepartViewComponent implements OnInit {
     const d = new Date(date);
     const heure = d.toISOString();
     const temps = heure.split('T')[1];
-    const h = temps.substr(0, 5);
+    const h = temps.substring(0, 5);
     return h;
   }
 

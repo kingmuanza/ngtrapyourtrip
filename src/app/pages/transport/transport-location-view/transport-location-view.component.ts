@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
+import { AlertPromise } from 'selenium-webdriver';
 import { LocationVoiture } from 'src/app/models/location.voiture.model';
 import { Reservation } from 'src/app/models/reservation.model';
 import { Ville } from 'src/app/models/ville.model';
@@ -97,6 +98,15 @@ export class TransportLocationViewComponent implements OnInit {
     });
   }
 
+  test() {
+    console.log('valuteste');
+    const val = metro().dialog.isDialog('#demoDialog2');
+    metro().dialog.remove('#demoDialog2');
+    console.log(val);
+    this.onFormSubmit();
+  }
+
+
   onFormSubmit() {
     const value = this.form.value;
     console.log('value');
@@ -117,6 +127,7 @@ export class TransportLocationViewComponent implements OnInit {
       console.log(arrivee);
       console.log('date');
       console.log(date);
+
 
       if (depart && arrivee && date && heure) {
         const location = new LocationVoiture('interurbain', this.voiture);
@@ -161,8 +172,8 @@ export class TransportLocationViewComponent implements OnInit {
       if (ville && debut && fin && heureDebut && heureFin) {
         const location = new LocationVoiture('location', this.voiture);
         location.ville = ville;
-        location.debut = new Date(debut + ' ' + heureDebut);
-        location.fin = new Date(fin + ' ' + heureDebut);
+        location.debut = new Date(debut + 'T' + heureDebut);
+        location.fin = new Date(fin + 'T' + heureFin);
         if (location.debut.getTime() - new Date().getTime() > 0) {
           if (location.fin.getTime() - location.debut.getTime() > 0) {
             console.log('location');
@@ -187,6 +198,24 @@ export class TransportLocationViewComponent implements OnInit {
       } else {
         alert('Veuillez remplir le formulaire de réservation');
       }
+    }
+  }
+
+  onSubmitInterurbain() {
+    const value = this.form.value;
+    const depart = value.depart;
+    const arrivee = value.arrivee;
+    const date = this.date.nativeElement.value;
+    const heure = value.heure;
+    if (depart && arrivee && date && heure) {
+      const dateDepart = new Date(date + 'T' + heure);
+      if (dateDepart.getTime() - new Date().getTime() > 0) {
+        metro().dialog.open('#demoDialog2');
+      } else {
+        alert('Veuillez rentrer une date valide');
+      }
+    } else {
+      alert('Veuillez remplir le formulaire !');
     }
   }
 
@@ -216,21 +245,21 @@ export class TransportLocationViewComponent implements OnInit {
       reservation.locationVoiture = location;
       reservation.dateDebut = location.debut;
       reservation.dateFin = location.fin;
+      const diff = new Date(reservation.dateFin).getTime() - new Date(reservation.dateDebut).getTime();
+      const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
       if (location.type === 'location') {
-        const diff = new Date(reservation.dateFin).getTime() - new Date(reservation.dateDebut).getTime();
-        const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
         reservation.cout = location.voiture.cout * days;
       }
       if (location.type === 'interurbain') {
         if (location.voiture.coutInterurbain) {
           reservation.cout = location.voiture.coutInterurbain;
           if (allerretour) {
-            reservation.cout = location.voiture.coutInterurbain * 2;
+            reservation.cout = location.voiture.coutInterurbain * days;
           }
         } else {
           reservation.cout = location.voiture.cout;
           if (allerretour) {
-            reservation.cout = location.voiture.cout * 2;
+            reservation.cout = location.voiture.cout * days;
           }
         }
       }
@@ -273,31 +302,42 @@ export class TransportLocationViewComponent implements OnInit {
     console.log('heureFin');
     console.log(heureFin);
 
+    console.log('this.type');
+    console.log(this.type);
+    console.log(this.type === 'interurbain');
+
     if (this.type === 'interurbain') {
-      const depart = this.departInput.nativeElement.value;
-      const arrivee = this.arriveeInput.nativeElement.value;
-      const date = this.date.nativeElement.value;
-      const date2 = this.date2.nativeElement.value;
-      const heure = value.heure;
+      const depart = value.depart;
+      const arrivee = value.arrivee;
 
       console.log('depart');
       console.log(depart);
       console.log('arrivee');
       console.log(arrivee);
+      const date = this.date.nativeElement.value;
+      const date2 = this.date2.nativeElement.value;
+      const heure = value.heure;
+
       console.log('date');
       console.log(date);
+
+      console.log('date2');
+      console.log(date2);
+      console.log('heure');
+      console.log(heure);
 
       if (depart && arrivee && date && heure) {
         const location = new LocationVoiture('interurbain', this.voiture);
         location.depart = depart;
         location.arrivee = arrivee;
-        const dateDepart = new Date(date + ' ' + heureDebut);
-        const dateRetour = new Date(date2 + ' ' + heureFin);
+        const dateDepart = new Date(date + 'T' + heure);
+        const dateRetour = new Date(date2 + 'T' + this.retourHeure);
         console.log('dateDepart');
         console.log(dateDepart);
         console.log('dateRetour');
         console.log(dateRetour);
         if (dateDepart.getTime() - new Date().getTime() > 0 && dateRetour.getTime() - dateDepart.getTime() > 0) {
+          metro().dialog.remove('#demoDialog2');
           location.date = dateDepart;
           location.dateRetour = dateRetour;
           location.allerretour = allerretour;

@@ -1,6 +1,6 @@
 <div class="page" *ngIf="divertissement">
     <div class="entete">
-        <div class="row">
+        <div class="row" style="margin-bottom: 20px">
             <div class="cell-lg-9">
                 <div class="titre">
                     {{divertissement.titre}}
@@ -19,18 +19,26 @@
                 <div class="sous-titre text-leader2" *ngIf="divertissement.date && divertissement.dateFin">
                     Du <b>{{divertissement.date | date: 'yyyy-MM-dd' }}</b> au <b>{{divertissement.dateFin | date: 'yyyy-MM-dd' }}</b>
                 </div>
-            </div>
-            <div class="cell-lg-3 text-right">
-                <app-admin>
-                    <div class="administration">
-                        <button class="button primary" style="background-color: rgb(48, 164, 221);" (click)="modifier(divertissement)">
-                            Modifier
-                        </button>
-                        <button class="button alert" style="margin-left: 10px;" (click)="supprimer(divertissement)">
-                            Supprimer
-                        </button>
+
+                <div>
+                    <div style="margin-top: 10px;">
+                        <a *ngIf="divertissement.latitude && divertissement.longitude" class="showOnMObile " style="color: rgb(48, 164, 221); font-size: 0.8em;" (click)="ouvrirGoogleMap()" target="_blank">
+                            Ouvrir sur Google Map
+                        </a>
                     </div>
-                </app-admin>
+                </div>
+            </div>
+            <div class="cell-lg-3 text-right hideOnMObile">
+                <div *ngIf="divertissement.latitude && divertissement.longitude" style="text-align: center; margin-top: 0px;">
+                    <div style="font-size: 2.5em;">
+                        <span class="mif-location" style="color: rgb(48, 164, 221);"></span>
+                    </div>
+                    <div>
+                        <a class="text-leader2 map" style="color: #303030;" (click)="ouvrirGoogleMap()" target="_blank">
+                            Ouvrir sur Google Map
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
         <form [formGroup]="form" (ngSubmit)="onFormSubmit()">

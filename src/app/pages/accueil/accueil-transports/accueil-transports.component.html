@@ -9,9 +9,9 @@
 
 <div class="transports">
     <div class="row">
-        <div class="cell-lg-3" *ngFor="let transport of transports; let index = index;">
+        <div class="cell-lg-4" *ngFor="let v of voitures; let index = index;">
             <div *ngIf="index < 6">
-                <app-display-transport [transport]="transport"></app-display-transport>
+                <app-display-voiture [voiture]="v"></app-display-voiture>
             </div>
         </div>
     </div>

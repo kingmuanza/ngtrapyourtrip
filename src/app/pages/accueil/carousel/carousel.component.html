@@ -21,7 +21,7 @@
                 </div>
                 <input *ngIf="mobile" [(ngModel)]="recherche" (ngModelChange)="rechercher($event)" data-role="materialinput" placeholder="Entrez le nom d'une ville">
                 <input *ngIf="!mobile" [(ngModel)]="recherche" (ngModelChange)="rechercher($event)" class="trap-input hideOnMObile shadow-3">
-                <div (click)="verifier()" class="resultats">
+                <div class="resultats">
                     <small class="showOnMObile propositions-titre">
                         Quelques propositions
                     </small>

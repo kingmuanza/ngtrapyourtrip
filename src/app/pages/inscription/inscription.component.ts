@@ -30,9 +30,9 @@ export class InscriptionComponent implements OnInit {
 
   initForm() {
     this.form = this.formBuilder.group({
-      login: ['kangudie@gmail.com', [Validators.required]],
-      nom: ['Muanza', [Validators.required]],
-      prenom: ['Kangudie', []],
+      login: ['', [Validators.required]],
+      nom: ['', [Validators.required]],
+      prenom: ['', []],
       sexe: ['homme', []],
       passe: ['', [Validators.required]],
       confirmation: ['', [Validators.required]]

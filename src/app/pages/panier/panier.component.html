@@ -40,26 +40,30 @@
                         <span *ngIf="reservation.divertissement ">
                             {{reservation.divertissement.titre}}
                         </span>
+                        <span *ngIf="reservation.divertissementItem">
+                            {{reservation.divertissementItem.divertissement.titre}}
+                            <div>
+                                {{reservation.divertissementItem.titre}}
+                            </div>
+                        </span>
                         <span *ngIf="reservation.transport ">
                             {{reservation.transport.depart.agence.nom}}
                         </span>
                         <span *ngIf="reservation.locationVoiture ">
                             Location de voiture :
-                            {{reservation.locationVoiture.voiture.modele}}
+                            {{reservation.locationVoiture.voiture.categorie}}
                         </span>
                     </td>
                     <td>
-                        <span *ngIf="reservation.sejour ">
-                            {{reservation.sejour.description}}
+                        <span *ngIf="reservation.sejour " [innerHTML]="reservation.sejour.description">
                         </span>
-                        <span *ngIf="reservation.hebergement ">
-                            {{reservation.hebergement.description}}
+                        <span *ngIf="reservation.hebergement " [innerHTML]="reservation.hebergement.description">
                         </span>
-                        <span *ngIf="reservation.divertissement ">
-                            {{reservation.divertissement.description}}
+                        <span *ngIf="reservation.divertissement " [innerHTML]="reservation.divertissement.description">
                         </span>
-                        <span *ngIf="reservation.transport ">
-                            {{description(reservation.transport.depart.trajet)}}
+                        <span *ngIf="reservation.divertissementItem " [innerHTML]="reservation.divertissementItem.description">
+                        </span>
+                        <span *ngIf="reservation.transport " [innerHTML]="description(reservation.transport.depart.trajet)">
                         </span>
                         <div *ngIf="reservation.locationVoiture ">
                             {{reservation.locationVoiture.type}}
@@ -103,92 +107,118 @@
             </tfoot>
         </table>
         <div *ngIf="reservations && reservations.length> 0" style="margin-top: 20px;">
-            <div>
-                <form #form action="https://trapyourtrip.com/cinetpay/index.php" method="post">
-                    <!-- <form #form action="cinetpay/index.php" method="post"> -->
+
+            <div class="row">
+                <div class="col-lg-4">
                     <a (click)="supprimerTout()" class="button alert danger" style="color: white;">
                         Annuler toutes les réservations
                     </a>
-                    <input type="hidden" name="montant" [value]="TOTAL">
-                    <input type="hidden" name="id" [value]="paiement.id">
-                    <button *ngIf="isUser" type="submit" (click)="payer(form)" class="button warning" style="background-color: rgb(48, 164, 221); float: right;">
-                        <ng-container *ngIf="isUser">
-                            Passer au paiement
-                        </ng-container>
-                    </button>
-                    <button *ngIf="!isUser" class="button warning" style="background-color: rgb(48, 164, 221); float: right;" (click)="suivant()">
+                </div>
+                <div class="col-lg-8">
+                    <form #formMobile action="https://trapyourtrip.com/cinetpay/index.php" method="post">
+
+                        <input type="hidden" name="amount" [value]="TOTAL">
+                        <input type="hidden" name="currency" value="XAF">
+                        <input type="hidden" name="valider" [value]="true">
+                        <input type="hidden" name="customer_name" [value]="utilisateur.nom + ' ' + utilisateur.prenom">
+                        <input type="hidden" name="customer_surname" [value]="utilisateur.nom + ' ' + utilisateur.prenom">
+                        <input type="hidden" name="description" value="Achat sur Trap your trip">
+                        <input type="hidden" name="id" [value]="paiement.id">
+
+                        <a *ngIf="isUser" (click)="payerMobile(formMobile)" class="button success" style="color: white; float: right; ">
+                            Paiment mobile
+                            <span style="margin-left: 10px;" class="fas fa-mobile fg-white"></span>
+                        </a>
+                    </form>
+                    <form #formBancaire action="http://trapyourtrip/stripe/index.php" method="post">
+
+                        <input type="hidden" name="montant" [value]="TOTAL">
+                        <input type="hidden" name="email" [value]="utilisateur.email ? utilisateur.email: 'aucun.email@gmail.com'">
+
+                        <button type="submit" *ngIf="isUser" (click)="payerBancaire(formBancaire)" class="button success" style="background-color: rgb(48, 164, 221); color: white; float: right; margin-right: 10px; ">
+
+                            Paiment par carte
+                            <span style="margin-left: 10px;" class="fas fa-credit-card fg-white"></span>
+                        </button>
+                    </form>
+                    <button *ngIf="!isUser " class="button warning " style="background-color: rgb(48, 164, 221); float: right; " (click)="suivant() ">
                         Suivant
                     </button>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-    <div class="contenu2 showOnMObile" style="width: 100vw; overflow-x: hidden;">
-        <table style="margin-top: 0; padding-top: 0;" class="table table-border cell-border">
+    <div class="contenu2 showOnMObile " style="width: 100vw; overflow-x: hidden; ">
+        <table style="margin-top: 0; padding-top: 0; " class="table table-border cell-border ">
             <thead>
                 <tr>
                     <th>Prestations</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let reservation of reservations">
+                <tr *ngFor="let reservation of reservations ">
                     <td>
                         <b>Date</b> : {{reservation.date | date: 'yyyy-MM-dd HH:mm'}}<br>
                         <b>Date début</b> : {{reservation.dateDebut | date: 'yyyy-MM-dd'}}<br>
                         <b>Prestation</b> :
-                        <span *ngIf="reservation.sejour">
+                        <span *ngIf="reservation.sejour ">
                             {{reservation.sejour.titre}}
                         </span>
-                        <span *ngIf="reservation.hebergement">
+                        <span *ngIf="reservation.hebergement ">
                             {{reservation.hebergement.titre}}
                         </span>
-                        <span *ngIf="reservation.divertissement">
+                        <span *ngIf="reservation.divertissement ">
                             {{reservation.divertissement.titre}}
                         </span>
-                        <span *ngIf="reservation.transport">
+                        <span *ngIf="reservation.divertissementItem ">
+                            {{reservation.divertissementItem.divertissement.titre}}
+                            <div>
+                                {{reservation.divertissementItem.titre}}
+                            </div>
+                        </span>
+                        <span *ngIf="reservation.transport ">
                             {{reservation.transport.depart.agence.nom}}
                         </span>
-                        <span *ngIf="reservation.locationVoiture">
+                        <span *ngIf="reservation.locationVoiture ">
                             Location de voiture :
-                            {{reservation.locationVoiture.voiture.modele}}
+                            {{reservation.locationVoiture.voiture.categorie}}
                         </span>
                         <br>
                         <b>Description</b> :
-                        <span *ngIf="reservation.sejour">
-                            {{reservation.sejour.description}}
+
+                        <span *ngIf="reservation.sejour " [innerHTML]="reservation.sejour.description ">
                         </span>
-                        <span *ngIf="reservation.hebergement">
-                            {{reservation.hebergement.description}}
+                        <span *ngIf="reservation.hebergement " [innerHTML]="reservation.hebergement.description ">
                         </span>
-                        <span *ngIf="reservation.divertissement">
-                            {{reservation.divertissement.description}}
+                        <span *ngIf="reservation.divertissement " [innerHTML]="reservation.divertissement.description ">
                         </span>
-                        <span *ngIf="reservation.transport">
-                            {{description(reservation.transport.depart.trajet)}}
+                        <span *ngIf="reservation.divertissementItem " [innerHTML]="reservation.divertissementItem.description ">
                         </span>
-                        <div *ngIf="reservation.locationVoiture">
+                        <span *ngIf="reservation.transport " [innerHTML]="description(reservation.transport.depart.trajet) ">
+                        </span>
+                        <div *ngIf="reservation.locationVoiture ">
                             {{reservation.locationVoiture.type}}
-                            <span *ngIf="reservation.locationVoiture.type === 'interurbain'">
+                            <span *ngIf="reservation.locationVoiture.type==='interurbain' ">
                                 : {{reservation.locationVoiture.depart}} - {{reservation.locationVoiture.arrivee}}
                             </span>
-                            <span *ngIf="reservation.locationVoiture.type === 'location'">
+                            <span *ngIf="reservation.locationVoiture.type==='location' ">
                                 : {{reservation.locationVoiture.ville}}
                             </span>
-                            <div *ngIf="reservation.locationVoiture">
+                            <div *ngIf="reservation.locationVoiture ">
                                 Du {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}} à {{toDate(reservation.dateDebut) | date: 'HH:mm'}} au {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}} à {{toDate(reservation.dateFin) | date: 'HH:mm'}}
                             </div>
                         </div>
                         <br>
                         <b>Coût</b> : {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}<br>
 
-                        <div class="white-space" style="margin-top: 10px; margin-bottom: 10px;">
-                            <button (click)="voir(reservation)" class="button success">
+                        <div class="white-space " style="margin-top: 10px; margin-bottom: 10px; ">
+                            <button (click)="voir(reservation) " class="button success ">
                                 Voir
                             </button>
-                            <button (click)="modifier(reservation)" class="button warning" style="background-color: rgb(48, 164, 221);">
+                            <button (click)="modifier(reservation) " class="button warning " style="background-color: rgb(48, 164, 221); ">
                                 Modifier
                             </button>
-                            <button (click)="supprimer(reservation.id)" class="button alert danger">
+                            <button (click)="supprimer(reservation.id) " class="button alert danger ">
                                 Supprimer
                             </button>
                         </div>
@@ -197,7 +227,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th style="font-size: 1.2em; text-align: right;background-color: #fafafa;">
+                    <th style="font-size: 1.2em; text-align: right;background-color: #fafafa; ">
                         Total : {{TOTAL | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
                     </th>
                 </tr>
@@ -212,12 +242,12 @@
                     </a>
                     <input type="hidden" name="montant" [value]="TOTAL">
                     <input type="hidden" name="id" [value]="paiement.id">
-                    <button *ngIf="isUser" type="submit" (click)="payer(form)" class="button warning" style="background-color: rgb(48, 164, 221); float: right;">
-                        <ng-container *ngIf="isUser">
-                            Passer au paiement
-                        </ng-container>
+
+                    <button *ngIf="isUser" type="submit" (click)="payerMobile(form)" class="button warning suite" style="background-color: rgb(48, 164, 221); ">
+                        Passer au paiement
                     </button>
-                    <button *ngIf="!isUser" class="button warning" style="background-color: rgb(48, 164, 221); float: right;" (click)="suivant()">
+
+                    <button *ngIf="!isUser" class="button warning suite" style="background-color: rgb(48, 164, 221);" (click)="suivant()">
                         Suivant
                     </button>
                 </form>

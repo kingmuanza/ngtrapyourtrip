@@ -17,16 +17,13 @@
                         <div *ngIf="prestataire">
                             <div class="titre">
                                 {{prestataire.nom}}
-                                <a class="button small showOnMObile" (click)="rechercheFilter()"
-                                    style="float: right; margin-left: 10px;">
+                                <a class="button small showOnMObile" (click)="rechercheFilter()" style="float: right; margin-left: 10px;">
                                     <i class="mif-search fg-blue"></i>
                                 </a>
-                                <a class="button small showOnMObile" (click)="toggleFilter()"
-                                    style="float: right; margin-left: 10px;">
+                                <a class="button small showOnMObile" (click)="toggleFilter()" style="float: right; margin-left: 10px;">
                                     <i class="mif-filter fg-blue"></i>
                                 </a>
-                                <span class="sejour__notation bleu"
-                                    [innerHTML]="notationToStars(prestataire.notation)"></span>
+                                <span class="sejour__notation bleu" [innerHTML]="notationToStars(prestataire.notation)"></span>
                             </div>
                             <div class="sous-titre text-leader2" style="font-size: 1.1em;">
                                 <ng-container *ngIf="prestataire.pays">
@@ -45,29 +42,24 @@
                                     {{prestataire.email}}
                                 </ng-container>
                             </div>
+                            <div>
+                                <a *ngIf="prestataire.latitude && prestataire.longitude" class="showOnMObile " style="color: rgb(48, 164, 221); font-size: 0.8em;" (click)="ouvrirGoogleMap()" target="_blank">
+                                    Ouvrir sur Google Map
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="cell-lg-3 text-right">
-                        <app-admin>
-                            <div class="administration">
-                                <button *ngIf="prestataire.indisponible" class="button warning"
-                                    (click)="setDisponible()">
-                                    Rendre disponible
-                                </button>
-                                <button *ngIf="!prestataire.indisponible" class="button warning"
-                                    (click)="setIndisponible()">
-                                    Rendre indisponible
-                                </button>
-                                <button class="button primary" style="background-color: rgb(48, 164, 221);"
-                                    (click)="modifier(prestataire)">
-                                    Modifier
-                                </button>
-                                <button class="button alert" style="margin-left: 10px;"
-                                    (click)="supprimer(prestataire)">
-                                    Supprimer
-                                </button>
+                    <div class="cell-lg-3 text-right hideOnMObile">
+                        <div *ngIf="prestataire.latitude && prestataire.longitude" style="text-align: center; margin-top: 20px;">
+                            <div style="font-size: 2.5em;">
+                                <span class="mif-location" style="color: rgb(48, 164, 221);"></span>
                             </div>
-                        </app-admin>
+                            <div>
+                                <a class="text-leader2 map" style="color: #303030;" (click)="ouvrirGoogleMap()" target="_blank">
+                                    Ouvrir sur Google Map
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -79,8 +71,7 @@
                     <div class="row no-gap shadow-2" style="border-radius: 0px;">
                         <div class="cell-lg-9 bordure-orange-debut">
                             <div style="color: #303030">
-                                <select style="color: #303030" placeholder="Ordre" data-prepend="Ordre"
-                                    formControlName="ordre" data-role="select" data-filter="false">
+                                <select style="color: #303030" placeholder="Ordre" data-prepend="Ordre" formControlName="ordre" data-role="select" data-filter="false">
                                     <option value="null" disabled="true" [selected]="true">
                                         Ordre d'affichage
                                     </option>
@@ -93,8 +84,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="cell-lg-3 bordure-orange-fin radius-droit2"
-                            style="background-color: rgb(48, 164, 221);">
+                        <div class="cell-lg-3 bordure-orange-fin radius-droit2" style="background-color: rgb(48, 164, 221);">
                             <button class="button rechercher">Rechercher</button>
                         </div>
                     </div>

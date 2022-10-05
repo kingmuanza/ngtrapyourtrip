@@ -1,1 +1,60 @@
-<p>restaurant-view works!</p>
+<div class="page" *ngIf="divertissement">
+    <div class="entete">
+        <div class="row">
+            <div class="cell-lg-9">
+                <div class="titre">
+                    {{divertissement.titre}}
+                </div>
+                <div class="sous-titre">
+                    Prévoir en moyenne {{divertissement.prix | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                </div>
+                <div>
+                    <div style="margin-top: 10px;">
+                        <a *ngIf="divertissement.latitude && divertissement.longitude" class="showOnMObile " style="color: rgb(48, 164, 221); font-size: 0.8em;" (click)="ouvrirGoogleMap()" target="_blank">
+                            Ouvrir sur Google Map
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="cell-lg-3 text-right hideOnMObile">
+                <div *ngIf="divertissement.latitude && divertissement.longitude" style="text-align: center; margin-top: 0px;">
+                    <div style="font-size: 2.5em;">
+                        <span class="mif-location" style="color: rgb(48, 164, 221);"></span>
+                    </div>
+                    <div>
+                        <a class="text-leader2 map" style="color: #303030;" (click)="ouvrirGoogleMap()" target="_blank">
+                            Ouvrir sur Google Map
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contenu" style="padding-top: 2.5vmin">
+        <div class="row">
+            <div class="cell-lg-5">
+                <div class="sous-titre text-leader2">
+                    {{divertissement.description}}
+                </div>
+            </div>
+            <div *ngIf="divertissement.images[0]" class="cell-lg-7">
+                <div class="trap-image-big">
+                    <ng-container *ngFor="let image of divertissement.images; let i = index">
+
+                        <div *ngIf="i === indexImages" class="trap-image-big animer" [ngStyle]="{'background-image': 'url(' + divertissement.images[i] +')'}">
+
+                        </div>
+
+                    </ng-container>
+                </div>
+                <div class="row" style="margin-top: 5px;">
+                    <div (click)="choisir(i)" class="cell-lg-1 cell-3" *ngFor="let image of divertissement.images; let i = index">
+                        <div [ngClass]="{'actuelle': i === indexImages}" style="height: 60px; cursor: pointer; background-size: cover; background-position: center center;" [ngStyle]="{'background-image': 'url(' + image +')'}">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

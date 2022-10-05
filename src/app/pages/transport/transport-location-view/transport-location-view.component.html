@@ -88,7 +88,7 @@
                         </div>
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin bg-dark">
-                        <a onclick="Metro.dialog.open('#demoDialog2')" class="button warning fg-white" style="width: 100%; background-color: rgb(48, 164, 221);">
+                        <a (click)="onSubmitInterurbain()" class="button warning fg-white" style="width: 100%; background-color: rgb(48, 164, 221);">
                             Réserver
                         </a>
                     </div>
@@ -222,7 +222,9 @@
         </div>
     </div>
     <div class="dialog-actions">
-        <button (click)="onFormSubmit()" class="button js-dialog-close">Non, merci</button>
+
+        <a (onclick)="test()" (click)="test()" class="button">Non, merci</a>
+
         <button (click)="saveWithRetour()" class="button warning js-dialog-close" style="background-color: rgb(48, 164, 221);">
             Enregistrer
         </button>

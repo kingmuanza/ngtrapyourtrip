@@ -1,37 +1,45 @@
 <div style="">
-<div class="trait">
+    <div class="trait">
 
-</div>
-<div class="titre">
-    <span>
+    </div>
+    <div class="titre">
+        <span>
         Nos offres de divertissements
     </span>
-</div>
+    </div>
 
-<div class="sejours">
-    <div class="row">
-        <div class="cell-lg-2 muanza-mobile">
-            <div class="description text-leader2 text-center">
-                Découvrez toutes nos offres de divertissements pour un confort sans pareil
+    <div class="sejours">
+        <div class="row">
+            <div class="cell-lg-2 muanza-mobile">
+                <div class="description text-leader2 text-center">
+                    Découvrez toutes nos offres de divertissements pour un confort sans pareil
+                </div>
             </div>
-        </div>
 
-        <div class="cell-lg-10">
-            <div class="row">
-                <div class="cell-lg-4" *ngFor="let divertissement of divertissements; let index = index;">
-                    <div *ngIf="index < 6">
-                        <app-display-divertissement [divertissement]="divertissement"></app-display-divertissement>
+            <div class="cell-lg-10">
+                <div class="row">
+                    <div class="cell-lg-4" *ngFor="let divertissement of resultats; let index = index;">
+                        <div *ngIf="index < 6">
+                            <div *ngIf="isEvenement(divertissement)">
+                                <app-display-divertissement [divertissement]="divertissement"></app-display-divertissement>
+                            </div>
+                            <div *ngIf="isRestaurant(divertissement)">
+                                <app-display-restaurant [divertissement]="divertissement"></app-display-restaurant>
+                            </div>
+                            <div *ngIf="isLoisir(divertissement)">
+                                <app-display-loisir [divertissement]="divertissement"></app-display-loisir>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="cell-lg-2 muanza-desktop">
-            <div class="description text-leader2 text-right">
-                Découvrez toutes nos offres de divertissements pour un confort sans pareil
-            </div>
 
+            <div class="cell-lg-2 muanza-desktop">
+                <div class="description text-leader2 text-right">
+                    Découvrez toutes nos offres de divertissements pour un confort sans pareil
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
 </div>

@@ -22,13 +22,16 @@ export class Utilisateur {
     notation: number;
     prixMin: number;
 
+    latitude = 0;
+    longitude = 0;
+
     options: {
-      piscine: boolean,
-      plage: boolean,
-      spa: boolean,
-      petitdej: boolean,
-      dej: boolean,
-      cuisine: boolean,
+        piscine: boolean,
+        plage: boolean,
+        spa: boolean,
+        petitdej: boolean,
+        dej: boolean,
+        cuisine: boolean,
     };
     modification: Modification;
     indisponible = false;

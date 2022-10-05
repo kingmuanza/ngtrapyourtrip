@@ -1,55 +1,47 @@
-<div class="page" *ngIf="divertissement">
-    <div class="entete">
-        <div class="row">
-            <div class="cell-lg-9">
-                <div class="titre">
-                    {{divertissement.titre}}
-                </div>
-                <div class="sous-titre text-leader2">
-                    {{divertissement.description}}
-                </div>
-            </div>
-            <div class="cell-lg-3 text-right">
-                <app-admin>
-                    <div class="administration">
-                        <button class="button primary" style="background-color: rgb(48, 164, 221);" (click)="modifier(divertissement)">
-                            Modifier
-                        </button>
-                        <button class="button alert" style="margin-left: 10px;" (click)="supprimer(divertissement)">
-                            Supprimer
-                        </button>
+<div style="min-height: 100vh;">
+    <div class="page" *ngIf="divertissement">
+        <div class="entete">
+            <div class="row">
+                <div class="cell-lg-9">
+                    <div class="titre">
+                        {{divertissement.titre}}
                     </div>
-                </app-admin>
+                    <div [innerHTML]="divertissement.description" class="sous-titre text-leader2" style="margin-top: 20px;">
+                    </div>
+                    <div>
+                        <div style="margin-top: 10px;">
+                            <a *ngIf="divertissement.latitude && divertissement.longitude" class="showOnMObile " style="color: rgb(48, 164, 221); font-size: 0.8em;" (click)="ouvrirGoogleMap()" target="_blank">
+                                Ouvrir sur Google Map
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cell-lg-3 text-right hideOnMObile">
+                    <div *ngIf="divertissement.latitude && divertissement.longitude" style="text-align: center; margin-top: 0px;">
+                        <div style="font-size: 2.5em;">
+                            <span class="mif-location" style="color: rgb(48, 164, 221);"></span>
+                        </div>
+                        <div>
+                            <a class="text-leader2 map" style="color: #303030;" (click)="ouvrirGoogleMap()" target="_blank">
+                                Ouvrir sur Google Map
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-            <div class="row no-gap shadow-3">
-                <div class="cell-lg-4 bordure-bleu-debut">
-                    <input formControlName="personnes" data-role="input" data-prepend="Personnes">
-                </div>
-                <div class="cell-lg-3 bordure-bleu-fin">
-                    <input #calendarpickerlocale formControlName="date" data-role="calendarpicker" data-prepend="Date">
-                </div>
-                <div class="cell-lg-3 bordure-bleu-fin">
-                    <select formControlName="heure" data-role="select" data-prepend="Heure">
-                        
-                        <option [ngValue]="heure" *ngFor="let heure of heures">
-                            {{heure}}
-                        </option>
-                    </select>
-                </div>
-                <div class="cell-lg-2 bordure-bleu-fin">
-                    <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
-                        Réserver
-                    </button>
+        <div class="contenu" style="padding-top: 5vh">
+            <div class="row">
+                <div *ngFor="let divertissementItem of divertissementItems" class="cell-lg-4">
+                    <app-display-divertissement-item [divertissementItem]="divertissementItem"></app-display-divertissement-item>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
-    <div class="contenu" style="padding-top: 5vh">
-        <div class="row">
-            <div *ngFor="let image of divertissement.images" class="cell-lg-4">
-                <div class="trap-image" [ngStyle]="{'background-image': 'url(' + image +')'}">
+    <div class="contenu-images" style="">
+        <div class="row ">
+            <div *ngFor="let image of divertissement.images " class="cell-lg-3 ">
+                <div class="trap-image " [ngStyle]="{ 'background-image': 'url(' + image + ')'} ">
 
                 </div>
             </div>

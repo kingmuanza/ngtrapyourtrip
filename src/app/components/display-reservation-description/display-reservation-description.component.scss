@@ -1,0 +1,86 @@
+.titre2 {
+    font-size: 2.0em;
+}
+
+.orange {
+    color: rgba(255, 115, 0);
+}
+
+.sejour__notation {
+    margin-left: 15px;
+    font-size: 0.9em;
+}
+
+.sejour_duree {
+    margin-top: 20px;
+    font-weight: bold;
+    padding-bottom: 5px;
+    .cell-lg-3 {
+        div {
+            margin-right: 10px;
+            background-color: #eee;
+            padding: 10px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+    }
+}
+
+.prix {
+    background-color: #30a4dd;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.petit-padding {
+    padding-left: 10px;
+    @media screen and (max-width: 599px) {
+        padding-left: 0px;
+    }
+}
+
+.muanza-text-right {
+    text-align: right;
+    margin: 0;
+    padding: 0;
+    @media screen and (max-width: 599px) {
+        text-align: left;
+        padding-top: 20px;
+    }
+}
+
+.connexion-obligatoire {
+    position: fixed;
+    padding: 25%;
+    padding-top: 5%;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100000;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    &-titre {
+        font-size: 2.0em;
+        margin-bottom: 20px;
+    }
+    &-contenu {
+        font-size: 1.2em;
+        margin-bottom: 40px;
+    }
+    &-logo {
+        margin-bottom: 0px;
+        img {
+            height: 100px;
+        }
+    }
+    &-timer {
+        margin-top: 40px;
+        margin-bottom: 40px;
+        font-size: 2.0em;
+        font-weight: bold;
+        ;
+    }
+}

@@ -9,17 +9,14 @@
     text-align: center;
     font-size: 4vmin;
     font-family: 'Raleway';
-
     @media screen and (max-width: 599px) {
         line-height: 1.15;
     }
-
     span {
         background-color: white;
         padding-left: 5vw;
         padding-right: 5vw;
         font-weight: bold;
-
         @media screen and (max-width: 599px) {
             display: inline-block;
             margin-left: 15vw;
@@ -32,7 +29,6 @@
     font-size: 3vh;
     padding-top: 0px;
     padding-right: 20px;
-
     @media screen and (max-width: 599px) {
         padding-right: 0px;
         padding-top: 0px;
@@ -42,9 +38,8 @@
     }
 }
 
-.sejours {
+.transports {
     padding-top: 30px;
-
     @media screen and (max-width: 599px) {
         padding-top: 0px;
     }
@@ -62,14 +57,11 @@
         background-size: cover;
         background-position: center center;
         border-radius: 10px;
-
         @media screen and (max-width: 599px) {
             height: 20vh;
         }
     }
-
     .sejour__description {
         padding-top: 10px;
-
     }
 }

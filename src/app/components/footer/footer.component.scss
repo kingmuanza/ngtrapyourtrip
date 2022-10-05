@@ -3,15 +3,11 @@
     padding-bottom: 10vmin;
     padding-left: 10vw;
     padding-right: 10vw;
-    
-
     @media screen and (max-width: 599px) {
         padding-left: 5vmin;
         padding-right: 5vmin;
     }
-    .rubrique {
-        
-    }
+    .rubrique {}
 }
 
 .admin {
@@ -25,5 +21,12 @@
 * {
     @media screen and (max-width: 599px) {
         font-size: 12px;
+    }
+}
+
+.rs {
+    cursor: pointer;
+    &:hover {
+        opacity: 0.8;
     }
 }

@@ -258,3 +258,17 @@ input.muanza {
         background-color: rgba(#000, 0.8);
     }
 }
+
+.others {
+    padding-left: 10vw;
+    padding-right: 10vw;
+    min-height: 50vmin;
+    background-color: #ddd;
+    padding-top: 2.5vw;
+    padding-bottom: 5vw;
+    margin-top: 30px;
+    @media screen and (max-width: 599px) {
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+}

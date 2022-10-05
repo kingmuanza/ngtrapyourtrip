@@ -1,0 +1,22 @@
+.trap-image {
+    height: 40vh;
+    background-size: cover;
+    background-position: center center;
+    &.default {
+        background-color: #eee;
+    }
+}
+
+.divertissement-item {
+    cursor: pointer;
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.trap-description {
+    padding: 20px;
+    background-color: #eee;
+    margin-bottom: 20px;
+    line-height: 1.15;
+}

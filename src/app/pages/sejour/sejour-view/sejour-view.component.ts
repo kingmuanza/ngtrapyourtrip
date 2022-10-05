@@ -24,6 +24,9 @@ export class SejourViewComponent implements OnInit {
   screenWidth: number;
   mobile = true;
 
+  indexImages = 0;
+  changeImage;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -39,6 +42,30 @@ export class SejourViewComponent implements OnInit {
     });
     this.initForm();
     this.getScreenSize();
+  }
+
+  changementDimages() {
+    if (this.sejour) {
+      if (this.sejour.images) {
+        if (this.sejour.images.length > 0) {
+          this.indexImages = 0;
+          this.changeImage = setInterval(() => {
+            const i = this.indexImages + 1;
+            if (i < this.sejour.images.length) {
+              this.indexImages++;
+            } else {
+              this.indexImages = 0;
+            }
+            console.log('changement dimage');
+            console.log(this.indexImages + ' sur ' + this.sejour.images.length);
+          }, 10000);
+        }
+      }
+    }
+  }
+
+  choisir(i) {
+    this.indexImages = i;
   }
 
   initForm() {
@@ -85,7 +112,7 @@ export class SejourViewComponent implements OnInit {
       reservation.personnes = personnes;
 
       if (this.sejour.dateDebut) {
-        if (new Date( this.sejour.dateDebut).getTime() > new Date().getTime()) {
+        if (new Date(this.sejour.dateDebut).getTime() > new Date().getTime()) {
           date = this.sejour.dateDebut;
         }
       }
@@ -133,6 +160,7 @@ export class SejourViewComponent implements OnInit {
         this.sejour = sejour;
         console.log('TERMINEEE !!!');
         console.log(this.sejour);
+        this.changementDimages();
         metro().activity.close(activity);
       }).catch((e) => {
         metro().activity.close(activity);

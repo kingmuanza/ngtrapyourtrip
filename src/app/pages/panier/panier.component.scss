@@ -1,37 +1,30 @@
 .page-sejour {
     .entete2 {
-
         background-color: rgb(48, 164, 221);
         color: white;
         padding-top: 60px;
         padding-left: 10vw;
         padding-right: 10vw;
         padding-bottom: 3vh;
-
         @media screen and (max-width: 599px) {
             padding-top: 50px;
             padding-left: 5vw;
             padding-right: 5vw;
             text-align: center;
         }
-
         .titre {
             font-size: 3.0em;
             font-family: 'Raleway';
         }
-
         .sous-titre {
             margin-top: -5px;
         }
     }
-
     .contenu2 {
-
         padding-top: 7vh;
         padding-left: 10vw;
         padding-right: 10vw;
         padding-bottom: 5vh;
-
         @media screen and (max-width: 599px) {
             padding-top: 30px;
             padding-left: 5vw;
@@ -43,5 +36,15 @@
 .white-space {
     @media screen and (min-width: 600px) {
         white-space: nowrap;
+    }
+}
+
+.suite {
+    float: right;
+    @media screen and (min-width: 600px) {
+        float: left;
+        margin-top: 10px;
+        width: 100%;
+        display: inline-block;
     }
 }

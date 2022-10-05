@@ -1,0 +1,29 @@
+<div class="divertissement-item" (click)="voir()">
+
+    <div *ngIf="divertissementItem.images && divertissementItem.images[0]">
+        <div class="trap-image" [ngStyle]="{'background-image': 'url(' + divertissementItem.images[0] +')'}">
+
+        </div>
+    </div>
+    <div *ngIf="!(divertissementItem.images && divertissementItem.images[0])">
+        <div class="trap-image default">
+
+        </div>
+    </div>
+
+    <div class="trap-description">
+        <div>
+            <b>
+                {{divertissementItem?.titre}}
+            </b>
+        </div>
+        <div [innerHTML]="divertissementItem?.description">
+        </div>
+        <div style="margin-top: 20px">
+            <b>
+                {{divertissementItem.prix | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+            </b>
+        </div>
+
+    </div>
+</div>

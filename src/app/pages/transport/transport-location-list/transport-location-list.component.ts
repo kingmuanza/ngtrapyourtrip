@@ -61,7 +61,6 @@ export class TransportLocationListComponent implements OnInit {
 
   voir(voiture: Voiture) {
     this.router.navigate(['offres', 'transport', 'location', voiture.id]);
-    this.router.navigate(['offres', 'transport', 'location', voiture.id]);
   }
 
 }

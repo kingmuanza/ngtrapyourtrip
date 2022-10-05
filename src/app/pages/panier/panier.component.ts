@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
 import { Paiement } from 'src/app/models/paiement.model';
 import * as firebase from 'firebase';
 import { HttpClient } from '@angular/common/http';
+import * as stripe from '@stripe/stripe-js';
 declare const metro: any;
 
 @Component({
@@ -25,6 +26,12 @@ export class PanierComponent implements OnInit {
   paiement = new Paiement();
   responsables = new Array<any>();
   reservationsGroupes = {};
+  utilisateur: any;
+
+  laCarte: stripe.StripeCardElement;
+  dataStripe: any;
+  stripeInstanceResut: stripe.Stripe;
+  stripeErrorMessage: string;
 
   constructor(
     private authService: AuthentificationService,
@@ -36,6 +43,7 @@ export class PanierComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.utilisateur) {
       this.isUser = true;
+      this.utilisateur = this.authService.utilisateur;
     } else {
       this.isUser = false;
     }
@@ -157,7 +165,18 @@ export class PanierComponent implements OnInit {
     });
   }
 
-  async payer(form) {
+  async payerMobile(form) {
+    await this.sauvegarderPaiementEtenvoyerEmail();
+    form.submit();
+  }
+
+  async payerBancaire(form) {
+    // await this.sauvegarderPaiementEtenvoyerEmail();
+    console.log(form);
+    form.submit();
+  }
+
+  private async sauvegarderPaiementEtenvoyerEmail() {
     const activity = metro().activity.open({
       type: 'square',
       overlayColor: '#fff',
@@ -195,7 +214,6 @@ export class PanierComponent implements OnInit {
       }
     }
     metro().activity.close(activity);
-    form.submit();
   }
 
   envoyerMailConfirmation(responsable) {
@@ -203,7 +221,7 @@ export class PanierComponent implements OnInit {
       console.log('envoyerMailConfirmation');
       const noms = responsable.noms;
       this.http.get('https://trapyourtrip.com/trapyourtripback/sendmail.php?email=' + responsable.email + '&noms=' + noms)
-      /* this.http.get('trapyourtripback/sendmail.php?email=' + responsable.email + '&noms=' + noms) */
+        /* this.http.get('trapyourtripback/sendmail.php?email=' + responsable.email + '&noms=' + noms) */
         .subscribe((response) => {
           console.log('response');
           console.log(response);
@@ -214,10 +232,84 @@ export class PanierComponent implements OnInit {
           reject(error);
         });
     });
-
   }
 
+  paiementStripe() {
+    window.location.href = 'http://www.trapyourtrip.com/stripe';
+  }
 
+  paiementParCarte() {
+    console.log('Nous montons la carte');
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = false;
+    const stripeInstance = stripe.loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
+    xhr.addEventListener('readystatechange', () => {
+      if (xhr.readyState === 4) {
+        console.log(xhr.responseText);
+        this.dataStripe = JSON.parse(xhr.responseText);
+
+        stripeInstance.then((stripeInstanceResut) => {
+          this.stripeInstanceResut = stripeInstanceResut;
+          const elements = stripeInstanceResut.elements();
+          const leStyle = {
+            base: {
+              color: '#32325d',
+              fontFamily: 'Arial, sans-serif',
+              fontSmoothing: 'antialiased',
+              fontSize: '16px',
+              '::placeholder': {
+                color: '#32325d'
+              }
+            },
+            invalid: {
+              fontFamily: 'Arial, sans-serif',
+              color: '#fa755a',
+              iconColor: '#fa755a'
+            }
+          };
+          this.laCarte = elements.create('card', { style: leStyle });
+          this.laCarte.mount('#cardElement');
+          console.log('La carte a été montée');
+          console.log(this.laCarte);
+        });
+      }
+    });
+
+    xhr.open('GET', 'this.globalService.ADRESSE_SERVEUR_BACKEND' + 'stripe/create-payment-intent');
+
+    xhr.send();
+  }
+
+  payerParStripeVraiVrai(laCarte, data) {
+    console.log('laCarte');
+    console.log(laCarte);
+    console.log('data');
+    console.log(data);
+    this.stripeInstanceResut.confirmCardPayment(
+      data.clientSecret,
+      {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        payment_method: {
+          card: laCarte
+        }
+      }
+    ).then((result) => {
+      console.log('Le résulat esst le suivant');
+      console.log(result);
+      if (result.error) {
+        // Show error to your customer
+        console.log(result.error.message);
+        this.stripeErrorMessage = result.error.message;
+      } else {
+        // The payment succeeded!
+        const paymentIntentId = result.paymentIntent.id;
+        console.log('paymentIntentId');
+        console.log(paymentIntentId);
+        // const lien = 'https://dashboard.stripe.com/test/payments/' + paymentIntentId;
+        // window.open(lien);
+      }
+    });
+  }
 
 }

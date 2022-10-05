@@ -5,6 +5,7 @@ import { Sejour } from 'src/app/models/sejour.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Reservation } from 'src/app/models/reservation.model';
 import { Hebergement } from 'src/app/models/hebergement.model';
+import { Utilisateur } from 'src/app/models/utilisateur.model';
 declare const metro: any;
 
 @Component({
@@ -22,6 +23,9 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
   hebergements = new Array<Hebergement>();
   HEBERGEMENTS = new Array<Hebergement>();
   resultats = new Array<Hebergement>();
+  others = new Array<Hebergement>();
+
+  prestataires = new Array<Utilisateur>();
 
   indexImages = 0;
   changeImage;
@@ -32,6 +36,9 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
   screenWidth: number;
   mobile = true;
   formReservationShowed: boolean;
+  fini = false;
+
+  prestataire: Utilisateur;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,8 +52,24 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
       if (id) {
         this.getSejour(id).then((hebergement) => {
           this.hebergement = hebergement;
-          this.changementDimages();
-          this.getSejours();
+          this.getPrestataire(this.hebergement.prestataire.id).then(() => {
+            this.getPrestatairesMemeVille().then(() => {
+              if (this.prestataires.length > 0) {
+                const p = this.prestataires[0];
+                this.getHebergementsByPrestataire(p).then((hebergements) => {
+                  this.fini = true;
+                  console.log('hebergements 155655');
+                  console.log(hebergements);
+                  this.hebergements = this.hebergements.concat(hebergements);
+                });
+              }
+            });
+            this.getOthers().then((resultats) => {
+              this.others = resultats;
+            });
+            this.changementDimages();
+            this.getSejours();
+          });
         });
       }
     });
@@ -122,7 +145,7 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  onFormSubmit() {
+  submit() {
     const value = this.form.value;
     console.log('value');
     console.log(value);
@@ -139,7 +162,7 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
       console.log('difefrence');
       console.log(diff);
 
-      if (new Date().getTime() < new Date(date).getTime()) {
+      if (new Date().getTime() < new Date(date).getTime() || new Date().toISOString().split('T')[0] === new Date(date).toISOString().split('T')[0]) {
         if (new Date(date).getTime() < new Date(dateFin).getTime()) {
 
           if (Number(enfants) > 5 || 0 > Number(enfants)) {
@@ -188,13 +211,68 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
           alert('La date d\'arrivée est supérieure à la date de départ');
         }
       } else {
-        alert('La date d\'arrivée doit être spérieure à celle d\'aujourd\'hui');
+        alert('La date d\'arrivée doit être supérieure ou être celle d\'aujourd\'hui');
       }
 
     } else {
       alert('Veuillez renseigner la date');
     }
+  }
+  onFormSubmit() {
 
+    if (this.hebergement.prestataire.hotel) {
+      this.submit();
+    } else {
+      this.check().then(() => {
+        this.submit();
+      }).catch(() => {
+        alert('Indisponibilité sur la période');
+      });
+    }
+
+
+  }
+
+  check() {
+    const dateDebut = this.calendarpickerlocale.nativeElement.value;
+    const dateFin = this.calendarpickerlocale2.nativeElement.value;
+    return this.checkDisponibilite(dateDebut, dateFin);
+  }
+
+  checkDisponibilite(dateDebut: Date, dateFin: Date): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      let reservations = new Array<Reservation>();
+      const db = firebase.firestore();
+      db.collection('reservation-trap')
+        .where('hebergement.id', '==', this.hebergement.id)
+        .get().then((resultats) => {
+          console.log(resultats.size);
+          resultats.forEach((resultat) => {
+            console.log(resultat.data().dateDebut + ' ' + resultat.data().dateFin);
+            const reservation = resultat.data() as Reservation;
+            reservations.push(reservation);
+          });
+          console.log('reservations.length avant');
+          console.log(reservations.length);
+          reservations = reservations.filter((r) => {
+            // tslint:disable-next-line:max-line-length
+            const cas1 = new Date(r.dateDebut).getTime() <= new Date(dateDebut).getTime() && new Date(dateDebut).getTime() <= new Date(r.dateFin).getTime();
+            // tslint:disable-next-line:max-line-length
+            const cas2 = new Date(dateDebut).getTime() <= new Date(r.dateDebut).getTime() && new Date(r.dateDebut).getTime() <= new Date(dateFin).getTime();
+            // tslint:disable-next-line:max-line-length
+            const cas3 = new Date(dateDebut).getTime() <= new Date(r.dateFin).getTime() && new Date(r.dateFin).getTime() <= new Date(dateFin).getTime();
+            // tslint:disable-next-line:max-line-length
+            return cas1 || cas2 || cas3;
+          });
+          console.log('reservations.length');
+          console.log(reservations.length);
+          if (reservations.length === 0) {
+            resolve(true);
+          } else {
+            reject(reservations);
+          }
+        });
+    });
   }
 
   getSejour(id: string): Promise<Hebergement> {
@@ -235,26 +313,7 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
     return new Promise((resolve, reject) => {
       db.collection('hebergements-trap').get().then((resultats) => {
         resultats.forEach((resultat) => {
-          /*
-          const hebergement = resultat.data() as Hebergement;
-          if (!hebergement.options) {
-            hebergement.options = {
-              wifi: false,
-              plage: false,
-              piscine: false,
-              climatiseur: false,
-              parking: false,
-              petitdej: false,
-              gardien: false,
-            };
-            hebergement.options.parking = hebergement.parking;
-            hebergement.options.wifi = hebergement.wifi;
-          }
-          if (hebergement.id !== this.hebergement.id) {
-            this.hebergements.push(hebergement);
-            this.resultats.push(hebergement);
-          }
-          */
+
         });
         console.log('TERMINEEE !!!');
         console.log(this.hebergements);
@@ -277,6 +336,76 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
         this.router.navigate(['offres', 'hebergement']);
       });
     }
+  }
+
+  getOthers(): Promise<Array<Hebergement>> {
+    const id = this.prestataire.id;
+    const hebergements = new Array<Hebergement>();
+    const db = firebase.firestore();
+    return new Promise((resolve, reject) => {
+      db.collection('hebergements-trap').where('prestataire.id', '==', id)
+        .get().then((resultats) => {
+          resultats.forEach((resultat) => {
+            let hebergement = resultat.data() as Hebergement;
+            hebergement = new Hebergement(hebergement);
+            if (hebergement.id !== this.hebergement.id) {
+              hebergements.push(hebergement);
+            }
+          });
+          resolve(hebergements);
+        }).catch((e) => {
+          reject(e);
+        });
+    });
+  }
+
+  getPrestatairesMemeVille() {
+    this.prestataires = [];
+    return new Promise((resolve, reject) => {
+      if (this.prestataire.ville) {
+        const db = firebase.firestore();
+        db.collection('utilisateurs-trap').where('ville', '==', this.prestataire.ville).get().then((resultats) => {
+          resultats.forEach((resultat) => {
+            const prestataire = resultat.data() as Utilisateur;
+            if (prestataire.id !== this.prestataire.id) {
+              this.prestataires.push(prestataire);
+            }
+          });
+          resolve(this.prestataires);
+        });
+      }
+    });
+  }
+
+  getHebergementsByPrestataire(prestataire: Utilisateur): Promise<Array<Hebergement>> {
+    const hebergements = new Array<Hebergement>();
+    const db = firebase.firestore();
+    return new Promise((resolve, reject) => {
+      db.collection('hebergements-trap').where('prestataire.id', '==', prestataire.id)
+        .get().then((resultats) => {
+          resultats.forEach((resultat) => {
+            let hebergement = resultat.data() as Hebergement;
+            hebergement = new Hebergement(hebergement);
+            if (hebergement.id !== this.hebergement.id) {
+              hebergements.push(hebergement);
+            }
+          });
+          resolve(hebergements);
+        }).catch((e) => {
+          reject(e);
+        });
+    });
+  }
+
+  getPrestataire(id: string) {
+    return new Promise((resolve, reject) => {
+      const db = firebase.firestore();
+      db.collection('utilisateurs-trap').doc(id).get().then((resultat) => {
+        const prestataire = resultat.data() as Utilisateur;
+        this.prestataire = prestataire;
+        resolve(prestataire);
+      });
+    });
   }
 
   ngOnDestroy(): void {

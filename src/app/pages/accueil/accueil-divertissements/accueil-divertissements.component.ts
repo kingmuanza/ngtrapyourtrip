@@ -38,9 +38,17 @@ export class AccueilDivertissementsComponent implements OnInit {
     return new Promise((resolve, reject) => {
       db.collection('divertissements-trap').get().then((resultats) => {
         resultats.forEach((resultat) => {
+          console.log('DIVERTISSEMNTS');
           const divertissement = resultat.data() as Divertissement;
-          this.divertissements.push(divertissement);
-          this.resultats.push(divertissement);
+          console.log(divertissement.date);
+          if (divertissement.date) {
+            const estFuture = new Date(divertissement.date).getTime() > new Date().getTime();
+            if (estFuture) {
+              this.resultats.push(divertissement);
+            }
+          } else {
+            this.resultats.push(divertissement);
+          }
         });
         console.log('TERMINEEE !!!');
         console.log(this.divertissements);
@@ -62,6 +70,31 @@ export class AccueilDivertissementsComponent implements OnInit {
         return sejour.description.toLowerCase().indexOf(ev) !== -1;
       });
     }
+  }
+
+  isEvenement(divertissement: Divertissement) {
+    if (divertissement.date) {
+      return true;
+    }
+    return false;
+  }
+
+  isRestaurant(divertissement: Divertissement) {
+    if (!divertissement.date) {
+      if (divertissement.restaurant) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  isLoisir(divertissement: Divertissement) {
+    if (!divertissement.date) {
+      if (!divertissement.restaurant) {
+        return true;
+      }
+    }
+    return false;
   }
 
   ordonner(ev) {

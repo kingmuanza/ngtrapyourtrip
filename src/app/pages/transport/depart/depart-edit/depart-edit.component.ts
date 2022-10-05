@@ -100,7 +100,7 @@ export class DepartEditComponent implements OnInit {
     console.log(depart);
 
     horaires.forEach((h) => {
-      const heure = new Date('2020-01-01 ' + h);
+      const heure = new Date('2020-01-01T' + h.trim());
       heures.push(heure);
     });
     depart.heures = heures;

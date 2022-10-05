@@ -55,81 +55,52 @@
             </form>
         </div>
     </div>
-    <div *ngIf="sejour" class="images-sejour">
-        <div *ngIf="sejour.images.length === 1" class="row">
-            <div *ngFor="let image of sejour.images" class="cell-12">
-                <div class="trap-image moyenne" [ngStyle]="{'background-image': 'url(' + image +')'}">
+    <div class="contenu">
+        <div class="row">
+            <div *ngIf="sejour.images[0]" class="cell-lg-7">
+                <div class="trap-image-big">
+                    <ng-container *ngFor="let image of sejour.images; let i = index">
 
-                </div>
-            </div>
-        </div>
-        <div *ngIf="sejour.images.length === 2" class="row">
-            <div *ngFor="let image of sejour.images" class="cell-lg-6 cell-6">
-                <div class="trap-image moyenne" [ngStyle]="{'background-image': 'url(' + image +')'}">
+                        <div *ngIf="i === indexImages" class="trap-image-big animer" [ngStyle]="{'background-image': 'url(' + sejour.images[i] +')'}">
 
-                </div>
-            </div>
-        </div>
-        <div *ngIf="sejour.images.length === 3" class="row">
-            <div *ngFor="let image of sejour.images" class="cell-lg-4 cell-6">
-                <div class="trap-image moyenne" [ngStyle]="{'background-image': 'url(' + image +')'}">
+                        </div>
 
+                    </ng-container>
                 </div>
-            </div>
-        </div>
-        <div *ngIf="sejour.images.length === 4" class="row">
-            <div *ngFor="let image of sejour.images" class="cell-lg-3 cell-6">
-                <div class="trap-image" [ngStyle]="{'background-image': 'url(' + image +')'}">
+                <div class="row" style="margin-top: 5px;">
+                    <div (click)="choisir(i)" class="cell-lg-1 cell-3" *ngFor="let image of sejour.images; let i = index">
+                        <div [ngClass]="{'actuelle': i === indexImages}" style="height: 60px; cursor: pointer; background-size: cover; background-position: center center;" [ngStyle]="{'background-image': 'url(' + image +')'}">
 
-                </div>
-            </div>
-        </div>
-        <div *ngIf="sejour.images.length === 5" class="row cells-5">
-            <div *ngFor="let image of sejour.images" class="cell-1 cell-5">
-                <div class="trap-image" [ngStyle]="{'background-image': 'url(' + image +')'}">
-
-                </div>
-            </div>
-        </div>
-        <div *ngIf="sejour.images.length === 6" class="row">
-            <div *ngFor="let image of sejour.images" class="cell-lg-2 cell-6">
-                <div class="trap-image" [ngStyle]="{'background-image': 'url(' + image +')'}">
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div *ngIf="sejour" class="sejour-autres-details">
-        <div *ngIf="sejour" class="row">
-            <div class="cell-lg-3 cell-6">
-                <div class="box-details">
-                    {{sejour.description}}
-                </div>
-            </div>
-            <div class="cell-lg-3 cell-6">
-                <div class="box-details" *ngIf="sejour.pack.hebergement" style="">
-                    <div class="box-details-titre">Hébergements</div>
-                    <div style="margin-top: 5px;">
-                        {{sejour.pack.hebergement.prestataire.nom}}
-                    </div>
-                    <div>
-                        {{sejour.pack.hebergement.titre}}
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="cell-lg-3">
-                <div class="box-details" *ngIf="sejour.pack.divertissements" style="line-height: 1.15;">
-
-                    <div>
-                        <div class="box-details-titre">Divertissements</div>
-                        <ul style="padding:0; margin: 0; margin-top: 5px;">
-                            <li *ngFor="let d of sejour.pack.divertissements">
-                                {{d.titre}}
-                            </li>
-                        </ul>
+            <div class="cell-lg-5">
+                <div class="text-leader2 sejour-suite" style="">
+                    <div [innerHTML]="sejour.description" class="text-leader2">
+                    </div>
+                    <div class="box-details" *ngIf="sejour.pack.hebergement" style="">
+                        <div class="box-details-titre">Hébergements</div>
+                        <div style="margin-top: 5px;">
+                            {{sejour.pack.hebergement.prestataire.nom}}
+                        </div>
+                        <div>
+                            {{sejour.pack.hebergement.titre}}
+                        </div>
+                    </div>
+                    <div class="box-details" *ngIf="sejour.pack.divertissements" style="line-height: 1.15;">
+                        <div>
+                            <div class="box-details-titre">Divertissements</div>
+                            <ul style="padding:0; margin: 0; margin-top: 5px;">
+                                <li *ngFor="let d of sejour.pack.divertissements">
+                                    {{d.titre}}
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div style="height: 20vmin;"></div>
 </div>

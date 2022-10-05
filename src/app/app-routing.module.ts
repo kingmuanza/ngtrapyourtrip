@@ -56,6 +56,7 @@ import { TransportLocationListComponent } from './pages/transport/transport-loca
 import { TransportLocationViewComponent } from './pages/transport/transport-location-view/transport-location-view.component';
 import { CancelComponent } from './pages/paiement/cancel/cancel.component';
 import { ReturnComponent } from './pages/paiement/return/return.component';
+import { DivertissementItemViewComponent } from './pages/divertissement/divertissement-item-view/divertissement-item-view.component';
 
 const routes: Routes = [
   { path: 'accueil', component: AccueilComponent },
@@ -115,6 +116,7 @@ const routes: Routes = [
   { path: 'offres/divertissement/loisirs/view/:id', component: LoisirViewComponent },
   { path: 'offres/divertissement/edit', component: DivertissementEditComponent },
   { path: 'offres/divertissement/edit/:id', component: DivertissementEditComponent },
+  { path: 'offres/divertissement/loisirs/item/view/:id', component: DivertissementItemViewComponent },
 
   { path: 'offres/transport', component: TransportChoixComponent },
   { path: 'offres/transport/recherche', component: TransportListComponent },

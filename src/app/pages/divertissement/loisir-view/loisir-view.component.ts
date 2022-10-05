@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
+import { DivertissementItem } from 'src/app/models/divertissement.item.model';
 import { Divertissement } from 'src/app/models/divertissement.model';
 import { Reservation } from 'src/app/models/reservation.model';
 declare const metro: any;
@@ -17,7 +18,8 @@ export class LoisirViewComponent implements OnInit {
 
   heures = [];
   divertissement: Divertissement;
-  form: FormGroup;
+  divertissementItems = new Array<DivertissementItem>();
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -35,10 +37,11 @@ export class LoisirViewComponent implements OnInit {
     this.route.paramMap.subscribe((paramMap) => {
       const id = paramMap.get('id');
       if (id) {
-        this.getSejour(id);
+        this.getSejour(id).then(() => {
+          this.getActivites();
+        });
       }
     });
-    this.initForm();
   }
 
   modifier(element) {
@@ -51,72 +54,6 @@ export class LoisirViewComponent implements OnInit {
     db.collection('divertissements').doc(element.id).delete().then(() => {
       this.router.navigate(['offres', 'divertissement']);
     });
-  }
-
-  initForm() {
-    this.form = this.formBuilder.group({
-      date: ['', Validators.required],
-      heure: ['', Validators.required],
-      personnes: [1, Validators.required]
-    });
-
-    // tslint:disable-next-line:no-string-literal
-    this.form.controls['date'].valueChanges.subscribe((value) => {
-      console.log('value');
-      console.log(value);
-    });
-  }
-
-  onFormSubmit() {
-    const value = this.form.value;
-    console.log('value');
-    console.log(value);
-    const date = this.calendarpickerlocale.nativeElement.value;
-
-    const personnes = value.personnes;
-
-    if (date && value.heure) {
-      if (new Date(date).getTime() > new Date().getTime()) {
-        const reservation = new Reservation();
-        this.divertissement.date = new Date(date + 'T' + value.heure + ':00');
-        reservation.divertissement = this.divertissement;
-        reservation.personnes = personnes;
-        reservation.dateDebut = new Date(date);
-        reservation.cout = this.divertissement.prix * personnes;
-
-        console.log('reservation');
-        console.log(reservation);
-
-        const activity = metro().activity.open({
-          type: 'square',
-          overlayColor: '#fff',
-          overlayAlpha: 0.8
-        });
-
-        const panierString = localStorage.getItem('panier-trap');
-        let panier = [];
-        if (panierString) {
-          panier = JSON.parse(panierString);
-        }
-        panier.push(reservation);
-        localStorage.setItem('panier-trap', JSON.stringify(panier));
-
-        const db = firebase.firestore();
-        db.collection('reservation-trap').doc(reservation.id).set(JSON.parse(JSON.stringify(reservation))).then((resultats) => {
-          console.log('TERMINEEE !!!');
-          metro().activity.close(activity);
-          this.router.navigate(['offres', 'reservation', 'view', reservation.id]);
-        }).catch((e) => {
-          metro().activity.close(activity);
-        });
-
-      } else {
-        alert('La date doit être spérieure à celle d\'aujourd\'hui');
-      }
-    } else {
-      alert('Veuillez renseigner la date et l\'heure');
-    }
-
   }
 
   getSejour(id: string) {
@@ -133,10 +70,31 @@ export class LoisirViewComponent implements OnInit {
         console.log('TERMINEEE !!!');
         console.log(this.divertissement);
         metro().activity.close(activity);
+        resolve(divertissement);
       }).catch((e) => {
         metro().activity.close(activity);
       });
     });
+  }
+
+  getActivites() {
+    const db = firebase.firestore();
+    return new Promise((resolve, reject) => {
+      db.collection('divertissements-item-trap').where('divertissement.id', '==', this.divertissement.id).get().then((resultats) => {
+        resultats.forEach((resultat) => {
+          const divertissementItem = resultat.data() as DivertissementItem;
+          this.divertissementItems.push(divertissementItem);
+          console.log('TERMINEEE !!!');
+          console.log(this.divertissementItems);
+        });
+      }).catch((e) => {
+      });
+    });
+  }
+
+  ouvrirGoogleMap() {
+    const lien = 'http://maps.google.com/maps?q=' + this.divertissement.latitude + ',' + this.divertissement.longitude;
+    window.open(lien);
   }
 
 }

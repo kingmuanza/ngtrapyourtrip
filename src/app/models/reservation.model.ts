@@ -5,11 +5,13 @@ import { Hebergement } from './hebergement.model';
 import { Divertissement } from './divertissement.model';
 import { Transport } from './transport.model';
 import { LocationVoiture } from './location.voiture.model';
+import { DivertissementItem } from './divertissement.item.model';
 
 export class Reservation extends Modele {
 
     sejour?: Sejour;
     divertissement?: Divertissement;
+    divertissementItem?: DivertissementItem;
     hebergement?: Hebergement;
     transport?: Transport;
     locationVoiture?: LocationVoiture;

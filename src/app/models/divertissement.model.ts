@@ -16,6 +16,8 @@ export class Divertissement extends Modele {
     images: Array<string>;
     restaurant: boolean;
     modification: Modification;
+    latitude = 0;
+    longitude = 0;
 
     constructor() {
         super();

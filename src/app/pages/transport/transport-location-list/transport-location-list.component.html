@@ -60,33 +60,7 @@
         <div class="voitures">
             <div class="row">
                 <div *ngFor="let v of voitures" class="cell-lg-4">
-                    <div (click)="voir(v)" class="voiture">
-                        <div class="row">
-                            <div class="cell-lg-8">
-                                <div class="voiture-categorie">
-                                    {{v.categorie}}
-                                </div>
-                                <div class="voiture-modele" style="display: none;">
-                                    {{v.modele}}
-                                </div>
-                            </div>
-                            <div class="cell-lg-4">
-                                <div class="voiture-infos">
-                                    Infos
-                                </div>
-                            </div>
-                        </div>
-                        <div class="voiture-description">
-
-                            {{v.sieges}} sièges | {{v.portieres}} portières | {{v.transmission}}
-                        </div>
-                        <div class="voiture-image" [ngStyle]="{'background-image': 'url('+ v.image +')'}">
-
-                        </div>
-                        <div class="voiture-cout" style="display: none;">
-                            {{v.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
-                        </div>
-                    </div>
+                    <app-display-voiture [voiture]="v"></app-display-voiture>
                 </div>
             </div>
         </div>

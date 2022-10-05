@@ -1,11 +1,9 @@
-
 $couleur: rgb(48, 164, 221);
 $couleur: rgb(48, 164, 221);
 @keyframes progress-bar {
     0% {
         transform: scaleX(0);
     }
-
     100% {
         transform: scaleX(1);
     }
@@ -15,58 +13,47 @@ $couleur: rgb(48, 164, 221);
     0% {
         transform: scale(1.5);
     }
-
     100% {
         transform: scale(1);
     }
 }
 
 .sejour {
-    
     &.indisponible {
         filter: grayscale(95%);
     }
-
     &:hover {
         // -webkit-box-shadow: 0 17px 50px 0 rgba(0, 0, 0, 0.19), 0 12px 15px 0 rgba(0, 0, 0, 0.24);
         // box-shadow: 0 17px 50px 0 rgba(0, 0, 0, 0.19), 0 12px 15px 0 rgba(0, 0, 0, 0.24);
         border: 0px solid #f0f0f0;
-
         .sejour__image {
             transform: scale(1.2);
         }
     }
-
     cursor: pointer;
     animation-name: progress-bar;
     animation-duration: 500ms;
     margin-bottom: 10px;
-
     .sejour__conteneur {
         background-color: #eee;
         height: 250px;
         overflow: hidden;
         border-top-left-radius: 0px;
         border-top-right-radius: 0px;
-
     }
-
     .sejour__image {
         height: 250px;
         background-size: cover;
         background-position: center center;
-
         border-radius: 0px;
         transition: transform 400ms;
         animation-name: opaque;
         animation-duration: 1000ms;
         background-color: #303030;
-
         &:hover {
             transform: scale(1.2);
         }
     }
-
     .sejour__description {
         padding: 10px;
         padding-left: 15px;
@@ -75,25 +62,18 @@ $couleur: rgb(48, 164, 221);
         border-bottom-right-radius: 0px;
         height: 120px;
         overflow: hidden;
-
     }
-
     .sejour__notation {
         margin-top: -3px;
-        float: right;
         font-size: 1.2em;
-        ;
     }
-
     .sejour__prix {
         margin-top: 0px;
-
         span {
             color: #444;
             border-radius: 0px;
             font-weight: bold;
         }
-
     }
 }
 
@@ -108,7 +88,6 @@ $couleur: rgb(48, 164, 221);
     text-align: left;
     margin-right: 30%;
     line-height: 2.5;
-
     .detail {
         background-color: $couleur;
         padding: 5px;
@@ -144,5 +123,5 @@ $couleur: rgb(48, 164, 221);
     width: 150px;
     white-space: nowrap;
     text-overflow: ellipsis;
-    display:inline-block;
+    display: inline-block;
 }

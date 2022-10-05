@@ -144,4 +144,9 @@ export class DivertissementViewComponent implements OnInit {
     });
   }
 
+  ouvrirGoogleMap() {
+    const lien = 'http://maps.google.com/maps?q=' + this.divertissement.latitude + ',' + this.divertissement.longitude;
+    window.open(lien);
+  }
+
 }
