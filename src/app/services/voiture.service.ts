@@ -41,8 +41,8 @@ export class VoitureService {
   }
 
   getVoiture(id: string): Promise<Voiture> {
-    const db = firebase.firestore();
     return new Promise((resolve, reject) => {
+      const db = firebase.firestore();
       if (id) {
         db.collection('voitures-trap').doc(id).get().then((resultat) => {
           const voiture = resultat.data() as Voiture;

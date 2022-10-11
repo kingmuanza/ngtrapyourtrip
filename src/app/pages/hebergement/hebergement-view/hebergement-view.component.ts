@@ -219,7 +219,6 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
     }
   }
   onFormSubmit() {
-
     if (this.hebergement.prestataire.hotel) {
       this.submit();
     } else {
@@ -229,8 +228,6 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
         alert('Indisponibilité sur la période');
       });
     }
-
-
   }
 
   check() {
