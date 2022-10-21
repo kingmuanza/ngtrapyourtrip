@@ -225,7 +225,7 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
       this.check().then(() => {
         this.submit();
       }).catch(() => {
-        alert('Indisponibilité sur la période');
+        alert('Ce bien est indisponible sur la période souhaitée. Veuillez changer de dates ou de biens svp');
       });
     }
   }

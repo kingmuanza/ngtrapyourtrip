@@ -9,6 +9,7 @@ export class Sejour extends Modele {
     public prixUnitaire: number;
     public ville: string;
     public description: string;
+    public descriptionSuccincte: string;
     public tags: string;
     public titre: string;
     public images: Array<string>;

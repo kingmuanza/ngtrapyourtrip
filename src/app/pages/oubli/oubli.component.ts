@@ -33,7 +33,7 @@ export class OubliComponent implements OnInit {
       utilisateur = JSON.parse(email);
     }
     this.form = this.formBuilder.group({
-      login: [utilisateur ? utilisateur.login : 'kangudie@gmail.com', [Validators.required]]
+      login: [utilisateur ? utilisateur.login : '', [Validators.required]]
     });
   }
 

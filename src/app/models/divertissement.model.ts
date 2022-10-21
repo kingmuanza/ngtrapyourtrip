@@ -6,6 +6,7 @@ export class Divertissement extends Modele {
     titre: string;
     prix: number;
     description: string;
+    descriptionSuccincte: string;
     lieu: string;
     ville: string;
     tel: string;

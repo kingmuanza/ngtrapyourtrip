@@ -55,13 +55,13 @@
                         </span>
                     </td>
                     <td>
-                        <span *ngIf="reservation.sejour " [innerHTML]="reservation.sejour.description">
+                        <span *ngIf="reservation.sejour " [innerHTML]="reservation.sejour.descriptionSuccincte">
                         </span>
-                        <span *ngIf="reservation.hebergement " [innerHTML]="reservation.hebergement.description">
+                        <span *ngIf="reservation.hebergement " [innerHTML]="reservation.hebergement.descriptionSuccincte">
                         </span>
-                        <span *ngIf="reservation.divertissement " [innerHTML]="reservation.divertissement.description">
+                        <span *ngIf="reservation.divertissement " [innerHTML]="reservation.divertissement.descriptionSuccincte">
                         </span>
-                        <span *ngIf="reservation.divertissementItem " [innerHTML]="reservation.divertissementItem.description">
+                        <span *ngIf="reservation.divertissementItem " [innerHTML]="reservation.divertissementItem.descriptionSuccincte">
                         </span>
                         <span *ngIf="reservation.transport " [innerHTML]="description(reservation.transport.depart.trajet)">
                         </span>
@@ -115,7 +115,7 @@
                     </a>
                 </div>
                 <div class="col-lg-8">
-                    <form #formMobile action="https://trapyourtrip.com/cinetpay/index.php" method="post">
+                    <form #formMobile method="post">
 
                         <input type="hidden" name="amount" [value]="TOTAL">
                         <input type="hidden" name="currency" value="XAF">
@@ -124,13 +124,16 @@
                         <input type="hidden" name="customer_surname" [value]="utilisateur.nom + ' ' + utilisateur.prenom">
                         <input type="hidden" name="description" value="Achat sur Trap your trip">
                         <input type="hidden" name="id" [value]="paiement.id">
+                        <input type="hidden" name="returnURL" [value]="returnURL">
+                        <input type="hidden" name="cancelURL" [value]="cancelURL">
+                        <input type="hidden" name="notifyURL" [value]="notifyURL">
 
-                        <a *ngIf="isUser" (click)="payerMobile(formMobile)" class="button success" style="color: white; float: right; ">
+                        <a *ngIf="isUser" (click)="paiementCinetPay()" class="button success" style="color: white; float: right; ">
                             Paiment mobile
                             <span style="margin-left: 10px;" class="fas fa-mobile fg-white"></span>
                         </a>
                     </form>
-                    <form #formBancaire action="http://trapyourtrip/stripe/index.php" method="post">
+                    <form #formBancaire [action]="lienStripe" method="post">
 
                         <input type="hidden" name="montant" [value]="TOTAL">
                         <input type="hidden" name="email" [value]="utilisateur.email ? utilisateur.email: 'aucun.email@gmail.com'">
@@ -186,13 +189,13 @@
                         <br>
                         <b>Description</b> :
 
-                        <span *ngIf="reservation.sejour " [innerHTML]="reservation.sejour.description ">
+                        <span *ngIf="reservation.sejour " [innerHTML]="reservation.sejour.descriptionSuccincte ">
                         </span>
-                        <span *ngIf="reservation.hebergement " [innerHTML]="reservation.hebergement.description ">
+                        <span *ngIf="reservation.hebergement " [innerHTML]="reservation.hebergement.descriptionSuccincte ">
                         </span>
-                        <span *ngIf="reservation.divertissement " [innerHTML]="reservation.divertissement.description ">
+                        <span *ngIf="reservation.divertissement " [innerHTML]="reservation.divertissement.descriptionSuccincte ">
                         </span>
-                        <span *ngIf="reservation.divertissementItem " [innerHTML]="reservation.divertissementItem.description ">
+                        <span *ngIf="reservation.divertissementItem " [innerHTML]="reservation.divertissementItem.descriptionSuccincte ">
                         </span>
                         <span *ngIf="reservation.transport " [innerHTML]="description(reservation.transport.depart.trajet) ">
                         </span>
@@ -235,22 +238,35 @@
         </table>
         <div *ngIf="reservations && reservations.length> 0" style="margin-top: 20px;">
             <div>
-                <form #form action="https://trapyourtrip.com/cinetpay/index.php" method="post">
-                    <!--  <form #form action="cinetpay/index.php" method="post"> -->
-                    <a (click)="supprimerTout()" class="button alert danger" style="color: white;">
+                <div style="margin-bottom: 10px;">
+                    <a (click)="supprimerTout()" class="button alert danger" style="color: white; width: 100%;">
                         Annuler toutes les réservations
                     </a>
-                    <input type="hidden" name="montant" [value]="TOTAL">
-                    <input type="hidden" name="id" [value]="paiement.id">
-
-                    <button *ngIf="isUser" type="submit" (click)="payerMobile(form)" class="button warning suite" style="background-color: rgb(48, 164, 221); ">
-                        Passer au paiement
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <button *ngIf="isUser" (click)="paiementCinetPay()" class="button success" style="width: 100%;">
+                        Paiment mobile
+                        <span style="margin-left: 10px;" class="fas fa-mobile fg-white"></span>
                     </button>
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <form #formBancaire2 [action]="lienStripe" method="post">
 
+                        <input type="hidden" name="montant" [value]="TOTAL">
+                        <input type="hidden" name="email" [value]="utilisateur.email ? utilisateur.email: 'aucun.email@gmail.com'">
+
+                        <button *ngIf="isUser" (click)="payerBancaire(formBancaire2)" class="button success" style="background-color: rgb(48, 164, 221); color: white; margin-right: 10px;width: 100%; ">
+    
+                            Paiment par carte
+                            <span style="margin-left: 10px;" class="fas fa-credit-card fg-white"></span>
+                        </button>
+                    </form>
+                </div>
+                <div style="margin-bottom: 10px;">
                     <button *ngIf="!isUser" class="button warning suite" style="background-color: rgb(48, 164, 221);" (click)="suivant()">
                         Suivant
                     </button>
-                </form>
+                </div>
             </div>
         </div>
     </div>

@@ -1,15 +1,34 @@
 <div style="background-color: rgb(48, 164, 221);">
-    <div class="titre fg-white">
-        S'inscrire à notre Newsletter
-    </div>
-    <div class="formulaire">
-        <input class="trap-input hideOnMObile shadow-1">
-        <input style="text-align: center;" placeholder="Votre addresse mail ici pour vous abonner à la Newsletter" class="showOnMObile" data-role="materialinput">
+    <div *ngIf="!inscrit">
+        <div class="titre fg-white">
+            S'inscrire à notre Newsletter
+        </div>
+        <div class="formulaire">
+            <form [formGroup]="form" class="hideOnMObile">
+                <input formControlName="email" type="email" class="trap-input  shadow-1">
+                <div>
+                    <button (click)="enregisterMail()" [disabled]="form.invalid" class="button large muanza">
+                        S'inscrire
+                    </button>
+                </div>
+            </form>
+            <form [formGroup]="form" class="showOnMObile">
+                <input formControlName="email" style="text-align: center;" placeholder="Votre addresse mail ici pour vous abonner à la Newsletter" class="showOnMObile" data-role="materialinput">
+                <div>
+                    <button (click)="enregisterMail()" [disabled]="form.invalid" class="button large muanza">
+                        S'inscrire
+                    </button>
+                </div>
+            </form>
 
-        <div>
-            <button class="button large muanza">
-                S'inscrire
-            </button>
+        </div>
+    </div>
+    <div *ngIf="inscrit">
+        <div class="titre fg-white">
+            Merci de vous être inscrit à notre Newsletter
+        </div>
+        <div style="height: 150px;">
+
         </div>
     </div>
 </div>

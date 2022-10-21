@@ -8,6 +8,7 @@ export class DivertissementItem extends Modele {
     titre: string;
     prix: number;
     description: string;
+    descriptionSuccincte: string;
     images: Array<string>;
 
     constructor(divertissement: Divertissement) {

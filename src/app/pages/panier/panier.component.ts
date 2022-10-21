@@ -10,7 +10,9 @@ import { Paiement } from 'src/app/models/paiement.model';
 import * as firebase from 'firebase';
 import { HttpClient } from '@angular/common/http';
 import * as stripe from '@stripe/stripe-js';
+import { environment } from '../../../environments/environment';
 declare const metro: any;
+declare var CinetPay: any;
 
 @Component({
   selector: 'app-panier',
@@ -33,12 +35,141 @@ export class PanierComponent implements OnInit {
   stripeInstanceResut: stripe.Stripe;
   stripeErrorMessage: string;
 
+  lienback = '';
+  returnURL = '';
+  cancelURL = '';
+  notifyURL = '';
+  lienStripe = '';
+
   constructor(
     private authService: AuthentificationService,
     private router: Router,
     private panierService: PanierService,
     private http: HttpClient,
-  ) { }
+  ) {
+
+    console.log('environment.lienback');
+    console.log(environment.lienback);
+    this.lienback = environment.lienback;
+    this.returnURL = environment.lienback + 'trapyourtripback/return.php';
+    this.cancelURL = environment.lienback + 'trapyourtripback/return.php';
+    this.notifyURL = environment.lienback + 'trapyourtripback/return.php';
+    this.lienStripe = environment.lienback + 'stripe/index.php';
+    console.log('CinetPay');
+    console.log(CinetPay);
+
+  }
+
+  private async sauvegarderPaiementEtenvoyerEmail() {
+
+    this.initPaiementItem();
+
+    await this.savePaiement(this.paiement);
+    console.log('paiement sauvegardé');
+
+    const responsable = {
+      noms: this.utilisateur.displayName,
+      email: this.utilisateur.email,
+    };
+    const response = await this.envoyerMailConfirmation(responsable);
+    console.log('response');
+    console.log(response);
+  }
+
+  private initPaiementItem() {
+    this.paiement.reservations = this.reservations;
+    this.paiement.total = this.TOTAL;
+    this.paiement.mode = 'CINETPAY';
+    this.paiement.date = new Date();
+    this.paiement.utilisateur = this.authService.utilisateur;
+    this.paiement.statut = 1;
+    console.log(' this.paiement');
+    console.log(this.paiement);
+  }
+
+  paiementCinetPay() {
+    this.initPaiementItem();
+    const muanza = CinetPay.setConfig({
+      apikey: '14805067945e0b6eb3374f47.48751476',
+      site_id: '962769',
+      mode: 'PRODUCTION',
+      notify_url: 'https://mondomaine.com/notify/',
+      device_id: '',
+      type: ''
+    });
+    console.log('muanza');
+    console.log(muanza);
+    const nom = 'Muanza';
+    const prenom = 'Muanza';
+    const email = 'muanza.kangudie@gmail.com';
+    const tel = '696543495';
+
+    const data = {
+      transaction_id: this.paiement.id,
+      amount: 100,
+      // amount: this.TOTAL,
+      currency: 'XAF',
+      channels: 'ALL',
+      description: 'YOUR_PAYMENT_DESCRIPTION',
+      customer_name: nom ? nom : '',
+      customer_surname: prenom ? prenom : '',
+      customer_email: email ? email : '',
+      customer_phone_number: tel ? tel : '',
+      customer_address: 'BP 0024',
+      customer_city: 'Antananarivo',
+      customer_country: 'CM',
+      customer_state: 'CM',
+      customer_zip_code: '06510', // code postal
+    };
+
+    console.log('data');
+    console.log(data);
+
+    console.log('getCheckout');
+    CinetPay.getCheckout(data);
+
+    CinetPay.waitResponse((donnees: any) => {
+      console.log('donnees');
+      console.log(donnees);
+      if (donnees.status === 'REFUSED') {
+        alert('Votre paiement a échoué');
+        window.location.reload();
+      } else if (donnees.status === 'ACCEPTED') {
+        alert('Votre paiement a été effectué avec succès');
+        this.initPaiementItem();
+        this.paiement.statut = 4;
+        this.savePaiement(this.paiement).then(() => {
+          console.log('paiement sauvegardé');
+          if (this.utilisateur.email) {
+            const responsable = {
+              noms: this.utilisateur.displayName,
+              email: this.utilisateur.email,
+            };
+            this.envoyerMailConfirmation(responsable).then((response) => {
+              console.log('response');
+              console.log(response);
+              this.router.navigate(['return', this.paiement.id]).then(() => {
+                window.location.reload();
+              });
+            });
+          } else {
+            alert('Vous ne disposez pas d\'addresse mail dans votre profil');
+            this.router.navigate(['return', this.paiement.id]).then(() => {
+              window.location.reload();
+            });
+          }
+
+        }).catch((e) => {
+          alert(e);
+        });
+      }
+    });
+
+    CinetPay.onError((donnees) => {
+      console.log('donnees');
+      console.log(donnees);
+    });
+  }
 
   ngOnInit(): void {
     if (this.authService.utilisateur) {
@@ -176,52 +307,11 @@ export class PanierComponent implements OnInit {
     form.submit();
   }
 
-  private async sauvegarderPaiementEtenvoyerEmail() {
-    const activity = metro().activity.open({
-      type: 'square',
-      overlayColor: '#fff',
-      overlayAlpha: 0.8
-    });
-    this.paiement.reservations = this.reservations;
-    this.paiement.total = this.TOTAL;
-    this.paiement.mode = 'CINETPAY';
-    this.paiement.date = new Date();
-    this.paiement.utilisateur = this.authService.utilisateur;
-    this.paiement.statut = 1;
-    console.log(' this.paiement');
-    console.log(this.paiement);
-    setTimeout(() => {
-      console.log(' setTimeout metro().activity.close(activity)');
-      if (activity && metro().activity) {
-        metro().activity.close(activity);
-      }
-    }, 10000);
-    await this.savePaiement(this.paiement);
-    console.log('paiement sauvegardé');
-    console.log(this.reservationsGroupes);
-    const keys = Object.keys(this.reservationsGroupes);
-    console.log('keys');
-    console.log(keys);
-    if (keys.length > 0) {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < keys.length; i++) {
-        const key = keys[i];
-        const responsable = {
-          noms: this.reservationsGroupes[key].noms,
-          email: key,
-        };
-        const response = await this.envoyerMailConfirmation(responsable);
-      }
-    }
-    metro().activity.close(activity);
-  }
-
   envoyerMailConfirmation(responsable) {
     return new Promise((resolve, reject) => {
       console.log('envoyerMailConfirmation');
       const noms = responsable.noms;
-      this.http.get('https://trapyourtrip.com/trapyourtripback/sendmail.php?email=' + responsable.email + '&noms=' + noms)
-        /* this.http.get('trapyourtripback/sendmail.php?email=' + responsable.email + '&noms=' + noms) */
+      this.http.get(this.lienback + 'trapyourtripback/sendmail.php?email=' + responsable.email + '&noms=' + noms)
         .subscribe((response) => {
           console.log('response');
           console.log(response);
@@ -231,84 +321,6 @@ export class PanierComponent implements OnInit {
           console.log(error);
           reject(error);
         });
-    });
-  }
-
-  paiementStripe() {
-    window.location.href = 'http://www.trapyourtrip.com/stripe';
-  }
-
-  paiementParCarte() {
-    console.log('Nous montons la carte');
-    const xhr = new XMLHttpRequest();
-    xhr.withCredentials = false;
-    const stripeInstance = stripe.loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
-
-    xhr.addEventListener('readystatechange', () => {
-      if (xhr.readyState === 4) {
-        console.log(xhr.responseText);
-        this.dataStripe = JSON.parse(xhr.responseText);
-
-        stripeInstance.then((stripeInstanceResut) => {
-          this.stripeInstanceResut = stripeInstanceResut;
-          const elements = stripeInstanceResut.elements();
-          const leStyle = {
-            base: {
-              color: '#32325d',
-              fontFamily: 'Arial, sans-serif',
-              fontSmoothing: 'antialiased',
-              fontSize: '16px',
-              '::placeholder': {
-                color: '#32325d'
-              }
-            },
-            invalid: {
-              fontFamily: 'Arial, sans-serif',
-              color: '#fa755a',
-              iconColor: '#fa755a'
-            }
-          };
-          this.laCarte = elements.create('card', { style: leStyle });
-          this.laCarte.mount('#cardElement');
-          console.log('La carte a été montée');
-          console.log(this.laCarte);
-        });
-      }
-    });
-
-    xhr.open('GET', 'this.globalService.ADRESSE_SERVEUR_BACKEND' + 'stripe/create-payment-intent');
-
-    xhr.send();
-  }
-
-  payerParStripeVraiVrai(laCarte, data) {
-    console.log('laCarte');
-    console.log(laCarte);
-    console.log('data');
-    console.log(data);
-    this.stripeInstanceResut.confirmCardPayment(
-      data.clientSecret,
-      {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        payment_method: {
-          card: laCarte
-        }
-      }
-    ).then((result) => {
-      console.log('Le résulat esst le suivant');
-      console.log(result);
-      if (result.error) {
-        // Show error to your customer
-        console.log(result.error.message);
-        this.stripeErrorMessage = result.error.message;
-      } else {
-        // The payment succeeded!
-        const paymentIntentId = result.paymentIntent.id;
-        console.log('paymentIntentId');
-        console.log(paymentIntentId);
-        // const lien = 'https://dashboard.stripe.com/test/payments/' + paymentIntentId;
-        // window.open(lien);
-      }
     });
   }
 

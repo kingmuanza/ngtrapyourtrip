@@ -7,6 +7,7 @@ export class Hebergement extends Modele {
 
     titre: string;
     description: string;
+    descriptionSuccincte: string;
     nuitee: number;
     lieu: string;
     tel: string;

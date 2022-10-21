@@ -34,7 +34,7 @@
                                 <span class="mif-meter">
 
                                 </span>
-                                <span style="margin-left: 10px;">
+                            <span style="margin-left: 10px;">
                                     {{trajet.duree ? trajet.duree: 'Aucune information sur la durée du trajet'}}
                                 </span>
                             </span>
@@ -68,7 +68,7 @@
                     </tbody>
                 </table>
             </div>
-            <div *ngIf="trajet.villeDepart !== trajet.villeArrivee" class="trajets">
+            <div *ngIf="trajet.villeDepart !== trajet.villeArrivee" class="trajets hideOnMObile">
                 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                     <thead>
                         <tr>
@@ -108,6 +108,25 @@
                         </tr>
                     </tfoot>
                 </table>
+            </div>
+            <div *ngIf="trajet.villeDepart !== trajet.villeArrivee" class="trajets showOnMObile">
+                <ng-container *ngFor="let depart of departs">
+                    <div (click)="reservation(depart, null)" class="shadow-1" style="cursor: pointer; margin-top: 10px; padding: 16px;">
+                        <div (click)="reservation(depart, null)" style="float: right;">
+                            <span *ngIf="depart.vip" class="vip">
+                                VIP
+                            </span>
+                            <span *ngIf="!depart.vip" class="standard">
+                                Standard
+                            </span>
+                        </div>
+                        <div>{{ depart.trajet.villeDepart }} - {{ depart.trajet.villeArrivee }}</div>
+                        <div>{{ depart.agence.nom }}</div>
+                        <div style="font-size: 1.2em; font-weight: bold;">
+                            {{ depart.prix | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                        </div>
+                    </div>
+                </ng-container>
             </div>
         </div>
     </div>

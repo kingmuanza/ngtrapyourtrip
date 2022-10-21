@@ -27,7 +27,7 @@
             </ng-container>
         </div>
         <div class="sous-titre text-leader2">
-            <div [innerHTML]="reservation.hebergement.description" *ngIf="reservation.hebergement">
+            <div [innerHTML]="reservation.hebergement.descriptionSuccincte" *ngIf="reservation.hebergement">
             </div>
             <ng-container *ngIf="reservation.transport">
                 {{description(reservation.transport.depart.trajet)}}
@@ -36,7 +36,7 @@
                 </span>
             </ng-container>
             <ng-container *ngIf="reservation.divertissement">
-                {{reservation.divertissement.description}}
+                {{reservation.divertissement.descriptionSuccincte}}
                 <div>
                     Le
                     <b>{{reservation.divertissement.date | date: 'yyyy-MM-dd'}} </b>
@@ -45,9 +45,7 @@
             <ng-container *ngIf="reservation.divertissementItem">
                 {{reservation.divertissementItem.titre}}
             </ng-container>
-            <ng-container *ngIf="reservation.sejour">
-                {{reservation.sejour.description}}
-            </ng-container>
+            <div [innerHTML]="reservation.sejour.descriptionSuccincte" *ngIf="reservation.sejour"></div>
             <ng-container *ngIf="reservation.locationVoiture">
                 {{reservation.locationVoiture.type}}
                 <span *ngIf="reservation.locationVoiture.type === 'interurbain'">

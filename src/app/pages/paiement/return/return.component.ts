@@ -24,12 +24,16 @@ export class ReturnComponent implements OnInit {
       const id = paramMap.get('id');
       if (id) {
         this.getPaiement(id).then((paiement) => {
-          this.paiement = paiement;
-          this.setPaiement().then(() => {
+          if (paiement) {
+            this.paiement = paiement;
+
             localStorage.setItem('panier-trap', JSON.stringify([]));
             this.panierService.reservations = [];
             this.panierService.emit();
-          });
+
+          } else {
+
+          }
         });
       }
     });
