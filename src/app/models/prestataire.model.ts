@@ -6,6 +6,7 @@ export class Prestataire extends Utilisateur {
     nom: string;
     hotel: boolean;
     villa: boolean;
+    lodge: boolean;
     login: string;
     passe: string;
     logo: string;

@@ -1,0 +1,36 @@
+<div class="page">
+    <div class="entete">
+        <div class="titre">
+            Liste des gares
+        </div>
+    </div>
+    <div class="contenu">
+        <div class="gares">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Type</th>
+                        <th>Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let gare of gares" style="cursor: pointer;">
+                        <td>{{ gare.id }}</td>
+                        <td>{{ gare.nom | uppercase}}</td>
+                        <td>{{ gare.bus ? 'Gare de voyage': ''}}</td>
+                        <td>
+                            <button class="button" (click)="modifier(gare)">
+                                Modifier
+                            </button>
+                            <button style="margin-left: 10px;" class="button alert" (click)="supprimer(gare)">
+                                Supprimer
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

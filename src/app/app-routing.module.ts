@@ -61,6 +61,7 @@ import { DivertissementItemViewComponent } from './pages/divertissement/divertis
 const routes: Routes = [
   { path: 'accueil', component: AccueilComponent },
   { path: 'cancel/:id', component: CancelComponent },
+  { path: 'return', component: ReturnComponent },
   { path: 'return/:id', component: ReturnComponent },
 
   { path: 'rechercher', component: RechercherComponent },
@@ -136,6 +137,7 @@ const routes: Routes = [
   { path: 'offres/transport/depart/edit/:id', component: DepartEditComponent },
   { path: 'offres/transport/depart/list/:id', component: DepartListComponent },
   { path: 'offres/transport/depart/view/:id/:heure', component: DepartViewComponent },
+  { path: 'offres/transport/depart/view/:id/gare/:idgare', component: DepartViewComponent },
 
   { path: 'prestataire', component: PrestataireListComponent },
   { path: 'prestataire/view/:id', component: PrestataireViewComponent },

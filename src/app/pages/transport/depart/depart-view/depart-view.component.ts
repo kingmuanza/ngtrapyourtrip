@@ -7,6 +7,7 @@ import * as firebase from 'firebase';
 import { Depart } from 'src/app/models/depart.model';
 import { Transport } from 'src/app/models/transport.model';
 import { Trajet } from 'src/app/models/trajet.model';
+import { Gare } from 'src/app/models/gare.model';
 declare const metro: any;
 
 @Component({
@@ -25,6 +26,7 @@ export class DepartViewComponent implements OnInit {
   allerretour = false;
   retourDate;
   retourHeure;
+  gare: Gare;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,12 +37,22 @@ export class DepartViewComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((paramMap) => {
       const id = paramMap.get('id');
+      const idgare = paramMap.get('idgare');
       const heure = paramMap.get('heure');
       if (id) {
         this.getDepart(id).then((depart) => {
           this.depart = depart;
           console.log('depart');
           console.log(depart);
+          if (idgare) {
+            const db = firebase.firestore();
+            db.collection('gares-trap').doc(idgare).get().then((resultat) => {
+              const gare = resultat.data() as Gare;
+              this.gare = gare;
+              this.initForm();
+            }).catch((e) => {
+            });
+          }
         });
       }
       if (heure) {
@@ -178,6 +190,9 @@ export class DepartViewComponent implements OnInit {
       transport.date = dateDebut;
       transport.depart = this.depart;
       transport.personnes = personnes;
+      if (this.gare) {
+        transport.gare = this.gare;
+      }
       let cout = this.depart.prix * Number(personnes);
 
       if (this.allerretour) {

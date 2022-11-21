@@ -12,7 +12,7 @@ $bg-primaire: rgb(48, 164, 221);
         }
     }
     .offre {
-        border: 1.5px solid #333;
+        border: 1.5px solid #31393C;
         border-radius: 10px;
         height: 64px;
         padding: 20px;
@@ -21,7 +21,7 @@ $bg-primaire: rgb(48, 164, 221);
         font-size: 1.2em;
         cursor: pointer;
         &:hover {
-            background-color: #404040;
+            background-color: rgba(#31393C, 1);
             color: $bg-primaire;
         }
         .libelle {
@@ -32,7 +32,7 @@ $bg-primaire: rgb(48, 164, 221);
             float: right;
         }
         @media screen and (max-width: 599px) {
-            border: 1px solid #333;
+            border: 1px solid #31393C;
             border-radius: 10px;
             height: 50px;
             padding: 10px;

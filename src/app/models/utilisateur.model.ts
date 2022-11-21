@@ -19,6 +19,7 @@ export class Utilisateur {
     localisation: string;
     hotel: boolean;
     villa: boolean;
+    lodge: boolean;
     notation: number;
     prixMin: number;
 

@@ -47,7 +47,6 @@
     &-debut {
         border: 2px solid rgb(48, 164, 221);
     }
-
     &-fin {
         border: 2px solid rgb(48, 164, 221);
         border-left: 0px solid #eee;
@@ -58,3 +57,15 @@
     margin-top: 20px;
 }
 
+.trap-image {
+    height: 40vh;
+    background-size: cover;
+    background-position: center center;
+    margin-bottom: 2vh;
+}
+
+.trap-image-big {
+    height: 62vmin;
+    background-size: cover;
+    background-position: center center;
+}

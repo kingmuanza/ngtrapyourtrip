@@ -91,10 +91,10 @@ export class ReservationViewComponent implements OnInit {
   }
 
   infos(reservation: Reservation) {
+    this.router.navigate(['offres', 'reservation', 'infos', reservation.id]);
     if (this.utilisateur) {
-      this.router.navigate(['offres', 'reservation', 'infos', reservation.id]);
     } else {
-      this.showconnexionObligatoire = true;
+      /* this.showconnexionObligatoire = true;
       this.interval = setInterval(() => {
         this.seconds--;
       }, 1000);
@@ -102,7 +102,7 @@ export class ReservationViewComponent implements OnInit {
         clearInterval(this.interval);
         localStorage.setItem('connexion-url', reservation.id);
         this.router.navigate(['connexion']);
-      }, 5000);
+      }, 5000); */
     }
   }
 

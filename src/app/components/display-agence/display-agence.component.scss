@@ -1,0 +1,13 @@
+.logo {
+    background-size: cover;
+    background-position: center center;
+    height: 300px;
+}
+
+.agence {
+    background-color: #eee;
+    &:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+}

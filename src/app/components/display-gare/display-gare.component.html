@@ -1,0 +1,16 @@
+<div class="agence">
+    <div *ngIf="gare.images && gare.images[0]" class="logo" [ngStyle]="{'background-image': 'url(' + gare.images[0] +')'}">
+
+    </div>
+    <div *ngIf="!(gare.images && gare.images[0])" class="logo">
+
+    </div>
+    <div style="padding: 10px; text-align: center;">
+        {{gare.nom}}
+        <div>
+            <b>
+                {{gare.ville}},
+            </b> {{gare.lieu}}
+        </div>
+    </div>
+</div>

@@ -6,6 +6,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import * as firebase from 'firebase';
 import { Depart } from 'src/app/models/depart.model';
 import { Transport } from 'src/app/models/transport.model';
+import { Agence } from 'src/app/models/agence.model';
+import { Gare } from 'src/app/models/gare.model';
+declare const metro: any;
+
 
 @Component({
   selector: 'app-depart-list',
@@ -15,8 +19,13 @@ import { Transport } from 'src/app/models/transport.model';
 export class DepartListComponent implements OnInit {
 
   departs = new Array<Depart>();
+  gares = new Array<Gare>();
   trajet: Trajet;
   resultats = new Array<Transport>();
+  agences = new Array<any>();
+  departChoisi: Depart;
+
+  choixGare = false;
 
   dtOptions = {
     language: DATATABLES_OPTIONS_LANGUAGE,
@@ -80,8 +89,41 @@ export class DepartListComponent implements OnInit {
         const depart = resultat.data() as Depart;
         this.departs.push(depart);
       });
+      this.genererAgences();
       this.dtTrigger.next();
     }).catch((e) => {
+    });
+  }
+
+  genererAgences() {
+    this.departs.forEach((depart) => {
+      this.agences.push(depart.agence);
+    });
+  }
+
+  choisirAgenceDepart(depart: Depart) {
+    const agence = depart.agence;
+    this.gares = new Array<Gare>();
+    this.departChoisi = depart;
+
+    const activity = metro().activity.open({
+      type: 'square',
+      overlayColor: '#fff',
+      overlayAlpha: 0.8
+    });
+
+    const db = firebase.firestore();
+    db.collection('gares-trap').get().then((resultats) => {
+      metro().activity.close(activity);
+      resultats.forEach((resultat) => {
+        const gare = resultat.data() as Gare;
+        if (gare.agence && gare.agence.id === agence.id && this.trajet.villeDepart.toLowerCase() === gare.ville.toLowerCase()) {
+          this.gares.push(gare);
+        }
+      });
+      this.choixGare = true;
+    }).catch((e) => {
+      metro().activity.close(activity);
     });
   }
 
@@ -93,6 +135,10 @@ export class DepartListComponent implements OnInit {
     } else {
       this.router.navigate(['offres', 'transport', 'depart', 'view', depart.id, '00:01']);
     }
+  }
+
+  reservationWithGare(depart: Depart, gare: Gare) {
+    this.router.navigate(['offres', 'transport', 'depart', 'view', depart.id, 'gare', gare.id]);
   }
 
   description(trajet: Trajet) {

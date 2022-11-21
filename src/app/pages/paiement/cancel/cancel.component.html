@@ -1,1 +1,19 @@
-<p>cancel works!</p>
+<div style="min-height: 80vh; background-color: #eee;">
+
+    <div *ngIf="paiement" style="text-align: center; height: 50vh; padding-top: 10vh;">
+
+        <div style="margin-bottom: 20px">
+            <span class="mif-cross fg-red" style="font-size: 12em; color: rgb(48, 164, 221);"></span>
+        </div>
+
+        <div style="margin-bottom: 10px">
+            Votre paiement a echoué
+        </div>
+
+        <div>
+            <button routerLink="accueil" class="button" style="background-color: rgb(48, 164, 221); color: white">
+                Revenir à l'accueil
+            </button>
+        </div>
+    </div>
+</div>

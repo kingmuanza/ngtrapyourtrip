@@ -1,25 +1,22 @@
 .trait {
     height: 1px;
-    background-color: #303030;
+    background-color: rgba(#31393C, 0.5);
     margin-top: 4vmin;
 }
 
 .titre {
-    margin-top: -3.5vmin;
+    margin-top: -25px;
     text-align: center;
-    font-size: 4vmin;
-    font-family: 'Raleway';
-
+    font-size: 30px;
+    font-family: 'Poppins';
     @media screen and (max-width: 599px) {
-        line-height: 1.15;
+        line-height: 1;
     }
-
     span {
         background-color: white;
-        padding-left: 5vw;
-        padding-right: 5vw;
-        font-weight: bold;
-
+        padding-left: 50px;
+        padding-right: 50px;
+        // font-weight: bold;
         @media screen and (max-width: 599px) {
             display: inline-block;
             margin-left: 15vw;
@@ -29,10 +26,9 @@
 }
 
 .description {
-    font-size: 3vh;
+    font-size: 25px;
     padding-top: 0px;
     padding-right: 20px;
-
     @media screen and (max-width: 599px) {
         padding-right: 0px;
         padding-top: 0px;
@@ -44,7 +40,6 @@
 
 .sejours {
     padding-top: 30px;
-
     @media screen and (max-width: 599px) {
         padding-top: 0px;
     }
@@ -62,14 +57,15 @@
         background-size: cover;
         background-position: center center;
         border-radius: 10px;
-
         @media screen and (max-width: 599px) {
             height: 20vh;
         }
     }
-
     .sejour__description {
         padding-top: 10px;
-
     }
+}
+
+.box {
+    // background-color: #eee;
 }

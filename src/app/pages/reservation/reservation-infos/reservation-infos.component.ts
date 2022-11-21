@@ -99,8 +99,9 @@ export class ReservationInfosComponent implements OnInit {
     localStorage.setItem('panier-trap', JSON.stringify(newPanier));
 
     if (this.utilisateur) {
-      const db = firebase.firestore();
       this.reservation.utilisateur = this.utilisateur;
+
+      const db = firebase.firestore();
       db.collection('responsables-trap')
         .doc(this.utilisateur.uid)
         .set(JSON.parse(JSON.stringify(this.reservation.responsable))).then(() => {
@@ -114,8 +115,16 @@ export class ReservationInfosComponent implements OnInit {
         }).catch((e) => {
         });
     } else {
-      this.router.navigate(['connexion']);
+      const db = firebase.firestore();
+      db.collection('reservation-trap').doc(this.reservation.id).set(JSON.parse(JSON.stringify(this.reservation))).then(() => {
+        console.log('TERMINEEE !!!');
+        metro().activity.close(activity);
+        this.router.navigate(['offres', 'reservation', 'recap', this.reservation.id]);
+      }).catch((e) => {
+        metro().activity.close(activity);
+      });
     }
+
 
   }
 

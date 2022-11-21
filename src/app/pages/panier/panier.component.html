@@ -115,9 +115,10 @@
                     </a>
                 </div>
                 <div class="col-lg-8">
-                    <form #formMobile method="post">
+                    <form #formMobile method="post" action="https://trapyourtrip.com/cinetpay-sdk-php/action.php">
 
                         <input type="hidden" name="amount" [value]="TOTAL">
+                        <!-- <input type="hidden" name="amount" [value]="100"> -->
                         <input type="hidden" name="currency" value="XAF">
                         <input type="hidden" name="valider" [value]="true">
                         <input type="hidden" name="customer_name" [value]="utilisateur.nom + ' ' + utilisateur.prenom">
@@ -128,19 +129,19 @@
                         <input type="hidden" name="cancelURL" [value]="cancelURL">
                         <input type="hidden" name="notifyURL" [value]="notifyURL">
 
-                        <a *ngIf="isUser" (click)="paiementCinetPay()" class="button success" style="color: white; float: right; ">
-                            Paiment mobile
+                        <a (click)="payerMobile(formMobile)" class="button success" style="color: white; float: right; ">
+                            Paiement mobile
                             <span style="margin-left: 10px;" class="fas fa-mobile fg-white"></span>
                         </a>
                     </form>
                     <form #formBancaire [action]="lienStripe" method="post">
 
                         <input type="hidden" name="montant" [value]="TOTAL">
-                        <input type="hidden" name="email" [value]="utilisateur.email ? utilisateur.email: 'aucun.email@gmail.com'">
+                        <input type="hidden" name="email" [value]="reservations ? reservations[0].responsable.email : ''">
 
-                        <button type="submit" *ngIf="isUser" (click)="payerBancaire(formBancaire)" class="button success" style="background-color: rgb(48, 164, 221); color: white; float: right; margin-right: 10px; ">
+                        <button type="submit" (click)="payerBancaire(formBancaire)" class="button success" style="background-color: rgb(48, 164, 221); color: white; float: right; margin-right: 10px; ">
 
-                            Paiment par carte
+                            Paiement par carte
                             <span style="margin-left: 10px;" class="fas fa-credit-card fg-white"></span>
                         </button>
                     </form>
@@ -244,20 +245,34 @@
                     </a>
                 </div>
                 <div style="margin-bottom: 10px;">
-                    <button *ngIf="isUser" (click)="paiementCinetPay()" class="button success" style="width: 100%;">
-                        Paiment mobile
-                        <span style="margin-left: 10px;" class="fas fa-mobile fg-white"></span>
-                    </button>
+                    <form #formMobile method="post" action="https://trapyourtrip.com/cinetpay-sdk-php/action.php">
+
+                        <input type="hidden" name="amount" [value]="TOTAL">
+                        <input type="hidden" name="currency" value="XAF">
+                        <input type="hidden" name="valider" [value]="true">
+                        <input type="hidden" name="customer_name" [value]="utilisateur.nom + ' ' + utilisateur.prenom">
+                        <input type="hidden" name="customer_surname" [value]="utilisateur.nom + ' ' + utilisateur.prenom">
+                        <input type="hidden" name="description" value="Achat sur Trap your trip">
+                        <input type="hidden" name="id" [value]="paiement.id">
+                        <input type="hidden" name="returnURL" [value]="returnURL">
+                        <input type="hidden" name="cancelURL" [value]="cancelURL">
+                        <input type="hidden" name="notifyURL" [value]="notifyURL">
+
+                        <a (click)="payerMobile(formMobile)" class="button success" style="color: white; width: 100%; ">
+                            Paiement mobile
+                            <span style="margin-left: 10px;" class="fas fa-mobile fg-white"></span>
+                        </a>
+                    </form>
                 </div>
                 <div style="margin-bottom: 10px;">
                     <form #formBancaire2 [action]="lienStripe" method="post">
 
                         <input type="hidden" name="montant" [value]="TOTAL">
-                        <input type="hidden" name="email" [value]="utilisateur.email ? utilisateur.email: 'aucun.email@gmail.com'">
+                        <input type="hidden" name="email" [value]="reservations ? reservations[0].responsable.email : ''">
 
-                        <button *ngIf="isUser" (click)="payerBancaire(formBancaire2)" class="button success" style="background-color: rgb(48, 164, 221); color: white; margin-right: 10px;width: 100%; ">
+                        <button (click)="payerBancaire(formBancaire2)" class="button success" style="background-color: rgb(48, 164, 221); color: white; margin-right: 10px;width: 100%; ">
     
-                            Paiment par carte
+                            Paiement par carte
                             <span style="margin-left: 10px;" class="fas fa-credit-card fg-white"></span>
                         </button>
                     </form>

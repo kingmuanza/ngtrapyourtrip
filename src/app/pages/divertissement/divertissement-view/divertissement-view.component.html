@@ -5,11 +5,8 @@
                 <div class="titre">
                     {{divertissement.titre}}
                 </div>
-                <div class="sous-titre text-leader2">
-                    {{divertissement.description}}
-                </div>
-                <div style="height: 20px;">
-
+                <div class="sous-titre">
+                    {{divertissement.descriptionSuccincte}}
                 </div>
 
                 <div class="sous-titre text-leader2" *ngIf="divertissement.date && !divertissement.dateFin">
@@ -56,9 +53,27 @@
     </div>
     <div class="contenu" style="padding-top: 5vh">
         <div class="row">
-            <div *ngFor="let image of divertissement.images" class="cell-lg-4">
-                <div class="trap-image" [ngStyle]="{'background-image': 'url(' + image +')'}">
+            <div class="col-lg-5">
+                <div class="sous-titre text-leader2">
+                    {{divertissement.description}}
+                </div>
+            </div>
+            <div *ngIf="divertissement.images[0]" class="cell-lg-7">
+                <div class="trap-image-big">
+                    <ng-container *ngFor="let image of divertissement.images; let i = index">
 
+                        <div *ngIf="i === indexImages" class="trap-image-big animer" [ngStyle]="{'background-image': 'url(' + divertissement.images[i] +')'}">
+
+                        </div>
+
+                    </ng-container>
+                </div>
+                <div class="row" style="margin-top: 5px;">
+                    <div (click)="choisir(i)" class="cell-lg-1 cell-3" *ngFor="let image of divertissement.images; let i = index">
+                        <div [ngClass]="{'actuelle': i === indexImages}" style="height: 60px; cursor: pointer; background-size: cover; background-position: center center;" [ngStyle]="{'background-image': 'url(' + image +')'}">
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

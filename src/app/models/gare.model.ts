@@ -1,13 +1,14 @@
-import { Trajet } from './trajet.model';
-import { v4 as uuidv4 } from 'uuid';
-import { Modification } from './modification.model';
 
-export class Agence {
+import { v4 as uuidv4 } from 'uuid';
+import { Agence } from './agence.model';
+
+export class Gare {
     id: string;
     nom: string;
-    bus: boolean;
-    logo: string;
-    modification: Modification;
+    ville: string;
+    lieu: string;
+    agence: Agence;
+    images = [];
 
     constructor() {
         this.id = this.generateID();

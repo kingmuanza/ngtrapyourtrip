@@ -1,0 +1,8 @@
+<div class="agence">
+    <div *ngIf="agence.logo" class="logo" [ngStyle]="{'background-image': 'url(' + agence.logo +')'}">
+
+    </div>
+    <div style="padding: 10px; text-align: center;">
+        {{agence.nom}}
+    </div>
+</div>

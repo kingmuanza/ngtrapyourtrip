@@ -26,6 +26,10 @@ export class DivertissementViewComponent implements OnInit {
   adminSubscription: Subscription;
   passee = false;
 
+  indexImages = 0;
+  changeImage;
+
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -131,6 +135,7 @@ export class DivertissementViewComponent implements OnInit {
       db.collection('divertissements-trap').doc(id).get().then((resultat) => {
         const divertissement = resultat.data() as Divertissement;
         this.divertissement = divertissement;
+        this.changementDimages();
         const date = new Date(this.divertissement?.date);
         if (date.getTime() < new Date().getTime()) {
           this.passee = true;
@@ -142,6 +147,30 @@ export class DivertissementViewComponent implements OnInit {
         metro().activity.close(activity);
       });
     });
+  }
+
+  choisir(i) {
+    this.indexImages = i;
+  }
+
+  changementDimages() {
+    if (this.divertissement) {
+      if (this.divertissement.images) {
+        if (this.divertissement.images.length > 0) {
+          this.indexImages = 0;
+          this.changeImage = setInterval(() => {
+            const i = this.indexImages + 1;
+            if (i < this.divertissement.images.length) {
+              this.indexImages++;
+            } else {
+              this.indexImages = 0;
+            }
+            console.log('changement dimage');
+            console.log(this.indexImages + ' sur ' + this.divertissement.images.length);
+          }, 10000);
+        }
+      }
+    }
   }
 
   ouvrirGoogleMap() {

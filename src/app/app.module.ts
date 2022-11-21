@@ -97,6 +97,11 @@ import { DisplayVoitureComponent } from './components/display-voiture/display-vo
 import { DisplayDivertissementItemComponent } from './components/display-divertissement-item/display-divertissement-item.component';
 import { DivertissementItemViewComponent } from './pages/divertissement/divertissement-item-view/divertissement-item-view.component';
 import { DisplayReservationDescriptionComponent } from './components/display-reservation-description/display-reservation-description.component';
+import { DisplayAgenceComponent } from './components/display-agence/display-agence.component';
+import { GareEditComponent } from './pages/transport/gare/gare-edit/gare-edit.component';
+import { GareListComponent } from './pages/transport/gare/gare-list/gare-list.component';
+import { GareViewComponent } from './pages/transport/gare/gare-view/gare-view.component';
+import { DisplayGareComponent } from './components/display-gare/display-gare.component';
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -190,7 +195,12 @@ registerLocaleData(localeFr, 'fr-FR');
     DisplayVoitureComponent,
     DisplayDivertissementItemComponent,
     DivertissementItemViewComponent,
-    DisplayReservationDescriptionComponent
+    DisplayReservationDescriptionComponent,
+    DisplayAgenceComponent,
+    GareEditComponent,
+    GareListComponent,
+    GareViewComponent,
+    DisplayGareComponent
   ],
   imports: [
     BrowserModule,

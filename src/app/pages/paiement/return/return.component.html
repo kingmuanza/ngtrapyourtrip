@@ -1,6 +1,6 @@
 <div style="min-height: 80vh; background-color: #eee;">
 
-    <div *ngIf="paiement && paiement.statut == 4" style="text-align: center; height: 50vh; padding-top: 10vh;">
+    <div *ngIf="paiement" style="text-align: center; height: 50vh; padding-top: 10vh;">
 
         <div style="margin-bottom: 20px">
             <span class="mif-checkmark" style="font-size: 12em; color: rgb(48, 164, 221);"></span>
@@ -9,6 +9,9 @@
         <div style="margin-bottom: 10px">
             Votre paiement a bien été effectué
         </div>
+        <p style="margin-bottom: 10px">
+            Un email de confirmation vous sera envoyé. Regardez dans vos spams s'il n'apparait pas dans votre boîte principale
+        </p>
         <div style="color: #aaa;margin-bottom: 10px">
             {{paiement.id}}
         </div>
@@ -22,15 +25,19 @@
             </button>
         </div>
     </div>
-    <div *ngIf="paiement && paiement.statut < 4" style="text-align: center; height: 50vh; padding-top: 10vh;">
+
+    <div *ngIf="!paiement" style="text-align: center; height: 50vh; padding-top: 10vh;">
 
         <div style="margin-bottom: 20px">
-            <span class="mif-cross fg-red" style="font-size: 12em; color: rgb(48, 164, 221);"></span>
+            <span class="mif-checkmark" style="font-size: 12em; color: rgb(48, 164, 221);"></span>
         </div>
 
         <div style="margin-bottom: 10px">
-            Votre paiement a echoué
+            Votre paiement a bien été effectué
         </div>
+        <p style="margin-bottom: 10px">
+            Un email de confirmation vous sera envoyé. Regardez dans vos spams s'il n'apparait pas dans votre boîte principale
+        </p>
 
         <div>
             <button routerLink="accueil" class="button" style="background-color: rgb(48, 164, 221); color: white">

@@ -117,6 +117,7 @@ export class PrestataireListComponent implements OnInit {
 
       hotel: [false],
       appartement: [false],
+      lodge: [false],
 
       wifi: [false],
       climatiseur: [false],
@@ -143,7 +144,10 @@ export class PrestataireListComponent implements OnInit {
         if (value.appartement) {
           nature = 'villa';
         }
-        if (value.appartement && value.hotel) {
+        if (value.lodge) {
+          nature = 'lodge';
+        }
+        if (value.appartement && value.hotel && value.lodge) {
           nature = null;
         }
       }
@@ -154,6 +158,9 @@ export class PrestataireListComponent implements OnInit {
       }
       if (value.appartement) {
         nature = 'villa';
+      }
+      if (value.lodge) {
+        nature = 'lodge';
       }
     }
     this.resultats = this.utilisateurs;
@@ -184,6 +191,9 @@ export class PrestataireListComponent implements OnInit {
       }
       if (nature === 'hotel') {
         return options && prestataire && prestataire.prestataire && prestataire.hotel;
+      }
+      if (nature === 'lodge') {
+        return options && prestataire && prestataire.prestataire && prestataire.lodge;
       }
       return options && prestataire && prestataire.prestataire;
     });

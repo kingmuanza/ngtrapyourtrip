@@ -31,9 +31,17 @@
             </div>
             <ng-container *ngIf="reservation.transport">
                 {{description(reservation.transport.depart.trajet)}}
-                <span *ngIf="reservation.transport.depart.vip" class="allerretour" style="float: right; font-weight: bold;">
-                    VIP
-                </span>
+
+                <ng-container *ngIf="reservation.transport.gare">
+                    <span>
+                        : {{reservation.transport.gare.nom}}, {{reservation.transport.gare.lieu}}
+                    </span>
+                </ng-container>
+                <div style="margin-top: 5px;">
+                    <span *ngIf="reservation.transport.depart.vip" class="allerretour" style="font-weight: bold;">
+                        VIP
+                    </span>
+                </div>
             </ng-container>
             <ng-container *ngIf="reservation.divertissement">
                 {{reservation.divertissement.descriptionSuccincte}}
@@ -63,10 +71,6 @@
                 {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
             </b>
         </div>
-
-        <span *ngIf="reservation.transport && reservation.transport.depart.vip" class="allerretour" style="float: right; font-weight: bold;">
-            VIP
-        </span>
     </div>
 </div>
 
@@ -106,6 +110,10 @@
                     Durée de la location : {{days}} jours
                 </ng-container>
                 <ng-container *ngIf="reservation.divertissement">
+                    {{reservation.divertissement.date | date: 'yyyy-MM-dd'}}
+                </ng-container>
+                <ng-container *ngIf="reservation.transport">
+                    {{reservation.transport.date | date: 'yyyy-MM-dd HH:mm'}}
                 </ng-container>
                 <ng-container *ngIf="reservation.divertissementItem">
                     Attraction
@@ -338,23 +346,11 @@
     <div class="cell-lg-2">
     </div>
     <div class="cell-lg-4 muanza-text-right">
-        <div>
-            <b *ngIf="reservation.transport.retour">
-                {{reservation.personnes}} * {{reservation.transport.depart.prix * 2 |
-                currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
-            </b>
-            <b *ngIf="!reservation.transport.retour">
-                {{reservation.personnes}} * {{reservation.transport.depart.prix |
-                currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
-            </b>
-        </div>
+
         <div *ngIf="reservation.transport.retour">
             <span class="allerretour">
                 Aller Retour
             </span>
         </div>
-        <h3 class="" style="margin: 0; padding:0">
-            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
-        </h3>
     </div>
 </div>

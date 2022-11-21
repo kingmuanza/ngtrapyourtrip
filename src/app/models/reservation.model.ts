@@ -41,6 +41,8 @@ export class Reservation extends Modele {
     utilisateur: Utilisateur;
     statut: string;
 
+    payee = false;
+
     constructor() {
         super();
         this.enfants = 0;

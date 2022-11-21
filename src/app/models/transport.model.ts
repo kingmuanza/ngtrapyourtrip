@@ -1,4 +1,5 @@
 import { Depart } from './depart.model';
+import { Gare } from './gare.model';
 import { Modele } from './model.model';
 import { Modification } from './modification.model';
 
@@ -20,6 +21,7 @@ export class Transport extends Modele {
     Trajet: string;
 
     depart: Depart;
+    gare: Gare;
     date: Date;
     personnes: number;
     retour: boolean;

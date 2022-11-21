@@ -1,25 +1,27 @@
 <div class="trait">
 
 </div>
-<div class="titre">
-    <span>
+<div class="box">
+    <div class="titre">
+        <span>
         Nos offres de séjours
     </span>
-</div>
+    </div>
 
-<div class="sejours">
-    <div class="row">
-        <div class="cell-lg-2">
-            <div class="description text-leader2 mobile-center">
-                Découvrez toutes nos offres de séjours pour un confort sans pareil
+    <div class="sejours">
+        <div class="row">
+            <div class="cell-lg-2">
+                <div class="description text-leader2 mobile-center">
+                    Découvrez toutes nos offres de séjours pour un confort sans pareil
+                </div>
+
             </div>
-
-        </div>
-        <div class="cell-lg-10">
-            <div class="row">
-                <div class="cell-lg-4" *ngFor="let sejour of sejours; let index = index;">
-                    <div *ngIf="index < 6">
-                        <app-display-sejour [sejour]="sejour"></app-display-sejour>
+            <div class="cell-lg-10">
+                <div class="row">
+                    <div class="cell-lg-4" *ngFor="let sejour of sejours; let index = index;">
+                        <div *ngIf="index < 6">
+                            <app-display-sejour [sejour]="sejour"></app-display-sejour>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -40,6 +40,12 @@
                                 {{depart.trajet.villeDepart}} - {{depart.trajet.villeArrivee}}
                             </span>
                         </ng-container>
+                        <ng-container *ngIf="gare">
+                            <span>
+                                : {{gare.nom}}, {{gare.lieu}}
+                            </span>
+                        </ng-container>
+
                     </div>
                 </div>
             </div>

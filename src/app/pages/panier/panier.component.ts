@@ -11,6 +11,7 @@ import * as firebase from 'firebase';
 import { HttpClient } from '@angular/common/http';
 import * as stripe from '@stripe/stripe-js';
 import { environment } from '../../../environments/environment';
+import { Utilisateur } from 'src/app/models/utilisateur.model';
 declare const metro: any;
 declare var CinetPay: any;
 
@@ -29,6 +30,7 @@ export class PanierComponent implements OnInit {
   responsables = new Array<any>();
   reservationsGroupes = {};
   utilisateur: any;
+  utilisateurSubscription: Subscription;
 
   laCarte: stripe.StripeCardElement;
   dataStripe: any;
@@ -41,6 +43,8 @@ export class PanierComponent implements OnInit {
   notifyURL = '';
   lienStripe = '';
 
+  pagechargeeInterval: any;
+
   constructor(
     private authService: AuthentificationService,
     private router: Router,
@@ -51,25 +55,52 @@ export class PanierComponent implements OnInit {
     console.log('environment.lienback');
     console.log(environment.lienback);
     this.lienback = environment.lienback;
+    this.lienback = 'https://trapyourtrip.com/';
     this.returnURL = environment.lienback + 'trapyourtripback/return.php';
     this.cancelURL = environment.lienback + 'trapyourtripback/return.php';
     this.notifyURL = environment.lienback + 'trapyourtripback/return.php';
-    this.lienStripe = environment.lienback + 'stripe/index.php';
+    // this.lienStripe = this.lienback + 'stripe/index.php';
+    this.lienStripe = 'https://trapyourtrip.com/' + 'stripe/index.php';
     console.log('CinetPay');
     console.log(CinetPay);
 
   }
 
-  private async sauvegarderPaiementEtenvoyerEmail() {
+  ngOnInit(): void {
+    this.utilisateurSubscription = this.authService.utilisateurSubject.subscribe((utilisateur: Utilisateur) => {
+      this.utilisateur = utilisateur;
+    });
+    if (this.authService.utilisateur) {
+      this.isUser = true;
+      this.utilisateur = this.authService.utilisateur;
+    } else {
+      this.isUser = false;
+    }
+    this.panierSubscription = this.panierService.panierSubject.subscribe((reservations) => {
+      this.reservations = reservations;
+      this.update();
+    });
+    this.panierService.getPanier();
+  }
 
+  private async sauvegarderPaiementEtenvoyerEmail() {
+    /*
+        metro().dialog.create({
+          title: 'Vérifier vos mails',
+          content: 'Un email de confirmation vous sera envoyé. regardez dans vos spams s\'il n\'apparait pas dans votre boîte principale',
+          closeButton: true
+        });
+     */
     this.initPaiementItem();
 
     await this.savePaiement(this.paiement);
     console.log('paiement sauvegardé');
 
+    const lesnoms = this.reservations[0].responsable.nom + ' ' + this.reservations[0].responsable.prenom;
+
     const responsable = {
-      noms: this.utilisateur.displayName,
-      email: this.utilisateur.email,
+      noms: lesnoms,
+      email: this.reservations[0].responsable.email,
     };
     const response = await this.envoyerMailConfirmation(responsable);
     console.log('response');
@@ -99,21 +130,38 @@ export class PanierComponent implements OnInit {
     });
     console.log('muanza');
     console.log(muanza);
-    const nom = 'Muanza';
+
+    let nom = this.reservations[0].responsable.displayName;
+
+    if (this.reservations[0].responsable.nom && !this.reservations[0].responsable.displayName) {
+      nom = this.reservations[0].responsable.nom;
+      if (this.reservations[0].responsable.prenom) {
+        nom += ' ' + this.reservations[0].responsable.prenom;
+      }
+    }
+    if (this.reservations[0].responsable.displayName) {
+      nom = this.reservations[0].responsable.displayName;
+    }
+
     const prenom = 'Muanza';
-    const email = 'muanza.kangudie@gmail.com';
+    let mail = 'muanza.kangudie@gmail.com';
+    if (this.reservations[0].responsable.email) {
+      mail = this.reservations[0].responsable.email;
+    } else {
+      mail = this.paiement.reservations[0].responsable.email;
+    }
     const tel = '696543495';
 
     const data = {
       transaction_id: this.paiement.id,
-      amount: 100,
-      // amount: this.TOTAL,
+      amount: this.TOTAL,
+      // amount: 100,
       currency: 'XAF',
       channels: 'ALL',
       description: 'YOUR_PAYMENT_DESCRIPTION',
       customer_name: nom ? nom : '',
-      customer_surname: prenom ? prenom : '',
-      customer_email: email ? email : '',
+      customer_surname: '',
+      customer_email: mail,
       customer_phone_number: tel ? tel : '',
       customer_address: 'BP 0024',
       customer_city: 'Antananarivo',
@@ -128,11 +176,25 @@ export class PanierComponent implements OnInit {
     console.log('getCheckout');
     CinetPay.getCheckout(data);
 
+    this.pagechargeeInterval = setInterval(() => {
+      const cpclose = document.getElementById('cp-close');
+      console.log(new Date().getTime());
+      console.log('cpclose');
+      console.log(cpclose);
+      if (cpclose) {
+        clearInterval(this.pagechargeeInterval);
+        document.getElementById('cp-close').addEventListener('click', (() => {
+          console.log('jai fermé cinetpay');
+          window.location.reload();
+        }));
+      }
+    }, 5000);
+
     CinetPay.waitResponse((donnees: any) => {
       console.log('donnees');
       console.log(donnees);
       if (donnees.status === 'REFUSED') {
-        alert('Votre paiement a échoué');
+        alert('Votre paiement a été refusé. Veuillez réessayer !!');
         window.location.reload();
       } else if (donnees.status === 'ACCEPTED') {
         alert('Votre paiement a été effectué avec succès');
@@ -140,22 +202,22 @@ export class PanierComponent implements OnInit {
         this.paiement.statut = 4;
         this.savePaiement(this.paiement).then(() => {
           console.log('paiement sauvegardé');
-          if (this.utilisateur.email) {
+          if (this.reservations[0].responsable.email) {
             const responsable = {
-              noms: this.utilisateur.displayName,
-              email: this.utilisateur.email,
+              noms: this.reservations[0].responsable.displayName,
+              email: mail,
             };
             this.envoyerMailConfirmation(responsable).then((response) => {
               console.log('response');
               console.log(response);
               this.router.navigate(['return', this.paiement.id]).then(() => {
-                window.location.reload();
+                // window.location.reload();
               });
             });
           } else {
-            alert('Vous ne disposez pas d\'addresse mail dans votre profil');
+            console.log('Vous ne disposez pas d\'addresse mail dans votre profil');
             this.router.navigate(['return', this.paiement.id]).then(() => {
-              window.location.reload();
+              // window.location.reload();
             });
           }
 
@@ -169,20 +231,6 @@ export class PanierComponent implements OnInit {
       console.log('donnees');
       console.log(donnees);
     });
-  }
-
-  ngOnInit(): void {
-    if (this.authService.utilisateur) {
-      this.isUser = true;
-      this.utilisateur = this.authService.utilisateur;
-    } else {
-      this.isUser = false;
-    }
-    this.panierSubscription = this.panierService.panierSubject.subscribe((reservations) => {
-      this.reservations = reservations;
-      this.update();
-    });
-    this.panierService.getPanier();
   }
 
   update() {
@@ -298,11 +346,13 @@ export class PanierComponent implements OnInit {
 
   async payerMobile(form) {
     await this.sauvegarderPaiementEtenvoyerEmail();
+    console.log('form');
+    console.log(form);
     form.submit();
   }
 
   async payerBancaire(form) {
-    // await this.sauvegarderPaiementEtenvoyerEmail();
+    await this.sauvegarderPaiementEtenvoyerEmail();
     console.log(form);
     form.submit();
   }
