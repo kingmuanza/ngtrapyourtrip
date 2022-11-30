@@ -67,7 +67,7 @@ export class DepartViewComponent implements OnInit {
     this.form = this.formBuilder.group({
       date: [''],
       personnes: [1, Validators.required],
-      heure: [null, [Validators.required]],
+      heure: [null, []],
       allerretour: ['allersimple'],
     });
 
@@ -89,6 +89,10 @@ export class DepartViewComponent implements OnInit {
   }
 
   saveWithRetour() {
+    if (!this.retourHeure) {
+      alert('Veuillez choisir une heure de retour');
+      return ;
+    }
     console.log('this.retourDate');
     console.log(this.dialogRetour);
     const d = $(this.dialogRetour);
@@ -113,7 +117,7 @@ export class DepartViewComponent implements OnInit {
     const dateAller = new Date(date + 'T' + heure + ':00');
     const dateRetour = new Date(date2 + 'T' + this.retourHeure + ':00');
 
-    if (dateAller.getTime() <= dateRetour.getTime()) {
+    if (dateAller.getTime() + 1000 < dateRetour.getTime()) {
       this.onFormSubmit();
       console.log('metro');
       console.log(metro);
@@ -138,24 +142,27 @@ export class DepartViewComponent implements OnInit {
     const heure = d.toISOString();
     const temps = heure.split('T')[1];
     const h = temps.substring(0, 5);
+    // console.log(h + 'r');
     return h;
   }
 
   isDateValide(): boolean {
     const value = this.form.value;
     const heure = value.heure;
-    if (this.calendarpickerlocale) {
-      if (this.calendarpickerlocale.nativeElement) {
+    if (heure) {
+      if (this.calendarpickerlocale) {
+        if (this.calendarpickerlocale.nativeElement) {
 
-        const date = this.calendarpickerlocale.nativeElement.value;
-        // console.log('date');
-        // console.log(date);
-        const dateDebut = new Date(date + 'T' + heure + ':00');
-        // console.log(dateDebut);
-        if (date && new Date().getTime() <= dateDebut.getTime()) {
-          return true;
-        } else {
-          return false;
+          const date = this.calendarpickerlocale.nativeElement.value;
+          // console.log('date');
+          // console.log(date);
+          const dateDebut = new Date(date + 'T' + heure + ':00');
+          // console.log(dateDebut);
+          if (date && new Date().getTime() <= dateDebut.getTime()) {
+            return true;
+          } else {
+            return false;
+          }
         }
       }
     }
@@ -238,9 +245,15 @@ export class DepartViewComponent implements OnInit {
   }
 
   avertir() {
+    const value = this.form.value;
     const notify = metro().notify;
     const date = this.calendarpickerlocale.nativeElement.value;
-    alert('La date n\'est pas valide : ' + date);
+    const heure = value.heure;
+    if (heure) {
+      alert('La date n\'est pas valide : ' + date);
+    } else {
+      alert('Veuillez choisir l\'heure');
+    }
   }
 
   getDepart(id: string): Promise<Depart> {

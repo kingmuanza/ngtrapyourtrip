@@ -1,31 +1,24 @@
 .entete {
     height: 270px;
-
     // overflow: hidden;
     @media screen and (max-width: 599px) {
         height: 100vh;
     }
-
     .entete__background {
-
         height: 270px;
         overflow: hidden;
-
         animation-name: progress-bar;
         animation-duration: 500ms;
         background-size: cover;
         background-position: center center;
         // background-attachment: fixed;
         background-image: url('../../../../../assets/img/hummer.jpg');
-
         // transform: scale(1.2);
         @media screen and (max-width: 599px) {
             height: 100vh;
             display: none;
         }
-
     }
-
     .entete__contenu {
         padding-top: 55px;
         padding-left: 10vw;
@@ -35,7 +28,6 @@
         height: 270px;
         //background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5));
         background-color: rgba(255, 255, 255, 0.85);
-
         //color: white;
         @media screen and (max-width: 599px) {
             margin-top: 53px;
@@ -45,23 +37,17 @@
             height: 100vh;
             z-index: 10000;
         }
-
         .titre {
             font-size: 2.0em;
             line-height: 1.15;
         }
-
         .sous-titre {
             margin-top: 5px;
         }
-
         .le-formulaire-mm {
-            @media screen and (max-width: 599px) {
-            }
+            @media screen and (max-width: 599px) {}
         }
     }
-
-
 }
 
 .sous-titre {
@@ -120,13 +106,11 @@
 .details {
     margin-top: 20px;
     margin-bottom: 10px;
-
     .detail {
         display: inline-block;
         background-color: #fafafa;
         margin-right: 10px;
         padding-right: 10px;
-
         span {
             color: rgba(255, 115, 0);
             background-color: #eee;
@@ -135,22 +119,18 @@
             padding-right: 5px;
         }
     }
-
     .detail2 {
         display: inline-block;
         background-color: #fafafa;
         margin-right: 10px;
         padding-right: 10px;
-
         span.icone {
             color: rgba(255, 115, 0);
             background-color: #eee;
-
             i {
                 font-size: 1.5em;
             }
         }
-
         span.libelle {
             display: inline-block;
             padding: 3px;
@@ -175,11 +155,9 @@
     &-debut {
         border: 2px solid rgb(48, 164, 221);
     }
-
     &-fin {
         border: 2px solid rgb(48, 164, 221);
         border-left: 0px solid #eee;
-
         @media screen and (max-width: 599px) {
             border: 2px solid rgb(48, 164, 221);
         }
@@ -197,7 +175,6 @@ input.muanza {
     padding-left: 5vw;
     padding-right: 5vw;
 }
-
 
 .radius-gauche {
     border-top-left-radius: 10px;
@@ -218,12 +195,12 @@ input.muanza {
     letter-spacing: 1.5;
     font-weight: bold;
     float: right;
-
     @media screen and (max-width: 599px) {
         float: none;
-        position: fixed;
-        top: 65px;
-        left: 5vw;
+        position: relative;
+        display: inline-block;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 }
 

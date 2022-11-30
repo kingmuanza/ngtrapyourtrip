@@ -71,8 +71,13 @@
                 Hôtel
             </ng-container>
 
-            <ng-container *ngIf="!prestataire.hotel">
+            <ng-container *ngIf="prestataire.villa">
                 Appartement
+            </ng-container>
+
+
+            <ng-container *ngIf="prestataire.lodge">
+                Lodge
             </ng-container>
 
         </div>

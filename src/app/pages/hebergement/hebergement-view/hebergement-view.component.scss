@@ -19,6 +19,10 @@
 .entete {
     height: 235px;
     overflow: hidden;
+    @media screen and (max-width: 599px) {
+        overflow-y: auto;
+        height: auto;
+    }
     .entete__background {
         height: 235px;
         overflow: hidden;
@@ -29,6 +33,9 @@
         // background-attachment: fixed;
         filter: blur(5px);
         transform: scale(1.2);
+        @media screen and (max-width: 599px) {
+            display: none;
+        }
     }
     .entete__contenu {
         padding-top: 75px;
@@ -45,6 +52,9 @@
             padding-left: 5vw;
             padding-right: 5vw;
             background-color: rgba(255, 255, 255, 1);
+            margin-top: 0px;
+            height: auto;
+            overflow: auto;
         }
         .titre {
             font-size: 2.0em;

@@ -56,6 +56,7 @@
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin">
                         <select data-prepend="Heure" formControlName="heure" data-role="select">
+                            <option [ngValue]="null">Veuillez choisir une heure </option>
                             <option [ngValue]="getHeure(heure)" *ngFor="let heure of depart.heures">
                                 {{getHeure(heure)}}
                             </option>
@@ -81,7 +82,7 @@
                         </select>
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin">
-                        <button [disabled]="form.invalid" *ngIf="!allerretour" class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
+                        <button (click)="onFormSubmit()" [disabled]="form.invalid" *ngIf="!allerretour" class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
                             Réserver
                         </button>
                         <a *ngIf="allerretour && !isDateValide()" class="button warning" style="width: 100%; color:white; background-color: rgb(48, 164, 221);" (click)="avertir()">
@@ -122,6 +123,7 @@
                     </div>
                     <div class="cell-lg-12">
                         <select [(ngModel)]="retourHeure" data-prepend="Heure" data-role="select">
+                            <option [ngValue]="null">Veuillez choisir une heure </option>
                             <option [ngValue]="getHeure(heure)" *ngFor="let heure of depart.heures">
                                 {{getHeure(heure)}}
                             </option>

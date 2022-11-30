@@ -45,6 +45,8 @@ export class PanierComponent implements OnInit {
 
   pagechargeeInterval: any;
 
+  responsable: any;
+
   constructor(
     private authService: AuthentificationService,
     private router: Router,
@@ -77,13 +79,16 @@ export class PanierComponent implements OnInit {
       this.isUser = false;
     }
     this.panierSubscription = this.panierService.panierSubject.subscribe((reservations) => {
-      this.reservations = reservations;
+      this.reservations = reservations.filter((reservation) => {
+        return reservation.responsable;
+      });
       this.update();
     });
     this.panierService.getPanier();
   }
 
   private async sauvegarderPaiementEtenvoyerEmail() {
+    console.log('sauvegarderPaiementEtenvoyerEmail');
     /*
         metro().dialog.create({
           title: 'Vérifier vos mails',
@@ -96,7 +101,12 @@ export class PanierComponent implements OnInit {
     await this.savePaiement(this.paiement);
     console.log('paiement sauvegardé');
 
+    console.log('this.reservations[0]');
+    console.log(this.reservations[0]);
+
     const lesnoms = this.reservations[0].responsable.nom + ' ' + this.reservations[0].responsable.prenom;
+    console.log('lesnoms');
+    console.log(lesnoms);
 
     const responsable = {
       noms: lesnoms,
@@ -105,9 +115,11 @@ export class PanierComponent implements OnInit {
     const response = await this.envoyerMailConfirmation(responsable);
     console.log('response');
     console.log(response);
+
   }
 
   private initPaiementItem() {
+    console.log('initPaiementItem');
     this.paiement.reservations = this.reservations;
     this.paiement.total = this.TOTAL;
     this.paiement.mode = 'CINETPAY';
@@ -335,20 +347,29 @@ export class PanierComponent implements OnInit {
   }
 
   savePaiement(paiement: Paiement): Promise<Paiement> {
+    console.log('savePaiement');
     const db = firebase.firestore();
     return new Promise((resolve, reject) => {
       db.collection('paiement-trap').doc(paiement.id).set(JSON.parse(JSON.stringify(paiement))).then(() => {
         resolve(paiement);
       }).catch((e) => {
+        reject(e);
       });
     });
   }
 
   async payerMobile(form) {
-    await this.sauvegarderPaiementEtenvoyerEmail();
-    console.log('form');
-    console.log(form);
-    form.submit();
+
+    if (this.reservations[0].responsable) {
+      this.responsable = this.reservations[0].responsable;
+      console.log('payerMobile');
+      await this.sauvegarderPaiementEtenvoyerEmail();
+      console.log('form');
+      console.log(form);
+      form.submit();
+    } else {
+      alert('Une de vos reservations ne contient pas de responsable');
+    }
   }
 
   async payerBancaire(form) {
@@ -360,7 +381,7 @@ export class PanierComponent implements OnInit {
   envoyerMailConfirmation(responsable) {
     return new Promise((resolve, reject) => {
       console.log('envoyerMailConfirmation');
-      const noms = responsable.noms;
+      const noms = responsable.nom + ' ' + responsable.prenom;
       this.http.get(this.lienback + 'trapyourtripback/sendmail.php?email=' + responsable.email + '&noms=' + noms)
         .subscribe((response) => {
           console.log('response');

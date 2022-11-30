@@ -121,8 +121,8 @@
                         <!-- <input type="hidden" name="amount" [value]="100"> -->
                         <input type="hidden" name="currency" value="XAF">
                         <input type="hidden" name="valider" [value]="true">
-                        <input type="hidden" name="customer_name" [value]="utilisateur.nom + ' ' + utilisateur.prenom">
-                        <input type="hidden" name="customer_surname" [value]="utilisateur.nom + ' ' + utilisateur.prenom">
+                        <input *ngIf="responsable" type="hidden" name="customer_name" [value]="responsable.nom">
+                        <input *ngIf="responsable" type="hidden" name="customer_surname" [value]="responsable.prenom">
                         <input type="hidden" name="description" value="Achat sur Trap your trip">
                         <input type="hidden" name="id" [value]="paiement.id">
                         <input type="hidden" name="returnURL" [value]="returnURL">
@@ -248,10 +248,11 @@
                     <form #formMobile method="post" action="https://trapyourtrip.com/cinetpay-sdk-php/action.php">
 
                         <input type="hidden" name="amount" [value]="TOTAL">
+                        <!-- <input type="hidden" name="amount" [value]="100"> -->
                         <input type="hidden" name="currency" value="XAF">
                         <input type="hidden" name="valider" [value]="true">
-                        <input type="hidden" name="customer_name" [value]="utilisateur.nom + ' ' + utilisateur.prenom">
-                        <input type="hidden" name="customer_surname" [value]="utilisateur.nom + ' ' + utilisateur.prenom">
+                        <input *ngIf="responsable" type="hidden" name="customer_name" [value]="responsable.nom">
+                        <input *ngIf="responsable" type="hidden" name="customer_surname" [value]="responsable.prenom">
                         <input type="hidden" name="description" value="Achat sur Trap your trip">
                         <input type="hidden" name="id" [value]="paiement.id">
                         <input type="hidden" name="returnURL" [value]="returnURL">

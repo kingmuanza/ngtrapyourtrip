@@ -3,11 +3,9 @@
         transform: scaleX(0);
         opacity: 0;
     }
-
     50% {
         opacity: 0.5;
     }
-
     100% {
         transform: scaleX(1);
     }
@@ -16,24 +14,18 @@
 .entete {
     height: 200px;
     overflow: hidden;
-
     .entete__background {
-
         height: 200px;
         overflow: hidden;
-
         animation-name: progress-bar;
         animation-duration: 500ms;
         background-size: cover;
         background-position: center center;
         // background-attachment: fixed;
         background-image: url('../../../../../assets/img/hummer.jpg');
-
         filter: blur(5px);
         transform: scale(1.2);
-
     }
-
     .entete__contenu {
         padding-top: 55px;
         padding-left: 10vw;
@@ -43,7 +35,7 @@
         height: 200px;
         overflow: hidden;
         //background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5));
-        background-color: rgba(255,255,255,0.85);
+        background-color: rgba(255, 255, 255, 0.85);
         //color: white;
         @media screen and (max-width: 599px) {
             padding-top: 55px;
@@ -54,15 +46,18 @@
             height: 200px;
             overflow: hidden;
             //background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5));
-            background-color: rgba(255,255,255,0.85);
+            background-color: rgba(255, 255, 255, 0.85);
             //color: white;
         }
-
         .titre {
             font-size: 2.0em;
             line-height: 1.15;
+            @media screen and (max-width: 599px) {
+                font-size: 1.2em;
+                font-weight: bold;
+                line-height: 1.1;
+            }
         }
-
         .sous-titre {
             margin-top: 5px;
         }
@@ -91,7 +86,6 @@
 .options {
     margin-top: 0px;
     margin-left: -5px;
-
     span {
         margin-right: 20px;
         display: block;
@@ -109,11 +103,9 @@
         font-size: 0.9em;
         margin-bottom: 10px;
         transition: letter-spacing 200ms;
-
         &:hover {
             letter-spacing: 1px;
         }
-
         &.active {
             font-weight: bold;
             color: rgb(48, 164, 221);
@@ -131,23 +123,21 @@ input.muanza {
     color: rgba(255, 115, 0);
 }
 
-
 .bordure-orange {
     &-debut {
         border: 2px solid rgb(48, 164, 221);
     }
-
     &-fin {
         border: 2px solid rgb(48, 164, 221);
         border-left: 0px solid #eee;
     }
 }
 
-
 .radius-gauche {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 }
+
 .radius-droit {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
