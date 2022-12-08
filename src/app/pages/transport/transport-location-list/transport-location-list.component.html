@@ -8,13 +8,13 @@
                 <div class="cell-lg-12">
                     <div style="margin-left: -15px; margin-bottom: -20px; margin-top: 0px;">
                         <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
-                            <li class="page-item"><a routerLink="accueil" class="page-link">Accueil</a></li>
-                            <li class="page-item"><a routerLink="/offres/transport" class="page-link">Transports</a></li>
-                            <li class="page-item"><a class="page-link">Location de voiture</a></li>
+                            <li class="page-item"><a routerLink="accueil" class="page-link">{{'Accueil' | traduction}}</a></li>
+                            <li class="page-item"><a routerLink="/offres/transport" class="page-link">{{'Transports' | traduction}}</a></li>
+                            <li class="page-item"><a class="page-link">{{'Location de voiture' | traduction}}</a></li>
                         </ul>
                     </div>
                     <div class="titre">
-                        Location de voiture
+                        {{'Location de voiture' | traduction}}
                     </div>
                 </div>
             </div>
@@ -26,24 +26,24 @@
                 <div class="row no-gap shadow-3">
                     <div class="cell-lg-5 bordure-orange-debut">
                         <div>
-                            <input formControlName="rechercher" data-role="input" data-prepend="Rechercher">
+                            <input formControlName="rechercher" data-role="input" [attr.data-prepend]="'Rechercher' | traduction">
                         </div>
                     </div>
                     <div class="cell-lg-3 bordure-orange-fin">
                         <div>
-                            <select formControlName="categorie" data-role="select" data-prepend="Catégorie">
+                            <select formControlName="categorie" data-role="select" [attr.data-prepend]="'Catégorie' | traduction">
 
                             </select>
                         </div>
                     </div>
                     <div class="cell-lg-3 bordure-orange-fin">
                         <div>
-                            <select #depart formControlName="transmission" data-role="select" data-prepend="Transmission">
+                            <select #depart formControlName="transmission" data-role="select" [attr.data-prepend]="'Transmission' | traduction">
                                 <option value="Automatique">
-                                    Automatique
+                                    {{'Automatique' | traduction}}
                                 </option>
                                 <option value="Manuelle">
-                                    Manuelle
+                                    {{'Manuelle' | traduction}}
                                 </option>
                             </select>
 
@@ -51,7 +51,7 @@
                     </div>
                     <div class="cell-lg-1 bordure-orange-fin bg-dark">
                         <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
-                            Rechercher
+                            {{'Rechercher' | traduction}}
                         </button>
                     </div>
                 </div>

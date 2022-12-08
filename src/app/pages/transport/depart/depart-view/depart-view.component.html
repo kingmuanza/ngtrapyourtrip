@@ -8,7 +8,7 @@
                 <div class="cell-lg-12">
                     <div style="margin-left: -15px; margin-top: -10px;">
                         <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
-                            <li class="page-item"><a routerLink="/offres/transport" class="page-link">Trajets</a></li>
+                            <li class="page-item"><a routerLink="/offres/transport" class="page-link">{{'Trajets' | traduction}}</a></li>
                             <li class="page-item" *ngIf="depart.trajet">
                                 <a class="page-link">
                                     {{description(depart.trajet)}}
@@ -55,8 +55,8 @@
                         <input #calendarpickerlocale name="calendarpickerlocale" data-role="calendarpicker" data-prepend="Date" type="date" class="radius-gauche">
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin">
-                        <select data-prepend="Heure" formControlName="heure" data-role="select">
-                            <option [ngValue]="null">Veuillez choisir une heure </option>
+                        <select [attr.data-prepend]="'Heure' | traduction" formControlName="heure" data-role="select">
+                            <option [ngValue]="null">{{'Veuillez choisir une heure' | traduction}} </option>
                             <option [ngValue]="getHeure(heure)" *ngFor="let heure of depart.heures">
                                 {{getHeure(heure)}}
                             </option>
@@ -64,7 +64,7 @@
                     </div>
                     <div class="cell-lg-3 bordure-orange-fin">
                         <ng-container *ngIf="depart.trajet.villeDepart !== depart.trajet.villeArrivee">
-                            <input data-prepend="Personnes" formControlName="personnes" data-role="input">
+                            <input [attr.data-prepend]="'Personnes' | traduction" formControlName="personnes" data-role="input">
                         </ng-container>
                         <ng-container *ngIf="depart.trajet.villeDepart === depart.trajet.villeArrivee">
                             <input data-prepend="Nombre de jours" formControlName="personnes" data-role="input">
@@ -74,22 +74,22 @@
                     <div class="cell-lg-2 bordure-orange-fin">
                         <select formControlName="allerretour" data-role="select" data-filter="false">
                             <option value="allersimple">
-                                Aller simple
+                                {{'Aller simple' | traduction}}
                             </option>
                             <option *ngIf="depart.vip" value="allerretour">
-                                Aller Retour
+                                {{'Aller Retour' | traduction}}
                             </option>
                         </select>
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin">
                         <button (click)="onFormSubmit()" [disabled]="form.invalid" *ngIf="!allerretour" class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
-                            Réserver
+                            {{'Réserver' | traduction}}
                         </button>
                         <a *ngIf="allerretour && !isDateValide()" class="button warning" style="width: 100%; color:white; background-color: rgb(48, 164, 221);" (click)="avertir()">
-                            Continuer
+                            {{'Continuer' | traduction}}
                         </a>
                         <a *ngIf="allerretour && isDateValide()" class="button warning" style="width: 100%; color:white; background-color: rgb(48, 164, 221);" (click)="continuer()">
-                            Continuer
+                            {{'Continuer' | traduction}}
                         </a>
                     </div>
                 </div>

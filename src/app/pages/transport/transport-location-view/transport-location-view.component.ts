@@ -41,6 +41,9 @@ export class TransportLocationViewComponent implements OnInit {
   retourHeure = '';
   villes = new Array<Ville>();
 
+  langue = 'FR';
+  fuseau = 'en';
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -56,6 +59,15 @@ export class TransportLocationViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const langue = localStorage.getItem('TYTLangue');
+    if (langue) {
+      this.langue = langue;
+      if (langue === 'FR') {
+        this.fuseau = 'fr';
+      } else {
+        this.fuseau = 'en';
+      }
+    }
     this.initForm();
     this.getVilles();
     this.route.paramMap.subscribe((paramMap) => {

@@ -16,7 +16,7 @@
     </div>
     <div class="voiture-description">
 
-        {{voiture.sieges}} sièges | {{voiture.portieres}} portières | {{voiture.transmission}}
+        {{voiture.sieges}} {{'sièges' | traduction}} | {{voiture.portieres}} {{'portières' | traduction}} | {{voiture.transmission | traduction}}
     </div>
     <div class="voiture-image" [ngStyle]="{'background-image': 'url('+ voiture.image +')'}">
 
