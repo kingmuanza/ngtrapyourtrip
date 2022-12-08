@@ -23,7 +23,7 @@
                 {{reservation.sejour.titre}}
             </ng-container>
             <ng-container *ngIf="reservation.locationVoiture">
-                Location de voiture : {{reservation.locationVoiture.voiture.categorie}}
+                {{'Location de voiture' | traduction}} : {{reservation.locationVoiture.voiture.categorie}}
             </ng-container>
         </div>
         <div class="sous-titre text-leader2">
@@ -46,7 +46,7 @@
             <ng-container *ngIf="reservation.divertissement">
                 {{reservation.divertissement.descriptionSuccincte}}
                 <div>
-                    Le
+                    {{'Le' | traduction}}
                     <b>{{reservation.divertissement.date | date: 'yyyy-MM-dd'}} </b>
                 </div>
             </ng-container>
@@ -68,7 +68,7 @@
     <div class="cell-lg-3">
         <div class="titre2 prix shadow-1" style="">
             <b>
-                {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                {{reservation.cout | currency:'XAF':'symbol':'1.2-2':fuseau}}
             </b>
         </div>
     </div>
@@ -79,35 +79,35 @@
         <div class="cell-lg-3 cell-6">
             <div class="petit-padding">
                 <ng-container *ngIf="reservation.hebergement">
-                    Hébergement
+                    {{'Hébergement' | traduction}}
                 </ng-container>
                 <ng-container *ngIf="reservation.transport">
-                    Transport
+                    {{'Transport' | traduction}}
                 </ng-container>
                 <ng-container *ngIf="reservation.divertissement">
-                    Divertissement
+                    {{'Divertissement' | traduction}}
                 </ng-container>
                 <ng-container *ngIf="reservation.divertissementItem">
-                    Divertissement
+                    {{'Divertissement' | traduction}}
                 </ng-container>
                 <ng-container *ngIf="reservation.sejour">
-                    Séjour
+                    {{'Séjour' | traduction}}
                 </ng-container>
                 <ng-container *ngIf="reservation.locationVoiture">
-                    Location de voiture
+                    {{'Location de voiture' | traduction}}
                 </ng-container>
             </div>
         </div>
         <div class="cell-lg-3 cell-6">
             <div>
                 <ng-container *ngIf="reservation.hebergement">
-                    Durée : {{days}} jours
+                    {{'Durée' | traduction}} : {{days}} jours
                 </ng-container>
                 <ng-container *ngIf="reservation.sejour">
-                    Durée séjour : {{days}} jours
+                    {{'Durée séjour' | traduction}} : {{days}} jours
                 </ng-container>
                 <ng-container *ngIf="reservation.locationVoiture">
-                    Durée de la location : {{days}} jours
+                    {{'Durée de la location' | traduction}} : {{days}} jours
                 </ng-container>
                 <ng-container *ngIf="reservation.divertissement">
                     {{reservation.divertissement.date | date: 'yyyy-MM-dd'}}
@@ -124,14 +124,25 @@
             <div class="">
                 <ng-container *ngIf="reservation.transport">
                     <ng-container *ngIf="reservation.transport.depart.trajet.villeDepart !== reservation.transport.depart.trajet.villeArrivee">
-                        {{reservation.personnes}} {{reservation.personnes > 1 ? 'Adultes': 'Adulte'}}
+                        {{reservation.personnes}}
+                        <ng-container *ngIf="reservation.personnes > 1">
+                            {{'Adultes' | traduction}}
+                        </ng-container>
+                        <ng-container *ngIf="!(reservation.personnes > 1)">
+                            {{'Adulte' | traduction}}
+                        </ng-container>
                     </ng-container>
                     <ng-container *ngIf="reservation.transport.depart.trajet.villeDepart === reservation.transport.depart.trajet.villeArrivee">
-                        {{reservation.personnes}} jours
+                        {{reservation.personnes}}
                     </ng-container>
                 </ng-container>
                 <ng-container *ngIf="!(reservation.transport)">
-                    {{reservation.personnes}} {{reservation.personnes > 1 ? 'Adultes': 'Adulte'}}
+                    <ng-container *ngIf="reservation.personnes > 1">
+                        {{'Adultes' | traduction}}
+                    </ng-container>
+                    <ng-container *ngIf="!(reservation.personnes > 1)">
+                        {{'Adulte' | traduction}}
+                    </ng-container>
                 </ng-container>
             </div>
         </div>
@@ -139,14 +150,14 @@
             <div>
                 <ng-container *ngIf="reservation.transport">
                     <ng-container *ngIf="reservation.transport.depart.trajet.villeDepart !== reservation.transport.depart.trajet.villeArrivee">
-                        {{reservation.enfants ? reservation.enfants : 0}} Enfants
+                        {{reservation.enfants ? reservation.enfants : 0}} {{'Enfants' | traduction}}
                     </ng-container>
                     <ng-container *ngIf="reservation.transport.depart.trajet.villeDepart === reservation.transport.depart.trajet.villeArrivee">
 
                     </ng-container>
                 </ng-container>
                 <ng-container *ngIf="!(reservation.transport)">
-                    {{reservation.enfants ? reservation.enfants : 0}} Enfants
+                    {{reservation.enfants ? reservation.enfants : 0}} {{'Enfants' | traduction}}
                 </ng-container>
             </div>
         </div>
@@ -162,35 +173,35 @@
         </div>
         <div>
             <ng-container *ngIf="reservation.hebergement">
-                {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy': '' : fuseau}}
             </ng-container>
         </div>
     </div>
     <div class="cell-lg-3 cell-6">
         <div>
             <b>
-                Départ
+                {{'Départ' | traduction}}
             </b>
         </div>
         <div>
             <ng-container *ngIf="reservation.hebergement">
-                {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy': '' : fuseau}}
             </ng-container>
             <ng-container *ngIf="!reservation.hebergement">
-                {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy': '' : fuseau}}
             </ng-container>
         </div>
     </div>
     <div class="cell-lg-2">
         <div style="padding-top: 5px;" *ngIf="reservation.hebergement">
             <button (click)="edit(reservation)" class="button outline warning" style="border-color:  rgb(48, 164, 221); color:  rgb(48, 164, 221);">
-                Changer les dates
+                {{'Changer les dates' | traduction}}
             </button>
         </div>
     </div>
     <div class="cell-lg-4">
         <h3 class="muanza-text-right" style="margin: 0; padding:0">
-            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':fuseau}}
         </h3>
     </div>
 </div>
@@ -198,37 +209,37 @@
     <div class="cell-lg-3 cell-6">
         <div>
             <b>
-                Début
+                {{'Début' | traduction}}
             </b>
         </div>
         <div>
             <ng-container>
-                {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}} à {{toDate(reservation.dateDebut) | date: 'HH:mm'}}
+                {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy': '' : fuseau}} {{'à' | traduction}} {{toDate(reservation.dateDebut) | date: 'HH:mm'}}
             </ng-container>
         </div>
     </div>
     <div class="cell-lg-3 cell-6">
         <div>
             <b>
-                Fin
+                {{'Fin' | traduction}}
             </b>
         </div>
         <div>
             <ng-container>
-                {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}} à {{toDate(reservation.dateFin) | date: 'HH:mm'}}
+                {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy': '' : fuseau}} à {{toDate(reservation.dateFin) | date: 'HH:mm'}}
             </ng-container>
         </div>
     </div>
     <div class="cell-lg-2">
         <div style="padding-top: 5px;">
             <button *ngIf="reservation.hebergement" (click)="edit(reservation)" class="button outline warning" style="border-color:  rgb(48, 164, 221); color:  rgb(48, 164, 221);">
-                Changer les dates
+                {{'Changer les dates' | traduction}}
             </button>
         </div>
     </div>
     <div class="cell-lg-4">
         <h3 class="muanza-text-right" style="margin: 0; padding:0">
-            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':fuseau}}
         </h3>
     </div>
 </div>
@@ -236,40 +247,40 @@
     <div class="cell-lg-3 cell-6">
         <div>
             <b>
-                Arrivée
+                {{'Arrivée' | traduction}}
             </b>
         </div>
         <div>
             <ng-container *ngIf="reservation.sejour">
-                {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy': '' : fuseau}}
             </ng-container>
         </div>
     </div>
     <div class="cell-lg-3 cell-6">
         <div>
             <b>
-                Départ
+                {{'Départ' | traduction}}
             </b>
         </div>
         <div>
             <ng-container *ngIf="reservation.sejour">
-                {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy': '' : fuseau}}
             </ng-container>
             <ng-container *ngIf="!reservation.sejour">
-                {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy': '' : fuseau}}
             </ng-container>
         </div>
     </div>
     <div class="cell-lg-2">
         <div style="padding-top: 5px;">
             <button *ngIf="reservation.hebergement" (click)="edit(reservation)" class="button outline warning" style="border-color:  rgb(48, 164, 221); color:  rgb(48, 164, 221);">
-                Changer les dates
+                {{'Changer les dates' | traduction}}
             </button>
         </div>
     </div>
     <div class="cell-lg-4">
         <h3 class="muanza-text-right" style="">
-            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':fuseau}}
         </h3>
     </div>
 </div>
@@ -277,7 +288,7 @@
     <div class="cell-lg-3 cell-6">
         <div>
             <b>
-                Arrivée
+                {{'Arrivée' | traduction}}
             </b>
         </div>
         <div>
@@ -292,7 +303,7 @@
     </div>
     <div class="cell-lg-4">
         <h3 class="muanza-text-right" style="margin: 0; padding:0">
-            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':fuseau}}
         </h3>
     </div>
 </div>
@@ -318,28 +329,28 @@
     <div class="cell-lg-3 cell-6">
         <div>
             <b>
-                Date de Départ
+                {{'Date de Départ' | traduction}}
             </b>
         </div>
         <div>
-            {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+            {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy': '' : fuseau}}
         </div>
         <h2 style="margin-top: 0px;">
-            {{toDate(reservation.dateDebut) | date: 'HH:mm' : 'fr-FR'}}
+            {{toDate(reservation.dateDebut) | date: 'HH:mm': '' : fuseau}}
         </h2>
     </div>
     <div class="cell-lg-3 cell-6">
         <div *ngIf="reservation.transport.dateRetour">
             <div>
                 <b>
-                    Date de retour
+                    {{'Date de retour' | traduction}}
                 </b>
             </div>
             <div>
-                {{toDate(reservation.transport.dateRetour) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                {{toDate(reservation.transport.dateRetour) | date: 'EEEE dd MMMM yyyy': '' : fuseau}}
             </div>
             <h2 style="margin-top: 0px;">
-                {{toDate(reservation.transport.dateRetour) | date: 'HH:mm' : 'fr-FR'}}
+                {{toDate(reservation.transport.dateRetour) | date: 'HH:mm' : fuseau}}
             </h2>
         </div>
     </div>
@@ -349,7 +360,7 @@
 
         <div *ngIf="reservation.transport.retour">
             <span class="allerretour">
-                Aller Retour
+                {{'Aller Retour' | traduction}}
             </span>
         </div>
     </div>

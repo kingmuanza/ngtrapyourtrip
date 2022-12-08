@@ -14,10 +14,10 @@
         <div class="cell-lg-8">
             <div class="recherche">
                 <div class="carousel-titre">
-                    Rechercher une destination
+                    {{'Rechercher une destination' | traduction}}
                 </div>
                 <div class="complement">
-                    Veuillez saisir le nom d'une ville, afin d'y décourvrir toutes nos offres
+                    {{"Veuillez saisir le nom d'une ville, afin d'y décourvrir toutes nos offres" | traduction}}
                 </div>
                 <input *ngIf="mobile" [(ngModel)]="recherche" (ngModelChange)="rechercher($event)" data-role="materialinput" placeholder="Entrez le nom d'une ville">
                 <input *ngIf="!mobile" [(ngModel)]="recherche" (ngModelChange)="rechercher($event)" class="trap-input hideOnMObile shadow-3">

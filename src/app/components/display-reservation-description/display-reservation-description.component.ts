@@ -10,6 +10,9 @@ import { Trajet } from 'src/app/models/trajet.model';
 })
 export class DisplayReservationDescriptionComponent implements OnInit, OnChanges {
 
+  langue = 'FR';
+  fuseau = 'en';
+
   @Input() reservation: Reservation;
   days = 0;
   constructor(
@@ -18,6 +21,15 @@ export class DisplayReservationDescriptionComponent implements OnInit, OnChanges
 
   ngOnChanges(changes: SimpleChanges): void {
     this.days = this.duree(this.reservation);
+    const langue = localStorage.getItem('TYTLangue');
+    if (langue) {
+      this.langue = langue;
+      if (langue === 'FR') {
+        this.fuseau = 'fr';
+      } else {
+        this.fuseau = 'en';
+      }
+    }
   }
 
   ngOnInit(): void {

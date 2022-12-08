@@ -1,14 +1,14 @@
 <div style="background-color: rgb(48, 164, 221);">
     <div *ngIf="!inscrit">
         <div class="titre fg-white">
-            S'inscrire à notre Newsletter
+            {{"S'inscrire à notre Newsletter" | traduction}}
         </div>
         <div class="formulaire">
             <form [formGroup]="form" class="hideOnMObile">
                 <input formControlName="email" type="email" class="trap-input  shadow-1">
                 <div>
                     <button (click)="enregisterMail()" [disabled]="form.invalid" class="button large muanza">
-                        S'inscrire
+                        {{"S'inscrire" | traduction}}
                     </button>
                 </div>
             </form>
@@ -16,7 +16,7 @@
                 <input formControlName="email" style="text-align: center;" placeholder="Votre addresse mail ici pour vous abonner à la Newsletter" class="showOnMObile" data-role="materialinput">
                 <div>
                     <button (click)="enregisterMail()" [disabled]="form.invalid" class="button large muanza">
-                        S'inscrire
+                        {{"S'inscrire" | traduction}}
                     </button>
                 </div>
             </form>

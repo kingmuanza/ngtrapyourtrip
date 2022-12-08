@@ -5,6 +5,7 @@ import { ChartsModule } from 'ng2-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import localeEn from '@angular/common/locales/en';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -102,8 +103,10 @@ import { GareEditComponent } from './pages/transport/gare/gare-edit/gare-edit.co
 import { GareListComponent } from './pages/transport/gare/gare-list/gare-list.component';
 import { GareViewComponent } from './pages/transport/gare/gare-view/gare-view.component';
 import { DisplayGareComponent } from './components/display-gare/display-gare.component';
+import { TraductionPipe } from './pipes/traduction.pipe';
 
-registerLocaleData(localeFr, 'fr-FR');
+registerLocaleData(localeFr);
+registerLocaleData(localeEn);
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -200,7 +203,8 @@ registerLocaleData(localeFr, 'fr-FR');
     GareEditComponent,
     GareListComponent,
     GareViewComponent,
-    DisplayGareComponent
+    DisplayGareComponent,
+    TraductionPipe
   ],
   imports: [
     BrowserModule,
@@ -213,10 +217,10 @@ registerLocaleData(localeFr, 'fr-FR');
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    {
+    /* {
       provide: LOCALE_ID,
       useValue: 'fr-FR'
-    }
+    } */
   ],
 })
 export class AppModule { }

@@ -10,15 +10,16 @@
         <div class="shadow-1" style="padding:20px; padding-top: 15px; margin-top: 20px">
             <div>
                 <h3 style="margin:0; padding:0;">
-                    Responsable de la réservation
+                    {{'Responsable de la réservation' | traduction}}
                 </h3>
                 <div style="color: #444;">
-                    <small>Les informations suivantes sont strictement confidentielles et ne seront ni utilisées ni
-                        vendues</small>
+                    <small>
+                        {{'Les informations suivantes sont strictement confidentielles et ne seront ni utilisées ni vendues' | traduction}}
+                    </small>
                 </div>
                 <div class="row" style="margin-top: 20px;">
                     <div class="cell-lg-3 cell-6">
-                        <b>Noms et prénoms</b>
+                        <b>{{'Noms et prénoms' | traduction}}</b>
                         <div>
                             {{reservation.responsable.nom}} {{reservation.responsable.prenom}}
                         </div>
@@ -30,26 +31,26 @@
                         </div>
                     </div>
                     <div class="cell-lg-2">
-                        <b>Télephone</b>
+                        <b>{{'Télephone' | traduction}}</b>
                         <div>
                             {{reservation.responsable.indicatif}} {{reservation.responsable.tel}}
                         </div>
                     </div>
                     <div class="cell-lg-4">
-                        <b>Pièce d'identification</b>
+                        <b>{{'Pièce d`identification' | traduction}}</b>
                         <div>
                             <i *ngIf="reservation.responsable.typepiece">
                                 <ng-container *ngIf="reservation.responsable.typepiece === 'cni'">
-                                    Carte Nationale d'Identité
+                                    {{"Carte Nationale d'Identité" | traduction}}
                                 </ng-container>
                                 <ng-container *ngIf="reservation.responsable.typepiece === 'passeport'">
-                                    Passeport
+                                    {{'Passeport' | traduction}}
                                 </ng-container>
                                 <ng-container *ngIf="reservation.responsable.typepiece === 'sejour'">
-                                    Carte de séjour
+                                    {{'Carte de séjour' | traduction}} 
                                 </ng-container>
                                 <ng-container *ngIf="reservation.responsable.typepiece === 'permis'">
-                                    Permis de conduire
+                                    {{'Permis de conduire' | traduction}}
                                 </ng-container>
 
                             </i> {{reservation.responsable.numero}}

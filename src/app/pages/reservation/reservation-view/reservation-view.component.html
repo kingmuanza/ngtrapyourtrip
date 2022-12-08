@@ -8,7 +8,7 @@
 
         <div style="margin-top: 40px">
             <button (click)="infos(reservation)" class="button warning" style="background-color:  rgb(48, 164, 221); color: #fff;">
-                Etape suivante
+                {{'Etape suivante' | traduction}}
             </button>
         </div>
 
@@ -26,10 +26,10 @@
         0{{seconds}}:00
     </div>
     <div class="connexion-obligatoire-titre">
-        Veuillez-vous connecter !
+        {{'Veuillez-vous connecter' | traduction}} !
     </div>
     <div class="connexion-obligatoire-contenu">
-        Vous devez vous connecter pour effectuer une réservation. Vous serez redirigé momentanément vers la page de connexion
+        {{'Vous devez vous connecter pour effectuer une réservation.' | traduction}} {{'Vous serez redirigé momentanément vers la page de connexion' | traduction}}
     </div>
     <div class="connexion-obligatoire-compris">
         <button (click)="okJaiCompris(reservation)" class="button fg-white bg-blue">Ok ! J'ai compris</button>

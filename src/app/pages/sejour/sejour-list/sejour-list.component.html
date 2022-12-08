@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="cell-lg-9">
                         <div class="titre">
-                            Séjours
+                            {{'Séjours' | traduction}}
                             <a class="button small showOnMObile" (click)="rechercheFilter()" style="float: right; margin-left: 10px;">
                                 <i class="mif-search fg-blue"></i>
                             </a>
@@ -16,7 +16,7 @@
                             </a>
                         </div>
                         <div class="sous-titre text-leader2" style="font-size: 0.9em;">
-                            Retrouvez les meilleurs séjours
+                            {{'Retrouvez les meilleurs séjours' | traduction}}
                         </div>
                     </div>
                     <div class="cell-lg-3">
@@ -39,8 +39,8 @@
                 <div class="row no-gap shadow-1">
                     <div class="cell-lg-5 bordure-orange-debut">
                         <div *ngIf="villes.length > 0">
-                            <select (change)="rechercheFilter()" #ville data-prepend="Ville" data-role="select">
-                                <option value="">Toutes les villes</option>
+                            <select (change)="rechercheFilter()" #ville [attr.data-prepend]="'Ville' | traduction" data-role="select">
+                                <option value="">{{'Toutes les villes' | traduction}}</option>
                                 <option *ngFor="let v of villes" [value]="v.nom">
                                     {{v.nom}}
                                 </option>
@@ -52,18 +52,18 @@
                     </div>
                     <div class="cell-lg-4 bordure-orange-fin">
                         <div>
-                            <input #calendarpickerlocale type="date" placeholder="A partir du" data-role="calendarpicker">
+                            <input #calendarpickerlocale type="date" [placeholder]="'A partir du' | traduction" data-role="calendarpicker">
                         </div>
                     </div>
                     <div class="cell-lg-3 bordure-orange-fin">
                         <div>
                             <a (click)="rechercheFilter()" class="button warning" style="width: 100%; background-color: rgb(48, 164, 221); color: white">
-                                Rechercher
+                                {{'Rechercher' | traduction}}
                             </a>
                         </div>
                     </div>
                     <div class="showOnMObile mobile-recherche-fermer cell-lg-2">
-                        <a (click)="rechercheFilter()" class="button dark" style="color: #fff;  width: 100%;">Fermer</a>
+                        <a (click)="rechercheFilter()" class="button dark" style="color: #fff;  width: 100%;">{{'Fermer' | traduction}}</a>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="les-options-contenu">
                                     <div class="options-titres">
-                                        Filtres populaires
+                                        {{'Filtres populaires' | traduction}}
                                     </div>
                                     <div class="options">
                                         <span class="">
@@ -129,7 +129,7 @@
                                     </div>
 
                                     <div class="options-titres">
-                                        Activités
+                                        {{'Activités' | traduction}}
                                     </div>
                                     <div class="options">
                                         <span class="">
@@ -147,7 +147,7 @@
                                     </div>
 
                                     <div class="options-titres">
-                                        Dîner
+                                        {{'Dîner' | traduction}}
                                     </div>
                                     <div class="options">
                                         <span class="">
@@ -207,7 +207,7 @@
                                         </span>
                                     </div>
                                     <div class="options-titres">
-                                        Divertissement
+                                        {{'Divertissement' | traduction }}
                                     </div>
                                     <div class="options">
                                         <span class="">
@@ -236,7 +236,7 @@
                                         </span>
                                     </div>
                                     <div class="options-titres">
-                                        Catégorie propriété
+                                        {{'Catégorie propriété' | traduction}}
                                     </div>
                                     <div class="options">
                                         <span class="">
@@ -257,7 +257,7 @@
                                         </span>
                                     </div>
                                     <div class="options-titres">
-                                        Lieu de prise en charge de l'activité
+                                        {{"Lieu de prise en charge de l'activité" | traduction}}
                                     </div>
                                     <div class="options">
                                         <span class="">
@@ -274,7 +274,7 @@
                                         </span>
                                     </div>
                                     <div class="options-titres">
-                                        Langues disponibles
+                                        {{'Langues disponibles' | traduction}}
                                     </div>
                                     <div class="options">
                                         <span class="">

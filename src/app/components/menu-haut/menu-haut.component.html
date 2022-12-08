@@ -6,70 +6,52 @@
     <ul class="app-bar-menu ml-auto" [ngClass]="{'onscroll': !primarycolor || mobile}" (click)="hamburger()">
         <li>
             <a routerLink="accueil" routerLinkActive="active">
-                <span class="mif-home"></span> Accueil
+                <span class="mif-home"></span> {{'Accueil' | traduction:langue }}
 
             </a>
         </li>
         <li>
             <a [ngClass]="{'active': offres}" (click)="check()" class="dropdown-toggle">
-                <span class="mif-star-full"></span> Nos offres
+                <span class="mif-star-full"></span> {{'Nos offres' | traduction:langue }}
             </a>
             <ul style="z-index: 2000;" class="d-menu" data-role="dropdown" style="background-color: #303030;">
                 <li>
                     <a routerLink="/offres/sejour" routerLinkActive="active">
-                        Séjours
+                        {{'Séjours' | traduction:langue }}
                     </a>
                 </li>
                 <li>
                     <a routerLink="/offres/hebergement" routerLinkActive="active">
-                        Hébergements
+                         {{'Hébergements' | traduction:langue }}
                     </a>
                 </li>
                 <li>
                     <a routerLink="/offres/transport" routerLinkActive="active">
-                        Transports
+                        {{'Transports' | traduction:langue }}
                     </a>
                 </li>
                 <li>
                     <a routerLink="/offres/divertissement" routerLinkActive="active">
-                        Divertissements
+                        {{'Divertissements' | traduction:langue }}
                     </a>
                 </li>
             </ul>
         </li>
         <li>
             <a routerLink="panier" routerLinkActive="active">
-                <span class="mif-cart"></span> Panier
+                <span class="mif-cart"></span> {{'Panier' | traduction:langue }}
                 <b class="superieur" style="margin-left: 3px;">
                     <sup>{{reservations.length}}</sup>
                 </b>
             </a>
         </li>
 
-        <li *ngIf="admin" class="muanza-padding-droit">
-            <a class="dropdown-toggle">
-                <span class="mif-cog fg-blue"></span> Administration
-            </a>
-            <ul style="z-index: 2000;" class="d-menu" data-role="dropdown" style="background-color: #303030;">
-
-                <li>
-                    <a>
-                        Administrateurs
-                    </a>
-                </li>
-                <li>
-                    <a (click)="deconnexionAdmin()">
-                        Déconnexion
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li *ngIf="!utilisateur && !admin" class="muanza-padding-droit">
+        <li *ngIf="!utilisateur && !admin">
             <a routerLink="/connexion" routerLinkActive="active">
-                <span class="mif-security"></span> Connexion
+                <span class="mif-security"></span> {{'Connexion' | traduction:langue }}
             </a>
         </li>
-        <li *ngIf="utilisateur" class="muanza-padding-droit">
+        <li *ngIf="utilisateur">
             <a class="dropdown-toggle" [ngClass]="{'active': dashboard}">
 
                 <span class="nom-user">
@@ -88,42 +70,65 @@
             <ul style="background-color: #303030; z-index: 2000; margin-left: 0px; padding-left: 0px;" class="d-menu" data-role="dropdown">
                 <li>
                     <a routerLink="/dashboard/profil" routerLinkActive="active">
-                        Mon profil
+                        {{'Mon profil' | traduction:langue }}
                     </a>
                 </li>
                 <li>
                     <a routerLink="/dashboard/compte" routerLinkActive="active">
-                        Mon compte
+                        {{'Mon compte' | traduction:langue }}
                     </a>
                 </li>
                 <li>
                     <a routerLink="/dashboard/reservation" routerLinkActive="active">
                         <ng-container *ngIf="!utilisateur.prestataire">
-                            Mes réservations
+                            {{'Mes réservations' | traduction:langue }}
                         </ng-container>
                         <ng-container *ngIf="utilisateur.prestataire">
-                            Réservations
+                            {{'Réservations' | traduction:langue }}
                         </ng-container>
                     </a>
                 </li>
                 <li *ngIf="utilisateur.prestataire">
                     <a [routerLink]="['offres', 'hebergement', 'prestataire', utilisateur.id]">
-                        Mes offres
+                        {{'Mes offres' | traduction:langue }}
                     </a>
                 </li>
                 <li>
                     <a routerLink="/dashboard/paiement" routerLinkActive="active">
                         <ng-container *ngIf="!utilisateur.prestataire">
-                            Mes paiements
+                            {{'Mes paiements' | traduction:langue }}
                         </ng-container>
                         <ng-container *ngIf="utilisateur.prestataire">
-                            Paiements
+                            {{'Paiements' | traduction:langue }}
                         </ng-container>
                     </a>
                 </li>
                 <li>
                     <a (click)="deconnexion()">
-                        Déconnexion
+                        {{'Déconnexion' | traduction:langue }}
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="muanza-padding-droit">
+            <a class="dropdown-toggle" [ngClass]="{'active': dashboard}">
+
+                <span class="nom-user">
+                    
+                    {{langue}}
+                    
+                </span>
+                <img src="../../../assets/img/ciel.jpg" style="opacity: 0; width: 0px;" class="user-image" alt="">
+            </a>
+            <ul style="background-color: #303030; z-index: 2000; margin-left: 0px; padding-left: 0px;" class="d-menu" data-role="dropdown">
+                <li>
+                    <a (click)="changerDeLangue('FR')">
+                        FR
+                    </a>
+                </li>
+                <li>
+                    <a (click)="changerDeLangue('ENG')">
+                        ENG
                     </a>
                 </li>
             </ul>

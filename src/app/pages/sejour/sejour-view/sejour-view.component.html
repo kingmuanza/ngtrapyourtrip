@@ -7,8 +7,8 @@
 
             <div style="margin-left: -15px; margin-bottom: -20px;">
                 <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
-                    <li class="page-item"><a routerLink="accueil" class="page-link">Accueil</a></li>
-                    <li class="page-item"><a (click)="goToAll()" class="page-link">Séjours</a></li>
+                    <li class="page-item"><a routerLink="accueil" class="page-link">{{'Accueil' | traduction}}</a></li>
+                    <li class="page-item"><a (click)="goToAll()" class="page-link">{{'Séjours' | traduction}}</a></li>
                     <li class="page-item" *ngIf="sejour"><a class="page-link">{{sejour.titre}}</a></li>
                 </ul>
             </div>
@@ -20,16 +20,16 @@
                     <div class="muanza-description">
                         <small>
                             <ng-container *ngIf="sejour.dateDebut && sejour.dateFin">
-                                Du {{sejour.dateDebut | date: 'yyyy-MM-dd'}}
-                                au {{sejour.dateFin | date: 'yyyy-MM-dd'}},
+                                {{'Du' | traduction}} {{sejour.dateDebut | date: 'yyyy-MM-dd'}}
+                                {{'au' | traduction}} {{sejour.dateFin | date: 'yyyy-MM-dd'}},
                             </ng-container>
 
-                            {{sejour.ville}}, {{sejour.prixUnitaire}} FCFA par personne
+                            {{sejour.ville}}, {{sejour.prixUnitaire}} {{'FCFA par personne' | traduction}}
                         </small>
                     </div>
                     <div class="showOnMObile" style="margin-top: 10px;">
                         <button (click)="showFormReservation()" class="button primary small" style="background-color: rgb(48, 164, 221);">
-                            Réserver
+                            {{'Réserver' | traduction}}
                         </button>
                     </div>
                 </div>
@@ -41,11 +41,11 @@
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                 <div *ngIf="formReservationShowed" class="row no-gap shadow-2 muanza-box-reservation" style="">
                     <div class="cell-lg-8 bordure-bleu-debut">
-                        <input formControlName="personnes" type="number" data-role="input" data-prepend="Nombre de personnes">
+                        <input formControlName="personnes" type="number" data-role="input" [attr.data-prepend]="'Nombre de personnes' | traduction">
                     </div>
                     <div class="cell-lg-4 bordure-bleu-fin">
                         <button class="button" style="width: 100%; background-color: rgb(48, 164, 221); color: #fff;">
-                            Réserver
+                            {{'Réserver' | traduction}}
                         </button>
                     </div>
                     <div class="showOnMObile mobile-recherche-fermer cell-lg-2">

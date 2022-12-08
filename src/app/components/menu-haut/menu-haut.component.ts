@@ -36,6 +36,8 @@ export class MenuHautComponent implements OnInit, AfterViewInit {
   screenWidth: number;
   mobile = true;
 
+  langue = 'FR';
+
   constructor(
     private authService: AuthentificationService,
     private panierService: PanierService,
@@ -78,6 +80,11 @@ export class MenuHautComponent implements OnInit, AfterViewInit {
       console.log('elements');
       console.log(elements);
     }, 2000);
+
+    const langue = localStorage.getItem('TYTLangue');
+    if (langue) {
+      this.langue = langue;
+    }
   }
 
   hamburger() {
@@ -143,6 +150,11 @@ export class MenuHautComponent implements OnInit, AfterViewInit {
       this.adminService.deconnexion();
       this.route.navigate(['accueil']);
     }
+  }
+
+  changerDeLangue(langue: string) {
+    localStorage.setItem('TYTLangue', langue);
+    window.location.reload();
   }
 
 }
