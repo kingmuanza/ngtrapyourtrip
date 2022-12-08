@@ -19,10 +19,10 @@
             <thead>
                 <tr>
                     <th class="hideOnMObile ">Date</th>
-                    <th>Date début</th>
-                    <th>Prestation</th>
-                    <th>Description</th>
-                    <th style="background-color: #fafafa; ">Coût</th>
+                    <th>{{'Date début' | traduction}}</th>
+                    <th>{{'Prestation' | traduction}}</th>
+                    <th>{{'Description'}}</th>
+                    <th style="background-color: #fafafa; ">{{'Coût' | traduction}}</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -111,7 +111,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <a (click)="supprimerTout()" class="button alert danger" style="color: white;">
-                        Annuler toutes les réservations
+                        {{'Annuler toutes les réservations' | traduction}}
                     </a>
                 </div>
                 <div class="col-lg-8">
@@ -130,7 +130,7 @@
                         <input type="hidden" name="notifyURL" [value]="notifyURL">
 
                         <a (click)="payerMobile(formMobile)" class="button success" style="color: white; float: right; ">
-                            Paiement mobile
+                            {{'Paiement mobile' | traduction}}
                             <span style="margin-left: 10px;" class="fas fa-mobile fg-white"></span>
                         </a>
                     </form>
@@ -141,12 +141,12 @@
 
                         <button type="submit" (click)="payerBancaire(formBancaire)" class="button success" style="background-color: rgb(48, 164, 221); color: white; float: right; margin-right: 10px; ">
 
-                            Paiement par carte
+                            {{'Paiement par carte' | traduction}}
                             <span style="margin-left: 10px;" class="fas fa-credit-card fg-white"></span>
                         </button>
                     </form>
                     <button *ngIf="!isUser " class="button warning " style="background-color: rgb(48, 164, 221); float: right; " (click)="suivant() ">
-                        Suivant
+                        {{'Suivant' | traduction}}
                     </button>
                 </div>
             </div>
@@ -156,15 +156,15 @@
         <table style="margin-top: 0; padding-top: 0; " class="table table-border cell-border ">
             <thead>
                 <tr>
-                    <th>Prestations</th>
+                    <th>{{'Prestations' | traduction}}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let reservation of reservations ">
                     <td>
                         <b>Date</b> : {{reservation.date | date: 'yyyy-MM-dd HH:mm'}}<br>
-                        <b>Date début</b> : {{reservation.dateDebut | date: 'yyyy-MM-dd'}}<br>
-                        <b>Prestation</b> :
+                        <b>{{'Date début' | traduction}}</b> : {{reservation.dateDebut | date: 'yyyy-MM-dd'}}<br>
+                        <b>{{'Prestation' | traduction}}</b> :
                         <span *ngIf="reservation.sejour ">
                             {{reservation.sejour.titre}}
                         </span>
@@ -184,7 +184,7 @@
                             {{reservation.transport.depart.agence.nom}}
                         </span>
                         <span *ngIf="reservation.locationVoiture ">
-                            Location de voiture :
+                            {{'Location de voiture' | traduction}} :
                             {{reservation.locationVoiture.voiture.categorie}}
                         </span>
                         <br>
@@ -209,21 +209,22 @@
                                 : {{reservation.locationVoiture.ville}}
                             </span>
                             <div *ngIf="reservation.locationVoiture ">
-                                Du {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}} à {{toDate(reservation.dateDebut) | date: 'HH:mm'}} au {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}} à {{toDate(reservation.dateFin) | date: 'HH:mm'}}
+                                {{'Du' | traduction}} {{toDate(reservation.dateDebut) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}} {{'à' | traduction}} {{toDate(reservation.dateDebut) | date: 'HH:mm'}} {{'au' | traduction}} {{toDate(reservation.dateFin) | date: 'EEEE dd MMMM yyyy' : 'fr-FR'}}
+                                à {{toDate(reservation.dateFin) | date: 'HH:mm'}}
                             </div>
                         </div>
                         <br>
-                        <b>Coût</b> : {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}<br>
+                        <b>{{'Coût' | traduction}}</b> : {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}<br>
 
                         <div class="white-space " style="margin-top: 10px; margin-bottom: 10px; ">
                             <button (click)="voir(reservation) " class="button success ">
-                                Voir
+                                {{'Voir' | traduction}}
                             </button>
                             <button (click)="modifier(reservation) " class="button warning " style="background-color: rgb(48, 164, 221); ">
-                                Modifier
+                                {{'Modifier' | traduction}}
                             </button>
                             <button (click)="supprimer(reservation.id) " class="button alert danger ">
-                                Supprimer
+                                {{'Supprimer' | traduction}}
                             </button>
                         </div>
                     </td>
@@ -241,7 +242,7 @@
             <div>
                 <div style="margin-bottom: 10px;">
                     <a (click)="supprimerTout()" class="button alert danger" style="color: white; width: 100%;">
-                        Annuler toutes les réservations
+                        {{'Annuler toutes les réservations' | traduction}}
                     </a>
                 </div>
                 <div style="margin-bottom: 10px;">
@@ -260,7 +261,7 @@
                         <input type="hidden" name="notifyURL" [value]="notifyURL">
 
                         <a (click)="payerMobile(formMobile)" class="button success" style="color: white; width: 100%; ">
-                            Paiement mobile
+                            {{'Paiement mobile' | traduction}}
                             <span style="margin-left: 10px;" class="fas fa-mobile fg-white"></span>
                         </a>
                     </form>
@@ -273,14 +274,14 @@
 
                         <button (click)="payerBancaire(formBancaire2)" class="button success" style="background-color: rgb(48, 164, 221); color: white; margin-right: 10px;width: 100%; ">
     
-                            Paiement par carte
+                            {{'Paiement par carte' | traduction}}
                             <span style="margin-left: 10px;" class="fas fa-credit-card fg-white"></span>
                         </button>
                     </form>
                 </div>
                 <div style="margin-bottom: 10px;">
                     <button *ngIf="!isUser" class="button warning suite" style="background-color: rgb(48, 164, 221);" (click)="suivant()">
-                        Suivant
+                        {{'Suivant' | traduction}}
                     </button>
                 </div>
             </div>

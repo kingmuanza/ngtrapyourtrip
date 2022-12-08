@@ -8,8 +8,8 @@
                     <div class="cell-lg-9">
                         <div style="margin-left: -15px; margin-bottom: -20px;">
                             <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
-                                <li class="page-item"><a routerLink="accueil" class="page-link">Accueil</a></li>
-                                <li class="page-item"><a (click)="goToAll()" class="page-link">Hébergement</a></li>
+                                <li class="page-item"><a routerLink="accueil" class="page-link">{{'Accueil' | traduction}}</a></li>
+                                <li class="page-item"><a (click)="goToAll()" class="page-link">{{'Hébergement' | traduction}}</a></li>
                                 <li class="page-item" *ngIf="prestataire"><a class="page-link">{{prestataire.nom}}</a>
                                 </li>
                             </ul>
@@ -44,7 +44,7 @@
                             </div>
                             <div>
                                 <a *ngIf="prestataire.latitude && prestataire.longitude" class="showOnMObile " style="color: rgb(48, 164, 221); font-size: 0.8em;" (click)="ouvrirGoogleMap()" target="_blank">
-                                    Ouvrir sur Google Map
+                                    {{'Ouvrir sur Google Map' | traduction}}
                                 </a>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                             </div>
                             <div>
                                 <a class="text-leader2 map" style="color: #303030;" (click)="ouvrirGoogleMap()" target="_blank">
-                                    Ouvrir sur Google Map
+                                    {{'Ouvrir sur Google Map' | traduction}}
                                 </a>
                             </div>
                         </div>
@@ -71,21 +71,21 @@
                     <div class="row no-gap shadow-2" style="border-radius: 0px;">
                         <div class="cell-lg-9 bordure-orange-debut">
                             <div style="color: #303030">
-                                <select style="color: #303030" placeholder="Ordre" data-prepend="Ordre" formControlName="ordre" data-role="select" data-filter="false">
+                                <select style="color: #303030" placeholder="Ordre" [attr.data-prepend]="'Ordre' | traduction" formControlName="ordre" data-role="select" data-filter="false">
                                     <option value="null" disabled="true" [selected]="true">
-                                        Ordre d'affichage
+                                        {{"Ordre d'affichage" | traduction}}
                                     </option>
                                     <option value="croissant">
-                                        Ordre croissant de prix
+                                        {{'Ordre croissant de prix' | traduction}}
                                     </option>
                                     <option value="decroissant">
-                                        Ordre décroissant de prix
+                                        {{'Ordre décroissant de prix' | traduction}}
                                     </option>
                                 </select>
                             </div>
                         </div>
                         <div class="cell-lg-3 bordure-orange-fin radius-droit2" style="background-color: rgb(48, 164, 221);">
-                            <button class="button rechercher">Rechercher</button>
+                            <button class="button rechercher">{{'Rechercher' | traduction}}</button>
                         </div>
                     </div>
                 </div>

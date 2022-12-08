@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Hebergement } from 'src/app/models/hebergement.model';
 import { Router } from '@angular/router';
 
@@ -7,14 +7,29 @@ import { Router } from '@angular/router';
   templateUrl: './display-hebergement.component.html',
   styleUrls: ['./display-hebergement.component.scss']
 })
-export class DisplayHebergementComponent implements OnInit {
+export class DisplayHebergementComponent implements OnInit, OnChanges {
 
   @Input() hebergement?: Hebergement;
   @Input() cliquable = true;
 
+  langue = 'FR';
+  fuseau = 'en';
+
   constructor(
     private router: Router,
   ) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const langue = localStorage.getItem('TYTLangue');
+    if (langue) {
+      this.langue = langue;
+      if (langue === 'FR') {
+        this.fuseau = 'fr';
+      } else {
+        this.fuseau = 'en';
+      }
+    }
+  }
 
   ngOnInit(): void {
   }

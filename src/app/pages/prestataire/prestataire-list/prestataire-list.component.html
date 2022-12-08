@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="cell-lg-8">
                         <div class="titre">
-                            Hébergements
+                            {{'Hébergements' | traduction}}
                             <a class="button small showOnMObile" (click)="rechercheFilter()" style="float: right; margin-left: 10px;">
                                 <i class="mif-search fg-blue"></i>
                             </a>
@@ -16,7 +16,7 @@
                             </a>
                         </div>
                         <div class="sous-titre text-leader2" style="font-size: 0.9em; padding-bottom: 5px;">
-                            Retrouvez nos offres d'hébergement
+                            {{"Retrouvez nos offres d'hébergement" | traduction}}
                         </div>
                     </div>
                     <div class="cell-lg-4">
@@ -37,16 +37,16 @@
                 <div class="row no-gap shadow-3 radius-droit3">
                     <div class="cell-lg-3 bordure-orange-debut">
                         <div class="">
-                            <input formControlName="mot" placeholder="Nom de l'établissement" class="input muanza ">
+                            <input formControlName="mot" [placeholder]="'Nom de l`établissement' | traduction" class="input muanza ">
                         </div>
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin">
                         <div *ngIf="villes.length === 0">
-                            <input #ville formControlName="ville" data-role="input" placeholder="Ville" data-autocomplete="Douala, Yaoundé, Kribi, Limbé, Garoua, Maroua">
+                            <input #ville formControlName="ville" data-role="input" [placeholder]="'Ville' | traduction" data-autocomplete="Douala, Yaoundé, Kribi, Limbé, Garoua, Maroua">
                         </div>
                         <div *ngIf="villes.length > 0">
-                            <select #ville formControlName="ville" data-prepend="Ville" data-role="select">
-                                <option value="">Toutes les villes</option>
+                            <select #ville formControlName="ville" [attr.data-prepend]="'Ville' | traduction" data-role="select">
+                                <option value="">{{'Toutes les villes' | traduction}}</option>
                                 <option *ngFor="let v of villes" [value]="v.nom">
                                     {{v.nom}}
                                 </option>
@@ -56,22 +56,22 @@
                     <div class="cell-lg-3 cell-6 bordure-orange-fin">
                         <select placeholder="Ordre" formControlName="ordre" data-role="select" data-filter="false">
                             <option value="null" disabled="true" [selected]="true">
-                                Ordre d'affichage
+                                {{"Ordre d'affichage" | traduction}}
                             </option>
                             <option value="croissant">
-                                {{mobile ? "Notation +": "Ordre croissant de notation"}}
+                                {{mobile ? "Notation +": "Ordre croissant de notation" | traduction}}
                                 
                             </option>
                             <option value="decroissant">
-                                {{mobile ? "Notation -": "Ordre décroissant de notation"}}
+                                {{mobile ? "Notation -": "Ordre décroissant de notation" | traduction}}
                                 
                             </option>
                             <option value="croissant-prix">
-                                {{mobile ? "Prix +": "Ordre croissant de prix"}}
+                                {{mobile ? "Prix +": "Ordre croissant de prix" | traduction}}
                                 
                             </option>
                             <option value="decroissant-prix">
-                                {{mobile ? "Prix -": " Ordre décroissant de notation"}}
+                                {{mobile ? "Prix -": "Ordre décroissant de prix" | traduction}}
                                
                             </option>
                         </select>
@@ -79,19 +79,19 @@
                     <div class="cell-lg-3 cell-6 bordure-orange-fin">
                         <select placeholder="Logement" formControlName="nature" data-role="select" data-filter="false">
                             <option value="null" disabled="true" [selected]="true">
-                                Type d'hébergement
+                                {{"Type d'hébergement" | traduction}}
                             </option>
                             <option value="tous">
-                                Tous
+                                {{'Tous' | traduction}}
                             </option>
                             <option value="hotel">
-                                Hôtel
+                                {{'Hôtel' | traduction}}
                             </option>
                             <option value="villa">
-                                Appartement
+                                {{'Appartement' | traduction}}
                             </option>
                             <option value="lodge">
-                                Lodge
+                                {{'Lodge'}}
                             </option>
                         </select>
                     </div>
@@ -128,7 +128,7 @@
                                     <div class="les-options-contenu">
 
                                         <div class="options-titres">
-                                            Filtres populaires
+                                            {{'Filtres populaires' | traduction}}
                                         </div>
                                         <div class="options">
                                             <span class="">
@@ -158,7 +158,7 @@
                                         </div>
 
                                         <div class="options-titres">
-                                            Type d’établissement
+                                            {{'Type d’établissement' | traduction}}
                                         </div>
                                         <div class="options">
                                             <span class="">
@@ -176,7 +176,7 @@
                                         </div>
 
                                         <div class="options-titres">
-                                            Etoiles
+                                            {{'Etoiles' | traduction}}
                                         </div>
                                         <div class="etoiles">
                                             <span (click)="changerEtoiles(1)" (mouseenter)="changerEtoilesIntention(1)" (mouseleave)="reinitEtoiles()" [ngClass]="{'mif-star-empty': triEtoilesIntention < 1, 'mif-star-full': triEtoilesIntention > 0 || triEtoiles > 0}"></span>
@@ -192,7 +192,7 @@
                                         </div>
 
                                         <div class="options-titres">
-                                            Repas
+                                            {{'Repas' | traduction}}
                                         </div>
                                         <div class="options">
                                             <span class="">

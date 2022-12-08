@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 })
 export class DisplayPrestataireComponent implements OnInit, OnChanges {
 
+  langue = 'FR';
+  fuseau = 'en';
+
   @Input() prestataire: Utilisateur;
   cliquable = true;
   photoURL = '../../../assets/img/prestataire.png';
@@ -24,6 +27,15 @@ export class DisplayPrestataireComponent implements OnInit, OnChanges {
     }
     if (this.prestataire.indisponible) {
       this.cliquable = true;
+    }
+    const langue = localStorage.getItem('TYTLangue');
+    if (langue) {
+      this.langue = langue;
+      if (langue === 'FR') {
+        this.fuseau = 'fr';
+      } else {
+        this.fuseau = 'en';
+      }
     }
   }
 

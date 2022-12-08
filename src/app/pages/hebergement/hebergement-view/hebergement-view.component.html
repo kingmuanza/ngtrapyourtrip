@@ -8,8 +8,8 @@
                 <div class="cell-lg-8">
                     <div style="margin-left: -15px; margin-top: -10px;">
                         <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
-                            <li class="page-item"><a routerLink="accueil" class="page-link">Accueil</a></li>
-                            <li class="page-item"><a (click)="goToAll()" class="page-link">Hébergement</a></li>
+                            <li class="page-item"><a routerLink="accueil" class="page-link">{{'Accueil' | traduction}}</a></li>
+                            <li class="page-item"><a (click)="goToAll()" class="page-link">{{'Hébergement' | traduction}}</a></li>
                             <li class="page-item" *ngIf="hebergement && hebergement.prestataire">
                                 <a (click)="goToPrestataire()" class="page-link">
                                     {{hebergement.prestataire.nom}}
@@ -217,29 +217,29 @@
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                 <div class="row no-gap shadow-3">
                     <div class="cell-lg-3 bordure-orange-debut">
-                        <input #calendarpickerlocale formControlName="date" data-role="calendarpicker" data-prepend="Arrivée">
+                        <input #calendarpickerlocale formControlName="date" data-role="calendarpicker" [attr.data-prepend]="'Arrivée' | traduction">
                     </div>
                     <div class="cell-lg-3 bordure-orange-fin">
-                        <input #calendarpickerlocale2 formControlName="dateFin" data-role="calendarpicker" data-prepend="Départ">
+                        <input #calendarpickerlocale2 formControlName="dateFin" data-role="calendarpicker" [attr.data-prepend]="'Départ' | traduction">
                     </div>
 
                     <div class="cell-lg-2 bordure-orange-fin">
                         <div>
-                            <input formControlName="adultes" data-role="input" type="number" data-prepend="Adultes">
+                            <input formControlName="adultes" data-role="input" type="number" [attr.data-prepend]="'Adultes' | traduction">
                         </div>
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin">
                         <div>
-                            <input min="0" max="5" formControlName="enfants" data-role="input" type="number" data-prepend="Enfants">
+                            <input min="0" max="5" formControlName="enfants" data-role="input" type="number" [attr.data-prepend]="'Enfants' | traduction">
                         </div>
                     </div>
                     <div class="cell-lg-2 bordure-orange-fin">
                         <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
-                            Réserver
+                            {{'Réserver' | traduction}}
                         </button>
                     </div>
                     <div class="showOnMObile mobile-recherche-fermer cell-lg-2">
-                        <a (click)="showFormReservation()" class="button dark" style="color: #fff;  width: 100%;">Fermer</a>
+                        <a (click)="showFormReservation()" class="button dark" style="color: #fff;  width: 100%;">{{'Fermer' | traduction}}</a>
                     </div>
                 </div>
             </form>

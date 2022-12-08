@@ -63,21 +63,20 @@
         </div>
         <div class="prix" *ngIf="prestataire.prixMin && prestataire.prixMin > 0">
             <span>
-                A partir de {{prestataire.prixMin}} FCFA
+                {{'A partir de' | traduction}} {{prestataire.prixMin | currency:'XAF':'symbol':'1.2-2':fuseau}}
             </span>
         </div>
         <div class="nature">
             <ng-container *ngIf="prestataire.hotel">
-                Hôtel
+                {{'Hôtel' | traduction}}
             </ng-container>
 
             <ng-container *ngIf="prestataire.villa">
-                Appartement
+                {{'Appartement' | traduction}}
             </ng-container>
 
-
             <ng-container *ngIf="prestataire.lodge">
-                Lodge
+                {{'Lodge' | traduction}}
             </ng-container>
 
         </div>
