@@ -9,6 +9,6 @@
     </div>
     <div class="transport__notation orange" [innerHTML]="notationToStars(transport.notation)"></div>
     <div class="transport__prix">
-        {{transport.prixUnitaire | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+        {{transport.prixUnitaire | conversion | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
     </div>
 </div>

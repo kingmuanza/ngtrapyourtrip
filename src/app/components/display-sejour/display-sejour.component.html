@@ -10,7 +10,7 @@
         <div class="row">
             <div class="cell-12" style="overflow: hidden;">
                 <b class="petit-titre">
-                    {{sejour.titre}},
+                    {{ fuseau.toUpperCase() === 'EN' ? (sejour.titreENG ? sejour.titreENG: sejour.titre) : sejour.titre}},
                 </b>
                 <span class="sejour__calendrier">
                     {{'du' | traduction}} 
@@ -37,7 +37,7 @@
         -->
         </div>
         <div class="sejour__prix">
-            {{sejour.prixUnitaire | currency:'XAF':'symbol':'1.2-2':'fr-FR'}} / {{'Personne' | traduction}}
+            {{sejour.prixUnitaire | conversion | currency:devise:'symbol':'1.2-2':fuseau}} / {{'Personne' | traduction}}
         </div>
         <div *ngIf="sejour.ville" style="padding-top: 5px;">
             {{sejour.ville}}

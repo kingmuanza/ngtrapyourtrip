@@ -63,7 +63,7 @@
         </div>
         <div class="prix" *ngIf="prestataire.prixMin && prestataire.prixMin > 0">
             <span>
-                {{'A partir de' | traduction}} {{prestataire.prixMin | currency:'XAF':'symbol':'1.2-2':fuseau}}
+                {{'A partir de' | traduction}} {{prestataire.prixMin | conversion  | currency:devise:'symbol':'1.2-2':fuseau}}
             </span>
         </div>
         <div class="nature">

@@ -20,15 +20,7 @@
                         </div>
                     </div>
                     <div class="cell-lg-3">
-                        <app-admin>
-                            <div class="administration">
-                                <div>
-                                    <button class="button" (click)="nouveau()">
-                                        Nouveau
-                                    </button>
-                                </div>
-                            </div>
-                        </app-admin>
+
                     </div>
                 </div>
             </div>
@@ -88,43 +80,43 @@
                                     <div class="options">
                                         <span class="">
                                             <input formControlName="relaxation" type="checkbox" data-role="checkbox"
-                                                data-caption="Relaxation">
+                                                [attr.data-caption]="'Relaxation' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="pieds" type="checkbox" data-role="checkbox"
-                                                data-caption="Pieds dans le sable">
+                                                [attr.data-caption]="'Pieds dans le sable' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="phasenature" type="checkbox" data-role="checkbox"
-                                                data-caption="En phase avec la nature">
+                                                [attr.data-caption]="'En phase avec la nature' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="sportif" type="checkbox" data-role="checkbox"
-                                                data-caption="Sportif">
+                                                [attr.data-caption]="'Sportif' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="gastronomique" type="checkbox" data-role="checkbox"
-                                                data-caption="Découverte gastronomique">
+                                                [attr.data-caption]="'Découverte gastronomique'  | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="insolite" type="checkbox" data-role="checkbox"
-                                                data-caption="Hébergement insolite">
+                                                [attr.data-caption]="'Hébergement insolite' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="festive" type="checkbox" data-role="checkbox"
-                                                data-caption="Ambiance festive">
+                                                [attr.data-caption]="'Ambiance festive' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="affaire" type="checkbox" data-role="checkbox"
-                                                data-caption="Séjour d'affaire">
+                                                [attr.data-caption]="'Séjour d`affaire' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="culturel" type="checkbox" data-role="checkbox"
-                                                data-caption="Evènement culturel">
+                                                [attr.data-caption]="'Evènement culturel' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="animaux" type="checkbox" data-role="checkbox"
-                                                data-caption="A la rencontre des animaux">
+                                                [attr.data-caption]="'A la rencontre des animaux' | traduction">
                                         </span>
                                     </div>
 
@@ -134,15 +126,15 @@
                                     <div class="options">
                                         <span class="">
                                             <input formControlName="spa" type="checkbox" data-role="checkbox"
-                                                data-caption="Accès au spa">
+                                                [attr.data-caption]="'Accès au spa' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="soin" type="checkbox" data-role="checkbox"
-                                                data-caption="Soin de corps">
+                                                [attr.data-caption]="'Soin de corps' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="massage" type="checkbox" data-role="checkbox"
-                                                data-caption="Massage et modélage">
+                                                [attr.data-caption]="'Massage et modélage' | traduction">
                                         </span>
                                     </div>
 
@@ -152,19 +144,19 @@
                                     <div class="options">
                                         <span class="">
                                             <input formControlName="pension" type="checkbox" data-role="checkbox"
-                                                data-caption="Demi pension">
+                                                [attr.data-caption]="'Demi pension' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="diner" type="checkbox" data-role="checkbox"
-                                                data-caption="Dîner">
+                                                [attr.data-caption]="'Dîner' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="degustation" type="checkbox" data-role="checkbox"
-                                                data-caption="Dégustation">
+                                                [attr.data-caption]="'Dégustation' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="pensioncomplete" type="checkbox"
-                                                data-role="checkbox" data-caption="Pension complète">
+                                                data-role="checkbox" [attr.data-caption]="'Pension complète' | traduction">
                                         </span>
                                     </div>
                                     <div class="options-titres">
@@ -173,11 +165,11 @@
                                     <div class="options">
                                         <span class="">
                                             <input formControlName="visiteguidee" type="checkbox" data-role="checkbox"
-                                                data-caption="Visite guidée">
+                                                [attr.data-caption]="'Visite guidée' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="autresvisites" type="checkbox" data-role="checkbox"
-                                                data-caption="Autres visites">
+                                                [attr.data-caption]="'Autres visites' | traduction">
                                         </span>
                                     </div>
 
@@ -187,23 +179,23 @@
                                     <div class="options">
                                         <span class="">
                                             <input formControlName="golf" type="checkbox" data-role="checkbox"
-                                                data-caption="Golf à proximité">
+                                                [attr.data-caption]="'Golf à proximité' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="sallesport" type="checkbox" data-role="checkbox"
-                                                data-caption="Forfait inclus salle de sport">
+                                                [attr.data-caption]="'Forfait inclus salle de sport' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="velo" type="checkbox" data-role="checkbox"
-                                                data-caption="Vélo">
+                                                [attr.data-caption]="'Vélo' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="tennis" type="checkbox" data-role="checkbox"
-                                                data-caption="Accès au terrain de tennis">
+                                                [attr.data-caption]="'Accès au terrain de tennis' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="basket" type="checkbox" data-role="checkbox"
-                                                data-caption="Accès au terrain de basket">
+                                                [attr.data-caption]="'Accès au terrain de basket' | traduction">
                                         </span>
                                     </div>
                                     <div class="options-titres">
@@ -212,27 +204,27 @@
                                     <div class="options">
                                         <span class="">
                                             <input formControlName="ponctuel" type="checkbox" data-role="checkbox"
-                                                data-caption="Evènement ponctuel">
+                                                [attr.data-caption]="'Evènement ponctuel' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="attraction" type="checkbox" data-role="checkbox"
-                                                data-caption="Parc d'attraction">
+                                                [attr.data-caption]="'Parc d`attraction' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="spectacle" type="checkbox" data-role="checkbox"
-                                                data-caption="Spectacle">
+                                                [attr.data-caption]="'Spectacle' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="zoo" type="checkbox" data-role="checkbox"
-                                                data-caption="Zoo">
+                                                [attr.data-caption]="'Zoo' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="foire" type="checkbox" data-role="checkbox"
-                                                data-caption="Foire">
+                                                [attr.data-caption]="'Foire' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="randonnee" type="checkbox" data-role="checkbox"
-                                                data-caption="Randonnée">
+                                                [attr.data-caption]="'Randonnée' | traduction">
                                         </span>
                                     </div>
                                     <div class="options-titres">
@@ -241,19 +233,19 @@
                                     <div class="options">
                                         <span class="">
                                             <input formControlName="maisonvacances" type="checkbox" data-role="checkbox"
-                                                data-caption="Maison de vacances">
+                                                [attr.data-caption]="'Maison de vacances' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="appartementvacances" type="checkbox"
-                                                data-role="checkbox" data-caption="Appartement de vacances">
+                                                data-role="checkbox" [attr.data-caption]="'Appartement de vacances' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="chambrehotel" type="checkbox" data-role="checkbox"
-                                                data-caption="Chambre d'hôtel">
+                                                [attr.data-caption]="'Chambre d`hôtel' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="villagevacances" type="checkbox"
-                                                data-role="checkbox" data-caption="Village de vacances">
+                                                data-role="checkbox" [attr.data-caption]="'Village de vacances' | traduction">
                                         </span>
                                     </div>
                                     <div class="options-titres">
@@ -262,15 +254,15 @@
                                     <div class="options">
                                         <span class="">
                                             <input formControlName="hotel" type="checkbox" data-role="checkbox"
-                                                data-caption="Hôtel">
+                                                [attr.data-caption]="'Hôtel' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="pointrencontre" type="checkbox" data-role="checkbox"
-                                                data-caption="Point de rencontre">
+                                                [attr.data-caption]="'Point de rencontre' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="lieuactivite" type="checkbox" data-role="checkbox"
-                                                data-caption="Lieu de l'activité">
+                                                [attr.data-caption]="'Lieu de l`activité' | traduction">
                                         </span>
                                     </div>
                                     <div class="options-titres">
@@ -279,15 +271,15 @@
                                     <div class="options">
                                         <span class="">
                                             <input formControlName="francais" type="checkbox" data-role="checkbox"
-                                                data-caption="Français">
+                                                [attr.data-caption]="'Français' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="anglais" type="checkbox" data-role="checkbox"
-                                                data-caption="Anglais">
+                                                [attr.data-caption]="'Anglais' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="arabe" type="checkbox" data-role="checkbox"
-                                                data-caption="Arabe">
+                                                [attr.data-caption]="'Arabe' | traduction">
                                         </span>
                                     </div>
                                 </div>

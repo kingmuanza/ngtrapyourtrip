@@ -1,18 +1,36 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Sejour } from 'src/app/models/sejour.model';
+import { PanierService } from 'src/app/services/panier.service';
 
 @Component({
   selector: 'app-display-sejour',
   templateUrl: './display-sejour.component.html',
   styleUrls: ['./display-sejour.component.scss']
 })
-export class DisplaySejourComponent implements OnInit {
+export class DisplaySejourComponent implements OnInit, OnChanges {
 
   @Input() sejour?: Sejour;
+
+  langue = 'FR';
+  fuseau = 'en';
+  devise = PanierService.getDevise();
+
   constructor(
     private router: Router,
   ) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const langue = localStorage.getItem('TYTLangue');
+    if (langue) {
+      this.langue = langue;
+      if (langue === 'FR') {
+        this.fuseau = 'fr';
+      } else {
+        this.fuseau = 'en';
+      }
+    }
+  }
 
   ngOnInit(): void {
   }

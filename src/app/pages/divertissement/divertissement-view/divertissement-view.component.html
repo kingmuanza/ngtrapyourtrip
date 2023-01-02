@@ -54,8 +54,7 @@
     <div class="contenu" style="padding-top: 5vh">
         <div class="row">
             <div class="col-lg-5">
-                <div class="sous-titre text-leader2">
-                    {{divertissement.description}}
+                <div class="sous-titre text-leader2" [innerHTML]="divertissement.description">
                 </div>
             </div>
             <div *ngIf="divertissement.images[0]" class="cell-lg-7">

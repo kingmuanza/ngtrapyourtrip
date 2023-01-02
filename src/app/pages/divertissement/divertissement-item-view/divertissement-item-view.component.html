@@ -13,7 +13,7 @@
                     </div>
                     <div>
 
-                        <b>{{divertissementItem.prix | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}</b>
+                        <b>{{divertissementItem.prix | currency:devise:'symbol':'1.2-2':fuseau}}</b>
                     </div>
                 </div>
             </div>
@@ -22,22 +22,22 @@
         <form [formGroup]="form">
             <div class="row no-gap shadow-3">
                 <div class="cell-lg-5 bordure-orange-debut">
-                    <input #calendarpickerlocale data-role="calendarpicker" data-prepend="Arrivée">
+                    <input #calendarpickerlocale data-role="calendarpicker" [attr.data-prepend]="'Arrivée' | traduction">
                 </div>
                 <div class="cell-lg-2 bordure-orange-fin">
                     <div>
-                        <select data-prepend="Heure" data-role="select" formControlName="heure">
+                        <select [attr.data-prepend]="'Heure' | traduction" data-role="select" formControlName="heure">
                             <option value="oui">--:--</option>
                             <option *ngFor="let h of heures" [ngValue]="h">{{h}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="cell-lg-3 bordure-orange-debut">
-                    <input formControlName="personnes" data-role="input" type="number" data-prepend="Quantité">
+                    <input formControlName="personnes" data-role="input" type="number" [attr.data-prepend]="'Quantité' | traduction">
                 </div>
                 <div class="cell-lg-2 bordure-orange-fin">
                     <button (click)="onFormSubmit()" class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
-                        Réserver
+                        {{'Réserver' | traduction}}
                     </button>
                 </div>
             </div>

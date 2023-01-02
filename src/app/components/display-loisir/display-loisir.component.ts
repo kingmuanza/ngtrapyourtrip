@@ -1,22 +1,38 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Divertissement } from 'src/app/models/divertissement.model';
+import { PanierService } from 'src/app/services/panier.service';
 
 @Component({
   selector: 'app-display-loisir',
   templateUrl: './display-loisir.component.html',
   styleUrls: ['./display-loisir.component.scss']
 })
-export class DisplayLoisirComponent implements OnInit {
+export class DisplayLoisirComponent implements OnInit, OnChanges {
 
   @Input() divertissement?: Divertissement;
   @Input() cliquable = true;
 
   date = new Date();
+  langue = 'FR';
+  fuseau = 'en';
+  devise = PanierService.getDevise();
 
   constructor(
     private router: Router,
   ) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const langue = localStorage.getItem('TYTLangue');
+    if (langue) {
+      this.langue = langue;
+      if (langue === 'FR') {
+        this.fuseau = 'fr';
+      } else {
+        this.fuseau = 'en';
+      }
+    }
+  }
 
   ngOnInit(): void {
   }

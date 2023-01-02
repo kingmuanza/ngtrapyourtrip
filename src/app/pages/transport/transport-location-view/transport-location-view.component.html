@@ -176,14 +176,14 @@
 
                             </div>
                             <div *ngIf=" type === 'location' " class="voiture-cout">
-                                {{voiture.cout | currency:'XAF':'symbol':'1.2-2':fuseau}}
+                                {{voiture.cout | currency:devise:'symbol':'1.2-2':fuseau}}
                             </div>
                             <div *ngIf=" type === 'interurbain' " class="voiture-cout">
                                 <ng-container *ngIf="voiture.coutInterurbain">
-                                    {{voiture.coutInterurbain | currency:'XAF':'symbol':'1.2-2':fuseau}}
+                                    {{voiture.coutInterurbain | currency:devise:'symbol':'1.2-2':fuseau}}
                                 </ng-container>
                                 <ng-container *ngIf="!voiture.coutInterurbain">
-                                    {{voiture.cout | currency:'XAF':'symbol':'1.2-2':fuseau}}
+                                    {{voiture.cout | currency:devise:'symbol':'1.2-2':fuseau}}
                                 </ng-container>
                             </div>
                         </div>

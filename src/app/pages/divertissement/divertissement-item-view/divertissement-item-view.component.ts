@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { DivertissementItem } from 'src/app/models/divertissement.item.model';
 import { Reservation } from 'src/app/models/reservation.model';
+import { PanierService } from 'src/app/services/panier.service';
 declare const metro: any;
 
 @Component({
@@ -21,6 +22,11 @@ export class DivertissementItemViewComponent implements OnInit {
   changeImage;
   heures = [];
 
+  langue = 'FR';
+  fuseau = 'en';
+
+  devise = PanierService.getDevise();
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -36,6 +42,15 @@ export class DivertissementItemViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const langue = localStorage.getItem('TYTLangue');
+    if (langue) {
+      this.langue = langue;
+      if (langue === 'FR') {
+        this.fuseau = 'fr';
+      } else {
+        this.fuseau = 'en';
+      }
+    }
     this.initForm();
     this.route.paramMap.subscribe((paramMap) => {
       const id = paramMap.get('id');

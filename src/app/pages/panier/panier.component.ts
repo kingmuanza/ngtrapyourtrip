@@ -47,6 +47,10 @@ export class PanierComponent implements OnInit {
 
   responsable: any;
 
+  langue = 'FR';
+  fuseau = 'en';
+  devise = PanierService.getDevise();
+
   constructor(
     private authService: AuthentificationService,
     private router: Router,
@@ -63,12 +67,22 @@ export class PanierComponent implements OnInit {
     this.notifyURL = environment.lienback + 'trapyourtripback/return.php';
     // this.lienStripe = this.lienback + 'stripe/index.php';
     this.lienStripe = 'https://trapyourtrip.com/' + 'stripe/index.php';
+    // this.lienStripe = 'http://trapyourtrip/' + 'stripe/index.php';
     console.log('CinetPay');
     console.log(CinetPay);
 
   }
 
   ngOnInit(): void {
+    const langue = localStorage.getItem('TYTLangue');
+    if (langue) {
+      this.langue = langue;
+      if (langue === 'FR') {
+        this.fuseau = 'fr';
+      } else {
+        this.fuseau = 'en';
+      }
+    }
     this.utilisateurSubscription = this.authService.utilisateurSubject.subscribe((utilisateur: Utilisateur) => {
       this.utilisateur = utilisateur;
     });

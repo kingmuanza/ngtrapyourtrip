@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Divertissement } from 'src/app/models/divertissement.model';
+import { PanierService } from 'src/app/services/panier.service';
 
 @Component({
   selector: 'app-display-restaurant',
@@ -14,11 +15,24 @@ export class DisplayRestaurantComponent implements OnInit {
 
   date = new Date();
 
+  langue = 'FR';
+  fuseau = 'en';
+  devise = PanierService.getDevise();
+
   constructor(
     private router: Router,
   ) { }
 
   ngOnInit(): void {
+    const langue = localStorage.getItem('TYTLangue');
+    if (langue) {
+      this.langue = langue;
+      if (langue === 'FR') {
+        this.fuseau = 'fr';
+      } else {
+        this.fuseau = 'en';
+      }
+    }
   }
 
   ouvrir(id) {

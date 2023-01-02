@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Hebergement } from 'src/app/models/hebergement.model';
 import { Router } from '@angular/router';
+import { PanierService } from 'src/app/services/panier.service';
 
 @Component({
   selector: 'app-display-hebergement',
@@ -14,6 +15,7 @@ export class DisplayHebergementComponent implements OnInit, OnChanges {
 
   langue = 'FR';
   fuseau = 'en';
+  devise = PanierService.getDevise();
 
   constructor(
     private router: Router,

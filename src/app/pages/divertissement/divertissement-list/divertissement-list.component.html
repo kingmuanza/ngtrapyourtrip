@@ -6,21 +6,21 @@
         <div class="entete__contenu">
             <div style="margin-left: -15px; margin-bottom: -20px;">
                 <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
-                    <li class="page-item"><a routerLink="accueil" class="page-link">Accueil</a></li>
-                    <li class="page-item"><a (click)="goToAll()" class="page-link">Divertissements</a></li>
+                    <li class="page-item"><a routerLink="accueil" class="page-link">{{'Accueil' | traduction}}</a></li>
+                    <li class="page-item"><a (click)="goToAll()" class="page-link">{{'Divertissements' | traduction}}</a></li>
                     <li class="page-item"><a class="page-link">
-                        Evènements
+                        {{'Evènements' | traduction}}
                     </a></li>
                 </ul>
             </div>
             <div class="row no-gap">
                 <div class="cell-lg-9">
                     <div class="titre">
-                        Evènements
+                        {{'Evènements' | traduction}}
                     </div>
                     <div class="sous-titre">
                         <div>
-                            Tous les événements
+                            {{'Tous les événements' | traduction}}
                         </div>
                     </div>
                 </div>
@@ -33,15 +33,15 @@
             <div class="row no-gap shadow-3">
 
                 <div class="cell-lg-3 bordure-orange-debut">
-                    <input formControlName="rechercher" placeholder="Rechercher" data-role="input">
+                    <input formControlName="rechercher" [placeholder]="'Rechercher' | traduction" data-role="input">
                 </div>
                 <div class="cell-lg-2 bordure-orange-fin">
                     <div *ngIf="villes.length === 0">
-                        <input #ville data-prepend="Ville" formControlName="ville" data-role="input" data-clear-button="false" data-autocomplete="Douala, Yaoundé, Kribi, Limbé, Garoua, Maroua">
+                        <input #ville [attr.data-prepend]="'Ville' | traduction" formControlName="ville" data-role="input" data-clear-button="false" data-autocomplete="Douala, Yaoundé, Kribi, Limbé, Garoua, Maroua">
                     </div>
                     <div *ngIf="villes.length > 0">
-                        <select formControlName="ville" data-prepend="Ville" data-role="select">
-                            <option value="">Toutes les villes</option>
+                        <select formControlName="ville" [attr.data-prepend]="'Ville' | traduction" data-role="select">
+                            <option value="">{{'Toutes les villes' | traduction}}</option>
                             <option *ngFor="let v of villes" [value]="v.nom">
                                 {{v.nom}}
                             </option>
@@ -49,14 +49,14 @@
                     </div>
                 </div>
                 <div class="cell-lg-3 bordure-orange-fin" style="">
-                    <input #calendarpickerlocale formControlName="dateDebut" data-role="calendarpicker" data-prepend="A partir du ">
+                    <input #calendarpickerlocale formControlName="dateDebut" data-role="calendarpicker" [attr.data-prepend]="'A partir du' | traduction">
                 </div>
                 <div class="cell-lg-3 bordure-orange-fin">
-                    <input #calendarpickerlocale2 formControlName="dateFin" data-role="calendarpicker" data-prepend="Avant le ">
+                    <input #calendarpickerlocale2 formControlName="dateFin" data-role="calendarpicker" [attr.data-prepend]="'Avant le' | traduction">
                 </div>
                 <div class="cell-lg-1 bordure-orange-fin">
                     <button class="button warning" style="width: 100%; background-color: rgb(48, 164, 221);">
-                        Rechercher
+                        {{'Rechercher' | traduction}}
                     </button>
                 </div>
             </div>

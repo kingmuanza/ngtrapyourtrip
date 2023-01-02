@@ -37,6 +37,7 @@ export class MenuHautComponent implements OnInit, AfterViewInit {
   mobile = true;
 
   langue = 'FR';
+  devise = 'XAF';
 
   constructor(
     private authService: AuthentificationService,
@@ -84,6 +85,10 @@ export class MenuHautComponent implements OnInit, AfterViewInit {
     const langue = localStorage.getItem('TYTLangue');
     if (langue) {
       this.langue = langue;
+    }
+    const devise = localStorage.getItem('TYTDevise');
+    if (devise) {
+      this.devise = devise;
     }
   }
 
@@ -154,6 +159,11 @@ export class MenuHautComponent implements OnInit, AfterViewInit {
 
   changerDeLangue(langue: string) {
     localStorage.setItem('TYTLangue', langue);
+    window.location.reload();
+  }
+
+  changerDeDevise(devise: string) {
+    localStorage.setItem('TYTDevise', devise);
     window.location.reload();
   }
 

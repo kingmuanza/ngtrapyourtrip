@@ -8,10 +8,16 @@ import { Modification } from './modification.model';
 export class Sejour extends Modele {
     public prixUnitaire: number;
     public ville: string;
+
+    public titre: string;
     public description: string;
     public descriptionSuccincte: string;
+
+    public titreENG: string;
+    public descriptionENG: string;
+    public descriptionSuccincteENG: string;
+
     public tags: string;
-    public titre: string;
     public images: Array<string>;
     public actif: boolean;
     public notation: number;

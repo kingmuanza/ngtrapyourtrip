@@ -7,6 +7,7 @@ import { LocationVoiture } from 'src/app/models/location.voiture.model';
 import { Reservation } from 'src/app/models/reservation.model';
 import { Ville } from 'src/app/models/ville.model';
 import { Voiture } from 'src/app/models/voiture.model';
+import { PanierService } from 'src/app/services/panier.service';
 import { VoitureService } from 'src/app/services/voiture.service';
 declare const metro: any;
 
@@ -43,6 +44,8 @@ export class TransportLocationViewComponent implements OnInit {
 
   langue = 'FR';
   fuseau = 'en';
+
+  devise = PanierService.getDevise();
 
   constructor(
     private router: Router,

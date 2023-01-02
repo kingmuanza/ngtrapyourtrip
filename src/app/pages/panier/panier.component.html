@@ -80,7 +80,7 @@
                     </td>
                     <td style="text-align: right; background-color: #fafafa; ">
                         <b>
-                            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                            {{reservation.cout | conversion  | currency:devise:'symbol':'1.2-2':fuseau}}
                         </b>
                     </td>
                     <td class="white-space " style=" ">
@@ -100,7 +100,7 @@
                 <tr>
                     <th style="font-size: 1.2em; " colspan="4 ">Total</th>
                     <th style="font-size: 1.2em; text-align: right;background-color: #fafafa; ">
-                        {{TOTAL | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                        {{TOTAL | conversion | currency:devise:'symbol':'1.2-2':fuseau}}
                     </th>
                     <th></th>
                 </tr>
@@ -136,8 +136,9 @@
                     </form>
                     <form #formBancaire [action]="lienStripe" method="post">
 
-                        <input type="hidden" name="montant" [value]="TOTAL">
+                        <input type="hidden" name="montant" [value]="TOTAL | conversion">
                         <input type="hidden" name="email" [value]="reservations ? reservations[0].responsable.email : ''">
+                        <input type="hidden" name="currency" [value]="devise">
 
                         <button type="submit" (click)="payerBancaire(formBancaire)" class="button success" style="background-color: rgb(48, 164, 221); color: white; float: right; margin-right: 10px; ">
 
@@ -214,7 +215,7 @@
                             </div>
                         </div>
                         <br>
-                        <b>{{'Coût' | traduction}}</b> : {{reservation.cout | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}<br>
+                        <b>{{'Coût' | traduction}}</b> : {{reservation.cout | conversion | currency:devise:'symbol':'1.2-2':fuseau}}<br>
 
                         <div class="white-space " style="margin-top: 10px; margin-bottom: 10px; ">
                             <button (click)="voir(reservation) " class="button success ">
@@ -233,7 +234,7 @@
             <tfoot>
                 <tr>
                     <th style="font-size: 1.2em; text-align: right;background-color: #fafafa; ">
-                        Total : {{TOTAL | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                        Total : {{TOTAL | conversion | currency:devise:'symbol':'1.2-2':fuseau}}
                     </th>
                 </tr>
             </tfoot>
@@ -269,8 +270,10 @@
                 <div style="margin-bottom: 10px;">
                     <form #formBancaire2 [action]="lienStripe" method="post">
 
-                        <input type="hidden" name="montant" [value]="TOTAL">
+                        <input type="hidden" name="montant" [value]="TOTAL | conversion">
                         <input type="hidden" name="email" [value]="reservations ? reservations[0].responsable.email : ''">
+                        <input type="hidden" name="currency" [value]="devise">
+
 
                         <button (click)="payerBancaire(formBancaire2)" class="button success" style="background-color: rgb(48, 164, 221); color: white; margin-right: 10px;width: 100%; ">
     

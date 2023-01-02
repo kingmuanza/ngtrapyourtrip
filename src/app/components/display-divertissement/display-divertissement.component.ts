@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Divertissement } from 'src/app/models/divertissement.model';
 import { Router } from '@angular/router';
+import { PanierService } from 'src/app/services/panier.service';
 
 @Component({
   selector: 'app-display-divertissement',
@@ -15,12 +16,26 @@ export class DisplayDivertissementComponent implements OnInit, OnChanges {
   date = new Date();
   passee = false;
 
+  langue = 'FR';
+  fuseau = 'en';
+
+  devise = PanierService.getDevise();
+
   constructor(
     private router: Router,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
 
+    const langue = localStorage.getItem('TYTLangue');
+    if (langue) {
+      this.langue = langue;
+      if (langue === 'FR') {
+        this.fuseau = 'fr';
+      } else {
+        this.fuseau = 'en';
+      }
+    }
     if (this.divertissement?.dateFin) {
       const dateFin = new Date(this.divertissement?.dateFin);
       if (dateFin.getTime() < new Date().getTime()) {

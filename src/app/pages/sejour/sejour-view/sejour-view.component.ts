@@ -5,6 +5,7 @@ import { Sejour } from 'src/app/models/sejour.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Reservation } from 'src/app/models/reservation.model';
 import { HostListener } from '@angular/core';
+import { PanierService } from 'src/app/services/panier.service';
 declare const metro: any;
 
 @Component({
@@ -26,6 +27,8 @@ export class SejourViewComponent implements OnInit {
 
   indexImages = 0;
   changeImage;
+
+  langue = PanierService.getLangue();
 
   constructor(
     private route: ActivatedRoute,

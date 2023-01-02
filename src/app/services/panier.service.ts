@@ -25,4 +25,22 @@ export class PanierService {
       this.emit();
     }
   }
+
+  static getDevise() {
+    const devise = localStorage.getItem('TYTDevise');
+    if (devise) {
+      return devise;
+    } else {
+      return 'XAF';
+    }
+  }
+
+  static getLangue() {
+    const langue = localStorage.getItem('TYTLangue');
+    if (langue) {
+      return langue;
+    } else {
+      return 'FR';
+    }
+  }
 }

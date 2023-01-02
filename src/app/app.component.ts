@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
     };
     firebase.initializeApp(FIREBASE_CONFIG);
     console.log(this.router.url);
+    // localStorage.getItem('TYTDevise');
   }
 
   ngOnInit(): void {

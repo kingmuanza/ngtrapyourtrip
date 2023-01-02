@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { Router } from '@angular/router';
 import { Reservation } from 'src/app/models/reservation.model';
 import { Trajet } from 'src/app/models/trajet.model';
+import { PanierService } from 'src/app/services/panier.service';
 
 @Component({
   selector: 'app-display-reservation-description',
@@ -12,6 +13,9 @@ export class DisplayReservationDescriptionComponent implements OnInit, OnChanges
 
   langue = 'FR';
   fuseau = 'en';
+
+  devise = PanierService.getDevise();
+
 
   @Input() reservation: Reservation;
   days = 0;

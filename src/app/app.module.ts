@@ -104,6 +104,7 @@ import { GareListComponent } from './pages/transport/gare/gare-list/gare-list.co
 import { GareViewComponent } from './pages/transport/gare/gare-view/gare-view.component';
 import { DisplayGareComponent } from './components/display-gare/display-gare.component';
 import { TraductionPipe } from './pipes/traduction.pipe';
+import { ConversionPipe } from './pipes/conversion.pipe';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeEn);
@@ -204,7 +205,8 @@ registerLocaleData(localeEn);
     GareListComponent,
     GareViewComponent,
     DisplayGareComponent,
-    TraductionPipe
+    TraductionPipe,
+    ConversionPipe
   ],
   imports: [
     BrowserModule,

@@ -68,7 +68,7 @@
     <div class="cell-lg-3">
         <div class="titre2 prix shadow-1" style="">
             <b>
-                {{reservation.cout | currency:'XAF':'symbol':'1.2-2':fuseau}}
+                {{reservation.cout | conversion  | currency:devise:'symbol':'1.2-2':fuseau}}
             </b>
         </div>
     </div>
@@ -201,7 +201,7 @@
     </div>
     <div class="cell-lg-4">
         <h3 class="muanza-text-right" style="margin: 0; padding:0">
-            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':fuseau}}
+            {{reservation.cout | currency:devise:'symbol':'1.2-2':fuseau}}
         </h3>
     </div>
 </div>
@@ -239,7 +239,7 @@
     </div>
     <div class="cell-lg-4">
         <h3 class="muanza-text-right" style="margin: 0; padding:0">
-            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':fuseau}}
+            {{reservation.cout | currency:devise:'symbol':'1.2-2':fuseau}}
         </h3>
     </div>
 </div>
@@ -280,7 +280,7 @@
     </div>
     <div class="cell-lg-4">
         <h3 class="muanza-text-right" style="">
-            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':fuseau}}
+            {{reservation.cout | currency:devise:'symbol':'1.2-2':fuseau}}
         </h3>
     </div>
 </div>
@@ -303,7 +303,7 @@
     </div>
     <div class="cell-lg-4">
         <h3 class="muanza-text-right" style="margin: 0; padding:0">
-            {{reservation.cout | currency:'XAF':'symbol':'1.2-2':fuseau}}
+            {{reservation.cout | currency:devise:'symbol':'1.2-2':fuseau}}
         </h3>
     </div>
 </div>

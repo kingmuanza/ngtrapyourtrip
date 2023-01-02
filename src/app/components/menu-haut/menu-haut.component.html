@@ -110,7 +110,7 @@
                 </li>
             </ul>
         </li>
-        <li class="muanza-padding-droit">
+        <li>
             <a class="dropdown-toggle" [ngClass]="{'active': dashboard}">
 
                 <span class="nom-user">
@@ -129,6 +129,29 @@
                 <li>
                     <a (click)="changerDeLangue('ENG')">
                         ENG
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="muanza-padding-droit">
+            <a class="dropdown-toggle" [ngClass]="{'active': dashboard}">
+
+                <span class="nom-user">
+                    
+                    {{devise}}
+                    
+                </span>
+                <img src="../../../assets/img/ciel.jpg" style="opacity: 0; width: 0px;" class="user-image" alt="">
+            </a>
+            <ul style="background-color: #303030; z-index: 2000; margin-left: 0px; padding-left: 0px;" class="d-menu" data-role="dropdown">
+                <li>
+                    <a (click)="changerDeDevise('EUR')">
+                        EUR
+                    </a>
+                </li>
+                <li>
+                    <a (click)="changerDeDevise('XAF')">
+                        XAF
                     </a>
                 </li>
             </ul>
