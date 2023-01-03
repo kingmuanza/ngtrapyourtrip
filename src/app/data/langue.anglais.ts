@@ -226,5 +226,8 @@ export const LangueAnglaise = {
     'Centre de remise en forme': 'Fitness center',
     'Navette aéroport': 'Airport shuttle',
 
+    'Vous pourriez aussi aimer': 'You might also like',
+    jours: 'days',
+
 };
 

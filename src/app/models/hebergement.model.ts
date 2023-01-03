@@ -6,8 +6,11 @@ import { Modification } from './modification.model';
 export class Hebergement extends Modele {
 
     titre: string;
+    titreENG: any;
     description: string;
+    descriptionENG: string;
     descriptionSuccincte: string;
+    descriptionSuccincteENG: string;
     nuitee: number;
     lieu: string;
     tel: string;

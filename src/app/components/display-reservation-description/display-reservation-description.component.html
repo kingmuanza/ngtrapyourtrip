@@ -4,7 +4,8 @@
             <ng-container *ngIf="reservation.hebergement">
                 <b *ngIf="reservation.hebergement.prestataire">
                     {{reservation.hebergement.prestataire.nom}} -
-                </b> {{reservation.hebergement.titre}}
+                </b> {{fuseau.toUpperCase() === 'EN' ? (reservation.hebergement.titreENG ? reservation.hebergement.titreENG: reservation.hebergement.titre) : reservation.hebergement.titre}}
+
                 <span class="sejour__notation fg-bleu" [innerHTML]="notationToStars(reservation.hebergement.notation)"></span>
             </ng-container>
             <ng-container *ngIf="reservation.transport">
@@ -20,7 +21,7 @@
                 {{reservation.divertissementItem.divertissement.titre}}
             </ng-container>
             <ng-container *ngIf="reservation.sejour">
-                {{reservation.sejour.titre}}
+                {{ fuseau.toUpperCase() === 'EN' ? (reservation.sejour.titreENG ? reservation.sejour.titreENG: reservation.sejour.titre) : reservation.sejour.titre}},
             </ng-container>
             <ng-container *ngIf="reservation.locationVoiture">
                 {{'Location de voiture' | traduction}} : {{reservation.locationVoiture.voiture.categorie}}
@@ -53,7 +54,9 @@
             <ng-container *ngIf="reservation.divertissementItem">
                 {{reservation.divertissementItem.titre}}
             </ng-container>
-            <div [innerHTML]="reservation.sejour.descriptionSuccincte" *ngIf="reservation.sejour"></div>
+
+            <div [innerHTML]="fuseau.toUpperCase() === 'EN' ? (reservation.sejour.descriptionSuccincteENG ? reservation.sejour.descriptionSuccincteENG: reservation.sejour.descriptionSuccincte) : reservation.sejour.descriptionSuccincte" *ngIf="reservation.sejour"></div>
+
             <ng-container *ngIf="reservation.locationVoiture">
                 {{reservation.locationVoiture.type}}
                 <span *ngIf="reservation.locationVoiture.type === 'interurbain'">
@@ -101,13 +104,13 @@
         <div class="cell-lg-3 cell-6">
             <div>
                 <ng-container *ngIf="reservation.hebergement">
-                    {{'Durée' | traduction}} : {{days}} jours
+                    {{'Durée' | traduction}} : {{days}} {{'jours' | traduction}}
                 </ng-container>
                 <ng-container *ngIf="reservation.sejour">
-                    {{'Durée séjour' | traduction}} : {{days}} jours
+                    {{'Durée séjour' | traduction}} : {{days}} {{'jours' | traduction}}
                 </ng-container>
                 <ng-container *ngIf="reservation.locationVoiture">
-                    {{'Durée de la location' | traduction}} : {{days}} jours
+                    {{'Durée de la location' | traduction}} : {{days}} {{'jours' | traduction}}
                 </ng-container>
                 <ng-container *ngIf="reservation.divertissement">
                     {{reservation.divertissement.date | date: 'yyyy-MM-dd'}}
@@ -200,9 +203,9 @@
         </div>
     </div>
     <div class="cell-lg-4">
-        <h3 class="muanza-text-right" style="margin: 0; padding:0">
-            {{reservation.cout | currency:devise:'symbol':'1.2-2':fuseau}}
-        </h3>
+        <!-- <h3 class="muanza-text-right" style="margin: 0; padding:0">
+            {{reservation.cout | conversion | currency:devise:'symbol':'1.2-2':fuseau}}
+        </h3> -->
     </div>
 </div>
 <div *ngIf="reservation.locationVoiture" class="row" style="margin-top: 20px;">

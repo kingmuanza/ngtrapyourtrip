@@ -32,7 +32,7 @@
                     <td>{{reservation.dateDebut | date: 'yyyy-MM-dd'}}</td>
                     <td>
                         <span *ngIf="reservation.sejour ">
-                            {{reservation.sejour.titre}}
+                            {{ fuseau.toUpperCase() === 'EN' ? (reservation.sejour.titreENG ? reservation.sejour.titreENG: reservation.sejour.titre) : reservation.sejour.titre}},
                         </span>
                         <span *ngIf="reservation.hebergement ">
                             {{reservation.hebergement.titre}}
@@ -55,7 +55,7 @@
                         </span>
                     </td>
                     <td>
-                        <span *ngIf="reservation.sejour " [innerHTML]="reservation.sejour.descriptionSuccincte">
+                        <span *ngIf="reservation.sejour " [innerHTML]="fuseau.toUpperCase() === 'EN' ? (reservation.sejour.descriptionSuccincteENG ? reservation.sejour.descriptionSuccincteENG: reservation.sejour.descriptionSuccincte) : reservation.sejour.descriptionSuccincte">
                         </span>
                         <span *ngIf="reservation.hebergement " [innerHTML]="reservation.hebergement.descriptionSuccincte">
                         </span>

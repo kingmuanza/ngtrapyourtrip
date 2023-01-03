@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Reservation } from 'src/app/models/reservation.model';
 import { Hebergement } from 'src/app/models/hebergement.model';
 import { Utilisateur } from 'src/app/models/utilisateur.model';
+import { PanierService } from 'src/app/services/panier.service';
 declare const metro: any;
 
 @Component({
@@ -40,6 +41,10 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
 
   prestataire: Utilisateur;
 
+  devise = PanierService.getDevise();
+  fuseau = 'en';
+  langue = 'FR';
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -47,6 +52,15 @@ export class HebergementViewComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    const langue = localStorage.getItem('TYTLangue');
+    if (langue) {
+      this.langue = langue;
+      if (langue === 'FR') {
+        this.fuseau = 'fr';
+      } else {
+        this.fuseau = 'en';
+      }
+    }
     this.route.paramMap.subscribe((paramMap) => {
       const id = paramMap.get('id');
       if (id) {

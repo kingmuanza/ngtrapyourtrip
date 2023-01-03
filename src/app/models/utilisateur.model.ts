@@ -14,6 +14,7 @@ export class Utilisateur {
     tel: string;
     email: string;
     description: string;
+    descriptionENG: string;
     pays: string;
     ville: string;
     localisation: string;

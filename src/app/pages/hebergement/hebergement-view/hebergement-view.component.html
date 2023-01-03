@@ -15,14 +15,16 @@
                                     {{hebergement.prestataire.nom}}
                                 </a>
                             </li>
-                            <li class="page-item" *ngIf="hebergement"><a class="page-link">{{hebergement.titre}}</a>
+                            <li class="page-item" *ngIf="hebergement"><a class="page-link">
+                                {{ langue.toUpperCase() === 'ENG' ? (hebergement.titreENG ? hebergement.titreENG: hebergement.titre) : hebergement.titre}}
+                            </a>
                             </li>
                         </ul>
                     </div>
                     <div class="titre" style="margin-top: -20px; padding-top: 0px; line-height: 1.15;">
                         <b *ngIf="hebergement.prestataire" style="">
                             {{hebergement.prestataire.nom}} -
-                        </b> {{hebergement.titre}}
+                        </b> {{ langue.toUpperCase() === 'ENG' ? (hebergement.titreENG ? hebergement.titreENG: hebergement.titre) : hebergement.titre}}
                     </div>
 
                     <div class="row hideOnMObile" style="margin-top: 10px; display: none;">
@@ -190,7 +192,7 @@
                     <div class="sejour__notation" style="color: rgb(48, 164, 221);;" [innerHTML]="notationToStars(hebergement.notation)"></div>
                     <div [ngClass]="{'text-right': !mobile}" class="" style="margin-top: -5px; color: #444">
                         <span style="font-size: 1.2em;">
-                            {{hebergement.nuitee | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                            {{hebergement.nuitee | conversion | currency:devise:'symbol':'1.2-2':fuseau}}
                         </span>
                     </div>
                     <div class="showOnMObile" style="margin-top: 10px;">
@@ -264,7 +266,8 @@
                 </div>
             </div>
             <div class="cell-lg-5">
-                <div [innerHTML]="hebergement.description" class="text-leader2" style="padding-bottom: 10px;">
+                <div [innerHTML]="langue.toUpperCase() === 'ENG' ? (hebergement.descriptionENG ? hebergement.descriptionENG: hebergement.description) : hebergement.description" class="text-leader2" style="padding-bottom: 10px;">
+
                 </div>
                 <div *ngIf="hebergement.options" class="details" style="margin-top: 20px;">
                     <span title="Baignoire" *ngIf="hebergement.options.baignoire" class="detail2">
@@ -425,7 +428,7 @@
 </div>
 <div class="others">
     <div style="font-size: 1.8em; font-weight: bold; margin-bottom: 2vw;">
-        Vous pourriez aussi aimer
+        {{'Vous pourriez aussi aimer' | traduction}}
     </div>
     <div class="row">
         <div class="cell-lg-3" *ngFor="let hebergement of others; let i = index">

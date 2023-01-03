@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 import { Hebergement } from 'src/app/models/hebergement.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Utilisateur } from 'src/app/models/utilisateur.model';
+import { PanierService } from 'src/app/services/panier.service';
 declare const metro: any;
 
 @Component({
@@ -27,6 +28,8 @@ export class HebergementListComponent implements OnInit {
   screenHeight: number;
   screenWidth: number;
   mobile = true;
+
+  langue = PanierService.getLangue();
 
   constructor(
     private router: Router,

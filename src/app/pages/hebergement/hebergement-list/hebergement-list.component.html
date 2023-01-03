@@ -181,7 +181,7 @@
                         </div>
                     </div>
                     <div class="cell-lg-3">
-                        <div [innerHTML]="prestataire.description" class="descrire-prestataire shadow-1">
+                        <div [innerHTML]="langue.toUpperCase() === 'ENG' ? (prestataire.descriptionENG ? prestataire.descriptionENG: prestataire.description) : prestataire.description" class="descrire-prestataire shadow-1">
 
                         </div>
                     </div>

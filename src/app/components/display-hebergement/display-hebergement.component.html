@@ -54,7 +54,7 @@
     </div>
     <div class="sejour__description">
         <div class="petit-titre">
-            {{hebergement.titre}}
+            {{ fuseau.toUpperCase() === 'EN' ? (hebergement.titreENG ? hebergement.titreENG: hebergement.titre) : hebergement.titre}},
             <div *ngIf="hebergement.prestataire">
                 <b>
                     {{hebergement.prestataire.nom}}
