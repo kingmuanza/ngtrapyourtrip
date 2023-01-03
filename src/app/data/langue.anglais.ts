@@ -228,6 +228,7 @@ export const LangueAnglaise = {
 
     'Vous pourriez aussi aimer': 'You might also like',
     jours: 'days',
-
+    'Le ': 'The',
+    'Prévoir en moyenne': 'Plan on average'
 };
 

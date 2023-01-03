@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 import { DivertissementItem } from 'src/app/models/divertissement.item.model';
 import { Divertissement } from 'src/app/models/divertissement.model';
 import { Reservation } from 'src/app/models/reservation.model';
+import { PanierService } from 'src/app/services/panier.service';
 declare const metro: any;
 
 @Component({
@@ -19,6 +20,8 @@ export class LoisirViewComponent implements OnInit {
   heures = [];
   divertissement: Divertissement;
   divertissementItems = new Array<DivertissementItem>();
+
+  langue = PanierService.getLangue();
 
   constructor(
     private route: ActivatedRoute,

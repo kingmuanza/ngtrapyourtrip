@@ -4,9 +4,12 @@ import { Modification } from './modification.model';
 export class Divertissement extends Modele {
 
     titre: string;
+    titreENG: string;
     prix: number;
     description: string;
+    descriptionENG: string;
     descriptionSuccincte: string;
+    descriptionSuccincteENG: string;
     lieu: string;
     ville: string;
     tel: string;

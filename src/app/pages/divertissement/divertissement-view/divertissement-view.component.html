@@ -3,18 +3,20 @@
         <div class="row" style="margin-bottom: 20px">
             <div class="cell-lg-9">
                 <div class="titre">
-                    {{divertissement.titre}}
+                    {{langue.toUpperCase() === 'ENG' ? (divertissement.titreENG ? divertissement.titreENG: divertissement.titre) : divertissement.titre}}
                 </div>
                 <div class="sous-titre">
-                    {{divertissement.descriptionSuccincte}}
+
+                    {{langue.toUpperCase() === 'ENG' ? (divertissement.descriptionSuccincteENG ? divertissement.descriptionSuccincteENG: divertissement.descriptionSuccincte) : divertissement.descriptionSuccincte}}
+
                 </div>
 
                 <div class="sous-titre text-leader2" *ngIf="divertissement.date && !divertissement.dateFin">
-                    Le
+                    {{'Le ' | traduction}}
                     <b>{{divertissement.date | date: 'yyyy-MM-dd'}} </b>
                 </div>
                 <div class="sous-titre text-leader2" *ngIf="divertissement.date && divertissement.dateFin">
-                    Du <b>{{divertissement.date | date: 'yyyy-MM-dd' }}</b> au <b>{{divertissement.dateFin | date: 'yyyy-MM-dd' }}</b>
+                    {{'Du' |traduction}} {{divertissement.date | date: 'yyyy-MM-dd' }} {{"au" |traduction}} {{divertissement.dateFin | date: 'yyyy-MM-dd' }}
                 </div>
 
                 <div>
@@ -54,7 +56,7 @@
     <div class="contenu" style="padding-top: 5vh">
         <div class="row">
             <div class="col-lg-5">
-                <div class="sous-titre text-leader2" [innerHTML]="divertissement.description">
+                <div class="sous-titre text-leader2" [innerHTML]="langue.toUpperCase() === 'ENG' ? (divertissement.descriptionENG ? divertissement.descriptionENG: divertissement.description) : divertissement.description">
                 </div>
             </div>
             <div *ngIf="divertissement.images[0]" class="cell-lg-7">

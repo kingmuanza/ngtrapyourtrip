@@ -3,13 +3,14 @@
         <div class="row">
             <div class="cell-lg-9">
                 <div class="titre">
-                    {{divertissement.titre}}
+                    {{langue.toUpperCase() === 'ENG' ? (divertissement.titreENG ? divertissement.titreENG: divertissement.titre) : divertissement.titre}}
                 </div>
                 <div class="sous-titre">
-                    {{divertissement.descriptionSuccincte}}
+                    {{langue.toUpperCase() === 'ENG' ? (divertissement.descriptionSuccincteENG ? divertissement.descriptionSuccincteENG: divertissement.descriptionSuccincte) : divertissement.descriptionSuccincte}}
+
                 </div>
                 <div class="sous-titre">
-                    Prévoir en moyenne {{divertissement.prix | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
+                    {{"Prévoir en moyenne" | traduction}} {{divertissement.prix | currency:'XAF':'symbol':'1.2-2':'fr-FR'}}
                 </div>
                 <div>
                     <div style="margin-top: 10px;">
@@ -36,8 +37,8 @@
     <div class="contenu" style="padding-top: 2.5vmin">
         <div class="row">
             <div class="cell-lg-5">
-                <div class="sous-titre text-leader2">
-                    {{divertissement.description}}
+                <div [innerHTML]="langue.toUpperCase() === 'ENG' ? (divertissement.descriptionENG ? divertissement.descriptionENG: divertissement.description) : divertissement.description" class="sous-titre text-leader2">
+
                 </div>
             </div>
             <div *ngIf="divertissement.images[0]" class="cell-lg-7">

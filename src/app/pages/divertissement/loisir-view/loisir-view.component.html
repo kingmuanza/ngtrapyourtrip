@@ -4,9 +4,10 @@
             <div class="row">
                 <div class="cell-lg-9">
                     <div class="titre">
-                        {{divertissement.titre}}
+                        {{langue.toUpperCase() === 'ENG' ? (divertissement.titreENG ? divertissement.titreENG: divertissement.titre) : divertissement.titre}}
                     </div>
-                    <div [innerHTML]="divertissement.description" class="sous-titre text-leader2" style="margin-top: 20px;">
+                    <div [innerHTML]="langue.toUpperCase() === 'ENG' ? (divertissement.descriptionENG ? divertissement.descriptionENG: divertissement.description) : divertissement.description" class="sous-titre text-leader2" style="margin-top: 20px;">
+
                     </div>
                     <div>
                         <div style="margin-top: 10px;">

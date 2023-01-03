@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { Divertissement } from 'src/app/models/divertissement.model';
 import { Reservation } from 'src/app/models/reservation.model';
+import { PanierService } from 'src/app/services/panier.service';
 declare const metro: any;
 
 @Component({
@@ -21,6 +22,8 @@ export class RestaurantViewComponent implements OnInit {
 
   indexImages = 0;
   changeImage;
+
+  langue = PanierService.getLangue();
 
   constructor(
     private route: ActivatedRoute,

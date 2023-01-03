@@ -8,6 +8,7 @@ import { Divertissement } from 'src/app/models/divertissement.model';
 import { Subscription } from 'rxjs';
 import { Administrateur } from 'src/app/models/administrateur.model';
 import { AdminService } from 'src/app/services/admin.service';
+import { PanierService } from 'src/app/services/panier.service';
 declare const metro: any;
 
 @Component({
@@ -29,6 +30,7 @@ export class DivertissementViewComponent implements OnInit {
   indexImages = 0;
   changeImage;
 
+  langue = PanierService.getLangue();
 
   constructor(
     private route: ActivatedRoute,

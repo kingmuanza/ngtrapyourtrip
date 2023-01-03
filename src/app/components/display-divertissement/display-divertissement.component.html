@@ -12,7 +12,7 @@
     <div class="row" style="font-size: 1.2em;">
         <div class="cell-8">
             <div class="sejour__description">
-                {{divertissement.titre}}
+                {{ fuseau.toUpperCase() === 'EN' ? (divertissement.titreENG ? divertissement.titreENG: divertissement.titre) : divertissement.titre}},
             </div>
             <div>
                 <b *ngIf="divertissement.ville">
@@ -23,7 +23,7 @@
                 {{divertissement.date | date: 'yyyy-MM-dd' }}
             </div>
             <div *ngIf="divertissement.date && divertissement.dateFin">
-                Du {{divertissement.date | date: 'yyyy-MM-dd' }} au {{divertissement.dateFin | date: 'yyyy-MM-dd' }}
+                {{'Du' |traduction}} {{divertissement.date | date: 'yyyy-MM-dd' }} {{"au" |traduction}} {{divertissement.dateFin | date: 'yyyy-MM-dd' }}
             </div>
         </div>
         <div class="cell-4">
