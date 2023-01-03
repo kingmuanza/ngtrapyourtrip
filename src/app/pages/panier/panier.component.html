@@ -32,18 +32,32 @@
                     <td>{{reservation.dateDebut | date: 'yyyy-MM-dd'}}</td>
                     <td>
                         <span *ngIf="reservation.sejour ">
-                            {{ fuseau.toUpperCase() === 'EN' ? (reservation.sejour.titreENG ? reservation.sejour.titreENG: reservation.sejour.titre) : reservation.sejour.titre}},
+                            {{ fuseau.toUpperCase() === 'EN' ? (reservation.sejour.titreENG ?
+                            reservation.sejour.titreENG: reservation.sejour.titre) : reservation.sejour.titre}},
                         </span>
                         <span *ngIf="reservation.hebergement ">
-                            {{reservation.hebergement.titre}}
+                            {{fuseau.toUpperCase() === 'EN' ? (reservation.hebergement.titreENG ?
+                            reservation.hebergement.titreENG: reservation.hebergement.titre) :
+                            reservation.hebergement.titre}}
+
                         </span>
                         <span *ngIf="reservation.divertissement ">
-                            {{reservation.divertissement.titre}}
+                            {{fuseau.toUpperCase() === 'EN' ? (reservation.divertissement.titreENG ?
+                            reservation.divertissement.titreENG: reservation.divertissement.titre) :
+                            reservation.divertissement.titre}}
+
                         </span>
                         <span *ngIf="reservation.divertissementItem">
-                            {{reservation.divertissementItem.divertissement.titre}}
+                            {{fuseau.toUpperCase() === 'EN' ? (reservation.divertissementItem.divertissement.titreENG ?
+                            reservation.divertissementItem.divertissement.titreENG:
+                            reservation.divertissementItem.divertissement.titre) :
+                            reservation.divertissementItem.divertissement.titre}}
+
                             <div>
-                                {{reservation.divertissementItem.titre}}
+                                {{fuseau.toUpperCase() === 'EN' ? (reservation.divertissementItem.titreENG ?
+                                reservation.divertissementItem.titreENG: reservation.divertissementItem.titre) :
+                                reservation.divertissementItem.titre}}
+
                             </div>
                         </span>
                         <span *ngIf="reservation.transport ">
@@ -55,16 +69,39 @@
                         </span>
                     </td>
                     <td>
-                        <span *ngIf="reservation.sejour " [innerHTML]="fuseau.toUpperCase() === 'EN' ? (reservation.sejour.descriptionSuccincteENG ? reservation.sejour.descriptionSuccincteENG: reservation.sejour.descriptionSuccincte) : reservation.sejour.descriptionSuccincte">
-                        </span>
-                        <span *ngIf="reservation.hebergement " [innerHTML]="reservation.hebergement.descriptionSuccincte">
-                        </span>
-                        <span *ngIf="reservation.divertissement " [innerHTML]="reservation.divertissement.descriptionSuccincte">
-                        </span>
-                        <span *ngIf="reservation.divertissementItem " [innerHTML]="reservation.divertissementItem.descriptionSuccincte">
-                        </span>
-                        <span *ngIf="reservation.transport " [innerHTML]="description(reservation.transport.depart.trajet)">
-                        </span>
+                        <div *ngIf="reservation.hebergement">
+                            {{fuseau.toUpperCase() === 'EN' ? (reservation.hebergement.descriptionSuccincteENG ? reservation.hebergement.descriptionSuccincteENG: reservation.hebergement.descriptionSuccincte) : reservation.hebergement.descriptionSuccincte}}
+                        </div>
+                        <ng-container *ngIf="reservation.transport">
+                            {{description(reservation.transport.depart.trajet)}}
+
+                            <ng-container *ngIf="reservation.transport.gare">
+                                <span>
+                                    : {{reservation.transport.gare.nom}}, {{reservation.transport.gare.lieu}}
+                                </span>
+                            </ng-container>
+                            <div style="margin-top: 5px;">
+                                <span *ngIf="reservation.transport.depart.vip" class="allerretour" style="font-weight: bold;">
+                                    VIP
+                                </span>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="reservation.divertissement">
+                            {{fuseau.toUpperCase() === 'EN' ? (reservation.divertissement.descriptionSuccincteENG ? reservation.divertissement.descriptionSuccincteENG: reservation.divertissement.descriptionSuccincte) : reservation.divertissement.descriptionSuccincte}}
+
+                            <div>
+                                {{'Le' | traduction}}
+                                <b>{{reservation.divertissement.date | date: 'yyyy-MM-dd'}} </b>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="reservation.divertissementItem">
+                            {{fuseau.toUpperCase() === 'EN' ? (reservation.divertissementItem.titreENG ? reservation.divertissementItem.titreENG: reservation.divertissementItem.titre) : reservation.divertissementItem.titre}}
+
+                        </ng-container>
+                        <div *ngIf="reservation.sejour">
+                            {{fuseau.toUpperCase() === 'EN' ? (reservation.sejour.descriptionSuccincteENG ? reservation.sejour.descriptionSuccincteENG: reservation.sejour.descriptionSuccincte) : reservation.sejour.descriptionSuccincte}}
+
+                        </div>
                         <div *ngIf="reservation.locationVoiture ">
                             {{reservation.locationVoiture.type}}
                             <span *ngIf="reservation.locationVoiture.type==='interurbain' ">
@@ -80,7 +117,7 @@
                     </td>
                     <td style="text-align: right; background-color: #fafafa; ">
                         <b>
-                            {{reservation.cout | conversion  | currency:devise:'symbol':'1.2-2':fuseau}}
+                            {{reservation.cout | conversion | currency:devise:'symbol':'1.2-2':fuseau}}
                         </b>
                     </td>
                     <td class="white-space " style=" ">
@@ -167,18 +204,32 @@
                         <b>{{'Date début' | traduction}}</b> : {{reservation.dateDebut | date: 'yyyy-MM-dd'}}<br>
                         <b>{{'Prestation' | traduction}}</b> :
                         <span *ngIf="reservation.sejour ">
-                            {{reservation.sejour.titre}}
+                            {{ fuseau.toUpperCase() === 'EN' ? (reservation.sejour.titreENG ?
+                            reservation.sejour.titreENG: reservation.sejour.titre) : reservation.sejour.titre}},
                         </span>
                         <span *ngIf="reservation.hebergement ">
-                            {{reservation.hebergement.titre}}
+                            {{fuseau.toUpperCase() === 'EN' ? (reservation.hebergement.titreENG ?
+                            reservation.hebergement.titreENG: reservation.hebergement.titre) :
+                            reservation.hebergement.titre}}
+
                         </span>
                         <span *ngIf="reservation.divertissement ">
-                            {{reservation.divertissement.titre}}
+                            {{fuseau.toUpperCase() === 'EN' ? (reservation.divertissement.titreENG ?
+                            reservation.divertissement.titreENG: reservation.divertissement.titre) :
+                            reservation.divertissement.titre}}
+
                         </span>
-                        <span *ngIf="reservation.divertissementItem ">
-                            {{reservation.divertissementItem.divertissement.titre}}
+                        <span *ngIf="reservation.divertissementItem">
+                            {{fuseau.toUpperCase() === 'EN' ? (reservation.divertissementItem.divertissement.titreENG ?
+                            reservation.divertissementItem.divertissement.titreENG:
+                            reservation.divertissementItem.divertissement.titre) :
+                            reservation.divertissementItem.divertissement.titre}}
+
                             <div>
-                                {{reservation.divertissementItem.titre}}
+                                {{fuseau.toUpperCase() === 'EN' ? (reservation.divertissementItem.titreENG ?
+                                reservation.divertissementItem.titreENG: reservation.divertissementItem.titre) :
+                                reservation.divertissementItem.titre}}
+
                             </div>
                         </span>
                         <span *ngIf="reservation.transport ">
@@ -191,16 +242,39 @@
                         <br>
                         <b>Description</b> :
 
-                        <span *ngIf="reservation.sejour " [innerHTML]="reservation.sejour.descriptionSuccincte ">
-                        </span>
-                        <span *ngIf="reservation.hebergement " [innerHTML]="reservation.hebergement.descriptionSuccincte ">
-                        </span>
-                        <span *ngIf="reservation.divertissement " [innerHTML]="reservation.divertissement.descriptionSuccincte ">
-                        </span>
-                        <span *ngIf="reservation.divertissementItem " [innerHTML]="reservation.divertissementItem.descriptionSuccincte ">
-                        </span>
-                        <span *ngIf="reservation.transport " [innerHTML]="description(reservation.transport.depart.trajet) ">
-                        </span>
+                        <div *ngIf="reservation.hebergement">
+                            {{fuseau.toUpperCase() === 'EN' ? (reservation.hebergement.descriptionSuccincteENG ? reservation.hebergement.descriptionSuccincteENG: reservation.hebergement.descriptionSuccincte) : reservation.hebergement.descriptionSuccincte}}
+                        </div>
+                        <ng-container *ngIf="reservation.transport">
+                            {{description(reservation.transport.depart.trajet)}}
+
+                            <ng-container *ngIf="reservation.transport.gare">
+                                <span>
+                                    : {{reservation.transport.gare.nom}}, {{reservation.transport.gare.lieu}}
+                                </span>
+                            </ng-container>
+                            <div style="margin-top: 5px;">
+                                <span *ngIf="reservation.transport.depart.vip" class="allerretour" style="font-weight: bold;">
+                                    VIP
+                                </span>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="reservation.divertissement">
+                            {{fuseau.toUpperCase() === 'EN' ? (reservation.divertissement.descriptionSuccincteENG ? reservation.divertissement.descriptionSuccincteENG: reservation.divertissement.descriptionSuccincte) : reservation.divertissement.descriptionSuccincte}}
+
+                            <div>
+                                {{'Le' | traduction}}
+                                <b>{{reservation.divertissement.date | date: 'yyyy-MM-dd'}} </b>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="reservation.divertissementItem">
+                            {{fuseau.toUpperCase() === 'EN' ? (reservation.divertissementItem.titreENG ? reservation.divertissementItem.titreENG: reservation.divertissementItem.titre) : reservation.divertissementItem.titre}}
+
+                        </ng-container>
+                        <div *ngIf="reservation.sejour">
+                            {{fuseau.toUpperCase() === 'EN' ? (reservation.sejour.descriptionSuccincteENG ? reservation.sejour.descriptionSuccincteENG: reservation.sejour.descriptionSuccincte) : reservation.sejour.descriptionSuccincte}}
+
+                        </div>
                         <div *ngIf="reservation.locationVoiture ">
                             {{reservation.locationVoiture.type}}
                             <span *ngIf="reservation.locationVoiture.type==='interurbain' ">
@@ -215,7 +289,8 @@
                             </div>
                         </div>
                         <br>
-                        <b>{{'Coût' | traduction}}</b> : {{reservation.cout | conversion | currency:devise:'symbol':'1.2-2':fuseau}}<br>
+                        <b>{{'Coût' | traduction}}</b> : {{reservation.cout | conversion | currency:devise:'symbol':'1.2-2':fuseau}}
+                        <br>
 
                         <div class="white-space " style="margin-top: 10px; margin-bottom: 10px; ">
                             <button (click)="voir(reservation) " class="button success ">
@@ -276,7 +351,7 @@
 
 
                         <button (click)="payerBancaire(formBancaire2)" class="button success" style="background-color: rgb(48, 164, 221); color: white; margin-right: 10px;width: 100%; ">
-    
+
                             {{'Paiement par carte' | traduction}}
                             <span style="margin-left: 10px;" class="fas fa-credit-card fg-white"></span>
                         </button>
