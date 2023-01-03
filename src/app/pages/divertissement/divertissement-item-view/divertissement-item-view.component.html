@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="cell-lg-9">
                     <div class="titre">
-                        {{divertissementItem.titre}}
+                        {{langue.toUpperCase() === 'ENG' ? (divertissementItem.titreENG ? divertissementItem.titreENG: divertissementItem.titre) : divertissementItem.titre}}
                     </div>
                     <div>
                         <b>
@@ -45,8 +45,8 @@
         <div class="contenu" style="padding-top: 5vh">
             <div class="row">
                 <div class="cell-lg-5">
-                    <div [innerHTML]="divertissementItem.description" class="sous-titre text-leader2">
-                        {{divertissementItem.description}}
+                    <div [innerHTML]="langue.toUpperCase() === 'ENG' ? (divertissementItem.descriptionENG ? divertissementItem.descriptionENG: divertissementItem.description) : divertissementItem.description" class="sous-titre text-leader2">
+
                     </div>
                 </div>
                 <div *ngIf="divertissementItem.images[0]" class="cell-lg-7">
