@@ -1,40 +1,35 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import * as firebase from 'firebase';
-import { Subject } from 'rxjs';
-import { DATATABLES_OPTIONS_LANGUAGE } from 'src/app/data/datatable.options';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Voiture } from 'src/app/models/voiture.model';
-import { Transport } from 'src/app/models/transport.model';
 import { VoitureService } from 'src/app/services/voiture.service';
 declare const metro: any;
 
 @Component({
-  selector: 'app-transport-location-list',
-  templateUrl: './transport-location-list.component.html',
-  styleUrls: ['./transport-location-list.component.scss']
+  selector: 'app-transport-location-categories-list',
+  templateUrl: './transport-location-categories-list.component.html',
+  styleUrls: ['./transport-location-categories-list.component.scss']
 })
-export class TransportLocationListComponent implements OnInit {
+export class TransportLocationCategoriesListComponent implements OnInit {
 
   @ViewChild('ville', { static: false }) departInput: ElementRef;
 
   form: FormGroup;
-  voitures = new Array<Voiture>();
+  categories = new Array<string>();
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private voitureService: VoitureService,
     private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.categories = ['SUV',
+      'Sportive',
+      'Citadine',
+      'Berline',
+      'Familiale'];
     this.initForm();
-    this.voitureService.getVoitures().then((voitures) => {
-      this.voitures = voitures.filter((voiture) => {
-        return voiture.categorie === this.route.snapshot.params.id;
-      });
-    });
   }
 
   initForm() {
@@ -63,7 +58,7 @@ export class TransportLocationListComponent implements OnInit {
   }
 
   voir(voiture: Voiture) {
-    this.router.navigate(['offres', 'transport', 'location', 'voiture', voiture.id]);
+    this.router.navigate(['offres', 'transport', 'location', voiture.id]);
   }
 
 }

@@ -1,0 +1,35 @@
+<div class="page-transport">
+    <div class="entete">
+
+        <div class="entete__background interurbain">
+        </div>
+        <div class="entete__contenu interurbain">
+            <div class="row no-gap">
+                <div class="cell-lg-12">
+                    <div style="margin-left: -15px; margin-bottom: -20px; margin-top: 0px;">
+                        <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
+                            <li class="page-item"><a routerLink="accueil" class="page-link">{{'Accueil' | traduction}}</a></li>
+                            <li class="page-item"><a routerLink="/offres/transport" class="page-link">{{'Transports' | traduction}}</a></li>
+                            <li class="page-item"><a class="page-link">{{'Location de voiture' | traduction}}</a></li>
+                        </ul>
+                    </div>
+                    <div class="titre">
+                        {{'Location de voiture' | traduction}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contenu">
+        <div class="voitures">
+            <div class="row">
+                <div *ngFor="let categorie of categories" class="cell-lg-4">
+                    <app-display-voiture-categorie [categorie]="categorie"></app-display-voiture-categorie>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="height: 50vh;">
+
+</div>

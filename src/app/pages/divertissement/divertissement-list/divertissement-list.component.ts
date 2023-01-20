@@ -124,6 +124,11 @@ export class DivertissementListComponent implements OnInit {
             this.resultats.push(divertissement);
           }
         });
+        this.resultats.sort((a, b) => {
+          const date1 = new Date(a.date);
+          const date2 = new Date(b.date);
+          return date1.getTime() - date2.getTime() > 0 ? -1 : 1;
+        });
         console.log('TERMINEEE !!!');
         console.log(this.divertissements);
         metro().activity.close(activity);

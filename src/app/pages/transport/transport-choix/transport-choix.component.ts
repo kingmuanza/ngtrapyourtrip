@@ -20,7 +20,7 @@ export class TransportChoixComponent implements OnInit {
   }
 
   location() {
-    this.router.navigate(['offres', 'transport', 'location']);
+    this.router.navigate(['offres', 'transport', 'location', 'categorie']);
   }
 
 }

@@ -12,7 +12,7 @@
     <div class="row" style="font-size: 1.2em;">
         <div class="cell-8">
             <div class="sejour__description">
-                {{divertissement.titre}}
+                {{ fuseau.toUpperCase() === 'EN' ? (divertissement.titreENG ? divertissement.titreENG: divertissement.titre) : divertissement.titre}},
             </div>
             <div>
                 <b>{{divertissement.ville}}</b><span *ngIf="divertissement.ville && divertissement.lieu">,</span>

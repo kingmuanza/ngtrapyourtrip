@@ -24,16 +24,9 @@
         <div class="formulaire-recherche">
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                 <div class="row no-gap shadow-3">
-                    <div class="cell-lg-5 bordure-orange-debut">
+                    <div class="cell-lg-8 bordure-orange-debut">
                         <div>
                             <input formControlName="rechercher" data-role="input" [attr.data-prepend]="'Rechercher' | traduction">
-                        </div>
-                    </div>
-                    <div class="cell-lg-3 bordure-orange-fin">
-                        <div>
-                            <select formControlName="categorie" data-role="select" [attr.data-prepend]="'Catégorie' | traduction">
-
-                            </select>
                         </div>
                     </div>
                     <div class="cell-lg-3 bordure-orange-fin">
@@ -59,7 +52,7 @@
         </div>
         <div class="voitures">
             <div class="row">
-                <div *ngFor="let v of voitures" class="cell-lg-4">
+                <div (click)="voir(v)" *ngFor="let v of voitures" class="cell-lg-4">
                     <app-display-voiture [voiture]="v"></app-display-voiture>
                 </div>
             </div>

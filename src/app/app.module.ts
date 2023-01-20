@@ -105,6 +105,8 @@ import { GareViewComponent } from './pages/transport/gare/gare-view/gare-view.co
 import { DisplayGareComponent } from './components/display-gare/display-gare.component';
 import { TraductionPipe } from './pipes/traduction.pipe';
 import { ConversionPipe } from './pipes/conversion.pipe';
+import { TransportLocationCategoriesListComponent } from './pages/transport/transport-location-categories-list/transport-location-categories-list.component';
+import { DisplayVoitureCategorieComponent } from './components/display-voiture-categorie/display-voiture-categorie.component';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeEn);
@@ -206,7 +208,9 @@ registerLocaleData(localeEn);
     GareViewComponent,
     DisplayGareComponent,
     TraductionPipe,
-    ConversionPipe
+    ConversionPipe,
+    TransportLocationCategoriesListComponent,
+    DisplayVoitureCategorieComponent
   ],
   imports: [
     BrowserModule,

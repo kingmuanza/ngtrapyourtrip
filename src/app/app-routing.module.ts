@@ -57,6 +57,7 @@ import { TransportLocationViewComponent } from './pages/transport/transport-loca
 import { CancelComponent } from './pages/paiement/cancel/cancel.component';
 import { ReturnComponent } from './pages/paiement/return/return.component';
 import { DivertissementItemViewComponent } from './pages/divertissement/divertissement-item-view/divertissement-item-view.component';
+import { TransportLocationCategoriesListComponent } from './pages/transport/transport-location-categories-list/transport-location-categories-list.component';
 
 const routes: Routes = [
   { path: 'accueil', component: AccueilComponent },
@@ -121,8 +122,9 @@ const routes: Routes = [
 
   { path: 'offres/transport', component: TransportChoixComponent },
   { path: 'offres/transport/recherche', component: TransportListComponent },
-  { path: 'offres/transport/location', component: TransportLocationListComponent },
-  { path: 'offres/transport/location/:id', component: TransportLocationViewComponent },
+  { path: 'offres/transport/location/categorie', component: TransportLocationCategoriesListComponent },
+  { path: 'offres/transport/location/categorie/:id', component: TransportLocationListComponent },
+  { path: 'offres/transport/location/voiture/:id', component: TransportLocationViewComponent },
   { path: 'offres/transport/view/:id', component: TransportViewComponent },
   { path: 'offres/transport/edit', component: TransportEditComponent },
   { path: 'offres/transport/edit/:id', component: TransportEditComponent },
