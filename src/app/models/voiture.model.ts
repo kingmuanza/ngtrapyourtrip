@@ -5,11 +5,14 @@ export class Voiture {
     categorie = '';
     modele = '';
     transmission = 'Automatique';
+    description = '';
+    descriptionENG = '';
     coutInterurbain = 0;
     cout = 10000;
     sieges = 5;
     portieres = 4;
     image = '../../../../assets/img/voiture.webp';
+    images = new Array<string>();
 
     constructor(categorie, modele, transmission?) {
         if (categorie) {

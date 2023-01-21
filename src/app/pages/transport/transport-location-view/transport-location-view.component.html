@@ -4,27 +4,28 @@
         <div class="entete__background interurbain">
         </div>
         <div class="entete__contenu interurbain">
+            <div style="margin-left: -15px; margin-bottom: -20px; margin-top: 0px;">
+                <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
+                    <li class="page-item"><a routerLink="accueil" class="page-link">{{'Accueil' | traduction}}</a></li>
+                    <li class="page-item"><a routerLink="/offres/transport" class="page-link">{{'Transports' |
+                            traduction}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a routerLink="/offres/transport/location/categorie" class="page-link">
+                            {{'Location de voiture' | traduction}}
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link">
+                            {{voiture ? voiture.modele : 'Veuillez patienter' | traduction}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
             <div class="row no-gap">
-                <div class="cell-lg-12">
-                    <div style="margin-left: -15px; margin-bottom: -20px; margin-top: 0px;">
-                        <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
-                            <li class="page-item"><a routerLink="accueil" class="page-link">{{'Accueil' | traduction}}</a></li>
-                            <li class="page-item"><a routerLink="/offres/transport" class="page-link">{{'Transports' | traduction}}</a>
-                            </li>
-                            <li class="page-item">
-                                <a routerLink="/offres/transport/location" class="page-link">
-                                    {{'Location de voiture' | traduction}}
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link">
-                                    {{voiture ? voiture.categorie : 'Veuillez patienter'  | traduction}}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="cell-lg-8">
                     <div class="titre">
-                        {{'Location de voiture' | traduction}} : {{voiture ? voiture.categorie : 'Veuillez patienter'}}
+                        {{'Location de voiture' | traduction}} : {{voiture ? voiture.modele : 'Veuillez patienter'}}
                     </div>
                     <div style="margin-top: 0px;">
                         <span class="">
@@ -37,18 +38,34 @@
                         </span>
                     </div>
                 </div>
+                <div class="cell-lg-4 text-right">
+                    <div class="titre">
+
+                        <div *ngIf=" type === 'location' " class="">
+                            {{voiture.cout | currency:devise:'symbol':'1.2-2':fuseau}}
+                        </div>
+                        <div *ngIf=" type === 'interurbain' " class="">
+                            <ng-container *ngIf="voiture.coutInterurbain">
+                                {{voiture.coutInterurbain | currency:devise:'symbol':'1.2-2':fuseau}}
+                            </ng-container>
+                            <ng-container *ngIf="!voiture.coutInterurbain">
+                                {{voiture.cout | currency:devise:'symbol':'1.2-2':fuseau}}
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="contenu">
-        <div *ngIf=" type === 'interurbain' " class="formulaire-recherche">
+        <div *ngIf=" type === 'interurbain' " class="formulaire-recherche" style="background-color: white;">
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                 <div class="row no-gap shadow-3">
                     <div class="cell-lg-3 bordure-orange-debut">
                         <div *ngIf="villes.length > 0">
                             <select formControlName="depart" [attr.data-prepend]="'Ville de départ' | traduction" data-role="select">
-                                <option value="">{{'Toutes les villes'  | traduction}}</option>
+                                <option value="">{{'Toutes les villes' | traduction}}</option>
                                 <option *ngFor="let v of villes" [value]="v.nom">
                                     {{v.nom}}
                                 </option>
@@ -95,7 +112,7 @@
                 </div>
             </form>
         </div>
-        <div *ngIf=" type === 'location' " class="formulaire-recherche">
+        <div *ngIf=" type === 'location' " class="formulaire-recherche" style="background-color: white;">
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                 <div class="row no-gap shadow-3">
                     <div class="cell-lg-3 bordure-orange-debut">
@@ -151,40 +168,35 @@
         </div>
         <div class="voitures">
             <div class="row" *ngIf="voiture">
-                <div class="cell-lg-6">
-                    <div>
-                        <div class="voiture">
-                            <div class="row">
-                                <div class="cell-lg-8">
-                                    <div class="voiture-categorie">
-                                        {{voiture.categorie}}
-                                    </div>
-                                    <div class="voiture-modele" style="display: none;">
-                                        {{voiture.modele}}
-                                    </div>
-                                </div>
-                                <div class="cell-lg-4">
-                                    <div class="voiture-infos">
-                                        Infos
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="voiture-description">
-                                {{voiture.sieges}} {{'sièges' | traduction}} | {{voiture.portieres}} {{'portières' | traduction}} | {{voiture.transmission | traduction}}
-                            </div>
-                            <div class="voiture-image" [ngStyle]="{'background-image': 'url('+ voiture.image +')'}">
+                <div class="cell-lg-4">
+                    <div style="margin-bottom: 20px;">
+                        <div class="voiture-categorie">
+                            {{voiture.categorie}}
+                        </div>
+                        <div class="voiture-modele">
+                            {{voiture.modele}}
+                        </div>
+                        <div class="">
+                            {{voiture.sieges}} {{'sièges' | traduction}} | {{voiture.portieres}} {{'portières' | traduction}} | {{voiture.transmission | traduction}}
+                        </div>
+                    </div>
+                    <div [innerHTML]="langue.toUpperCase() === 'ENG' ? (voiture.descriptionENG ? voiture.descriptionENG: voiture.description) : voiture.description">
+                    </div>
+                </div>
+                <div class="cell-lg-8">
+                    <div class="trap-image-big">
+                        <ng-container *ngFor="let image of voiture.images; let i = index">
+
+                            <div *ngIf="i === indexImages" class="trap-image-big animer" [ngStyle]="{'background-image': 'url(' + voiture.images[i] +')'}">
 
                             </div>
-                            <div *ngIf=" type === 'location' " class="voiture-cout">
-                                {{voiture.cout | currency:devise:'symbol':'1.2-2':fuseau}}
-                            </div>
-                            <div *ngIf=" type === 'interurbain' " class="voiture-cout">
-                                <ng-container *ngIf="voiture.coutInterurbain">
-                                    {{voiture.coutInterurbain | currency:devise:'symbol':'1.2-2':fuseau}}
-                                </ng-container>
-                                <ng-container *ngIf="!voiture.coutInterurbain">
-                                    {{voiture.cout | currency:devise:'symbol':'1.2-2':fuseau}}
-                                </ng-container>
+
+                        </ng-container>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div (click)="choisir(i)" class="cell-lg-1 cell-3" *ngFor="let image of voiture.images; let i = index">
+                            <div [ngClass]="{'actuelle': i === indexImages}" style="height: 60px; cursor: pointer; background-size: cover; background-position: center center;" [ngStyle]="{'background-image': 'url(' + image +')'}">
+
                             </div>
                         </div>
                     </div>

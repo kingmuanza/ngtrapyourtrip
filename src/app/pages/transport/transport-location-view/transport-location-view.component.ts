@@ -47,6 +47,9 @@ export class TransportLocationViewComponent implements OnInit {
 
   devise = PanierService.getDevise();
 
+  indexImages = 0;
+  changeImage;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -79,6 +82,7 @@ export class TransportLocationViewComponent implements OnInit {
       if (id) {
         this.voitureService.getVoiture(id).then((voiture) => {
           this.voiture = voiture;
+          this.changementDimages();
         }).catch((e) => {
           console.log(e);
           console.log(id);
@@ -379,7 +383,30 @@ export class TransportLocationViewComponent implements OnInit {
         alert('Veuillez remplir le formulaire de réservation');
       }
     }
+  }
 
+  changementDimages() {
+    if (this.voiture) {
+      if (this.voiture.images) {
+        if (this.voiture.images.length > 0) {
+          this.indexImages = 0;
+          this.changeImage = setInterval(() => {
+            const i = this.indexImages + 1;
+            if (i < this.voiture.images.length) {
+              this.indexImages++;
+            } else {
+              this.indexImages = 0;
+            }
+            console.log('changement dimage');
+            console.log(this.indexImages + ' sur ' + this.voiture.images.length);
+          }, 10000);
+        }
+      }
+    }
+  }
+
+  choisir(i) {
+    this.indexImages = i;
   }
 
 }

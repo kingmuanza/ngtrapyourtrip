@@ -222,7 +222,6 @@ $couleur: rgb(48,
     margin-top: 40px;
     .voiture {
         border: 2px solid #eee;
-        padding: 15px;
         line-height: 1.15;
         margin-bottom: 20px;
         cursor: pointer;
@@ -230,36 +229,11 @@ $couleur: rgb(48,
             border: 2px solid rgb(48, 164, 221);
         }
         &-image {
-            height: 300px;
+            height: 400px;
+            width: 100%;
             background-image: url('../../../../assets/img/voiture.webp');
-            background-size: contain;
+            background-size: cover;
             background-repeat: no-repeat;
-            margin-bottom: 15px;
-        }
-        &-infos {
-            font-size: 16px;
-            text-align: right;
-            text-decoration: underline;
-            color: rgb(48, 164, 221);
-        }
-        &-modele {
-            font-size: 16px;
-        }
-        &-categorie {
-            font-size: 18px;
-            font-weight: bold;
-            font-family: 'Raleway';
-        }
-        &-cout {
-            background-color: rgb(53, 54, 54);
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
-        &-description {
-            margin-top: 40px;
-            text-align: center;
-            padding: 10px;
         }
     }
 }
@@ -281,4 +255,17 @@ $couleur: rgb(48,
     cursor: pointer;
     margin-left: 60%;
     opacity: 0.8;
+}
+
+.trap-image {
+    height: 40vh;
+    background-size: cover;
+    background-position: center center;
+    margin-bottom: 2vh;
+}
+
+.trap-image-big {
+    height: 62vmin;
+    background-size: cover;
+    background-position: center center;
 }

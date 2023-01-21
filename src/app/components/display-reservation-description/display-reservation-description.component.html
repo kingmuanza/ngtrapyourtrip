@@ -27,7 +27,7 @@
                 {{ fuseau.toUpperCase() === 'EN' ? (reservation.sejour.titreENG ? reservation.sejour.titreENG: reservation.sejour.titre) : reservation.sejour.titre}},
             </ng-container>
             <ng-container *ngIf="reservation.locationVoiture">
-                {{'Location de voiture' | traduction}} : {{reservation.locationVoiture.voiture.categorie}}
+                {{'Location de voiture' | traduction}} : {{reservation.locationVoiture.voiture.categorie}}, {{reservation.locationVoiture.voiture.modele}}
             </ng-container>
         </div>
 
