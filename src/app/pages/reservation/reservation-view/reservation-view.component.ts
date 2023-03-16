@@ -91,8 +91,8 @@ export class ReservationViewComponent implements OnInit {
   }
 
   infos(reservation: Reservation) {
-    if (this.utilisateur) {
-      this.router.navigate(['offres', 'reservation', 'infos', reservation.id]);
+    this.router.navigate(['offres', 'reservation', 'infos', reservation.id]);
+    /* if (this.utilisateur) {
     } else {
       this.showconnexionObligatoire = true;
       this.interval = setInterval(() => {
@@ -103,7 +103,7 @@ export class ReservationViewComponent implements OnInit {
         localStorage.setItem('connexion-url', reservation.id);
         this.router.navigate(['connexion']);
       }, 5000);
-    }
+    } */
   }
 
   okJaiCompris(reservation: Reservation) {

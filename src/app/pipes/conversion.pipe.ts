@@ -6,8 +6,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ConversionPipe implements PipeTransform {
 
   transform(value: number): number {
-    const tauxEUR = 655;
-    const tauxUSD = 555;
+    let tauxEUR = 655;
+    let tauxUSD = 555;
+    const tauxString = localStorage.getItem('TYTTaux');
+    if (tauxString) {
+      const taux = JSON.parse(tauxString);
+      tauxEUR = taux.eur;
+      tauxUSD = taux.usd;
+    }
     const devise = localStorage.getItem('TYTDevise');
     if (devise) {
       if (devise === 'EUR') {

@@ -44,6 +44,21 @@ export class AppComponent implements OnInit {
       console.log('Cooedronnéesn géographies');
       console.log(`Positon: ${pos.lng} ${pos.lat}`);
     });
+
+    this.getTaux();
+  }
+
+  getTaux() {
+    const db = firebase.firestore();
+    db.collection('taux').doc('0').get().then((resultat) => {
+      console.log('TERMINEEE !!!');
+      if (resultat.data()) {
+        const taux = resultat.data();
+        localStorage.setItem('TYTTaux', JSON.stringify(taux));
+      }
+    }).catch((e) => {
+
+    });
   }
 
   getPosition(): Promise<any> {
