@@ -1,23 +1,26 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
+import { Observable, combineLatest } from 'rxjs';
+import { map, startWith, take, tap } from 'rxjs/operators';
 import { Sejour } from 'src/app/models/sejour.model';
 import { Ville } from 'src/app/models/ville.model';
+import { SejourService } from 'src/app/services/sejour.service';
 declare const metro: any;
 
 @Component({
   selector: 'app-sejour-list',
   templateUrl: './sejour-list.component.html',
-  styleUrls: ['./sejour-list.component.scss']
+  styleUrls: ['./sejour-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SejourListComponent implements OnInit {
 
   @ViewChild('calendarpickerlocale', { static: false }) calendarpickerlocale;
   @ViewChild('ville', { static: false }) departInput: ElementRef;
 
-  sejours = new Array<Sejour>();
-  resultats = new Array<Sejour>();
+  sejours$!: Observable<Array<Sejour>>;
   recherche = '';
   ordre = 'croissant';
   form: FormGroup;
@@ -35,13 +38,15 @@ export class SejourListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private sejourService: SejourService,
   ) {
     this.getScreenSize();
+    this.sejours$ = this.sejourService.sejours;
+    this.sejourService.getAllFromFirebase();
   }
 
   ngOnInit(): void {
-    this.getSejours();
     this.initForm();
     this.getVilles();
   }
@@ -50,8 +55,6 @@ export class SejourListComponent implements OnInit {
     this.form = this.formBuilder.group({
       mot: ['', []],
       ville: ['', []],
-      nature: ['tous', []],
-      ordre: ['croissant'],
       adultes: [1, []],
       enfants: [0, []],
 
@@ -105,17 +108,27 @@ export class SejourListComponent implements OnInit {
       arabe: [false],
 
     });
-    this.form.valueChanges.subscribe((val) => {
-
-      this.onSubmitForm();
+    let changementFormulaire$ = this.form.valueChanges.pipe(startWith({}));
+    const activity = metro().activity.open({
+      type: 'square',
+      overlayColor: '#fff',
+      overlayAlpha: 0.8
     });
+    this.sejours$ = combineLatest([changementFormulaire$, this.sejours$]).pipe(
+      map(([formValue, s]) => {
+        return this.onSubmitForm(s);
+      }),
+      tap(() => {
+        metro().activity.close(activity);
+      })
+    );
   }
 
-  onSubmitForm() {
-
+  onSubmitForm(sejours: Array<Sejour>) {
+    console.log("onSubmitForm");
     const value = this.form.value;
-    this.resultats = this.sejours;
-    this.resultats = this.resultats.filter((prestataire) => {
+    let resultats = new Array<Sejour>();
+    resultats = sejours.filter((prestataire) => {
       const keys = Object.keys(value);
       let toutOK = true;
       keys.forEach((key) => {
@@ -134,11 +147,7 @@ export class SejourListComponent implements OnInit {
       });
       return toutOK;
     });
-
-    this.ordonner(this.ordre);
-
-    console.log('Filtehffjf');
-    console.log(this.resultats);
+    return resultats;
 
   }
 
@@ -163,54 +172,6 @@ export class SejourListComponent implements OnInit {
     });
   }
 
-  getSejours() {
-    this.sejours = new Array<Sejour>();
-    const activity = metro().activity.open({
-      type: 'square',
-      overlayColor: '#fff',
-      overlayAlpha: 0.8
-    });
-    const db = firebase.firestore();
-    return new Promise((resolve, reject) => {
-      db.collection('sejours-trap').get().then((resultats) => {
-        resultats.forEach((resultat) => {
-          const sejour = resultat.data() as Sejour;
-          this.sejours.push(sejour);
-          this.resultats.push(sejour);
-        });
-        console.log('TERMINEEE !!!');
-        console.log(this.sejours);
-        metro().activity.close(activity);
-        this.ordonner(this.ordre);
-      }).catch((e) => {
-        metro().activity.close(activity);
-      });
-    });
-  }
-
-  rechercher(ev) {
-    console.log(ev);
-    this.resultats = this.sejours;
-    if (ev) {
-      this.resultats = this.resultats.filter((sejour) => {
-        return sejour.description.toLowerCase().indexOf(ev) !== -1;
-      });
-    }
-  }
-
-  ordonner(ev) {
-    console.log(ev);
-    if (ev === 'croissant') {
-      this.resultats.sort((a, b) => {
-        return a.prixUnitaire - b.prixUnitaire > 0 ? 1 : -1;
-      });
-    } else {
-      this.resultats.sort((a, b) => {
-        return a.prixUnitaire - b.prixUnitaire > 0 ? -1 : 1;
-      });
-    }
-  }
-
   toggleFilter() {
     this.filtersShowed = !this.filtersShowed;
   }
@@ -226,40 +187,50 @@ export class SejourListComponent implements OnInit {
         ladate = new Date(date);
       }
       console.log(ladate);
-      this.resultats = this.sejours.filter((sejour) => {
-        if (texte) {
-          if (sejour.ville) {
-            return sejour.ville.indexOf(texte) !== -1;
-          } else {
-            return false;
-          }
-        } else {
-          return true;
-        }
-      });
-      this.resultats = this.resultats.filter((sejour) => {
-        if (ladate) {
-          if (sejour.dateDebut) {
-            return new Date(sejour.dateDebut).getTime() - ladate.getTime() > 0;
-          } else {
-            return false;
-          }
-        } else {
-          return true;
-        }
-      });
+      this.sejours$ = this.sejourService.sejours.pipe(map(sejours => sejours.filter(this.filterTexte(texte))));
+      this.sejours$ = this.sejours$.pipe(map(sejours => sejours.filter(this.filterDate(ladate))));
     } else {
       this.recherchesShowed = !this.recherchesShowed;
-
     }
+  }
+
+  private filterDate(ladate: Date): any {
+    let resultat = false;
+    return (sejour: Sejour) => {
+      if (ladate) {
+        if (sejour.dateDebut) {
+          resultat = new Date(sejour.dateDebut).getTime() - ladate.getTime() > 0;
+        }
+        if (sejour.dateFin) {
+          resultat = new Date(sejour.dateFin).getTime() - ladate.getTime() > 0;
+        }
+      } else {
+        return true;
+      }
+      return resultat;
+    };
+  }
+
+  private filterTexte(texte: any): any {
+    return (sejour) => {
+      if (texte) {
+        if (sejour.ville) {
+          return sejour.ville.indexOf(texte) !== -1;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    };
   }
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
-    console.log('this.screenHeight, this.screenWidth');
-    console.log(this.screenHeight, this.screenWidth);
+    /* console.log('this.screenHeight, this.screenWidth');
+    console.log(this.screenHeight, this.screenWidth); */
     if (this.screenWidth > 599) {
       this.mobile = false;
       this.filtersShowed = true;

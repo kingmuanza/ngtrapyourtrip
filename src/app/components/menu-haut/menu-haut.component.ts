@@ -67,8 +67,8 @@ export class MenuHautComponent implements OnInit, AfterViewInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
-    console.log('this.screenHeight, this.screenWidth');
-    console.log(this.screenHeight, this.screenWidth);
+    /* console.log('this.screenHeight, this.screenWidth');
+    console.log(this.screenHeight, this.screenWidth); */
     if (this.screenWidth > 599) {
       this.mobile = false;
     }

@@ -18,11 +18,11 @@ export class TraductionPipe implements PipeTransform {
       if (langue === 'FR') {
         return value;
       } else {
-        console.log('value');
+        /* console.log('value');
         console.log(value);
         console.log('language[value]');
         console.log(this.language[value]);
-        console.log(this.language.Accueil);
+        console.log(this.language.Accueil); */
         if (this.language[value]) {
           return this.language[value];
         } else {

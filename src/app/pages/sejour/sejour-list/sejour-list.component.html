@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+<form [formGroup]="form">
     <div class="page-sejour">
         <div class="entete" style="background-color: #eee;">
             <div class="entete__background">
@@ -8,10 +8,12 @@
                     <div class="cell-lg-9">
                         <div class="titre">
                             {{'Séjours' | traduction}}
-                            <a class="button small showOnMObile" (click)="rechercheFilter()" style="float: right; margin-left: 10px;">
+                            <a class="button small showOnMObile" (click)="rechercheFilter()"
+                                style="float: right; margin-left: 10px;">
                                 <i class="mif-search fg-blue"></i>
                             </a>
-                            <a class="button small showOnMObile" (click)="toggleFilter()" style="float: right; margin-left: 10px;">
+                            <a class="button small showOnMObile" (click)="toggleFilter()"
+                                style="float: right; margin-left: 10px;">
                                 <i class="mif-filter fg-blue"></i>
                             </a>
                         </div>
@@ -31,7 +33,8 @@
                 <div class="row no-gap shadow-1">
                     <div class="cell-lg-5 bordure-orange-debut">
                         <div *ngIf="villes.length > 0">
-                            <select (change)="rechercheFilter()" #ville [attr.data-prepend]="'Ville' | traduction" data-role="select">
+                            <select (change)="rechercheFilter()" #ville [attr.data-prepend]="'Ville' | traduction"
+                                data-role="select">
                                 <option value="">{{'Toutes les villes' | traduction}}</option>
                                 <option *ngFor="let v of villes" [value]="v.nom">
                                     {{v.nom}}
@@ -44,18 +47,21 @@
                     </div>
                     <div class="cell-lg-4 bordure-orange-fin">
                         <div>
-                            <input #calendarpickerlocale type="date" [placeholder]="'A partir du' | traduction" data-role="calendarpicker">
+                            <input #calendarpickerlocale type="date" [placeholder]="'A partir du' | traduction"
+                                data-role="calendarpicker">
                         </div>
                     </div>
                     <div class="cell-lg-3 bordure-orange-fin">
                         <div>
-                            <a (click)="rechercheFilter()" class="button warning" style="width: 100%; background-color: rgb(48, 164, 221); color: white">
+                            <a (click)="rechercheFilter()" class="button warning"
+                                style="width: 100%; background-color: rgb(48, 164, 221); color: white">
                                 {{'Rechercher' | traduction}}
                             </a>
                         </div>
                     </div>
                     <div class="showOnMObile mobile-recherche-fermer cell-lg-2">
-                        <a (click)="rechercheFilter()" class="button dark" style="color: #fff;  width: 100%;">{{'Fermer' | traduction}}</a>
+                        <a (click)="rechercheFilter()" class="button dark" style="color: #fff;  width: 100%;">{{'Fermer'
+                            | traduction}}</a>
                     </div>
                 </div>
             </div>
@@ -156,7 +162,8 @@
                                         </span>
                                         <span class="">
                                             <input formControlName="pensioncomplete" type="checkbox"
-                                                data-role="checkbox" [attr.data-caption]="'Pension complète' | traduction">
+                                                data-role="checkbox"
+                                                [attr.data-caption]="'Pension complète' | traduction">
                                         </span>
                                     </div>
                                     <div class="options-titres">
@@ -237,7 +244,8 @@
                                         </span>
                                         <span class="">
                                             <input formControlName="appartementvacances" type="checkbox"
-                                                data-role="checkbox" [attr.data-caption]="'Appartement de vacances' | traduction">
+                                                data-role="checkbox"
+                                                [attr.data-caption]="'Appartement de vacances' | traduction">
                                         </span>
                                         <span class="">
                                             <input formControlName="chambrehotel" type="checkbox" data-role="checkbox"
@@ -245,7 +253,8 @@
                                         </span>
                                         <span class="">
                                             <input formControlName="villagevacances" type="checkbox"
-                                                data-role="checkbox" [attr.data-caption]="'Village de vacances' | traduction">
+                                                data-role="checkbox"
+                                                [attr.data-caption]="'Village de vacances' | traduction">
                                         </span>
                                     </div>
                                     <div class="options-titres">
@@ -289,7 +298,7 @@
                 </div>
                 <div class="cell-lg-10">
                     <div class="row muanza-padding-mobile">
-                        <div class="cell-lg-4" *ngFor="let sejour of resultats">
+                        <div class="cell-lg-4" *ngFor="let sejour of sejours$ | async">
                             <app-display-sejour [sejour]="sejour"></app-display-sejour>
                         </div>
                     </div>
