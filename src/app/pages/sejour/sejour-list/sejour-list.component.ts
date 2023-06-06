@@ -190,7 +190,7 @@ export class SejourListComponent implements OnInit {
       this.sejours$ = this.sejourService.sejours.pipe(map(sejours => sejours.filter(this.filterTexte(texte))));
       this.sejours$ = this.sejours$.pipe(map(sejours => sejours.filter(this.filterDate(ladate))));
     } else {
-      this.recherchesShowed = !this.recherchesShowed;
+      // this.recherchesShowed = !this.recherchesShowed;
     }
   }
 
