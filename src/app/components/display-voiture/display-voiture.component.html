@@ -1,27 +1,36 @@
 <div class="voiture">
-    <div class="row">
-        <div class="cell-lg-8">
-            <div class="voiture-categorie">
-                {{voiture.categorie}}
-            </div>
-            <div class="voiture-modele">
-                {{voiture.modele}}
-            </div>
-        </div>
-        <div class="cell-lg-4">
-            <div class="voiture-infos">
-                Infos
-            </div>
-        </div>
-    </div>
-    <div class="voiture-description">
-
-        {{voiture.sieges}} {{'sièges' | traduction}} | {{voiture.portieres}} {{'portières' | traduction}} | {{voiture.transmission | traduction}}
-    </div>
-    <div class="voiture-image" [ngStyle]="{'background-image': 'url('+ voiture.image +')'}">
+  <div class="row">
+    <div class="cell-lg-6">
+      <div class="voiture-infos" style="margin-bottom: 5px;">
+        {{voiture.ville}}
+      </div>
+      <div class="voiture-categorie">
+        {{voiture.categorie}}
+      </div>
+      <div class="voiture-modele">
+        {{voiture.modele}}
+      </div>
 
     </div>
-    <div class="voiture-cout" style="display: none;">
+    <div class="cell-lg-6" style="text-align: right;">
+
+      <div class="voiture-modele" style="font-size: 12px;">
+        A partir de
+      </div>
+      <h3 *ngIf="voiture.cout" style="margin: 0; padding: 0; font-size: 18px;">
         {{voiture.cout | conversion | currency:devise:'symbol':'1.2-2':fuseau}}
+      </h3>
     </div>
+  </div>
+  <div class="voiture-description">
+
+    {{voiture.sieges}} {{'sièges' | traduction}} | {{voiture.portieres}} {{'portières' | traduction}} |
+    {{voiture.transmission | traduction}}
+  </div>
+  <div class="voiture-image" [ngStyle]="{'background-image': 'url('+ voiture.image +')'}">
+
+  </div>
+  <div class="voiture-cout" style="display: none;">
+    {{voiture.cout | conversion | currency:devise:'symbol':'1.2-2':fuseau}}
+  </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as firebase from 'firebase';
 import { Voiture } from 'src/app/models/voiture.model';
 import { VoitureService } from 'src/app/services/voiture.service';
 declare const metro: any;
@@ -24,11 +25,16 @@ export class TransportLocationCategoriesListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.categories = ['SUV',
-      'Sportive',
-      'Citadine',
-      'Berline',
-      'Familiale'];
+    this.categories = [];
+    const db = firebase.firestore();
+    db.collection('categories-trap').get().then((resultats) => {
+      resultats.forEach((resultat) => {
+        const cat = resultat.data() as any;
+        this.categories.push(cat.nom);
+
+      });
+    }).catch((e) => {
+    });
     this.initForm();
   }
 

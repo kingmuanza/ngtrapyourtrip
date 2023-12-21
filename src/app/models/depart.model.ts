@@ -13,6 +13,7 @@ export class Depart {
     prix: number;
     vip: boolean;
     modification: Modification;
+    prixAR: number;
 
     constructor() {
         this.id = this.generateID();

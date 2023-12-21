@@ -8,8 +8,10 @@
                 <div class="cell-lg-12">
                     <div style="margin-left: -15px; margin-bottom: -20px; margin-top: 0px;">
                         <ul class="breadcrumbs" style="background-color: rgba(0,0,0,0);">
-                            <li class="page-item"><a routerLink="accueil" class="page-link">{{'Accueil' | traduction}}</a></li>
-                            <li class="page-item"><a routerLink="/offres/transport" class="page-link">{{'Transports' | traduction}}</a></li>
+                            <li class="page-item"><a routerLink="accueil" class="page-link">{{'Accueil' |
+                                    traduction}}</a></li>
+                            <li class="page-item"><a routerLink="/offres/transport" class="page-link">{{'Transports' |
+                                    traduction}}</a></li>
                             <li class="page-item"><a class="page-link">{{'Location de voiture' | traduction}}</a></li>
                         </ul>
                     </div>
@@ -24,14 +26,26 @@
         <div class="formulaire-recherche">
             <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
                 <div class="row no-gap shadow-3">
-                    <div class="cell-lg-8 bordure-orange-debut">
+                    <div class="cell-lg-5 bordure-orange-debut">
                         <div>
-                            <input formControlName="rechercher" data-role="input" [attr.data-prepend]="'Rechercher' | traduction">
+                            <input formControlName="rechercher" data-role="input"
+                                [attr.data-prepend]="'Rechercher' | traduction">
+                        </div>
+                    </div>
+                    <div *ngIf="villes.length>0" class="cell-lg-3 bordure-orange-fin">
+                        <div>
+                            <select formControlName="ville" data-role="select"
+                                [attr.data-prepend]="'Villes' | traduction">
+                                <option value="0">Toutes</option>
+                                <option *ngFor="let c of villes" [value]="c.nom">{{c.nom}}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="cell-lg-3 bordure-orange-fin">
                         <div>
-                            <select #depart formControlName="transmission" data-role="select" [attr.data-prepend]="'Transmission' | traduction">
+                            <select formControlName="transmission" data-role="select"
+                                [attr.data-prepend]="'Transmission' | traduction">
+                                <option value="0">Toutes</option>
                                 <option value="Automatique">
                                     {{'Automatique' | traduction}}
                                 </option>
@@ -39,7 +53,6 @@
                                     {{'Manuelle' | traduction}}
                                 </option>
                             </select>
-
                         </div>
                     </div>
                     <div class="cell-lg-1 bordure-orange-fin bg-dark">
@@ -52,7 +65,7 @@
         </div>
         <div class="voitures">
             <div class="row">
-                <div (click)="voir(v)" *ngFor="let v of voitures" class="cell-lg-4">
+                <div (click)="voir(v)" *ngFor="let v of resultats" class="cell-lg-4">
                     <app-display-voiture [voiture]="v"></app-display-voiture>
                 </div>
             </div>

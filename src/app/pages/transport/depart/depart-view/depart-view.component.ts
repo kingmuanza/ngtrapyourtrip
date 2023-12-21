@@ -91,7 +91,7 @@ export class DepartViewComponent implements OnInit {
   saveWithRetour() {
     if (!this.retourHeure) {
       alert('Veuillez choisir une heure de retour');
-      return ;
+      return;
     }
     console.log('this.retourDate');
     console.log(this.dialogRetour);
@@ -208,7 +208,11 @@ export class DepartViewComponent implements OnInit {
         console.log(date2);
         console.log(this.retourHeure);
         transport.dateRetour = new Date(date2 + 'T' + this.retourHeure + ':00');
-        cout = cout * 2;
+        if (this.depart.prixAR) {
+          cout = this.depart.prixAR * Number(personnes) * 2;
+        } else {
+          cout = this.depart.prix * Number(personnes) * 2;
+        }
       }
 
       reservation.dateDebut = dateDebut;

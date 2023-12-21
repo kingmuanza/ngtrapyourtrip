@@ -13,6 +13,7 @@ export class Voiture {
     portieres = 4;
     image = '../../../../assets/img/voiture.webp';
     images = new Array<string>();
+    ville = "";
 
     constructor(categorie, modele, transmission?) {
         if (categorie) {

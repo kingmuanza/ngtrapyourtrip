@@ -4,5 +4,17 @@
     </div>
     <div style="padding: 10px; text-align: center;">
         {{agence.nom}}
+        <div>
+            {{'Aller simple' | traduction}} :
+            <b>
+                {{prix | conversion | currency:devise:'symbol':'1.2-2':fuseau}}
+            </b>
+        </div>
+        <div>
+            {{'Aller Retour' | traduction}} :
+            <b>
+                {{prixAR*2 | conversion | currency:devise:'symbol':'1.2-2':fuseau}}
+            </b>
+        </div>
     </div>
 </div>

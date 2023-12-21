@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, Subject, combineLatest } from 'rxjs';
 import { map, startWith, take, tap } from 'rxjs/operators';
 import { Sejour } from 'src/app/models/sejour.model';
 import { Ville } from 'src/app/models/ville.model';
 import { SejourService } from 'src/app/services/sejour.service';
+import { VilleService } from 'src/app/services/ville.service';
 declare const metro: any;
 
 @Component({
@@ -15,12 +16,13 @@ declare const metro: any;
   styleUrls: ['./sejour-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SejourListComponent implements OnInit {
+export class SejourListComponent implements OnInit, OnDestroy {
 
   @ViewChild('calendarpickerlocale', { static: false }) calendarpickerlocale;
   @ViewChild('ville', { static: false }) departInput: ElementRef;
 
   sejours$!: Observable<Array<Sejour>>;
+  villes$!: Observable<Array<Ville>>;
   recherche = '';
   ordre = 'croissant';
   form: FormGroup;
@@ -36,19 +38,28 @@ export class SejourListComponent implements OnInit {
 
   villes = new Array<Ville>();
 
+  interval;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private sejourService: SejourService,
+    private villeService: VilleService,
   ) {
     this.getScreenSize();
     this.sejours$ = this.sejourService.sejours;
     this.sejourService.getAllFromFirebase();
+    this.villes$ = this.villeService.villes;
+    this.villeService.getAllFromFirebase();
+  }
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
   }
 
   ngOnInit(): void {
     this.initForm();
     this.getVilles();
+    this.villeService.getAllFromFirebase();
   }
 
   initForm() {
@@ -160,10 +171,11 @@ export class SejourListComponent implements OnInit {
   }
 
   getVilles() {
+    console.log("SEJOUR LIST GET VILLES");
     this.villes = new Array<Ville>();
     const db = firebase.firestore();
     db.collection('ville-trap').get().then((resultats) => {
-      console.log('TERMINEEE !!!');
+      console.log('SEJOUR LIST GET VILLES TERMINEEE !!!');
       resultats.forEach((resultat) => {
         const ville = resultat.data() as Ville;
         this.villes.push(ville);
@@ -190,7 +202,7 @@ export class SejourListComponent implements OnInit {
       this.sejours$ = this.sejourService.sejours.pipe(map(sejours => sejours.filter(this.filterTexte(texte))));
       this.sejours$ = this.sejours$.pipe(map(sejours => sejours.filter(this.filterDate(ladate))));
     } else {
-      // this.recherchesShowed = !this.recherchesShowed;
+
     }
   }
 
